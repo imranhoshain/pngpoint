@@ -5,13 +5,13 @@ PNGPoint is a full-stack platform for curating, moderating, and serving transpar
 ## Overview
 - **Frontend** – Next.js 15 (App Router, React 19, TypeScript, Tailwind CSS 4) renders the marketing site, catalog, and dashboards. Redux Toolkit + RTK Query coordinate state, authentication, and API calls. Components sprinkle structured JSON-LD metadata, social previews, pagination, dropzones, and toast notifications for a polished UX.
 - **Backend** – Django 5 + Django REST Framework expose `/api/v1` endpoints secured with SimpleJWT. A custom `User` model supports admin/user roles (only one admin can exist), Cloudflare API credentials live in `configuration.CloudflareConfig`, and the `images` app manages categories, sub-categories, keywords, and PNG metadata.
-- **Workers & Infra** – Celery workers offload bulk uploads and Cloudflare cleanup, Redis backs Celery and request caching, PostgreSQL serves production data (SQLite in dev), and Nginx terminates TLS before proxying Next.js and Daphne.
+- **Workers & Infra** – Traefik terminates TLS and routes traffic directly to the Next.js frontend and Daphne-powered backend. Celery workers offload bulk uploads and Cloudflare cleanup, Redis backs Celery and caching, and PostgreSQL serves production data (SQLite in dev).
 
 ### Why PNGPoint?
 - **Searchable catalog** – Visitors can search by title, keyword, category, slugified tags, or curated trending keywords, and every detail page exposes download actions, dimensions, SEO metadata, and related assets.
 - **Contributor workflow** – Contributors log in, upload via drag-and-drop batches (metadata auto-extracted with `exifr`), monitor status counts, edit keywords/categories from a sidebar editor, import metadata via CSV, and download consolidated stats.
 - **Admin control** – Admins get everything contributors do plus user management (block/unblock, download counts), category/sub-category CRUD with inline previews, Cloudflare configuration management, bulk moderation tools, and total platform metrics.
-- **Deployment ready** – Docker Compose files, production-ready Nginx config, Celery workers, Redis, and a deployment helper script (`deploy.prod.sh`) make it easy to ship.
+- **Deployment ready** – Docker Compose files ship with Traefik labels, Celery workers, Redis integration, and optional monitoring stacks under `srv/` so you can launch on a single host with minimal tweaks.
 
 ## Feature Highlights
 ### Public catalog
@@ -38,17 +38,21 @@ PNGPoint is a full-stack platform for curating, moderating, and serving transpar
 
 ## Architecture & Stack
 ```
-Next.js 15 (App Router, Redux, Tailwind)  <--->  Django 5 + DRF + SimpleJWT
-            |                                                 |
-            |                                     Celery workers + Redis
-            |                                                 |
-         Browser <-- Nginx (SSL, static/media) --> Daphne ASGI + PostgreSQL
-                                                         |
-                                             Cloudflare Images storage
+           Browser
+               │
+               ▼
+     Traefik (Let's Encrypt, routing)
+        │                    │
+        ▼                    ▼
+Next.js 15 (App Router)   Django 5 + DRF + SimpleJWT
+                              │
+                 Celery workers + Redis + PostgreSQL
+                              │
+                   Cloudflare Images storage
 ```
 - **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS 4, Redux Toolkit, RTK Query, React Hook Form, react-dropzone, exifr, react-responsive-pagination, react-toastify, next-sitemap.
 - **Backend**: Django 5.2, Django REST Framework, SimpleJWT, django-filters, django-redis, Celery 5, Redis, PostgreSQL (prod) / SQLite (dev), drf-spectacular + schema viewer, requests, Pillow, phonenumbers.
-- **Infra**: Docker Compose (dev & prod), Nginx with Let's Encrypt volumes, Daphne ASGI server, Redis 7, Celery workers, Deploy script orchestrating builds/migrations/static collection.
+- **Infra**: Docker Compose, Traefik v3 (with Let's Encrypt), Daphne ASGI server, Redis 7 (from `srv/redis`), Celery workers, optional Prometheus/Grafana monitoring, and Cloudflare Images.
 
 ## Domain Model
 | Model | Description |
@@ -132,16 +136,11 @@ Create `.env.dev`/`.env.prod` inside `backend/` and `.env.local` inside `fronten
 > Tip: `frontend/utils/api.ts` currently hardcodes production URLs. Uncomment the environment variable exports at the top of that file for local development.
 
 ### Run everything with Docker (recommended)
+For a production-like environment locally, create the shared `web` network, start the helper stacks under `srv/redis` and `srv/proxy`, then run:
 ```bash
-# Development stack (Next.js + Django run hot reloaders, Redis, Celery)
-docker compose -f docker-compose.dev.yml up --build
-
-# Tear down
-docker compose -f docker-compose.dev.yml down
+docker compose up -d --build
 ```
-- Frontend runs on http://localhost:3000.
-- Backend API runs on http://localhost:8000 (`/api/v1`).
-- Redis is exposed on port 6379.
+Traefik will listen on ports 80/443, proxying `pngpoint.test` (or whichever host you configure) to the frontend/backends. Adjust `/etc/hosts` if you want to hit the stack via a custom domain. Use `docker compose down` to stop the containers.
 
 ### Manual local setup
 1. **Redis** – start `redis-server` locally or via Docker (`docker run --rm -p 6379:6379 redis:7-alpine`).
@@ -185,20 +184,33 @@ docker compose -f docker-compose.dev.yml down
 - `core.utils.trigger_nextjs_revalidate` posts to `NEXTJS_URL/api/revalidate` with `REVALIDATE_SECRET` to bust cached Next.js routes (e.g., categories landing pages).
 
 ## Deployment
-1. Populate `backend/.env.prod` and `frontend/.env.local` with production values.
-2. Ensure `/etc/letsencrypt` contains your TLS certs – `nginx/default.conf` mounts it read-only.
-3. Run the helper script:
+1. Copy the example environment files and fill them with real secrets:
    ```bash
-   chmod +x deploy.prod.sh
-   ./deploy.prod.sh
+   cp backend/.env.prod.example backend/.env.prod
+   cp frontend/.env.local.example frontend/.env.local
    ```
-   The script builds Docker images, runs `docker-compose.prod.yml`, executes migrations, collects static files, validates Nginx config, and reloads Nginx.
-4. Services included in the production stack:
+   Point `CELERY_BROKER_URL`/`CELERY_RESULT_BACKEND` to the Redis stack defined in `srv/redis`, and update database + revalidation secrets.
+2. Create (once) the shared Traefik network and bring up the infrastructure stacks under `srv/`:
+   ```bash
+   docker network create web        # shared between traefik/app/redis
+   (cd srv/redis && docker compose up -d)
+   (cd srv/proxy && docker compose up -d)
+   # (optional) (cd srv/monitoring && docker compose up -d)
+   ```
+3. Build and start the stack that Traefik will route into:
+   ```bash
+   docker compose up -d --build
+   ```
+4. Run migrations and collect static assets inside the backend container:
+   ```bash
+   docker compose exec backend python manage.py migrate
+   docker compose exec backend python manage.py collectstatic --noinput
+   ```
+5. Services included in the production stack:
    - `frontend` – Next.js build served via `npm run start`.
    - `backend` – Daphne ASGI server exposing port 8000.
    - `celery` – Worker with `--concurrency=4`.
-   - `redis` – Message broker/cache.
-   - `nginx` – Terminates HTTPS, proxies `/` to `frontend:3000`, `/api/` to `backend:8000`, and serves `/static/` + `/media/` from bind mounts.
+   - Traefik handles TLS and smart routing (already running from `srv/proxy`), Redis lives under `srv/redis`, and Prometheus/Grafana live under `srv/monitoring`.
 
 ## Testing & Quality
 - **Backend**: `python manage.py test` (test suites are scaffolds; add coverage for accounts/images as you extend the platform).
@@ -225,10 +237,10 @@ pngpoint/
 │   ├── utils/               # API helpers, menus, search schema, icon registry
 │   ├── hooks/               # Auth helpers
 │   └── public/              # Logos, favicons, sitemap, robots.txt
-├── nginx/default.conf       # TLS + proxy configuration
-├── docker-compose.dev.yml   # Dev stack (frontend, backend, celery, redis)
-├── docker-compose.prod.yml  # Prod stack (frontend, backend, celery, redis, nginx)
-├── deploy.prod.sh           # Helper script to build/start/migrate/collectstatic
+├── docker-compose.yml       # Production stack (frontend, backend, celery + Traefik labels)
+├── srv/proxy                # Traefik reverse proxy (external `web` network)
+├── srv/redis                # Managed Redis stack (password-protected)
+├── srv/monitoring           # Prometheus, Grafana, exporters (optional)
 └── requirements.txt         # Backend dependency lock (pip)
 ```
 

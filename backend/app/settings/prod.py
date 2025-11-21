@@ -21,7 +21,7 @@ DATABASES = {
         'HOST': os.getenv('POSTGRES_HOST'),
         'PORT': os.getenv('POSTGRES_PORT'),
         'OPTIONS': {
-            'sslmode': os.getenv('POSTGRES_SSLMODE', 'require'),
+            'sslmode': os.getenv('POSTGRES_SSLMODE', 'disable'),
         },
     }
 }

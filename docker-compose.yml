@@ -1,0 +1,70 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    env_file:
+      - ./frontend/.env.local
+    expose:
+      - "3000"
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.pngpoint-frontend-web.rule=Host(`pngpoint.com`) || Host(`www.pngpoint.com`)"
+      - "traefik.http.routers.pngpoint-frontend-web.entrypoints=web"
+      - "traefik.http.routers.pngpoint-frontend-web.middlewares=pngpoint-https"
+      - "traefik.http.routers.pngpoint-frontend-secure.rule=Host(`pngpoint.com`) || Host(`www.pngpoint.com`)"
+      - "traefik.http.routers.pngpoint-frontend-secure.entrypoints=websecure"
+      - "traefik.http.routers.pngpoint-frontend-secure.tls.certresolver=le"
+      - "traefik.http.routers.pngpoint-frontend-secure.service=pngpoint-frontend-svc"
+      - "traefik.http.services.pngpoint-frontend-svc.loadbalancer.server.port=3000"
+      - "traefik.docker.network=web"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env.prod
+    command: daphne -b 0.0.0.0 -p 8000 app.asgi:application
+    volumes:
+      - ./backend/static:/app/static
+      - ./backend/media:/app/media
+    expose:
+      - "8000"
+    networks:
+      - web
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.pngpoint-backend-web.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && (PathPrefix(`/api`) || PathPrefix(`/static`) || PathPrefix(`/media`))"
+      - "traefik.http.routers.pngpoint-backend-web.entrypoints=web"
+      - "traefik.http.routers.pngpoint-backend-web.middlewares=pngpoint-https"
+      - "traefik.http.routers.pngpoint-backend-web.priority=20"
+      - "traefik.http.routers.pngpoint-backend-secure.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && (PathPrefix(`/api`) || PathPrefix(`/static`) || PathPrefix(`/media`))"
+      - "traefik.http.routers.pngpoint-backend-secure.entrypoints=websecure"
+      - "traefik.http.routers.pngpoint-backend-secure.tls.certresolver=le"
+      - "traefik.http.routers.pngpoint-backend-secure.priority=20"
+      - "traefik.http.routers.pngpoint-backend-secure.service=pngpoint-backend-svc"
+      - "traefik.http.services.pngpoint-backend-svc.loadbalancer.server.port=8000"
+      - "traefik.docker.network=web"
+
+  celery:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    env_file:
+      - ./backend/.env.prod
+    depends_on:
+      - backend
+    command: celery -A app worker --loglevel=info --concurrency=4
+    volumes:
+      - ./backend:/app
+    networks:
+      - web
+
+networks:
+  web:
+    external: true
