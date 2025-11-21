@@ -47,9 +47,9 @@ RUN chmod +x /wait-for-db.sh
 # EXPOSE PORT 8000
 EXPOSE 8000
 
-# ADD HEALTHCHECK (check if app is responding)
+# ADD HEALTHCHECK (check if app is responding, spoof public host header)
 HEALTHCHECK --interval=30s --timeout=5s --retries=3 \
-    CMD curl --fail http://localhost:8000/ || exit 1
+    CMD curl --fail -H "Host: pngpoint.com" http://localhost:8000/ || exit 1
 
 # START ASGI APP WITH DAPHNE SERVER
 CMD ["daphne", "-p", "8000", "-b", "0.0.0.0", "app.asgi:application"]
