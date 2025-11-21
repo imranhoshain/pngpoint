@@ -9,7 +9,7 @@ from app.settings.base import *
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['pngpoint.com', 'www.pngpoint.com']
+ALLOWED_HOSTS = ["*"]
 SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
 
 DATABASES = {
