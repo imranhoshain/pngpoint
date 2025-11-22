@@ -139,6 +139,8 @@ Create `.env.dev`/`.env.prod` inside `backend/` and `.env.local` inside `fronten
 For a production-like environment locally, create the shared `web` network, start the helper stacks under `srv/redis` and `srv/proxy`, then run:
 ```bash
 docker compose up -d --build
+docker compose exec backend python manage.py migrate
+docker compose exec backend python manage.py collectstatic --noinput
 ```
 Traefik will listen on ports 80/443, proxying `pngpoint.test` (or whichever host you configure) to the frontend/backends. Adjust `/etc/hosts` if you want to hit the stack via a custom domain. Use `docker compose down` to stop the containers.
 
@@ -195,13 +197,14 @@ Traefik will listen on ports 80/443, proxying `pngpoint.test` (or whichever host
    docker network create web        # shared between traefik/app/redis
    (cd srv/redis && docker compose up -d)
    (cd srv/proxy && docker compose up -d)
+   (cd srv/postgres && docker compose up -d)
    # (optional) (cd srv/monitoring && docker compose up -d)
    ```
 3. Build and start the stack that Traefik will route into:
    ```bash
    docker compose up -d --build
    ```
-4. Run migrations and collect static assets inside the backend container:
+4. Run migrations and collect static assets inside the backend container (if you haven't already run them after `docker compose up`):
    ```bash
    docker compose exec backend python manage.py migrate
    docker compose exec backend python manage.py collectstatic --noinput
@@ -210,7 +213,8 @@ Traefik will listen on ports 80/443, proxying `pngpoint.test` (or whichever host
    - `frontend` – Next.js build served via `npm run start`.
    - `backend` – Daphne ASGI server exposing port 8000.
    - `celery` – Worker with `--concurrency=4`.
-   - Traefik handles TLS and smart routing (already running from `srv/proxy`), Redis lives under `srv/redis`, and Prometheus/Grafana live under `srv/monitoring`.
+   - `assets` – Lightweight Nginx container serving `/static` and `/media`.
+   - Traefik handles TLS and smart routing (already running from `srv/proxy`), Redis lives under `srv/redis`, Postgres runs from `srv/postgres`, and Prometheus/Grafana live under `srv/monitoring`.
 
 ## Testing & Quality
 - **Backend**: `python manage.py test` (test suites are scaffolds; add coverage for accounts/images as you extend the platform).
