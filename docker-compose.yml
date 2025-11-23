@@ -4,7 +4,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     env_file:
-      - ./frontend/.env.local
+      - ./frontend/.env
     expose:
       - "3000"
     networks:
@@ -39,7 +39,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     env_file:
-      - ./backend/.env.prod
+      - ./backend/.env
     command: daphne -b 0.0.0.0 -p 8000 app.asgi:application
     volumes:
       - ./backend/static:/app/static
@@ -78,7 +78,7 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     env_file:
-      - ./backend/.env.prod
+      - ./backend/.env
     depends_on:
       - backend
     command: celery -A app worker --loglevel=info --concurrency=4

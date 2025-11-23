@@ -1,11 +1,6 @@
 name: Build & Deploy
 
 on:
-  workflow_call:
-    inputs:
-      environment_branch:
-        required: false
-        type: string
   push:
     branches:
       - staging
@@ -20,12 +15,13 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  frontend:
+  ci-frontend:
     name: Frontend CI
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: frontend
+
     steps:
       - uses: actions/checkout@v4
 
@@ -36,98 +32,86 @@ jobs:
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
-      - name: Install dependencies
-        run: npm ci --no-audit --fund=false
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Lint
-        run: npm run lint
+        run: npm run lint --if-present
 
-      - name: Build
+      - name: Build Next.js
         env:
-          CI: true
           NEXT_TELEMETRY_DISABLED: 1
         run: npm run build
 
-  backend:
+  ci-backend:
     name: Backend CI
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: backend
-    env:
-      DJANGO_SETTINGS_MODULE: app.settings.prod
-      ENV: prod
-      FRONTEND_DOMAIN: http://localhost:3000
-      CELERY_BROKER_URL: memory://
-      CELERY_RESULT_BACKEND: cache+memory://
+
     steps:
       - uses: actions/checkout@v4
+
+      - name: Load backend environment
+        run: |
+          echo "Loading backend/.env"
+          cat backend/.env >> $GITHUB_ENV
 
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: 3.12
           cache: pip
           cache-dependency-path: backend/requirements.txt
 
-      - name: Install system dependencies
+      - name: Install psycopg deps
         run: sudo apt-get update && sudo apt-get install -y build-essential libpq-dev
 
-      - name: Normalize requirements encoding
-        run: |
-          python - <<'PY'
-          from pathlib import Path
-          data = Path("requirements.txt").read_text(encoding="utf-16")
-          Path("requirements-ci.txt").write_text(data, encoding="utf-8")
-          PY
-
-      - name: Install Python dependencies
+      - name: Install Backend Dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements-ci.txt
+          pip install -r requirements.txt
 
-      - name: Django checks
+      - name: Django Checks
         run: python manage.py check
 
-      - name: Ensure migrations are up-to-date
+      - name: Migrations Check
         run: python manage.py makemigrations --check --dry-run
 
-      - name: Run backend tests
-        run: python manage.py test
+      - name: Run Tests
+        run: python manage.py test --noinput
 
-      - name: Collect static assets
+      - name: Collect Static (CI only)
         run: python manage.py collectstatic --noinput
 
-  docker-compose:
+  build-docker:
     name: Docker Compose Build
     runs-on: ubuntu-latest
     needs:
-      - frontend
-      - backend
+      - ci-frontend
+      - ci-backend
+
     env:
       DOCKER_BUILDKIT: 1
+
     steps:
       - uses: actions/checkout@v4
 
-      - name: Prepare compose network
+      - name: Create Traefik Network (CI)
         run: docker network create web || true
 
-      - name: Validate docker compose file
+      - name: Validate Compose File
         run: docker compose -f docker-compose.yml config
 
-      - name: Build application images
+      - name: Build All Images
         run: docker compose -f docker-compose.yml build
 
   deploy:
     name: Deploy to Server
-    needs:
-      - frontend
-      - backend
-      - docker-compose
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-    environment:
-      name: ${{ github.ref_name == 'main' && 'production' || 'staging' }}
+    needs:
+      - build-docker
 
     steps:
       - uses: actions/checkout@v4
@@ -137,48 +121,40 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
 
-      - name: Add known_hosts (staging)
-        if: github.ref_name == 'staging'
-        run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.STAGING_KNOWN_HOST }}" >> ~/.ssh/known_hosts
-
-      - name: Add known_hosts (production)
-        if: github.ref_name == 'main'
+      - name: Add Known Hosts (Prod)
+        if: github.ref == 'refs/heads/main'
         run: |
           mkdir -p ~/.ssh
           echo "${{ secrets.PRODUCTION_KNOWN_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Deploy to Staging
-        if: inputs.environment_branch == 'staging' || github.ref_name == 'staging'
-        shell: bash
+      - name: Add Known Hosts (Staging)
+        if: github.ref == 'refs/heads/staging'
         run: |
-          set -euo pipefail
-          ssh "${{ secrets.SERVER_USER }}@${{ secrets.STAGING_SERVER }}" <<'SSH'
-            set -e
-            cd /var/apps/staging.pngpoint.com
-            echo "Fetching latest staging branch..."
-            git fetch origin staging
-            git reset --hard origin/staging
-            echo "Pulling latest Docker images and restarting..."
-            docker compose pull || true
-            docker compose up -d --build
-            echo "✅ Staging deployed successfully."
-          SSH
+          mkdir -p ~/.ssh
+          echo "${{ secrets.STAGING_KNOWN_HOST }}" >> ~/.ssh/known_hosts
 
       - name: Deploy to Production
-        if: inputs.environment_branch == 'main' || github.ref_name == 'main'
-        shell: bash
+        if: github.ref == 'refs/heads/main'
         run: |
-          set -euo pipefail
-          ssh "${{ secrets.SERVER_USER }}@${{ secrets.PRODUCTION_SERVER }}" <<'SSH'
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.PRODUCTION_SERVER }} << 'SSH'
             set -e
             cd /var/apps/pngpoint.com
-            echo "Fetching latest production branch..."
             git fetch origin main
             git reset --hard origin/main
-            echo "Pulling latest Docker images and restarting..."
+            docker network create web || true
             docker compose pull || true
             docker compose up -d --build
-            echo "✅ Production deployed successfully."
+          SSH
+
+      - name: Deploy to Staging
+        if: github.ref == 'refs/heads/staging'
+        run: |
+          ssh ${{ secrets.SERVER_USER }}@${{ secrets.STAGING_SERVER }} << 'SSH'
+            set -e
+            cd /var/apps/staging.pngpoint.com
+            git fetch origin staging
+            git reset --hard origin/staging
+            docker network create web || true
+            docker compose pull || true
+            docker compose up -d --build
           SSH
