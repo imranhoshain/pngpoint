@@ -55,8 +55,8 @@ jobs:
 
       - name: Load backend environment
         run: |
-          echo "Loading backend/.env"
-          cat backend/.env >> $GITHUB_ENV
+          echo "Loading backend/.env.ci"
+          cat backend/.env.ci >> $GITHUB_ENV
 
       - name: Setup Python
         uses: actions/setup-python@v5
