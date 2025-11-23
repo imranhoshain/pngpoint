@@ -9,8 +9,8 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-// IMPORTANT: ignores MUST go before compat.extends()
-export default [
+const config = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     ignores: [
       "node_modules/**",
@@ -19,13 +19,10 @@ export default [
       "build/**",
       "next-env.d.ts",
     ],
-  },
-
-  ...compat.extends("next/core-web-vitals", "next/typescript"),
-
-  {
     rules: {
       "react/no-unescaped-entities": "off",
     },
   },
 ];
+
+export default config;
