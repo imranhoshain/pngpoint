@@ -1,10 +1,13 @@
 name: Build & Deploy
 
 on:
+  workflow_call:
+    inputs:
+      environment_branch:
+        required: false
+        type: string
   push:
-    branches:
-      - staging
-      - main
+    branches: [staging, main]
   workflow_dispatch:
 
 permissions:
