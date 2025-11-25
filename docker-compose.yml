@@ -16,17 +16,26 @@ services:
       - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
 
       # HTTP router (redirects to HTTPS)
-      - "traefik.http.routers.pngpoint-frontend-web.rule=Host(`pngpoint.com`) || Host(`www.pngpoint.com`)"
+      - "traefik.http.routers.pngpoint-frontend-web.rule=Host(`pngpoint.com`)"
+      - "traefik.http.routers.pngpoint-frontend-web-www.rule=Host(`www.pngpoint.com`)"
       - "traefik.http.routers.pngpoint-frontend-web.entrypoints=web"
       - "traefik.http.routers.pngpoint-frontend-web.middlewares=pngpoint-https"
       - "traefik.http.routers.pngpoint-frontend-web.priority=10"
+      - "traefik.http.routers.pngpoint-frontend-web-www.entrypoints=web"
+      - "traefik.http.routers.pngpoint-frontend-web-www.middlewares=pngpoint-https"
+      - "traefik.http.routers.pngpoint-frontend-web-www.priority=10"
 
       # HTTPS router
-      - "traefik.http.routers.pngpoint-frontend-secure.rule=Host(`pngpoint.com`) || Host(`www.pngpoint.com`)"
+      - "traefik.http.routers.pngpoint-frontend-secure.rule=Host(`pngpoint.com`)"
+      - "traefik.http.routers.pngpoint-frontend-secure-www.rule=Host(`www.pngpoint.com`)"
       - "traefik.http.routers.pngpoint-frontend-secure.entrypoints=websecure"
       - "traefik.http.routers.pngpoint-frontend-secure.tls.certresolver=le"
       - "traefik.http.routers.pngpoint-frontend-secure.priority=10"
       - "traefik.http.routers.pngpoint-frontend-secure.service=pngpoint-frontend-svc"
+      - "traefik.http.routers.pngpoint-frontend-secure-www.entrypoints=websecure"
+      - "traefik.http.routers.pngpoint-frontend-secure-www.tls.certresolver=le"
+      - "traefik.http.routers.pngpoint-frontend-secure-www.priority=10"
+      - "traefik.http.routers.pngpoint-frontend-secure-www.service=pngpoint-frontend-svc"
 
       # Service definition for frontend
       - "traefik.http.services.pngpoint-frontend-svc.loadbalancer.server.port=3000"
@@ -55,18 +64,28 @@ services:
       - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
 
       # API over HTTP (redirects to HTTPS)
-      - "traefik.http.routers.pngpoint-backend-api-web.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.pngpoint-backend-api-web.rule=Host(`pngpoint.com`) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.pngpoint-backend-api-web-www.rule=Host(`www.pngpoint.com`) && PathPrefix(`/api/`)"
       - "traefik.http.routers.pngpoint-backend-api-web.entrypoints=web"
       - "traefik.http.routers.pngpoint-backend-api-web.middlewares=pngpoint-https"
       - "traefik.http.routers.pngpoint-backend-api-web.priority=100"
       - "traefik.http.routers.pngpoint-backend-api-web.service=pngpoint-backend-svc"
+      - "traefik.http.routers.pngpoint-backend-api-web-www.entrypoints=web"
+      - "traefik.http.routers.pngpoint-backend-api-web-www.middlewares=pngpoint-https"
+      - "traefik.http.routers.pngpoint-backend-api-web-www.priority=100"
+      - "traefik.http.routers.pngpoint-backend-api-web-www.service=pngpoint-backend-svc"
 
       # API over HTTPS
-      - "traefik.http.routers.pngpoint-backend-api-secure.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.pngpoint-backend-api-secure.rule=Host(`pngpoint.com`) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.pngpoint-backend-api-secure-www.rule=Host(`www.pngpoint.com`) && PathPrefix(`/api/`)"
       - "traefik.http.routers.pngpoint-backend-api-secure.entrypoints=websecure"
       - "traefik.http.routers.pngpoint-backend-api-secure.tls.certresolver=le"
       - "traefik.http.routers.pngpoint-backend-api-secure.priority=100"
       - "traefik.http.routers.pngpoint-backend-api-secure.service=pngpoint-backend-svc"
+      - "traefik.http.routers.pngpoint-backend-api-secure-www.entrypoints=websecure"
+      - "traefik.http.routers.pngpoint-backend-api-secure-www.tls.certresolver=le"
+      - "traefik.http.routers.pngpoint-backend-api-secure-www.priority=100"
+      - "traefik.http.routers.pngpoint-backend-api-secure-www.service=pngpoint-backend-svc"
 
       # Service definition for backend (Django / Daphne)
       - "traefik.http.services.pngpoint-backend-svc.loadbalancer.server.port=8000"
@@ -107,18 +126,28 @@ services:
       - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
 
       # HTTP → assets (static + media), then redirect to HTTPS
-      - "traefik.http.routers.pngpoint-assets-web.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
+      - "traefik.http.routers.pngpoint-assets-web.rule=Host(`pngpoint.com`) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
+      - "traefik.http.routers.pngpoint-assets-web-www.rule=Host(`www.pngpoint.com`) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
       - "traefik.http.routers.pngpoint-assets-web.entrypoints=web"
       - "traefik.http.routers.pngpoint-assets-web.middlewares=pngpoint-https"
       - "traefik.http.routers.pngpoint-assets-web.priority=95"
       - "traefik.http.routers.pngpoint-assets-web.service=pngpoint-assets-svc"
+      - "traefik.http.routers.pngpoint-assets-web-www.entrypoints=web"
+      - "traefik.http.routers.pngpoint-assets-web-www.middlewares=pngpoint-https"
+      - "traefik.http.routers.pngpoint-assets-web-www.priority=95"
+      - "traefik.http.routers.pngpoint-assets-web-www.service=pngpoint-assets-svc"
 
       # HTTPS → assets (static + media)
-      - "traefik.http.routers.pngpoint-assets-secure.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
+      - "traefik.http.routers.pngpoint-assets-secure.rule=Host(`pngpoint.com`) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
+      - "traefik.http.routers.pngpoint-assets-secure-www.rule=Host(`www.pngpoint.com`) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
       - "traefik.http.routers.pngpoint-assets-secure.entrypoints=websecure"
       - "traefik.http.routers.pngpoint-assets-secure.tls.certresolver=le"
       - "traefik.http.routers.pngpoint-assets-secure.priority=95"
       - "traefik.http.routers.pngpoint-assets-secure.service=pngpoint-assets-svc"
+      - "traefik.http.routers.pngpoint-assets-secure-www.entrypoints=websecure"
+      - "traefik.http.routers.pngpoint-assets-secure-www.tls.certresolver=le"
+      - "traefik.http.routers.pngpoint-assets-secure-www.priority=95"
+      - "traefik.http.routers.pngpoint-assets-secure-www.service=pngpoint-assets-svc"
 
       # Service definition for assets (nginx)
       - "traefik.http.services.pngpoint-assets-svc.loadbalancer.server.port=80"
