@@ -10,9 +10,8 @@ from app.settings.base import *
 DEBUG = False
 
 # ---- ALLOWED_HOSTS from environment ----
-#raw_allowed_hosts = os.getenv("DJANGO_ALLOWED_HOSTS", "")
-#ALLOWED_HOSTS = [h.strip() for h in raw_allowed_hosts.split(",") if h.strip()]
-ALLOWED_HOSTS = [*]
+raw_allowed_hosts = os.getenv("DJANGO_ALLOWED_HOSTS", "")
+ALLOWED_HOSTS = [h.strip() for h in raw_allowed_hosts.split(",") if h.strip()]
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
