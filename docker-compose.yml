@@ -57,6 +57,7 @@ services:
       - "8000"
     networks:
       - web
+      - backend
     labels:
       - "traefik.enable=true"
 
@@ -105,6 +106,7 @@ services:
       - ./backend:/app
     networks:
       - web
+      - backend
 
   assets:
     image: nginx:1.27-alpine
@@ -158,3 +160,6 @@ networks:
   web:
     external: true
     name: web
+  backend:
+    external: true
+    name: backend
