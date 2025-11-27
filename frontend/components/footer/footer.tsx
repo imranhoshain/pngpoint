@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { ReactIcons } from "@/utils/reactIcons";
 import { FooterLogo } from "../logo/footerlogo";
+import { getTodayName, getCurrentYear } from "@/utils/dateHelper";
+const todayName = getTodayName();
+const currentYear = getCurrentYear();
 
 export default function Footer() {
     const { FaXTwitter, FaFacebook, FaPinterest, FaInstagram } = ReactIcons;
@@ -83,7 +86,7 @@ export default function Footer() {
                 </div>
             </div>
             <div className="flex flex-col flex-wrap items-center justify-center pt-5">
-                <p className="text-sm md:text-base">© 2025 pngpoint.com. Development by <Link className="font-medium text-[#eb7f32]" href={"https://dreamlabit.com/"} target="_blank">Dreamlabit</Link></p>
+                <p className="text-sm md:text-base">Copyright © {currentYear} PNGPoint • All rights reserved • Enjoy the rest of your {todayName}!</p>
             </div>
         </footer>
     );
