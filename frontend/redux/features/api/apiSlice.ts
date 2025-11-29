@@ -43,11 +43,23 @@ const baseQueryWithReauth = async (
     }
     const state = api.getState() as RootState;
     let accessToken: string | null | undefined = state.auth.tokens.access_token;
-    const refreshToken: string | null | undefined = state.auth.tokens.refresh_token;
+    let refreshToken: string | null | undefined = state.auth.tokens.refresh_token;
+    
+    // Early validation: if no tokens at all, don't proceed
+    if (!accessToken && !refreshToken) {
+        console.warn("No authentication tokens found. User may not be logged in.");
+        return baseQuery({ ...args }, api, extraOptions);
+    }
+
     if (accessToken) {
-        const isValid = await verifyAccessToken(accessToken, api, extraOptions);
-        if (!isValid) {
-            console.warn("Access token invalid. Will attempt refresh...");
+        try {
+            const isValid = await verifyAccessToken(accessToken, api, extraOptions);
+            if (!isValid) {
+                console.warn("Access token invalid. Will attempt refresh...");
+                accessToken = undefined;
+            }
+        } catch (error) {
+            console.warn("Token verification failed, will attempt refresh:", error);
             accessToken = undefined;
         }
     }
@@ -60,41 +72,60 @@ const baseQueryWithReauth = async (
         headers["Authorization"] = `Bearer ${accessToken}`;
     }
     let result = await baseQuery({ ...args, headers }, api, extraOptions);
+    
+    // If we get 401 and have refresh token, try to refresh
     if (result?.error?.status === 401 && refreshToken) {
         console.warn("Access token expired. Trying to refresh...");
-        const refreshResult = await baseQuery(
-            {
-                url: "/token/refresh/",
-                method: "POST",
-                body: { refresh: refreshToken },
-            },
-            api,
-            extraOptions
-        );
-        const newAccessToken = (refreshResult.data as { access?: string })?.access;
-        if (newAccessToken) {
-            accessToken = newAccessToken;
-            api.dispatch(
-                setAuth({
-                    user: state.auth.user,
-                    tokens: {
-                        access_token: newAccessToken,
-                        refresh_token: refreshToken,
-                    },
-                })
+        try {
+            const refreshResult = await baseQuery(
+                {
+                    url: "/token/refresh/",
+                    method: "POST",
+                    body: { refresh: refreshToken },
+                },
+                api,
+                extraOptions
             );
-            headers["Authorization"] = `Bearer ${newAccessToken}`;
-            result = await baseQuery({ ...args, headers }, api, extraOptions);
-        } else {
-            console.error("Refresh token expired or invalid. Logging out...");
+            
+            const refreshData = refreshResult.data as { access?: string; refresh?: string };
+            const newAccessToken = refreshData?.access;
+            const newRefreshToken = refreshData?.refresh;
+            
+            if (newAccessToken) {
+                accessToken = newAccessToken;
+                // Update the refresh token if a new one is provided (token rotation)
+                if (newRefreshToken) {
+                    refreshToken = newRefreshToken;
+                }
+                
+                api.dispatch(
+                    setAuth({
+                        user: state.auth.user,
+                        tokens: {
+                            access_token: newAccessToken,
+                            refresh_token: refreshToken,
+                        },
+                    })
+                );
+                
+                headers["Authorization"] = `Bearer ${newAccessToken}`;
+                result = await baseQuery({ ...args, headers }, api, extraOptions);
+            } else {
+                console.error("Refresh token expired or invalid. Logging out...");
+                localStorage.removeItem("auth");
+                api.dispatch(logout());
+            }
+        } catch (error) {
+            console.error("Token refresh failed:", error);
             localStorage.removeItem("auth");
             api.dispatch(logout());
         }
-    } else if (!refreshToken) {
-        console.warn("No refresh token found. Logging out...");
+    } else if (result?.error?.status === 401 && !refreshToken) {
+        console.warn("No refresh token found and access token is invalid. Logging out...");
         localStorage.removeItem("auth");
         api.dispatch(logout());
     }
+    
     return result;
 };
 
