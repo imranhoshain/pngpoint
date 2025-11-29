@@ -2,10 +2,10 @@ import Link from "next/link";
 import { ReactIcons } from "@/utils/reactIcons";
 import { FooterLogo } from "../logo/footerlogo";
 import { getTodayName, getCurrentYear } from "@/utils/dateHelper";
-const todayName = getTodayName();
-const currentYear = getCurrentYear();
 
 export default function Footer() {
+    const todayName = getTodayName();
+    const currentYear = getCurrentYear();
     const { FaXTwitter, FaFacebook, FaPinterest, FaInstagram } = ReactIcons;
     return (
         <footer className="relative top-0 left-0 right-0 py-10 lg:pt-16 pb-10 w-full text-white bg-[#0077a2]">
