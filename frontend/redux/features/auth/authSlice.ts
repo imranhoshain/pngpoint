@@ -10,23 +10,12 @@ let initialState: AuthStateType = {
 };
 
 if (typeof window !== "undefined") {
-    try {
-        const storedAuth = localStorage.getItem("auth");
-        if (storedAuth) {
-            const parsed = JSON.parse(storedAuth);
-            if (parsed && parsed.tokens && (parsed.tokens.access_token || parsed.tokens.refresh_token)) {
-                initialState = {
-                    user: parsed.user || null,
-                    tokens: {
-                        access_token: parsed.tokens.access_token || null,
-                        refresh_token: parsed.tokens.refresh_token || null,
-                    },
-                };
-            }
+    const storedAuth = localStorage.getItem("auth");
+    if (storedAuth) {
+        const parsed = JSON.parse(storedAuth);
+        if (parsed && parsed.tokens) {
+            initialState = parsed;
         }
-    } catch (error) {
-        console.warn("Failed to parse stored auth data:", error);
-        localStorage.removeItem("auth");
     }
 };
 
