@@ -1,4 +1,4 @@
-import { apiSlice } from "../api/apiSlice";
+import { apiSlice } from '../api/apiSlice';
 
 export const download = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
@@ -14,4 +14,5 @@ export const download = apiSlice.injectEndpoints({
   }),
 });
 
-export const { useGetDownloadQuery, useGetAllDownloadQuery, useGetAllContributorDownloadQuery } = download;
+export const { useGetDownloadQuery, useGetAllDownloadQuery, useGetAllContributorDownloadQuery } =
+  download;
