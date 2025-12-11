@@ -13,3 +13,4 @@ export const SERVER_URL =
 export const ROW_DOMAIN_NAME =
     process.env.NEXT_PUBLIC_ROW_DOMAIN_NAME || "pngpoint.com";
 
+export const REVALIDATE_SECRET= process.env.REVALIDATE_SECRET
