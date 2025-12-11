@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import bgShape from "../../public/bg-shape.jpg";
 import { Download } from "../download/download";
+import { DOMAIN_NAME, ROW_DOMAIN_NAME } from "@/utils/api";
 
 type TrendingimagesProps = {
     imagesData: any;
@@ -34,27 +35,27 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                                         description: image.description || image.title,
                                                         author: {
                                                             "@type": "Organization",
-                                                            name: "pngpoint.com",
-                                                            url: "https://pngpoint.com",
+                                                            name: `${ROW_DOMAIN_NAME}`,
+                                                            url: `${DOMAIN_NAME}`,
                                                         },
                                                         contentUrl: image.cloudflare_url,
-                                                        url: `https://pngpoint.com/image/${image.slug}/`,
+                                                        url: `${DOMAIN_NAME}/image/${image.slug}/`,
                                                         datePublished: image.created_at,
                                                         creator: {
                                                             "@type": "Organization",
-                                                            name: "pngpoint.com",
+                                                            name: `${ROW_DOMAIN_NAME}`,
                                                         },
-                                                        acquireLicensePage: "https://pngpoint.com/license",
-                                                        copyrightNotice: "© 2025 pngpoint.com. All rights reserved.",
+                                                        acquireLicensePage: `${DOMAIN_NAME}/license`,
+                                                        copyrightNotice: `© 2025 ${ROW_DOMAIN_NAME}. All rights reserved.`,
                                                         width: image.width || 352,
                                                         height: image.height || 352,
-                                                        license: "https://pngpoint.com/license",
+                                                        license: `${DOMAIN_NAME}/license`,
                                                         copyrightHolder: {
                                                             "@type": "Organization",
-                                                            name: "pngpoint.com",
+                                                            name: `${ROW_DOMAIN_NAME}`,
                                                         },
                                                         
-                                                        creditText: "pngpoint.com",
+                                                        creditText: `${ROW_DOMAIN_NAME}`,
                                                         exifData: image.exifData || [],
                                                     }),
                                                 }}

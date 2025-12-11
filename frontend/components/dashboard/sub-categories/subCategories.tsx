@@ -296,11 +296,13 @@ export const SubCategoriesComponent: React.FC = () => {
                                 </div>
                             )}
                             {selectedSubCategory && (
-                                <SingleSubCategoryPopup
-                                    subCategorySlug={selectedSubCategory.slug}
-                                    onClose={() => setSelectedSubCategory(null)}
-                                    refetch={refetch}
-                                />
+                                <>
+                                    <SingleSubCategoryPopup
+                                        subCategorySlug={selectedSubCategory.slug}
+                                        onClose={() => setSelectedSubCategory(null)}
+                                        refetch={refetch}
+                                    />
+                                </>
                             )}
                         </div>
                 </div>

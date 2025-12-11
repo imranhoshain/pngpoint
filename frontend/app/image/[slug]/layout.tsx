@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Footer from "@/components/footer/footer";
 import { SingleImageHeader } from "@/components/header/single_image_header";
-import { SERVER_URL } from "@/utils/api";
+import { DOMAIN_NAME, SERVER_URL } from "@/utils/api";
 import { Metadata } from "next";
 import React from "react";
 
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
             return {
                 title: "Image - PNGPoint",
                 description: "PNGPoint image details",
-                alternates: { canonical: `https://pngpoint.com/image/${slug}` },
+                alternates: { canonical: `${DOMAIN_NAME}/image/${slug}` },
             };
         }
 
@@ -32,11 +32,11 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
         return {
             title: `${data.title || "Image"} - PNGPoint`,
             description: data.description || "High-quality PNG image from PNGPoint",
-            alternates: { canonical: `https://pngpoint.com/image/${slug}` },
+            alternates: { canonical: `${DOMAIN_NAME}/image/${slug}` },
             openGraph: {
                 title: `${data.title || "Image"} - PNGPoint`,
                 description: data.description || "High-quality PNG image from PNGPoint",
-                url: `https://pngpoint.com/image/${slug}`,
+                url: `${DOMAIN_NAME}/image/${slug}`,
                 type: "website",
                 images: [
                     {
@@ -59,7 +59,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
         return {
             title: "Image - PNGPoint",
             description: "PNGPoint image details",
-            alternates: { canonical: `https://pngpoint.com/image/${slug}` },
+            alternates: { canonical: `${DOMAIN_NAME}/image/${slug}` },
         };
     }
 }

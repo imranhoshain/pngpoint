@@ -4,6 +4,7 @@ import "./globals.css";
 import { ReduxProvider } from "@/lib/providers";
 import Notification from "@/components/notification/notification";
 import Scrollbar from "@/components/scrollbar/scrollbar";
+import { DOMAIN_NAME } from "@/utils/api";
 
 const interFont = Inter({
     variable: "--font-inter",
@@ -61,19 +62,19 @@ export const metadata: Metadata = {
     authors: [{ name: "pngpoint" }],
     creator: "pngpoint",
     publisher: "pngpoint",
-    metadataBase: new URL("https://pngpoint.com"),
+    metadataBase: new URL(`${DOMAIN_NAME}`),
     alternates: {
         canonical: "/",
     },
     openGraph: {
         title: "Download Free PNG Images with Transparent Background | PNGPoint",
         description: "Explore thousands of free PNG images with transparent backgrounds. Perfect for presentations, graphic design, and social media posts",
-        url: "https://pngpoint.com",
+        url: `${DOMAIN_NAME}`,
         siteName: "PNGPoint",
         type: "website",
         images: [
             {
-                url: "https://pngpoint.com/og-image.png",
+                url: `${DOMAIN_NAME}/og-image.png`,
                 width: 1200,
                 height: 630,
                 alt: "PNGPoint",
@@ -84,7 +85,7 @@ export const metadata: Metadata = {
         card: "summary_large_image",
         title: "Download Free PNG Images with Transparent Background | PNGPoint",
         description: "Explore thousands of free PNG images with transparent backgrounds. Perfect for presentations, graphic design, and social media posts",
-        images: ["https://pngpoint.com/og-image.png"],
+        images: [`${DOMAIN_NAME}/og-image.png`],
         creator: "@PNGPoint",
     },
 };

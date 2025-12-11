@@ -1,3 +1,5 @@
+import { DOMAIN_NAME } from "./api";
+
 export interface SearchSchema {
     "@context": string;
     "@type": string;
@@ -28,17 +30,17 @@ export const getSearchSchema = (title: string): SearchSchema => {
         description: title
             ? `Find high-quality transparent PNG images of ${title} in various categories. Browse search results for free PNG downloads.`
             : "Find high-quality transparent PNG images in various categories. Browse search results for free PNG downloads.",
-        url: `https://www.pngpoint.com/?title=${encodedTitle}`,
+        url: `${DOMAIN_NAME}/?title=${encodedTitle}`,
         potentialAction: {
             "@type": "SearchAction",
-            target: `https://www.pngpoint.com/?title=${encodedTitle}`,
+            target: `${DOMAIN_NAME}/?title=${encodedTitle}`,
             "query-input": `${encodedTitle}`,
         },
         creator: {
             "@type": "Organization",
-            name: "pngpoint.com",
+            name: `${process.env.NEXT_PUBLIC_ROW_DOMAIN_NAME}`,
         },
-        acquireLicensePage: "https://pngpoint.com/license",
-        copyrightNotice: "© 2025 pngpoint.com. All rights reserved.",
+        acquireLicensePage: `${DOMAIN_NAME}/license`,
+        copyrightNotice: `© 2025 ${process.env.NEXT_PUBLIC_ROW_DOMAIN_NAME}. All rights reserved.`,
     };
 };

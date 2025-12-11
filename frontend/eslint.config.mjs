@@ -9,11 +9,8 @@ const compat = new FlatCompat({
   baseDirectory: __dirname,
 });
 
-// Generate the Next.js + TS configs once
-const baseConfigs = compat.extends("next/core-web-vitals", "next/typescript");
-
-// IMPORTANT: the ignores config MUST be first in the array
-const config = [
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals", "next/typescript"),
   {
     ignores: [
       "node_modules/**",
@@ -22,13 +19,10 @@ const config = [
       "build/**",
       "next-env.d.ts",
     ],
-  },
-  ...baseConfigs,
-  {
     rules: {
       "react/no-unescaped-entities": "off",
     },
   },
 ];
 
-export default config;
+export default eslintConfig;

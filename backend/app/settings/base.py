@@ -167,32 +167,3 @@ CACHES = {
         "KEY_PREFIX": "pngpoint",
     }
 }
-
-SCHEMA_VIEWER = {
-    'apps': [
-        'accounts',
-        'images',
-        'configuration',
-    ],
-}
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': 'INFO',
-        },
-        'images': {
-            'handlers': ['console'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    },
-}

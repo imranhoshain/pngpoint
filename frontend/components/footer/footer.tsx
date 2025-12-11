@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { ReactIcons } from "@/utils/reactIcons";
 import { FooterLogo } from "../logo/footerlogo";
-import { getTodayName, getCurrentYear } from "@/utils/dateHelper";
+import { getCurrentYear, getTodayName } from "@/utils/dateHelper";
 
 export default function Footer() {
     const todayName = getTodayName();

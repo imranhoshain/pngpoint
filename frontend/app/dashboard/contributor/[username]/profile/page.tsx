@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 
-
 const placeholderImage = "https://via.placeholder.com/150?text=No+Image";
 
 interface ProfileFormData {
@@ -21,7 +20,6 @@ export default function Profile() {
         refetchOnMountOrArgChange: true,
     });
 
-    // Handle if API returns array or object
     const data = Array.isArray(rawData) ? rawData[0] : rawData;
 
     const [editMode, setEditMode] = useState(false);

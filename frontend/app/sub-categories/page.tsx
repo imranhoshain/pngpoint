@@ -68,4 +68,3 @@ export default function SubCategories() {
         </section>
     );
 }
-

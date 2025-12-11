@@ -3,7 +3,6 @@ import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
-    console.log("▶️ /api/revalidate called");
     try {
         const body = await request.json();
         if (body.secret !== REVALIDATE_SECRET) {
