@@ -32,7 +32,7 @@ CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"] = timedelta(minutes=30)
 SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"] = timedelta(days=1)
 
-FERNET_KEYS = [
-    'new key for encrypting',
-    'older key for decrypting old data',
-]
+FIELD_ENCRYPTION_KEY = os.getenv(
+    "FIELD_ENCRYPTION_KEY",
+    "default-32-byte-random-key-for-dev!!"
+)
