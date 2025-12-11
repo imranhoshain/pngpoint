@@ -1,12 +1,16 @@
 /** @type {import('next-sitemap').IConfig} */
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_DOMAIN_NAME || "https://pngpoint.com";
+
 module.exports = {
-  siteUrl: `${process.env.NEXT_PUBLIC_DOMAIN_NAME}`,
+  siteUrl: SITE_URL,
   generateRobotsTxt: true,
   sitemapSize: 5000,
-  changefreq: 'daily',
+  changefreq: "daily",
   priority: 0.7,
   robotsTxtOptions: {
-    policies: [{ userAgent: '*', allow: '/' }],
-    additionalSitemaps: [`${process.env.NEXT_PUBLIC_DOMAIN_NAME}/sitemap.xml`],
+    policies: [{ userAgent: "*", allow: "/" }],
+    additionalSitemaps: [`${SITE_URL}/sitemap.xml`],
   },
 };
