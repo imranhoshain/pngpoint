@@ -111,7 +111,15 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
-    'PAGE_SIZE': 10000000,
+    'PAGE_SIZE': 100,
+    'DEFAULT_THROTTLE_CLASSES': [
+        'rest_framework.throttling.UserRateThrottle',
+        'rest_framework.throttling.AnonRateThrottle',
+    ],
+    'DEFAULT_THROTTLE_RATES': {
+        'user': '5/min',
+        'anon': '5/min',
+    },
 }
 
 CORS_URLS_REGEX = r'^/api/.*$'
@@ -132,8 +140,8 @@ SIMPLE_JWT = {
     "USER_ID_CLAIM": "id",
 }
 
-CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://127.0.0.1:6380/0')
-CELERY_RESULT_BACKEND = env('CELERY_RESULT_BACKEND', default='redis://127.0.0.1:6380/0')
+CELERY_BROKER_URL = os.getenv("CELERY_BROKER_URL", "redis://redis:6379/1")
+CELERY_RESULT_BACKEND = os.getenv("CELERY_RESULT_BACKEND", "redis://redis:6379/1")
 
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
@@ -152,14 +160,14 @@ FRONTEND_DOMAIN = os.getenv('FRONTEND_DOMAIN')
 FILE_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024  
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
 
-NEXTJS_URL = "https://pngpoint.com"
+NEXTJS_URL = os.getenv('NEXTJS_URL')
 
 REVALIDATE_SECRET = "vfldO5dr779Q2z0Kzmecb0z8GQWoJ5XG1mYvcff9ZppGg3X8uUm7tY3qVU8mP3KO"
 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://127.0.0.1:6380/0",
+        "LOCATION": os.getenv('REDIS_CACHE_URL', 'redis://redis:6379/0'),
         "TIMEOUT": 60,
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",

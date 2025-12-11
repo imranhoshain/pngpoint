@@ -1,11 +1,12 @@
 from django.db import models
+from fernet_fields import EncryptedCharField
 
 # Create your models here.
 
 class CloudflareConfig(models.Model):
-    api_key = models.CharField(max_length=255)
-    account_id = models.CharField(max_length=255)
-    account_hash = models.CharField(max_length=255)
+    api_key = EncryptedCharField(max_length=255)
+    account_id = EncryptedCharField(max_length=255)
+    account_hash = EncryptedCharField(max_length=255)
     images_domain = models.CharField(max_length=255)
     email = models.EmailField()
     endpoint = models.CharField(max_length=100, default="verify")
@@ -18,4 +19,4 @@ class CloudflareConfig(models.Model):
 
     def __str__(self):
         return "Cloudflare Configuration"
-        
+    

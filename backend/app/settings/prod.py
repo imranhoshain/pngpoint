@@ -9,9 +9,7 @@ from app.settings.base import *
 
 DEBUG = False
 
-# ---- ALLOWED_HOSTS from environment ----
-raw_allowed_hosts = os.getenv("DJANGO_ALLOWED_HOSTS", "")
-ALLOWED_HOSTS = [h.strip() for h in raw_allowed_hosts.split(",") if h.strip()]
+ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED_HOSTS', 'localhost').split(',')
 
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
@@ -29,10 +27,7 @@ DATABASES = {
     }
 }
 
-CSRF_TRUSTED_ORIGINS = [
-    "https://pngpoint.com",
-    "https://www.pngpoint.com",
-]
+CSRF_TRUSTED_ORIGINS = env.list("CSRF_TRUSTED_ORIGINS", default=[])
 
-SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"] = timedelta(days=365)
-SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"] = timedelta(days=365)
+SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"] = timedelta(minutes=30)
+SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"] = timedelta(days=1)
