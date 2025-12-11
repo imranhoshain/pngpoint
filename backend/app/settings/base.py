@@ -175,3 +175,8 @@ CACHES = {
         "KEY_PREFIX": "pngpoint",
     }
 }
+
+FIELD_ENCRYPTION_KEY = os.getenv(
+    "FIELD_ENCRYPTION_KEY",
+    "01234567890123456789012345678901"
+)
