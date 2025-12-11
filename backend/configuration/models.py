@@ -1,12 +1,12 @@
 from django.db import models
-from django_cryptography.fields import encrypt
+from encrypted_model_fields.fields import EncryptedCharField, EncryptedEmailField
 
 class CloudflareConfig(models.Model):
-    api_key = encrypt(models.CharField(max_length=255))
-    account_id = encrypt(models.CharField(max_length=255))
-    account_hash = encrypt(models.CharField(max_length=255))
+    api_key = EncryptedCharField(max_length=255)
+    account_id = EncryptedCharField(max_length=255)
+    account_hash = EncryptedCharField(max_length=255)
     images_domain = models.CharField(max_length=255)
-    email = models.EmailField()
+    email = EncryptedEmailField()
     endpoint = models.CharField(max_length=100, default="verify")
     updated_at = models.DateTimeField(auto_now=True)
 
