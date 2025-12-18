@@ -23,7 +23,8 @@ export const Header = () => {
                             className="w-40 md:w-56 h-auto"
                             src={Logo}
                             alt="pngpoint"
-                            loading="lazy"
+                            loading="eager"
+                            priority
                             decoding="async"
                             onClick={() => handleLogo()}
                         />

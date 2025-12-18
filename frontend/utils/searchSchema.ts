@@ -1,3 +1,5 @@
+import { siteConfig, getSearchUrl } from "@/config/site";
+
 export interface SearchSchema {
     "@context": string;
     "@type": string;
@@ -28,17 +30,17 @@ export const getSearchSchema = (title: string): SearchSchema => {
         description: title
             ? `Find high-quality transparent PNG images of ${title} in various categories. Browse search results for free PNG downloads.`
             : "Find high-quality transparent PNG images in various categories. Browse search results for free PNG downloads.",
-        url: `https://www.pngpoint.com/?title=${encodedTitle}`,
+        url: getSearchUrl(title),
         potentialAction: {
             "@type": "SearchAction",
-            target: `https://www.pngpoint.com/?title=${encodedTitle}`,
+            target: getSearchUrl(title),
             "query-input": `${encodedTitle}`,
         },
         creator: {
             "@type": "Organization",
-            name: "pngpoint.com",
+            name: siteConfig.siteName,
         },
-        acquireLicensePage: "https://pngpoint.com/license",
-        copyrightNotice: "© 2025 pngpoint.com. All rights reserved.",
+        acquireLicensePage: siteConfig.licenseUrl,
+        copyrightNotice: siteConfig.copyright,
     };
 };

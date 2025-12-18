@@ -15,9 +15,6 @@ class SelectedImageUpdateView(viewsets.ViewSet):
             category_value = request.data.get("category")
             sub_category_value = request.data.get("sub_category")
 
-            print('category value:', category_value)
-            print('sub category value:', sub_category_value)
-
             if not image_ids or not isinstance(image_ids, list):
                 return Response({
                     'success': False,
@@ -67,11 +64,10 @@ class SelectedImageUpdateView(viewsets.ViewSet):
                 'updated_ids': updated_images
             }, status=status.HTTP_200_OK)
 
-        except Exception as e:
+        except Exception:
             return Response({
                 'success': False,
-                'message': 'Internal server error',
-                'error': str(e)
+                'message': 'Internal server error'
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class SingleImageUpdateView(viewsets.ViewSet):
@@ -97,11 +93,11 @@ class SingleImageUpdateView(viewsets.ViewSet):
                     'errors': serializer.errors
                 }, status=status.HTTP_400_BAD_REQUEST)
 
-        except Exception as e:
+        except Exception:
             return Response({
                 'success': False,
                 'message': 'Internal server error',
-                'errors': f'An error occurred: {str(e)}.',
+                'errors': {},
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class NumberOfImageUpdateView(viewsets.ViewSet):
@@ -141,10 +137,10 @@ class NumberOfImageUpdateView(viewsets.ViewSet):
                             'errors': serializer.errors
                         })
 
-                except Exception as e:
+                except Exception:
                     failed_updates.append({
                         'id': image_id,
-                        'error': str(e)
+                        'error': 'Failed to update'
                     })
 
             return Response({
@@ -154,9 +150,8 @@ class NumberOfImageUpdateView(viewsets.ViewSet):
                 'failed_updates': failed_updates
             }, status=status.HTTP_200_OK)
 
-        except Exception as e:
+        except Exception:
             return Response({
                 'success': False,
-                'message': 'Internal server error',
-                'error': str(e)
+                'message': 'Internal server error'
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

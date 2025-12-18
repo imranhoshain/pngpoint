@@ -6,6 +6,7 @@ import Link from "next/link";
 import React from "react";
 import bgShape from "../../public/bg-shape.jpg";
 import { Download } from "../download/download";
+import { siteConfig, getImageUrl } from "@/config/site";
 
 interface ImagesProps {
     images: any;
@@ -43,11 +44,11 @@ export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
                                                         description: image.description || image.title,
                                                         author: {
                                                             "@type": "Organization",
-                                                            name: "pngpoint.com",
-                                                            url: "https://pngpoint.com",
+                                                            name: siteConfig.siteName,
+                                                            url: siteConfig.url,
                                                         },
                                                         contentUrl: image.cloudflare_url,
-                                                        url: `https://pngpoint.com/image/${image.slug}/`,
+                                                        url: getImageUrl(image.slug),
                                                         datePublished: new Date(image.created_at).toLocaleString("en-US", {
                                                             timeZone: "Asia/Dhaka",
                                                             year: "numeric",
@@ -59,10 +60,10 @@ export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
                                                         }),
                                                         width: image.width || 352,
                                                         height: image.height || 352,
-                                                        license: "https://pngpoint.com/license",
+                                                        license: siteConfig.licenseUrl,
                                                         copyrightHolder: {
                                                             "@type": "Organization",
-                                                            name: "pngpoint.com",
+                                                            name: siteConfig.siteName,
                                                         },
                                                         exifData: image.exifData || [],
                                                     }),

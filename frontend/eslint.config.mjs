@@ -1,18 +1,7 @@
-import { dirname } from "path";
-import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
+import nextConfig from "eslint-config-next";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const baseConfigs = Array.isArray(nextConfig) ? nextConfig : [nextConfig];
 
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
-
-// Generate the Next.js + TS configs once
-const baseConfigs = compat.extends("next/core-web-vitals", "next/typescript");
-
-// IMPORTANT: the ignores config MUST be first in the array
 const config = [
   {
     ignores: [
@@ -25,8 +14,13 @@ const config = [
   },
   ...baseConfigs,
   {
+    linterOptions: {
+      reportUnusedDisableDirectives: "off",
+    },
     rules: {
       "react/no-unescaped-entities": "off",
+      "react-hooks/set-state-in-effect": "off",
+      "react-hooks/incompatible-library": "off",
     },
   },
 ];

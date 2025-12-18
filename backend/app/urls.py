@@ -1,25 +1,35 @@
-from django.urls import path,include
+from django.urls import path, include
 from django.conf import settings
 from django.http import JsonResponse
 from django.conf.urls.static import static
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
-from rest_framework_simplejwt.views import TokenRefreshView, TokenVerifyView
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+from django.contrib import admin
+from api.accounts.views.token import ThrottledTokenRefreshView, ThrottledTokenVerifyView
 
 BASE_API = 'api/v1'
 
 urlpatterns = [
-    path('', lambda request: JsonResponse({"message": "Welcome to the png point API 🚀"})),
+    path('', lambda request: JsonResponse({"message": "Welcome to the png point API"})),
+    path('admin/', admin.site.urls),
     path(f'{BASE_API}/images/', include('api.images.urls')),
     path(f'{BASE_API}/accounts/', include('api.accounts.urls')),
     path(f'{BASE_API}/configuration/', include('api.configuration.urls')),
-    path(f'{BASE_API}/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
-    path(f'{BASE_API}/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
-    path(f'{BASE_API}/database-desing/', include('schema_viewer.urls')),
-    path(f'{BASE_API}/schema/', SpectacularAPIView.as_view(), name='schema'),
-    path(f'{BASE_API}/schema/swagger-ui/', SpectacularSwaggerView.as_view(), name='swagger_ui'),
-    path(f'{BASE_API}/schema/redoc/', SpectacularRedocView.as_view(), name='redoc'),
+    path(f'{BASE_API}/token/refresh/', ThrottledTokenRefreshView.as_view(), name='token_refresh'),
+    path(f'{BASE_API}/token/verify/', ThrottledTokenVerifyView.as_view(), name='token_verify'),
 ]
+
+if 'schema_viewer' in settings.INSTALLED_APPS and settings.DEBUG:
+    urlpatterns += [
+        path(f'{BASE_API}/database-desing/', include('schema_viewer.urls')),
+    ]
+
+if 'drf_spectacular' in settings.INSTALLED_APPS and settings.DEBUG:
+    from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
+    urlpatterns += [
+        path(f'{BASE_API}/schema/', SpectacularAPIView.as_view(), name='schema'),
+        path(f'{BASE_API}/schema/swagger-ui/', SpectacularSwaggerView.as_view(), name='swagger_ui'),
+        path(f'{BASE_API}/schema/redoc/', SpectacularRedocView.as_view(), name='redoc'),
+    ]
 
 def custom_404(request, exception):
     return JsonResponse({

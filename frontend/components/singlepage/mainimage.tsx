@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React from "react";
 import bgShape from "../../public/bg-shape.jpg";
+import { siteConfig, getImageUrl } from "@/config/site";
 
 interface MainImageProps {
     image: any;
@@ -21,24 +22,24 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
                             description: image?.image?.description || image?.image?.title,
                             author: {
                                 "@type": "Organization",
-                                name: "pngpoint.com",
-                                url: "https://pngpoint.com",
+                                name: siteConfig.siteName,
+                                url: siteConfig.url,
                             },
                             contentUrl: image?.image?.cloudflare_url,
-                            url: `https://pngpoint.com/image/${image?.image?.slug}/`,
+                            url: getImageUrl(image?.image?.slug),
                             datePublished: image.created_at,
                             creator: {
                                 "@type": "Organization",
-                                name: "pngpoint.com",
+                                name: siteConfig.siteName,
                             },
-                            acquireLicensePage: "https://pngpoint.com/license",
-                            copyrightNotice: "© 2025 pngpoint.com. All rights reserved.",
+                            acquireLicensePage: siteConfig.licenseUrl,
+                            copyrightNotice: siteConfig.copyright,
                             width: image.width || 352,
                             height: image.height || 352,
-                            license: "https://pngpoint.com/license",
+                            license: siteConfig.licenseUrl,
                             copyrightHolder: {
                                 "@type": "Organization",
-                                name: "pngpoint.com",
+                                name: siteConfig.siteName,
                             },
 
                             exifData: image.exifData || [],

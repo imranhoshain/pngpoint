@@ -23,7 +23,9 @@ class PendingImagesViewSet(viewsets.ViewSet):
         If not cached, set it to cache using DB query + paginate.
         """
         
-        queryset = Images.objects.filter(status='pending').order_by('-created_at')
+        queryset = Images.objects.filter(status='pending').select_related(
+            'user', 'category', 'sub_category'
+        ).prefetch_related('keywords').order_by('-created_at')
 
         for backend in list(self.filter_backends):
             queryset = backend().filter_queryset(request, queryset, self)
@@ -60,7 +62,9 @@ class UserPendingImagesViewSet(viewsets.ViewSet):
         """
   
         user = request.user
-        queryset = Images.objects.filter(user=user, status='pending').order_by('-created_at')
+        queryset = Images.objects.filter(user=user, status='pending').select_related(
+            'user', 'category', 'sub_category'
+        ).prefetch_related('keywords').order_by('-created_at')
 
         for backend in list(self.filter_backends):
             queryset = backend().filter_queryset(request, queryset, self)

@@ -1,5 +1,6 @@
 import os
 from PIL import Image
+from django.conf import settings
 from django.utils.text import slugify
 from django.core.exceptions import ValidationError
 from django.core.validators import EmailValidator
@@ -12,8 +13,10 @@ def validate_email(value):
         raise ValidationError(_('Invalid email address. Please provide a correct email.'))
 
 def validate_image_dimensions(image):
-    min_width, min_height = 2000, 2000
-    max_width, max_height = 10000, 10000
+    min_width = getattr(settings, "IMAGE_UPLOAD_MIN_WIDTH", 1000)
+    min_height = getattr(settings, "IMAGE_UPLOAD_MIN_HEIGHT", 1000)
+    max_width = getattr(settings, "IMAGE_UPLOAD_MAX_WIDTH", 10000)
+    max_height = getattr(settings, "IMAGE_UPLOAD_MAX_HEIGHT", 10000)
 
     try:
         with Image.open(image) as img:

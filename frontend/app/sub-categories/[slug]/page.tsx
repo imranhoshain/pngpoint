@@ -4,6 +4,7 @@
 import { Download } from "@/components/download/download";
 import { SERVER_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
+import { siteConfig, getImageUrl } from "@/config/site";
 import Image from "next/image";
 import Link from "next/link";
 import { useParams } from "next/navigation"
@@ -37,7 +38,6 @@ export default function SingleSubCategories() {
         return () => { isMounted = false; };
     }, [slug, currentPage]);
 
-    // ------------------ Loading State ------------------
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen w-full bg-[#FBFAFF]">
@@ -49,7 +49,6 @@ export default function SingleSubCategories() {
         );
     }
 
-    // ------------------ Error State ------------------
     if (error) {
         return (
             <div className="flex items-center justify-center h-screen w-full bg-[#FBFAFF]">
@@ -107,24 +106,24 @@ export default function SingleSubCategories() {
                                                             description: image.description || image.title,
                                                             author: {
                                                                 "@type": "Organization",
-                                                                name: "pngpoint.com",
-                                                                url: "https://pngpoint.com",
+                                                                name: siteConfig.siteName,
+                                                                url: siteConfig.url,
                                                             },
                                                             contentUrl: image.cloudflare_url,
-                                                            url: `https://pngpoint.com/image/${image.slug}/`,
+                                                            url: getImageUrl(image.slug),
                                                             datePublished: image.created_at,
                                                             creator: {
                                                                 "@type": "Organization",
-                                                                name: "pngpoint.com",
+                                                                name: siteConfig.siteName,
                                                             },
-                                                            acquireLicensePage: "https://pngpoint.com/license",
-                                                            copyrightNotice: "© 2025 pngpoint.com. All rights reserved.",
+                                                            acquireLicensePage: siteConfig.licenseUrl,
+                                                            copyrightNotice: siteConfig.copyright,
                                                             width: image.width || 352,
                                                             height: image.height || 352,
-                                                            license: "https://pngpoint.com/license",
+                                                            license: siteConfig.licenseUrl,
                                                             copyrightHolder: {
                                                                 "@type": "Organization",
-                                                                name: "pngpoint.com",
+                                                                name: siteConfig.siteName,
                                                             },
                                                             exifData: image.exifData || [],
                                                         }),

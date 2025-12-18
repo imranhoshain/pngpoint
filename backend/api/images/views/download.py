@@ -8,6 +8,7 @@ from django.db import models
 from django.utils.text import slugify
 from configuration.utils import get_cloudflare_config
 from django.db.models import Sum
+from api.throttling import PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle
 
 class AllImageDownloadCountViewSet(viewsets.ViewSet):
     """
@@ -39,6 +40,7 @@ class AllImageContributorDownloadCountViewSet(viewsets.ViewSet):
 
 class DownloadImageViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny]
+    throttle_classes = [PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle]
 
     def retrieve(self, request, pk=None):
         config = get_cloudflare_config()

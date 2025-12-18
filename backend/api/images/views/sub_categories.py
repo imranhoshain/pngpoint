@@ -13,6 +13,8 @@ from api.images.serializers.sub_categories import (
     CreateSubCategoriesSerializer,
 )
 from images.filters.filters import SubCategoriesFilter
+from api.decorators import cache_api_response, invalidate_cache_prefix
+from api.throttling import PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle
 
 logger = logging.getLogger(__name__)
 
@@ -25,6 +27,7 @@ class SubCategoriesViewSet(viewsets.ViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = SubCategoriesFilter
     pagination_class = SubCategoriesPagination
+    throttle_classes = [PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle]
 
     def get_permissions(self):
         if self.action in ["list", "retrieve"]:
@@ -33,6 +36,13 @@ class SubCategoriesViewSet(viewsets.ViewSet):
             permission_classes = [IsAdminUser]
         return [permission() for permission in permission_classes]
 
+    def _invalidate_cache(self):
+        invalidate_cache_prefix("sub_categories")
+        invalidate_cache_prefix("sub_category_detail")
+        invalidate_cache_prefix("categories")
+        invalidate_cache_prefix("category_detail")
+
+    @cache_api_response(timeout=600, cache_key_prefix="sub_categories")
     def list(self, request):
         try:
             queryset = SubCategories.objects.select_related('categories').order_by('name')
@@ -48,6 +58,7 @@ class SubCategoriesViewSet(viewsets.ViewSet):
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
+    @cache_api_response(timeout=600, cache_key_prefix="sub_category_detail")
     def retrieve(self, request, slug=None):
         try:
             sub_category = get_object_or_404(SubCategories.objects.select_related("categories"), slug=slug)
@@ -98,6 +109,7 @@ class SubCategoriesViewSet(viewsets.ViewSet):
             serializer = CreateSubCategoriesSerializer(data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                self._invalidate_cache()
                 return success_response(
                     message="Sub category created successfully.",
                     data=serializer.data,
@@ -121,6 +133,7 @@ class SubCategoriesViewSet(viewsets.ViewSet):
             serializer = SubCategoriesSerializers(sub_category, data=request.data)
             if serializer.is_valid():
                 serializer.save()
+                self._invalidate_cache()
                 return success_response(
                     message="Sub category updated successfully.",
                     data=serializer.data,
@@ -144,6 +157,7 @@ class SubCategoriesViewSet(viewsets.ViewSet):
             serializer = SubCategoriesSerializers(sub_category, data=request.data, partial=True)
             if serializer.is_valid():
                 serializer.save()
+                self._invalidate_cache()
                 return success_response(
                     message="Sub category partially updated successfully.",
                     data=serializer.data,
@@ -165,6 +179,7 @@ class SubCategoriesViewSet(viewsets.ViewSet):
         try:
             sub_category = get_object_or_404(SubCategories, pk=pk)
             sub_category.delete()
+            self._invalidate_cache()
             return success_response(
                 message="Sub category deleted successfully.",
             )

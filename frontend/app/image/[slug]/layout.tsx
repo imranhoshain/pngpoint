@@ -2,6 +2,7 @@
 import Footer from "@/components/footer/footer";
 import { SingleImageHeader } from "@/components/header/single_image_header";
 import { SERVER_URL } from "@/utils/api";
+import { getImageUrl } from "@/config/site";
 import { Metadata } from "next";
 import React from "react";
 
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
             return {
                 title: "Image - PNGPoint",
                 description: "PNGPoint image details",
-                alternates: { canonical: `https://pngpoint.com/image/${slug}` },
+                alternates: { canonical: getImageUrl(slug) },
             };
         }
 
@@ -32,11 +33,11 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
         return {
             title: `${data.title || "Image"} - PNGPoint`,
             description: data.description || "High-quality PNG image from PNGPoint",
-            alternates: { canonical: `https://pngpoint.com/image/${slug}` },
+            alternates: { canonical: getImageUrl(slug) },
             openGraph: {
                 title: `${data.title || "Image"} - PNGPoint`,
                 description: data.description || "High-quality PNG image from PNGPoint",
-                url: `https://pngpoint.com/image/${slug}`,
+                url: getImageUrl(slug),
                 type: "website",
                 images: [
                     {
@@ -59,12 +60,11 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
         return {
             title: "Image - PNGPoint",
             description: "PNGPoint image details",
-            alternates: { canonical: `https://pngpoint.com/image/${slug}` },
+            alternates: { canonical: getImageUrl(slug) },
         };
     }
 }
 
-// Root layout for the image page
 export default function ImageRootLayout({ children }: { children: React.ReactNode }) {
     return (
         <section className="relative top-0 left-0 right-0 w-full">

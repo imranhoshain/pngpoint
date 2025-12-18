@@ -18,6 +18,7 @@ export default function Register() {
                                     alt="png-point"
                                     width={100}
                                     height={100}
+                                    priority
                                 />
                             </Link>
                             </div>

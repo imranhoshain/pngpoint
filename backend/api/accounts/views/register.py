@@ -5,11 +5,13 @@ from rest_framework.parsers import JSONParser
 from rest_framework.permissions import AllowAny
 from api.accounts.serializers.register import RegisterSerializer
 from accounts.docs.register import register_schema
+from api.throttling import RegisterRateThrottle, BurstRateThrottle
 
 class RegisterViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny]
     parser_classes = [JSONParser]
     renderer_classes = [JSONRenderer]
+    throttle_classes = [RegisterRateThrottle, BurstRateThrottle]
 
     @register_schema
     def create(self, request, *args, **kwargs):
@@ -34,10 +36,10 @@ class RegisterViewSet(viewsets.ViewSet):
                 'message': 'validation errors',
                 'errors': serializer.errors,
             }, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
+        except Exception:
             return Response({
                 'success': False,
-                'message': '',
-                'errors': f'An error occurred: {str(e)}.',
+                'message': 'An error occurred. Please try again later.',
+                'errors': {},
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         

@@ -3,10 +3,14 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from images.models import Keywords
 from api.images.serializers.keyword import KeywordSerializer
+from api.decorators import cache_api_response
+from api.throttling import PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle
 
 class KeywordsView(APIView):
     permission_classes = [AllowAny]
+    throttle_classes = [PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle]
 
+    @cache_api_response(timeout=300, cache_key_prefix="keywords")
     def get(self, request, *args, **kwargs):
         try:
             all_keywords = Keywords.objects.order_by('-id')[:30]

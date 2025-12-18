@@ -78,9 +78,16 @@ export default function Profile() {
             await addProfileChange(formDataToSend).unwrap();
             toast.success("Profile updated!");
             setEditMode(false);
-        } catch (err) {
-            toast.error("Update failed");
-            console.error(err);
+        } catch (err: any) {
+            const errData = err?.data;
+            const errors = errData?.errors ?? errData;
+            if (errors && typeof errors === "object" && Object.keys(errors).length > 0) {
+                const firstKey = Object.keys(errors)[0];
+                const firstMessage = errors[firstKey]?.[0] ?? errors[firstKey];
+                toast.error(firstMessage || "Update failed");
+            } else {
+                toast.error(errData?.detail || errData?.message || "Update failed");
+            }
         }
     };
 

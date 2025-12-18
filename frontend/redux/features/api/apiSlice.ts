@@ -5,6 +5,14 @@ import type { RootState } from "../../store";
 import { logout, setAuth } from "../auth/authSlice";
 import { SERVER_URL } from "@/utils/api";
 
+const AUTH_STORAGE_KEY = "auth";
+
+const clearSessionAuth = () => {
+    if (typeof window !== "undefined") {
+        sessionStorage.removeItem(AUTH_STORAGE_KEY);
+    }
+};
+
 const baseQuery = fetchBaseQuery({
     baseUrl: SERVER_URL,
     prepareHeaders: (headers, api) => {
@@ -43,7 +51,8 @@ const baseQueryWithReauth = async (
     }
     const state = api.getState() as RootState;
     let accessToken: string | null | undefined = state.auth.tokens.access_token;
-    const refreshToken: string | null | undefined = state.auth.tokens.refresh_token;
+    let refreshToken: string | null | undefined =
+        state.auth.tokens.refresh_token;
     if (accessToken) {
         const isValid = await verifyAccessToken(accessToken, api, extraOptions);
         if (!isValid) {
@@ -71,15 +80,20 @@ const baseQueryWithReauth = async (
             api,
             extraOptions
         );
-        const newAccessToken = (refreshResult.data as { access?: string })?.access;
+        const refreshData = refreshResult.data as
+            | { access?: string; refresh?: string }
+            | undefined;
+        const newAccessToken = refreshData?.access;
+        const newRefreshToken = refreshData?.refresh ?? refreshToken;
         if (newAccessToken) {
             accessToken = newAccessToken;
+            refreshToken = newRefreshToken;
             api.dispatch(
                 setAuth({
                     user: state.auth.user,
                     tokens: {
                         access_token: newAccessToken,
-                        refresh_token: refreshToken,
+                        refresh_token: newRefreshToken ?? null,
                     },
                 })
             );
@@ -87,12 +101,12 @@ const baseQueryWithReauth = async (
             result = await baseQuery({ ...args, headers }, api, extraOptions);
         } else {
             console.error("Refresh token expired or invalid. Logging out...");
-            localStorage.removeItem("auth");
+            clearSessionAuth();
             api.dispatch(logout());
         }
     } else if (!refreshToken) {
         console.warn("No refresh token found. Logging out...");
-        localStorage.removeItem("auth");
+        clearSessionAuth();
         api.dispatch(logout());
     }
     return result;

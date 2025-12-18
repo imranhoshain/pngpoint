@@ -16,20 +16,24 @@ logger = logging.getLogger(__name__)
 
 def VALIDATE_IMAGE_EXTENSION(image):
     ext = os.path.splitext(image.name)[1].lower()
-    valid_extensions = ['.jpg', '.jpeg', '.png', '.webp']
-    if ext not in valid_extensions:
+    allowed_extensions = getattr(settings, "IMAGE_UPLOAD_ALLOWED_EXTENSIONS", ['.png'])
+    if ext not in allowed_extensions:
+        allowed = ", ".join(allowed_extensions)
         raise ValidationError(
-            _(f'Unsupported file extension "{ext}". Allowed types: JPG, JPEG, PNG, WEBP.')
+            _(f'Unsupported file extension "{ext}". Allowed types: {allowed}.')
         )
     
 def VALIDATE_IMAGE_SIZE(image):
-    max_size = 10 * 1024 * 1024
+    max_size_mb = getattr(settings, "IMAGE_UPLOAD_MAX_SIZE_MB", 10)
+    max_size = max_size_mb * 1024 * 1024
     if image.size > max_size:
-        raise ValidationError(_('The image file size must be less than 10 MB.'))
+        raise ValidationError(_(f'The image file size must be less than {max_size_mb} MB.'))
 
 def VALIDATE_IMAGE_DIMENSIONS(image):
-    min_width, min_height = 2000, 2000
-    max_width, max_height = 10000, 10000
+    min_width = getattr(settings, "IMAGE_UPLOAD_MIN_WIDTH", 1000)
+    min_height = getattr(settings, "IMAGE_UPLOAD_MIN_HEIGHT", 1000)
+    max_width = getattr(settings, "IMAGE_UPLOAD_MAX_WIDTH", 10000)
+    max_height = getattr(settings, "IMAGE_UPLOAD_MAX_HEIGHT", 10000)
 
     try:
         with Image.open(image) as img:
@@ -44,14 +48,6 @@ def VALIDATE_IMAGE_DIMENSIONS(image):
     if width > max_width or height > max_height:
         raise ValidationError(
             _(f'Image is too large: {width}x{height}px. Maximum size is {max_width}x{max_height}px.')
-        )
-
-def VALIDATE_IMAGE_EXTENSION(image):
-    ext = os.path.splitext(image.name)[1]
-    valid_extensions = ['.png']
-    if ext.lower() not in valid_extensions:
-        raise ValidationError(
-            _(f'Unsupported file extension: {ext}. Only PNG files are allowed.')
         )
 
 def VALIDATE_EMAIL(value):
@@ -97,7 +93,11 @@ def trigger_nextjs_revalidate(path="/categories"):
     Call Next.js revalidation API to invalidate ISR cache for `path`.
     """
     try:
-        url = f"{settings.NEXTJS_URL}/api/revalidate"
+        if not settings.REVALIDATE_SECRET or not settings.NEXTJS_URL:
+            logger.warning("Revalidation skipped; secret or NEXTJS_URL not configured.")
+            return False
+
+        url = f"{settings.NEXTJS_URL.rstrip('/')}/api/revalidate"
         payload = {
             "secret": settings.REVALIDATE_SECRET,
             "path": path
@@ -106,9 +106,9 @@ def trigger_nextjs_revalidate(path="/categories"):
         if resp.status_code == 200:
             logger.info(f"Next.js revalidated: {path}")
             return True
-        else:
-            logger.error(f"Next.js revalidate failed ({resp.status_code}): {resp.text}")
-            return False
+
+        logger.error(f"Next.js revalidate failed ({resp.status_code}): {resp.text}")
+        return False
     except Exception as exc:
         logger.exception(f"Error while calling Next.js revalidate: {exc}")
         return False

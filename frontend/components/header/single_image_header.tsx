@@ -31,6 +31,8 @@ export const SingleImageHeader: React.FC = () => {
                             alt="pngpoint"
                             width={244}
                             height={244}
+                            loading="eager"
+                            priority
                         />
                     </Link>
                     <div className="flex flex-col flex-wrap items-center relative w-[60%] md:w-[50%]">

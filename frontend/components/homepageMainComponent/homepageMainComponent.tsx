@@ -59,13 +59,16 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
                 })
                 .join("&");
 
-            router.push(`/?${queryParams}`, { scroll: false });
-
+            const nextPath = queryParams ? `/?${queryParams}` : "/";
+            router.push(nextPath, { scroll: false });
 
             const url = `${SERVER_URL}/images/approved/${queryParams ? `?${queryParams}` : ""}`;
-            const data = await getFetchData(url, { next: { revalidate: 120 } });
-
-            setImagesData(data);
+            try {
+                const data = await getFetchData(url, { next: { revalidate: 120 } });
+                setImagesData(data);
+            } catch (error) {
+                console.error("Failed to fetch images", error);
+            }
         };
 
         if (isFirstRender.current) {
@@ -88,4 +91,3 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
         </>
     );
 };
-

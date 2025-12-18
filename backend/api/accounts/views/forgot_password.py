@@ -8,6 +8,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes, force_str
 from django.contrib.auth import update_session_auth_hash
 from django.conf import settings
+from api.throttling import LoginRateThrottle, BurstRateThrottle
 
 User = get_user_model()
 
@@ -23,6 +24,7 @@ def generate_reset_link(user):
 
 class ForgotPasswordViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny]
+    throttle_classes = [LoginRateThrottle, BurstRateThrottle]
 
     def post(self, request, *args, **kwargs):
         email = request.data.get("email")
@@ -56,6 +58,7 @@ class ForgotPasswordViewSet(viewsets.ViewSet):
 
 class ResetPasswordViewSet(viewsets.ViewSet):
     permission_classes = [AllowAny]
+    throttle_classes = [LoginRateThrottle, BurstRateThrottle]
 
     def post(self, request, uidb64, token, *args, **kwargs):
         try:

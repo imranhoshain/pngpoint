@@ -117,13 +117,17 @@ Create `.env.dev`/`.env.prod` inside `backend/` and `.env.local` inside `fronten
 **Backend (`backend/.env.dev`/`.env.prod`):**
 | Variable | Description |
 | --- | --- |
-| `DJANGO_SETTINGS_MODULE` | `app.settings.dev` for local dev, `app.settings.prod` for production. |
+| `DJANGO_SETTINGS_MODULE` | `app.settings.prod` (override per-env via env vars). |
 | `DJANGO_SECRET_KEY` | Secret key for Django. |
 | `POSTGRES_DB`, `POSTGRES_USER`, `POSTGRES_PASSWORD`, `POSTGRES_HOST`, `POSTGRES_PORT`, `POSTGRES_SSLMODE` | Required when using PostgreSQL/production. |
 | `CELERY_BROKER_URL`, `CELERY_RESULT_BACKEND` | Redis URLs (e.g., `redis://redis:6379/0`). |
 | `FRONTEND_DOMAIN` | Base URL used in password reset emails (e.g., `http://localhost:3000`). |
+| `CORS_ALLOWED_ORIGINS` | Comma-separated list of allowed web origins (e.g., `http://localhost:5000,https://yourdomain.com`). |
+| `ACCESS_TOKEN_LIFETIME_MINUTES`, `REFRESH_TOKEN_LIFETIME_DAYS` | Override the default 15m / 14d JWT lifetimes. |
 | `NEXTJS_URL` | URL to the Next.js app so the backend can trigger ISR (e.g., `http://localhost:3000`). |
 | `REVALIDATE_SECRET` | Shared secret with Next.js `/api/revalidate`. |
+| `CACHE_DEFAULT_TIMEOUT` | Redis cache TTL in seconds (default `300`). |
+| `IMAGE_UPLOAD_ALLOWED_EXTENSIONS` | Allowed image extensions list (default `.png`). |
 | `EMAIL_HOST_USER`, `EMAIL_HOST_PASSWORD`, `EMAIL_HOST`, `EMAIL_PORT` | SMTP credentials for forgot-password emails. |
 
 **Frontend (`frontend/.env.local`):**
@@ -131,9 +135,8 @@ Create `.env.dev`/`.env.prod` inside `backend/` and `.env.local` inside `fronten
 | --- | --- |
 | `NEXT_PUBLIC_SERVER_URL` | Base API URL (e.g., `http://localhost:8000/api/v1`). |
 | `NEXT_PUBLIC_MEDIA_URL` | Base media URL (e.g., `http://localhost:8000`). |
-| `REVALIDATE_SECRET` | Must match backend `REVALIDATE_SECRET` if you trigger ISR from the frontend route. |
 
-> Tip: `frontend/utils/api.ts` currently hardcodes production URLs. Uncomment the environment variable exports at the top of that file for local development.
+> Tip: `frontend/utils/api.ts` reads from `NEXT_PUBLIC_*` variables with sane defaults, so tweak `.env.local` rather than editing the file when switching environments.
 
 ### Run everything with Docker (recommended)
 For a production-like environment locally, create the shared `web` network, start the helper stacks under `srv/redis` and `srv/proxy`, then run:
@@ -151,7 +154,7 @@ Traefik will listen on ports 80/443, proxying `pngpoint.test` (or whichever host
    cd backend
    python -m venv .venv && source .venv/bin/activate
    pip install -r requirements.txt
-   export DJANGO_SETTINGS_MODULE=app.settings.dev
+   export DJANGO_SETTINGS_MODULE=app.settings.prod
    python manage.py migrate
    python manage.py createsuperuser
    python manage.py runserver 0.0.0.0:8000
@@ -252,7 +255,7 @@ pngpoint/
 - **Secrets**: Move hard-coded email credentials out of `app/settings/base.py` and load them from environment variables before production.
 - **CSV endpoint**: Ensure `CSVFileView` is mapped inside `api/images/urls.py` so the dashboard’s CSV import button hits a valid route.
 - **Next.js envs**: Switch `frontend/utils/api.ts` to consume `NEXT_PUBLIC_*` variables when working locally; do not commit prod secrets.
-- **Media limits**: `core.utils.VALIDATE_IMAGE_SIZE` caps uploads at 10 MB and `VALIDATE_IMAGE_DIMENSIONS` expects PNGs between 2000×2000 and 10,000×10,000 px. Adjust these helpers as requirements change.
+- **Media limits**: `core.utils.VALIDATE_IMAGE_SIZE` caps uploads at 10 MB. `VALIDATE_IMAGE_DIMENSIONS` defaults to 2000×2000–10,000×10,000 px; override with `IMAGE_UPLOAD_MIN_WIDTH/HEIGHT` and `IMAGE_UPLOAD_MAX_WIDTH/HEIGHT` env vars if you need to accept smaller or larger assets.
 - **ISR**: Anytime you mutate categories/sub-categories or approve batches programmatically, trigger both Redis cache invalidation and Next.js revalidation to avoid stale content.
 - **Testing debt**: Test suites are stubs. Add unit tests around upload/mode ration workflows and Cypress/Playwright specs for dashboards to prevent regressions.
 

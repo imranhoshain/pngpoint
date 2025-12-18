@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import bgShape from "../../public/bg-shape.jpg";
 import { Download } from "../download/download";
+import { siteConfig, getImageUrl } from "@/config/site";
 
 type TrendingimagesProps = {
     imagesData: any;
@@ -34,27 +35,27 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                                         description: image.description || image.title,
                                                         author: {
                                                             "@type": "Organization",
-                                                            name: "pngpoint.com",
-                                                            url: "https://pngpoint.com",
+                                                            name: siteConfig.siteName,
+                                                            url: siteConfig.url,
                                                         },
                                                         contentUrl: image.cloudflare_url,
-                                                        url: `https://pngpoint.com/image/${image.slug}/`,
+                                                        url: getImageUrl(image.slug),
                                                         datePublished: image.created_at,
                                                         creator: {
                                                             "@type": "Organization",
-                                                            name: "pngpoint.com",
+                                                            name: siteConfig.siteName,
                                                         },
-                                                        acquireLicensePage: "https://pngpoint.com/license",
-                                                        copyrightNotice: "© 2025 pngpoint.com. All rights reserved.",
+                                                        acquireLicensePage: siteConfig.licenseUrl,
+                                                        copyrightNotice: siteConfig.copyright,
                                                         width: image.width || 352,
                                                         height: image.height || 352,
-                                                        license: "https://pngpoint.com/license",
+                                                        license: siteConfig.licenseUrl,
                                                         copyrightHolder: {
                                                             "@type": "Organization",
-                                                            name: "pngpoint.com",
+                                                            name: siteConfig.siteName,
                                                         },
                                                         
-                                                        creditText: "pngpoint.com",
+                                                        creditText: siteConfig.siteName,
                                                         exifData: image.exifData || [],
                                                     }),
                                                 }}

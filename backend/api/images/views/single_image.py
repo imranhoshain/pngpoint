@@ -11,14 +11,18 @@ from images.services.cloudflare import (
     GET_SINGLE_MAIN_IMAGE_URL_FROM_CLOUDFLARE,
 )
 from core.utils import GENERATE_SLUG
+from api.throttling import PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle
 
 class SingleImageView(viewsets.ViewSet):
     permission_classes = [AllowAny]
     renderer_classes = [JSONRenderer]
+    throttle_classes = [PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle]
 
     def retrieve(self, request, slug=None):
         # ---------------- MAIN IMAGE ----------------
-        image = Images.objects.prefetch_related("keywords").filter(slug=slug).first()
+        image = Images.objects.select_related(
+            'user', 'category', 'sub_category'
+        ).prefetch_related("keywords").filter(slug=slug).first()
         if not image:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 

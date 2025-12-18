@@ -1,23 +1,13 @@
 ###################################################
 """
-Environment-based settings loader.
+Settings entrypoint.
 
-Depending on the ENV environment variable, this file loads
-either development or production settings dynamically.
-
-Set ENV=dev   → Loads development settings from app.settings.dev  
-Set ENV=prod  → Loads production settings from app.settings.prod
-
-If ENV is not set correctly, an exception is raised.
+The development settings module has been removed. Use
+`app.settings.prod` for all environments and override values
+with environment variables as needed.
 """
 ###################################################
-import os
 
-app_env = os.environ.get('ENV', 'dev')
-
-if app_env == 'dev':
-    from app.settings.dev import *
-elif app_env == 'prod':
-    from app.settings.prod import *
-else:
-    raise Exception(f'❌ Unknown ENV value: {app_env}. Please set ENV to one of: dev, prod.')
+# Always load production settings; fall back here if DJANGO_SETTINGS_MODULE
+# points to app.settings.
+from app.settings.prod import *

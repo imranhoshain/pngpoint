@@ -4,6 +4,7 @@ import "./globals.css";
 import { ReduxProvider } from "@/lib/providers";
 import Notification from "@/components/notification/notification";
 import Scrollbar from "@/components/scrollbar/scrollbar";
+import { siteConfig } from "@/config/site";
 
 const interFont = Inter({
     variable: "--font-inter",
@@ -11,8 +12,8 @@ const interFont = Inter({
 });
 
 export const metadata: Metadata = {
-    title: "Download Free PNG Images with Transparent Background | PNGPoint",
-    description: "Explore thousands of free PNG images with transparent backgrounds. Perfect for presentations, graphic design, and social media posts",
+    title: siteConfig.title,
+    description: siteConfig.description,
     
     keywords: [
         "free png images",
@@ -58,34 +59,34 @@ export const metadata: Metadata = {
         "cartoon png background",
         "certificate border png"
     ],
-    authors: [{ name: "pngpoint" }],
-    creator: "pngpoint",
-    publisher: "pngpoint",
-    metadataBase: new URL("https://pngpoint.com"),
+    authors: [{ name: siteConfig.name }],
+    creator: siteConfig.name,
+    publisher: siteConfig.name,
+    metadataBase: new URL(siteConfig.url),
     alternates: {
         canonical: "/",
     },
     openGraph: {
-        title: "Download Free PNG Images with Transparent Background | PNGPoint",
-        description: "Explore thousands of free PNG images with transparent backgrounds. Perfect for presentations, graphic design, and social media posts",
-        url: "https://pngpoint.com",
-        siteName: "PNGPoint",
+        title: siteConfig.title,
+        description: siteConfig.description,
+        url: siteConfig.url,
+        siteName: siteConfig.siteName,
         type: "website",
         images: [
             {
-                url: "https://pngpoint.com/og-image.png",
+                url: siteConfig.ogImage,
                 width: 1200,
                 height: 630,
-                alt: "PNGPoint",
+                alt: siteConfig.siteName,
             },
         ],
     },
     twitter: {
         card: "summary_large_image",
-        title: "Download Free PNG Images with Transparent Background | PNGPoint",
-        description: "Explore thousands of free PNG images with transparent backgrounds. Perfect for presentations, graphic design, and social media posts",
-        images: ["https://pngpoint.com/og-image.png"],
-        creator: "@PNGPoint",
+        title: siteConfig.title,
+        description: siteConfig.description,
+        images: [siteConfig.ogImage],
+        creator: siteConfig.twitterHandle,
     },
 };
 

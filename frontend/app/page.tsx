@@ -7,6 +7,11 @@ interface HomeProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }
 
+interface ImagesData {
+    count: number;
+    images: unknown[];
+}
+
 export default async function Home({ searchParams }: HomeProps) {
     const params = await searchParams;
 
@@ -22,8 +27,17 @@ export default async function Home({ searchParams }: HomeProps) {
 
     const url = `${SERVER_URL}/images/approved/${queryParams ? `?${queryParams}` : ""}`;
 
-    const res = await fetch(url, { next: { revalidate: 120 } });
-    const imagesData = await res.json();
+    let imagesData: ImagesData = { count: 0, images: [] };
+    try {
+        const res = await fetch(url, { next: { revalidate: 120 } });
+        if (!res.ok) {
+            console.error(`Homepage fetch failed with status ${res.status}`);
+        } else {
+            imagesData = await res.json();
+        }
+    } catch (error) {
+        console.error("Failed to load homepage images", error);
+    }
 
     return (
         <section className="relative top-0 left-0 right-0 w-full">

@@ -6,12 +6,13 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.permissions import AllowAny
 from accounts.services.jwt_token import JWT_TOKEN
 from api.accounts.serializers.login import LoginSerializer
+from api.throttling import LoginRateThrottle, BurstRateThrottle
 
 class UserLoginView(APIView):
     permission_classes = [AllowAny]
     parser_classes = [JSONParser]
     renderer_classes = [JSONRenderer]
-    throttle_classes = []
+    throttle_classes = [LoginRateThrottle, BurstRateThrottle]
 
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(data=request.data, context={'request': request})
@@ -40,18 +41,18 @@ class UserLoginView(APIView):
                 'message': 'Validation errors',
                 'errors': serializer.errors,
             }, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
+        except Exception:
             return Response({
                 'success': False,
-                'message': '',
-                'errors': f'An error occurred: {str(e)}.',
+                'message': 'An error occurred. Please try again later.',
+                'errors': {},
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
 class AdminLoginView(APIView):
     permission_classes = [AllowAny]
     parser_classes = [JSONParser]
     renderer_classes = [JSONRenderer]
-    throttle_classes = []
+    throttle_classes = [LoginRateThrottle, BurstRateThrottle]
 
     def post(self, request, *args, **kwargs):
         serializer = LoginSerializer(data=request.data, context={'request': request, 'admin_login': True})
@@ -78,10 +79,10 @@ class AdminLoginView(APIView):
                 'message': 'Validation errors',
                 'errors': serializer.errors,
             }, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
+        except Exception:
             return Response({
                 'success': False,
-                'message': '',
-                'errors': f'An error occurred: {str(e)}.',
+                'message': 'An error occurred. Please try again later.',
+                'errors': {},
             }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         

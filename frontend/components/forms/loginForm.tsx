@@ -34,12 +34,17 @@ export const LoginForm: React.FC = () => {
         } catch (error: any) {
             const errorData = error?.data;
             const errors = errorData?.errors;
-            if (errors && typeof errors === 'object') {
+            if (errors && typeof errors === 'object' && Object.keys(errors).length > 0) {
                 const firstKey = Object.keys(errors)[0];
                 const firstErrorMessage = errors[firstKey]?.[0];
                 toast.error(firstErrorMessage);
             } else {
-                toast.error('No structured errors found.');
+                const fallbackMessage =
+                    errorData?.detail ||
+                    errorData?.message ||
+                    error?.error ||
+                    'Unable to login right now. Please try again.';
+                toast.error(fallbackMessage);
             }
         }
     };

@@ -1,6 +1,8 @@
 /** @type {import('next-sitemap').IConfig} */
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5000';
+
 module.exports = {
-  siteUrl: 'https://pngpoint.com',
+  siteUrl: siteUrl,
   generateRobotsTxt: true,
   sitemapSize: 5000,
   changefreq: 'daily',
@@ -10,7 +12,7 @@ module.exports = {
       { userAgent: '*', allow: '/' },
     ],
     additionalSitemaps: [
-      'https://pngpoint.com/sitemap.xml',
+      `${siteUrl}/sitemap.xml`,
     ],
   },
 };

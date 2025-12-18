@@ -9,7 +9,7 @@ from configuration.utils import get_cloudflare_config
 
 logger = logging.getLogger(__name__)
 
-ALLOWED_VARIANTS = ['public']
+ALLOWED_VARIANTS = ['public', 'singleimage', 'singleimagemain']
 
 MAX_RETRIES = 5
 RETRY_DELAY = 5

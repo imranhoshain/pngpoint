@@ -1,6 +1,7 @@
 import { SERVER_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import { SingleImages } from "@/components/singleimages/singleimages";
+import { getImageUrl } from "@/config/site";
 
 type SingleImageProps = {
   params: Promise<{ slug: string }>;
@@ -10,7 +11,7 @@ export default async function SingleImage({ params }: SingleImageProps) {
   const { slug } = await params;
 
     const image = await getFetchData(`${SERVER_URL}/images/${slug}/`);
-    const pageUrl = `https://pngpoint.com/image/${slug}`;
+    const pageUrl = getImageUrl(slug);
 
     return (
         <section className="relative py-5 lg:py-10 w-full bg-white">
