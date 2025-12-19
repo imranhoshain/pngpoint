@@ -2,9 +2,11 @@
 """
 Production settings configuration
 """
+
 #########################################################
 import os
 from datetime import timedelta
+
 from app.settings.base import *
 
 DEBUG = False
@@ -33,6 +35,10 @@ CSRF_TRUSTED_ORIGINS = [
     "https://pngpoint.com",
     "https://www.pngpoint.com",
 ]
+CORS_ALLOWED_ORIGINS = [
+    "https://pngpoint.com",
+]
+
 
 SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"] = timedelta(days=365)
 SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"] = timedelta(days=365)
