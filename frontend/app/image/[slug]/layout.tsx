@@ -13,7 +13,7 @@ type GenerateMetadataProps = {
 export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
     const { slug } = await params; 
     try {
-        const res = await fetch(`${SERVER_URL}/images/${slug}/`, {
+        const res = await fetch(`${SERVER_URL}/images/${slug}`, {
             next: { revalidate: 120 },
         });
 
