@@ -12,7 +12,7 @@ export default function Categories() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${SERVER_URL}/images/categories/`)
+        fetch(`${SERVER_URL}/images/categories`)
             .then(res => res.json())
             .then(data => setCategoriesData(data.data || []))
             .catch(err => console.error("Failed to fetch categories:", err))
