@@ -44,7 +44,7 @@ export default function Categories() {
                         {categoriesData.map(category => (
                             <Link
                                 className="group relative block w-full overflow-hidden rounded-lg shadow-lg bg-white py-2.5 px-2.5"
-                                href={`/categories/${category.slug}/`}
+                                href={`/categories/${category.slug}`}
                                 key={category.id}
                             >
                                 <div className="relative w-full h-64 md:h-90 overflow-hidden rounded">
