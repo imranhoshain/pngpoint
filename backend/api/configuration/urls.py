@@ -7,5 +7,5 @@ cloudflare_config = CloudflareConfigViewSet.as_view({
 })
 
 urlpatterns = [
-    path('cloudflare/config/', cloudflare_config, name='cloudflare-config'),
+    path('cloudflare/config', cloudflare_config, name='cloudflare-config'),
 ]
