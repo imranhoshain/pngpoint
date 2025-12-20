@@ -15,7 +15,7 @@ export const images = apiSlice.injectEndpoints({
           }
         }
         const query = new URLSearchParams(filteredParams).toString();
-        return `/images/approved/?${query}`;
+        return `/images/approved?${query}`;
       },
 
 
