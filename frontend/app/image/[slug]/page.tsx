@@ -10,7 +10,7 @@ type SingleImageProps = {
 export default async function SingleImage({ params }: SingleImageProps) {
   const { slug } = await params;
 
-    const image = await getFetchData(`${SERVER_URL}/images/${slug}/`);
+    const image = await getFetchData(`${SERVER_URL}/images/${slug}`);
     const pageUrl = getImageUrl(slug);
 
     return (
