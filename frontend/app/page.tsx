@@ -25,7 +25,7 @@ export default async function Home({ searchParams }: HomeProps) {
             .filter(([, v]) => v && v !== "1")
     ).toString();
 
-    const url = `${SERVER_URL}/images/approved/${queryParams ? `?${queryParams}` : ""}`;
+    const url = `${SERVER_URL}/images/approved${queryParams ? `?${queryParams}` : ""}`;
 
     let imagesData: ImagesData = { count: 0, images: [] };
     try {
