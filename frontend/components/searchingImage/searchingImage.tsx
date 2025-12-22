@@ -1,94 +1,77 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
-import { useSelector } from "react-redux";
+import { useGetCategoriesQuery } from "@/redux/features/categories/categoriesApi";
+import { setKeyword } from "@/redux/features/getImages/getImageSlice";
 import { RootState } from "@/redux/store";
-import { getFetchData } from "@/utils/getFetchData";
-import { SERVER_URL } from "@/utils/api";
+import { ReactIcons } from "@/utils/reactIcons";
+import { getSearchSchema } from "@/utils/searchSchema";
+import Link from "next/link";
+import { useState } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
-import { MainImage } from "../singlepage/mainimage";
-import { Content } from "../singlepage/content";
-import { RelatedImages } from "../relatedImages/related_images";
+// balloon png images
 
-interface SingleImagesProps {
-    image: any;
-    pageUrl: string;
-    slug: string;
-}
+export const SearchingImage: React.FC = () => {
+    const dispatch = useDispatch();
+    const [searchValue, setSearchValue] = useState<string>("");
+    const title = useSelector((state: RootState) => state.search.title);
+    const { IoSearchOutline } = ReactIcons;
 
-export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug }) => {
-    const { title, keyword } = useSelector((state: RootState) => state.search);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const val = e.target.value;
+        setSearchValue(val);
+        dispatch(setKeyword(val));
+    };
 
-    const [singleImageData, setSingleImageData] = useState<any>(image);
-    const [relatedImages, setRelatedImages] = useState<any>(null);
-    const [isLoadingRelated, setIsLoadingRelated] = useState(false);
-    const isFirstRender = useRef(true);
+    const { data: categoriesData } = useGetCategoriesQuery(undefined, { refetchOnMountOrArgChange: true });
 
-    useEffect(() => {
-        const fetchSingleImage = async () => {
-            try {
-                // Build query params dynamically
-                const params = new URLSearchParams();
-                if (title) params.append("search", title);
-                if (keyword) params.append("keyword", keyword);
-
-                const queryString = params.toString();
-                const url = `${SERVER_URL}/images/${slug}/${queryString ? `?${queryString}` : ""}`;
-
-                console.log("Fetching:", url);
-                setIsLoadingRelated(true);
-                const res = await getFetchData(url);
-                setSingleImageData(res);
-                setRelatedImages(res?.results);
-                setIsLoadingRelated(false);
-            } catch (error) {
-                console.error("Error fetching image:", error);
-                setIsLoadingRelated(false);
-            }
-        };
-
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            // Set initial related images if available
-            if (image?.results) {
-                setRelatedImages(image.results);
-            }
-        } else {
-            // Only re-fetch when title/keyword changes
-            if (title || keyword) fetchSingleImage();
-        }
-    }, [title, keyword]);
+    const category_list = categoriesData?.data;
+    const schema = getSearchSchema(title);
 
     return (
-        <>
-            {singleImageData?.image && (
-                <div className="grid grid-cols-1 md:grid-cols-[60%_35%] lg:grid-cols-[60%_35%] xl:grid-cols-[57%_40%] gap-5 lg:gap-10">
-                    <MainImage image={singleImageData} />
-                    <Content image={singleImageData} pageUrl={pageUrl} />
-                </div>
-            )}
-            <div className="block w-full mt-5 md:mt-8">
-                {isLoadingRelated ? (
-                    <section className="relative top-0 left-0 right-0 py-5 w-full bg-[#FBFAFF]">
-                        <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
-                            <div className="flex flex-col flex-wrap gap-y-5 w-full">
-                                <h2 className="text-base md:text-2xl font-semibold text-center uppercase">Loading related images...</h2>
-                                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5 basis-full">
-                                    {[...Array(8)].map((_, i) => (
-                                        <div key={i} className="block w-full relative rounded-2xl border border-gray-300 shadow-sm overflow-hidden animate-pulse bg-gray-200 min-h-[200px] sm:min-h-[220px] md:min-h-[250px] lg:min-h-[350px]">
-                                            <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200"></div>
-                                        </div>
-                                    ))}
-                                </div>
+        <section className="relative top-0 left-0 right-0 pb-2.5 md:pb-5 w-full bg-[#0077a2]">
+            <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
+                <div className="flex flex-col flex-wrap items-center justify-center gap-y-5 w-full">
+                    <h1 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-center uppercase">
+                        Free download transparent png files
+                    </h1>
+                    <div className="flex flex-col flex-wrap w-full lg:w-[95%] xl:w-[60%] relative">
+                        <input
+                            className="bg-transparent text-white placeholder:text-white text-sm xl:text-base font-normal pl-4 md:pl-5 pr-[12%] md:pr-20 py-3 sm:py-4 border md:border-2 border-white outline-none rounded-full w-full [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none"
+                            type="search"
+                            name="search"
+                            placeholder="Search images..."
+                            value={searchValue}
+                            onChange={handleInputChange}
+                        />
+                        <button
+                            className="absolute right-3 sm:right-4 md:right-5 top-1/2 -translate-y-1/2 cursor-pointer"
+                            type="button"
+                        >
+                            <IoSearchOutline className="text-white text-3xl md:text-4xl font-bold" />
+                        </button>
+                        <script
+                            type="application/ld+json"
+                            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+                        />
+                    </div>
+                    <div className="flex flex-row flex-wrap gap-1.5 md:gap-3.5 items-center justify-center w-full lg:w-[95%] xl:w-[62%] pb-2.5">
+                        {category_list?.map((item: any) => (
+                            <div key={item.id}>
+                                <Link
+                                    className="text-white text-xs xl:text-base font-medium cursor-pointer border-b md:border-b-2 hover:text-gray-300 duration-300"
+                                    type="button"
+                                    href={`/categories/${item.slug}`}
+                                >
+                                    {item.name}
+                                </Link>
                             </div>
-                        </div>
-                    </section>
-                ) : (
-                    relatedImages && <RelatedImages images={relatedImages} />
-                )}
+                        ))}
+                    </div>
+                </div>
             </div>
-        </>
+        </section>
     );
-};
+}
