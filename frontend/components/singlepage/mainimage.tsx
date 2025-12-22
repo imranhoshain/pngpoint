@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
+
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 import bgShape from "../../public/bg-shape.jpg";
 import { siteConfig, getImageUrl } from "@/config/site";
 
@@ -9,6 +11,8 @@ interface MainImageProps {
 }
 
 export const MainImage: React.FC<MainImageProps> = ({ image }) => {
+    const [isLoaded, setIsLoaded] = useState(false);
+
     return (
         <div className="flex flex-col flex-wrap gap-y-2.5 md:gap-y-5 w-full h-full">
             <div className="relative rounded-2xl border border-gray-300 cursor-pointer shadow-md group h-full">
@@ -41,14 +45,22 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
                                 "@type": "Organization",
                                 name: siteConfig.siteName,
                             },
-
                             exifData: image.exifData || [],
                         }),
                     }}
                 />
                 <div className="flex flex-col flex-wrap justify-center items-center w-full h-full z-50 relative overflow-hidden">
+                    {/* Skeleton loader - shows while main image is loading */}
+                    {!isLoaded && (
+                        <div className="absolute inset-0 flex items-center justify-center bg-gray-200 rounded-2xl">
+                            <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-pulse rounded-2xl"></div>
+                            <div className="absolute text-gray-400 text-sm">Loading image...</div>
+                        </div>
+                    )}
+                    
                     <div className="rounded-2xl bg-center bg-no-repeat bg-cover opacity-0 absolute top-0 right-0 left-0 w-full h-full group-hover:opacity-100 transition-all duration-300 ease-in-out" style={{ backgroundImage: `url(${bgShape.src})` }}></div>
-                    <div className="flex flex-col flex-wrap justify-center items-center p-2.5 z-50">
+                    
+                    <div className={`flex flex-col flex-wrap justify-center items-center p-2.5 z-50 transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
                         <Image
                             className="w-auto h-auto max-h-[350px] md:max-h-[600px]"
                             src={image?.image?.main_url}
@@ -57,6 +69,8 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
                             content={image?.image?.description}
                             width={500}
                             height={600}
+                            priority
+                            onLoad={() => setIsLoaded(true)}
                         />
                     </div>
                 </div>

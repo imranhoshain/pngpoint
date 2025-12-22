@@ -3,7 +3,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import Image from "next/image";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import bgShape from "../../public/bg-shape.jpg";
 import { Download } from "../download/download";
 import { siteConfig, getImageUrl } from "@/config/site";
@@ -13,12 +13,17 @@ interface ImagesProps {
 }
 
 export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
+    const [loadedImages, setLoadedImages] = useState<Set<string>>(new Set());
 
     const handleRelatedImageClick = () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth',
         });
+    };
+
+    const handleImageLoad = (imageId: string) => {
+        setLoadedImages(prev => new Set(prev).add(imageId));
     };
 
     return (
@@ -28,6 +33,8 @@ export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
                     <h2 className="text-base md:text-2xl font-semibold text-center uppercase">below are more related png files</h2>
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5 basis-full">
                         {images?.map((image: any) => {
+                            const isLoaded = loadedImages.has(image.id);
+                            
                             return (
                                 <div className="block w-full h-full relative rounded-2xl border border-gray-300 shadow-sm group" key={image.id} onClick={() => handleRelatedImageClick()}>
                                     <Link
@@ -35,43 +42,51 @@ export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
                                         href={`/image/${image.slug}/`}
                                     >
                                         <script
-                                                type="application/ld+json"
-                                                dangerouslySetInnerHTML={{
-                                                    __html: JSON.stringify({
-                                                        "@context": "https://schema.org",
-                                                        "@type": "ImageObject",
-                                                        name: image.title,
-                                                        description: image.description || image.title,
-                                                        author: {
-                                                            "@type": "Organization",
-                                                            name: siteConfig.siteName,
-                                                            url: siteConfig.url,
-                                                        },
-                                                        contentUrl: image.cloudflare_url,
-                                                        url: getImageUrl(image.slug),
-                                                        datePublished: new Date(image.created_at).toLocaleString("en-US", {
-                                                            timeZone: "Asia/Dhaka",
-                                                            year: "numeric",
-                                                            month: "2-digit",
-                                                            day: "2-digit",
-                                                            hour: "2-digit",
-                                                            minute: "2-digit",
-                                                            second: "2-digit",
-                                                        }),
-                                                        width: image.width || 352,
-                                                        height: image.height || 352,
-                                                        license: siteConfig.licenseUrl,
-                                                        copyrightHolder: {
-                                                            "@type": "Organization",
-                                                            name: siteConfig.siteName,
-                                                        },
-                                                        exifData: image.exifData || [],
+                                            type="application/ld+json"
+                                            dangerouslySetInnerHTML={{
+                                                __html: JSON.stringify({
+                                                    "@context": "https://schema.org",
+                                                    "@type": "ImageObject",
+                                                    name: image.title,
+                                                    description: image.description || image.title,
+                                                    author: {
+                                                        "@type": "Organization",
+                                                        name: siteConfig.siteName,
+                                                        url: siteConfig.url,
+                                                    },
+                                                    contentUrl: image.cloudflare_url,
+                                                    url: getImageUrl(image.slug),
+                                                    datePublished: new Date(image.created_at).toLocaleString("en-US", {
+                                                        timeZone: "Asia/Dhaka",
+                                                        year: "numeric",
+                                                        month: "2-digit",
+                                                        day: "2-digit",
+                                                        hour: "2-digit",
+                                                        minute: "2-digit",
+                                                        second: "2-digit",
                                                     }),
-                                                }}
-                                            /> 
-                                            
+                                                    width: image.width || 352,
+                                                    height: image.height || 352,
+                                                    license: siteConfig.licenseUrl,
+                                                    copyrightHolder: {
+                                                        "@type": "Organization",
+                                                        name: siteConfig.siteName,
+                                                    },
+                                                    exifData: image.exifData || [],
+                                                }),
+                                            }}
+                                        /> 
+                                        
+                                        {/* Skeleton loader */}
+                                        {!isLoaded && (
+                                            <div className="absolute inset-0 bg-gray-200 animate-pulse rounded-2xl">
+                                                <div className="w-full h-full bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 animate-shimmer"></div>
+                                            </div>
+                                        )}
+                                        
                                         <div className="rounded-2xl bg-center bg-no-repeat bg-cover opacity-0 absolute top-0 right-0 left-0 w-full h-full group-hover:opacity-100 transition-all duration-300 ease-in-out" style={{ backgroundImage: `url(${bgShape.src})` }}></div>
-                                        <div className="flex flex-col flex-wrap justify-center items-center z-50">
+                                        
+                                        <div className={`flex flex-col flex-wrap justify-center items-center z-50 transition-opacity duration-300 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
                                             <Image
                                                 className="w-auto h-auto"
                                                 src={image.cloudflare_url}
@@ -80,10 +95,15 @@ export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
                                                 content={image.description}
                                                 width={352}
                                                 height={352}
+                                                loading="lazy"
+                                                onLoad={() => handleImageLoad(image.id)}
+                                                placeholder="blur"
+                                                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGA60e6kgAAAABJRU5ErkJggg=="
                                             />
                                         </div>
+                                        
                                         <div
-                                            className="absolute bottom-0 right-0 left-0 w-full px-2.5 py-2.5 text-white/80 text-sm bg-black/80 z-50 rounded-b-2xl translate-y-full group-hover:translate-y-0 transition-all duration-400 ease-in-out"
+                                            className={`absolute bottom-0 right-0 left-0 w-full px-2.5 py-2.5 text-white/80 text-sm bg-black/80 z-50 rounded-b-2xl translate-y-full group-hover:translate-y-0 transition-all duration-400 ease-in-out ${!isLoaded ? 'invisible' : 'visible'}`}
                                         >
                                             <p className="text-sm font-normal text-center line-clamp-3">{image.title}</p>
                                         </div>
