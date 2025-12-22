@@ -13,7 +13,7 @@ import { Content } from "../singlepage/content";
 import { RelatedImages } from "../relatedImages/related_images";
 
 interface SingleImagesProps {
-    image: any;
+    image?: any;
     pageUrl: string;
     slug: string;
 }
@@ -69,16 +69,15 @@ const RelatedImagesSkeleton = () => (
 export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug }) => {
     const { title, keyword } = useSelector((state: RootState) => state.search);
 
-    // State management
+    // ALWAYS START WITH LOADING STATE - This ensures skeletons show immediately
     const [singleImageData, setSingleImageData] = useState<any>(null);
     const [relatedImages, setRelatedImages] = useState<any>(null);
-    const [isLoadingMain, setIsLoadingMain] = useState(true);
-    const [isLoadingRelated, setIsLoadingRelated] = useState(true);
+    const [isLoadingMain, setIsLoadingMain] = useState(true); // Start as loading
+    const [isLoadingRelated, setIsLoadingRelated] = useState(true); // Start as loading
     
     const prevSearchRef = useRef({ title: "", keyword: "" });
     const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
     const abortControllerRef = useRef<AbortController | null>(null);
-    const isMountedRef = useRef(true);
 
     // Fetch main image data
     const fetchMainImage = async (searchTitle?: string, searchKeyword?: string) => {
@@ -97,25 +96,24 @@ export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug
             const queryString = params.toString();
             const url = `${SERVER_URL}/images/${slug}${queryString ? `?${queryString}` : ""}`;
 
-            console.log("Fetching main image:", url);
-            setIsLoadingMain(true);
+            console.log("Fetching:", url);
 
             const res = await getFetchData(url, {
                 signal: abortControllerRef.current.signal
             });
 
-            if (isMountedRef.current) {
-                setSingleImageData(res);
-                setIsLoadingMain(false);
-                
-                // Set related images if they come with main response
-                if (res?.results) {
-                    setRelatedImages(res.results);
-                    setIsLoadingRelated(false);
-                }
+            setSingleImageData(res);
+            setIsLoadingMain(false);
+            
+            // Set related images if they come with main response
+            if (res?.results) {
+                setRelatedImages(res.results);
+                setIsLoadingRelated(false);
+            } else {
+                setIsLoadingRelated(false);
             }
         } catch (error: any) {
-            if (error.name !== 'AbortError' && isMountedRef.current) {
+            if (error.name !== 'AbortError') {
                 console.error("Error fetching main image:", error);
                 setIsLoadingMain(false);
                 setIsLoadingRelated(false);
@@ -123,65 +121,40 @@ export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug
         }
     };
 
-    // Fetch related images separately (optional optimization)
-    const fetchRelatedImagesOnly = async (searchTitle?: string, searchKeyword?: string) => {
-        try {
-            const params = new URLSearchParams();
-            if (searchTitle) params.append("search", searchTitle);
-            if (searchKeyword) params.append("keyword", searchKeyword);
-            params.append("limit", "12");
-
-            const queryString = params.toString();
-            const url = `${SERVER_URL}/images/${slug}/related?${queryString}`;
-
-            console.log("Fetching related images:", url);
-
-            const res = await getFetchData(url);
-
-            if (isMountedRef.current) {
-                setRelatedImages(res?.results || res);
-                setIsLoadingRelated(false);
-            }
-        } catch (error) {
-            if (isMountedRef.current) {
-                console.error("Error fetching related images:", error);
-                setIsLoadingRelated(false);
-            }
-        }
-    };
-
-    // Initial load on mount
+    // Initial load - runs immediately on mount
     useEffect(() => {
-        isMountedRef.current = true;
-
-        // If we have initial image data from props, use it
-        if (image?.image) {
+        console.log("Component mounted, starting fetch...");
+        
+        // If we have initial data from props, use it immediately
+        if (image && image.image) {
+            console.log("Using initial data from props");
             setSingleImageData(image);
             setIsLoadingMain(false);
             
-            if (image?.results) {
+            if (image.results) {
                 setRelatedImages(image.results);
                 setIsLoadingRelated(false);
             } else {
-                // Fetch related images separately after a short delay
-                setTimeout(() => {
-                    fetchRelatedImagesOnly(title, keyword);
-                }, 100);
+                // Still loading related images
+                setIsLoadingRelated(true);
             }
-        } else {
-            // No initial data, fetch everything
-            fetchMainImage(title, keyword);
         }
+        
+        // Always fetch fresh data (even if we have initial data)
+        // Use setTimeout with 0 to ensure it runs after render
+        const timeoutId = setTimeout(() => {
+            fetchMainImage(title, keyword);
+        }, 0);
 
         return () => {
-            isMountedRef.current = false;
+            clearTimeout(timeoutId);
             if (abortControllerRef.current) {
                 abortControllerRef.current.abort();
             }
         };
-    }, []);
+    }, []); // Only run once on mount
 
-    // Handle search changes
+    // Handle search changes with debounce
     useEffect(() => {
         const hasSearchChanged = 
             prevSearchRef.current.title !== title || 
@@ -200,6 +173,7 @@ export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug
 
         // Debounce search by 500ms
         debounceTimerRef.current = setTimeout(() => {
+            setIsLoadingMain(true);
             setIsLoadingRelated(true);
             fetchMainImage(title, keyword);
         }, 500);
@@ -211,9 +185,10 @@ export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug
         };
     }, [title, keyword]);
 
+    // RENDER IMMEDIATELY - Always show something, never return null
     return (
         <>
-            {/* Main Image Section - Always render, show skeleton while loading */}
+            {/* Main Image Section - ALWAYS visible */}
             <div className="grid grid-cols-1 md:grid-cols-[60%_35%] lg:grid-cols-[60%_35%] xl:grid-cols-[57%_40%] gap-5 lg:gap-10">
                 {isLoadingMain ? (
                     <>
@@ -227,16 +202,16 @@ export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug
                     </>
                 ) : (
                     <div className="col-span-full text-center py-10">
-                        <p className="text-gray-500">Image not found</p>
+                        <p className="text-gray-500 text-lg">Image not found</p>
                     </div>
                 )}
             </div>
 
-            {/* Related Images Section - Always render, show skeleton while loading */}
+            {/* Related Images Section - ALWAYS visible */}
             <div className="block w-full mt-5 md:mt-8">
                 {isLoadingRelated ? (
                     <RelatedImagesSkeleton />
-                ) : relatedImages ? (
+                ) : relatedImages && relatedImages.length > 0 ? (
                     <RelatedImages images={relatedImages} />
                 ) : (
                     <div className="text-center py-10">
