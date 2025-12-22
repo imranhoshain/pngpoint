@@ -2,7 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { getFetchData } from "@/utils/getFetchData";
@@ -22,44 +22,72 @@ export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug
     const { title, keyword } = useSelector((state: RootState) => state.search);
 
     const [singleImageData, setSingleImageData] = useState<any>(image);
-    const [relatedImages, setRelatedImages] = useState<any>(null);
+    const [relatedImages, setRelatedImages] = useState<any>(image?.results || null);
     const [isLoadingRelated, setIsLoadingRelated] = useState(false);
-    const isFirstRender = useRef(true);
+    
+    // Track previous search values to avoid unnecessary refetches
+    const prevSearchRef = useRef({ title: "", keyword: "" });
+    const debounceTimerRef = useRef<NodeJS.Timeout | null>(null);
+
+    const fetchSingleImage = useCallback(async (searchTitle: string, searchKeyword: string) => {
+        try {
+            // Build query params dynamically
+            const params = new URLSearchParams();
+            if (searchTitle) params.append("search", searchTitle);
+            if (searchKeyword) params.append("keyword", searchKeyword);
+
+            const queryString = params.toString();
+            const url = `${SERVER_URL}/images/${slug}${queryString ? `?${queryString}` : ""}`;
+
+            console.log("Fetching:", url);
+            setIsLoadingRelated(true);
+            
+            const res = await getFetchData(url);
+            
+            setSingleImageData(res);
+            setRelatedImages(res?.results);
+        } catch (error) {
+            console.error("Error fetching image:", error);
+        } finally {
+            setIsLoadingRelated(false);
+        }
+    }, [slug]);
 
     useEffect(() => {
-        const fetchSingleImage = async () => {
-            try {
-                // Build query params dynamically
-                const params = new URLSearchParams();
-                if (title) params.append("search", title);
-                if (keyword) params.append("keyword", keyword);
+        // Check if search parameters actually changed
+        const hasSearchChanged = 
+            prevSearchRef.current.title !== title || 
+            prevSearchRef.current.keyword !== keyword;
 
-                const queryString = params.toString();
-                const url = `${SERVER_URL}/images/${slug}/${queryString ? `?${queryString}` : ""}`;
+        if (!hasSearchChanged) {
+            return; // No change, skip fetch
+        }
 
-                console.log("Fetching:", url);
-                setIsLoadingRelated(true);
-                const res = await getFetchData(url);
-                setSingleImageData(res);
-                setRelatedImages(res?.results);
-                setIsLoadingRelated(false);
-            } catch (error) {
-                console.error("Error fetching image:", error);
-                setIsLoadingRelated(false);
+        // Update previous search ref
+        prevSearchRef.current = { title: title || "", keyword: keyword || "" };
+
+        // Only fetch if there's a search term
+        if (!title && !keyword) {
+            return;
+        }
+
+        // Clear existing timer
+        if (debounceTimerRef.current) {
+            clearTimeout(debounceTimerRef.current);
+        }
+
+        // Debounce the fetch by 500ms
+        debounceTimerRef.current = setTimeout(() => {
+            fetchSingleImage(title || "", keyword || "");
+        }, 500);
+
+        // Cleanup
+        return () => {
+            if (debounceTimerRef.current) {
+                clearTimeout(debounceTimerRef.current);
             }
         };
-
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
-            // Set initial related images if available
-            if (image?.results) {
-                setRelatedImages(image.results);
-            }
-        } else {
-            // Only re-fetch when title/keyword changes
-            if (title || keyword) fetchSingleImage();
-        }
-    }, [title, keyword]);
+    }, [title, keyword, fetchSingleImage]);
 
     return (
         <>
