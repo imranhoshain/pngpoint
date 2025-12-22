@@ -16,7 +16,7 @@ export default function SingleCategory() {
     useEffect(() => {
         const fetchCategory = async () => {
             try {
-                const res = await fetch(`${SERVER_URL}/images/categories/${slug}/`, {
+                const res = await fetch(`${SERVER_URL}/images/categories/${slug}`, {
                     next: {revalidate: 180}
                 });
                 if (!res.ok) throw new Error("Failed to fetch category");

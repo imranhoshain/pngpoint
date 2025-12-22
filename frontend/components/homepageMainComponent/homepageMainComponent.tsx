@@ -62,7 +62,7 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
             const nextPath = queryParams ? `/?${queryParams}` : "/";
             router.push(nextPath, { scroll: false });
 
-            const url = `${SERVER_URL}/images/approved/${queryParams ? `?${queryParams}` : ""}`;
+            const url = `${SERVER_URL}/images/approved${queryParams ? `?${queryParams}` : ""}`;
             try {
                 const data = await getFetchData(url, { next: { revalidate: 120 } });
                 setImagesData(data);

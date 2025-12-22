@@ -84,7 +84,7 @@ CORS_ALLOWED_ORIGINS = get_cors_allowed_origins()
 
 CSRF_TRUSTED_ORIGINS = get_csrf_trusted_origins()
 
-APPEND_SLASH = True
+APPEND_SLASH = False
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://.*\.replit\.dev$",
@@ -125,8 +125,7 @@ SIMPLE_JWT["AUTH_COOKIE_SAMESITE"] = "Strict"
 SILENCED_SYSTEM_CHECKS = []
 
 REDIS_CACHE_URL = os.getenv('REDIS_CACHE_URL', '')
-USE_REDIS = os.getenv('USE_REDIS', 'false').lower() in ('true', '1', 'yes')
-
+USE_REDIS = os.getenv("USE_REDIS", "false").lower() in ("true", "1", "yes")
 if REDIS_CACHE_URL and USE_REDIS and not DEBUG:
     CACHES = {
         "default": {

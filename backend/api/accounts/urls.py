@@ -8,57 +8,57 @@ from api.accounts.views.forgot_password import ForgotPasswordViewSet, ResetPassw
 
 urlpatterns = [
     path(
-        'user/register/',
+        'user/register',
         RegisterViewSet.as_view({ 'post' : 'create' }),
         name='register',
     ),
     path(
-        'user/login/',
+        'user/login',
         UserLoginView.as_view(),
         name='login',
     ),
     path(
-        'admin/login/',
+        'admin/login',
         AdminLoginView.as_view(),
         name='admin_login',
     ),
     path(
-        'user/profile/',
+        'user/profile',
         UserProfileView.as_view({'get': 'list'}),
         name='user_profile',
     ),
     path(
-        'user/profile/update/',
+        'user/profile/update',
         UserProfileUpdateView.as_view({ 'patch': 'update' }),
         name='user_profile_update',
     ),
     path(
-        'user/password/change/',
+        'user/password/change',
         UserPasswodChangeView.as_view({'post': 'post'}),
         name='user_passwod_change',
     ),
     path(
-        'user/forgot-password/',
+        'user/forgot-password',
         ForgotPasswordViewSet.as_view({'post': 'post'}),
         name='forgot_password',
     ),
     path(
-        'user/reset-password/<uidb64>/<token>/',
+        'user/reset-password/<uidb64>/<token>',
         ResetPasswordViewSet.as_view({'post': 'post'}),
         name='reset_password',
     ),
     path(
-        'users-list/',
+        'users-list',
         UserListView.as_view({ 'get': 'list' }),
         name='users_list',
     ),
     path(
-        'user/download-count/',
+        'user/download-count',
         UserDownloadCountViewSet.as_view({ 'get': 'list' }),
         name='user_download_count',
     ),
     path(
-        'user/admin/update/<int:pk>/',
+        'user/admin/update/<int:pk>',
         AdminUpdateUserViewSet.as_view({'patch': 'update'}),
         name='update_user',
     ),

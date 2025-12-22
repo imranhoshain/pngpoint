@@ -15,19 +15,19 @@ from api.images.views.upload import ImagesUploadAPIView
 urlpatterns = [
     # IMAGE UPLOAD ROUTE
     path(
-        "upload/", 
+        "upload", 
         ImagesUploadAPIView.as_view(),
         name="upload_images"
     ),
 
     # CATEGORIES ALL ROUTES 
     path(
-        "categories/", 
+        "categories", 
         CategoriesViewSet.as_view({"get": "list", "post": "create"}), 
         name="categories_list_create",
     ),
     path(
-        "categories/<int:pk>/", 
+        "categories/<int:pk>", 
         CategoriesViewSet.as_view({
             "put": "update",
             "patch": "partial_update",
@@ -36,19 +36,19 @@ urlpatterns = [
         name="categories_admin",
     ),
     path(
-        "categories/<slug:slug>/",
+        "categories/<slug:slug>",
         CategoriesViewSet.as_view({"get": "retrieve"}),
         name="categories_detail_slug",
     ),
 
     # SUB CATEGORIES ALL ROUTES
     path(
-        "sub-categories/",
+        "sub-categories",
         SubCategoriesViewSet.as_view({"get": "list", "post": "create"}),
         name="sub_categories_list_create",
     ),
     path(
-        "sub-categories/<int:pk>/",
+        "sub-categories/<int:pk>",
         SubCategoriesViewSet.as_view({
             "put": "update",
             "patch": "partial_update",
@@ -57,157 +57,157 @@ urlpatterns = [
         name="sub_categories_admin",
     ),
     path(
-        "sub-categories/<str:slug>/",
+        "sub-categories/<str:slug>",
         SubCategoriesViewSet.as_view({"get": "retrieve"}),
         name="sub_categories_detail_slug",
     ),
 
     # TOTAL IMAGES ALL ROUTES
     path(
-        'total/',
+        'total',
         TotalImagesViewSet.as_view({ 'get': 'list' }),
         name='total_images'
     ),
     path(
-        'total-images-length/',
+        'total-images-length',
         TotalImagesLenghtView.as_view({ 'get' : 'list' }),
         name='total_images_lenght',
     ),
     path(
-        'user/total/',
+        'user/total',
         UserTotalImagesViewSet.as_view({ 'get': 'list' }),
         name='user_total_images'
     ),
     path(
-        'user/total-images-length/',
+        'user/total-images-length',
         UserTotalImagesLengthView.as_view({ 'get' : 'list' }),
         name='total_images_lenght',
     ),
 
     # PENDING IMAGES ALL ROUTES
     path(
-        'pending/',
+        'pending',
         PendingImagesViewSet.as_view({ 'get' : 'list' }),
         name='pending_images'
     ),
     path(
-        'pending-images-length/',
+        'pending-images-length',
         PendingImagesLenghtView.as_view({ 'get' : 'list' }),
         name='pending_images_lenght',
     ),
     path(
-        'user/pending/',
+        'user/pending',
         UserPendingImagesViewSet.as_view({ 'get' : 'list' }),
         name='pending_images'
     ),
     path(
-        'user/pending-images-length/',
+        'user/pending-images-length',
         UserPendingImagesLengthView.as_view({ 'get' : 'list' }),
         name='pending_images_lenght',
     ),
 
     # APPROVED IMAGES ALL ROUTES
     path(
-        'approved/',
+        'approved',
         ApprovedImagesViewSet.as_view({ 'get' : 'list' }),
         name='approved_images'
     ),
     path(
-        'user/approved/',
+        'user/approved',
         UserApprovedImagesViewSet.as_view({ 'get' : 'list' }),
         name='approved_images'
     ),
     path(
-        'approved-images-length/',
+        'approved-images-length',
         ApprovedImagesLenghtView.as_view({ 'get' : 'list' }),
         name='approved_images_lenght',
     ),
     path(
-        'user/approved-images-length/',
+        'user/approved-images-length',
         UserApprovedImagesLengthView.as_view({ 'get' : 'list' }),
         name='approved_images_lenght',
     ),
 
     # REJECTED IMAGES ALL ROUTES
     path(
-        'rejected/',
+        'rejected',
         RejectedImagesViewSet.as_view({ 'get' : 'list' }),
         name='rejected_images'
     ),
     path(
-        'rejected-images-length/',
+        'rejected-images-length',
         RejectedImagesLenghtView.as_view({ 'get' : 'list' }),
         name='rejected_images_lenght',
     ),
     path(
-        'user/rejected/',
+        'user/rejected',
         UserRejectedImagesViewSet.as_view({ 'get' : 'list' }),
         name='rejected_images'
     ),
     path(
-        'user/rejected-images-length/',
+        'user/rejected-images-length',
         UserRejectedImagesLengthView.as_view({ 'get' : 'list' }),
         name='rejected_images_lenght',
     ),
 
     # IMAGE DOWNLOAD ROUTE
     path(
-        'all-download/',
+        'all-download',
         AllImageDownloadCountViewSet.as_view({'get': 'list'}),
         name='all_download_image'
     ),
     path(
-        'all-contributor-download/',
+        'all-contributor-download',
         AllImageContributorDownloadCountViewSet.as_view({'get': 'list'}),
         name='all_contributor_download',
     ),
 
     # KEYWORDS ALL ROUTES
     path(
-        'keywords/',
+        'keywords',
         KeywordsView.as_view(),
         name='keywords',
     ),
 
     # IMAGES UPDATED
     path(
-        'update/<int:pk>/',
+        'update/<int:pk>',
         SingleImageUpdateView.as_view({'put': 'update'}),
         name='single_imageUpdate',
     ),
     path(
-        'bulk-update/',
+        'bulk-update',
         SelectedImageUpdateView.as_view({'put': 'update'}),
         name='bulk-image-update',
     ),
 
     # IMAGES DELETED ALL ROUTES
     path(
-        'delete-all/',
+        'delete-all',
         ALLImageDeleteView.as_view({'delete': 'destroy'}),
         name='all_image_delete',
     ),
     path(
-        'deletes/',
+        'deletes',
         NumberOfImageDeleteView.as_view(),
         name='number_of_image_delete',
     ),
     path(
-        'delete/<int:pk>/',
+        'delete/<int:pk>',
         SingleImageDeleteView.as_view({'delete': 'destroy'}),
         name='single_image_delete',
     ),
 
     # SINGLE IMAGE ALL ROUTES
     path(
-        "<str:slug>/",
+        "<str:slug>",
         SingleImageView.as_view({"get": "retrieve"}),
         name="single_image_detail",
     ),
 
     # IMAGE DOWNLOAD ROUTE
     path(
-        "download/<str:pk>/",
+        "download/<str:pk>",
         DownloadImageViewSet.as_view({"get": "retrieve"}),
         name='download_image',
     ),

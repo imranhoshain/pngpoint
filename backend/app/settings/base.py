@@ -70,18 +70,18 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'middleware.ddos_protection.DDoSProtectionMiddleware',
-    'middleware.ddos_protection.RequestSizeLimitMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.middleware.gzip.GZipMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'middleware.ddos_protection.SecurityHeadersMiddleware',
+    "corsheaders.middleware.CorsMiddleware",
+    "middleware.ddos_protection.DDoSProtectionMiddleware",
+    "middleware.ddos_protection.RequestSizeLimitMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "django.middleware.gzip.GZipMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "middleware.ddos_protection.SecurityHeadersMiddleware",
 ]
 
 DDOS_MAX_REQUESTS = env.int('DDOS_MAX_REQUESTS', default=120)
