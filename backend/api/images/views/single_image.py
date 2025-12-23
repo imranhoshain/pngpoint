@@ -1,4 +1,5 @@
 from django.db.models import Prefetch
+from django.core.cache import cache
 from rest_framework import viewsets, status
 from rest_framework.permissions import AllowAny
 from rest_framework.renderers import JSONRenderer
@@ -19,26 +20,46 @@ class SingleImageView(viewsets.ViewSet):
     throttle_classes = [PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle]
 
     def retrieve(self, request, slug=None):
+        # ---------------- BUILD CACHE KEY ----------------
+        search_term = request.GET.get("search", "")
+        keyword_term = request.GET.get("keyword", "")
+        
+        # Create a unique cache key based on slug and query parameters
+        cache_key = f"single_image:{slug}"
+        if search_term:
+            cache_key += f":search:{GENERATE_SLUG(search_term)}"
+        if keyword_term:
+            cache_key += f":keyword:{GENERATE_SLUG(keyword_term)}"
+        
+        # ---------------- CHECK CACHE ----------------
+        cached_data = cache.get(cache_key)
+        if cached_data:
+            print(f"Cache HIT for key: {cache_key}")
+            return Response(cached_data, status=status.HTTP_200_OK)
+        
+        print(f"Cache MISS for key: {cache_key}")
+        
         # ---------------- MAIN IMAGE ----------------
         image = Images.objects.select_related(
             'user', 'category', 'sub_category'
         ).prefetch_related("keywords").filter(slug=slug).first()
+        
         if not image:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
         # ---------------- MAIN IMAGE KEYWORDS ----------------
         main_keywords = list(image.keywords.all().order_by("id"))
         if not main_keywords:
-            return Response(
-                {
-                    "count": 0,
-                    "results": [],
-                    "image": SingleImageSerializer(image).data,
-                    "success": True,
-                    "message": "No keywords found for this image.",
-                },
-                status=status.HTTP_200_OK,
-            )
+            response_data = {
+                "count": 0,
+                "results": [],
+                "image": SingleImageSerializer(image).data,
+                "success": True,
+                "message": "No keywords found for this image.",
+            }
+            # Cache for 1 hour (3600 seconds)
+            cache.set(cache_key, response_data, timeout=3600)
+            return Response(response_data, status=status.HTTP_200_OK)
 
         first_kw = main_keywords[0]
         first_kw_slug = first_kw.slug
@@ -63,9 +84,6 @@ class SingleImageView(viewsets.ViewSet):
         related_list = related_list[:50]
 
         # ---------------- OPTIONAL SEARCH / KEYWORD FILTERS (OR) ----------------
-        search_term = request.GET.get("search")
-        keyword_term = request.GET.get("keyword")
-
         if search_term or keyword_term:
             slugs_to_match = []
             if search_term:
@@ -99,5 +117,10 @@ class SingleImageView(viewsets.ViewSet):
             "success": True,
             "message": "Image with related images (based on first keyword and optional search/keyword) fetched successfully.",
         }
+
+        # ---------------- CACHE THE RESPONSE ----------------
+        # Cache for 1 hour (3600 seconds) - adjust timeout as needed
+        cache.set(cache_key, response_data, timeout=3600)
+        print(f"Response cached with key: {cache_key}")
 
         return Response(response_data, status=status.HTTP_200_OK)
