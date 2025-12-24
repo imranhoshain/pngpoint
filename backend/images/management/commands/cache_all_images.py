@@ -1,4 +1,5 @@
 import time
+import json
 
 from api.images.serializers.single_image import SingleImageSerializer
 from django.core.cache import cache
@@ -13,6 +14,8 @@ from images.services.cloudflare import (
 
 class Command(BaseCommand):
     help = "Pre-cache all images for SingleImageView to improve performance"
+
+    PROGRESS_KEY = "image_cache_progress"
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -46,14 +49,24 @@ class Command(BaseCommand):
         parser.add_argument(
             "--start-from",
             type=int,
-            default=0,
-            help="Start from specific chunk number (useful for resuming)",
+            default=None,
+            help="Start from specific chunk number (overrides auto-resume)",
         )
         parser.add_argument(
             "--limit",
             type=int,
             default=None,
             help="Limit total number of images to cache",
+        )
+        parser.add_argument(
+            "--reset-progress",
+            action="store_true",
+            help="Reset saved progress and start from beginning",
+        )
+        parser.add_argument(
+            "--no-auto-resume",
+            action="store_true",
+            help="Disable automatic resume from last position",
         )
 
     def handle(self, *args, **options):
@@ -62,12 +75,19 @@ class Command(BaseCommand):
         timeout = options["timeout"]
         clear_first = options["clear_first"]
         dry_run = options["dry_run"]
-        start_from = options["start_from"]
+        manual_start_from = options["start_from"]
         limit = options["limit"]
+        reset_progress = options["reset_progress"]
+        no_auto_resume = options["no_auto_resume"]
 
         self.stdout.write(self.style.SUCCESS("=" * 70))
         self.stdout.write(self.style.SUCCESS("Starting Image Caching Process"))
         self.stdout.write(self.style.SUCCESS("=" * 70))
+
+        # Reset progress if requested
+        if reset_progress:
+            self._clear_progress()
+            self.stdout.write(self.style.WARNING("✓ Progress reset\n"))
 
         # Clear existing cache if requested
         if clear_first:
@@ -83,6 +103,7 @@ class Command(BaseCommand):
                             "⚠ Pattern deletion not available, cleared entire cache"
                         )
                     )
+            self._clear_progress()
 
         # Get total count
         total_images = Images.objects.count()
@@ -90,6 +111,26 @@ class Command(BaseCommand):
         if limit:
             total_images = min(total_images, limit)
             self.stdout.write(self.style.WARNING(f"Limiting to {limit} images"))
+
+        # Determine starting point
+        saved_progress = self._get_progress()
+
+        if manual_start_from is not None:
+            start_from = manual_start_from
+            self.stdout.write(
+                self.style.WARNING(f"Manual start specified: chunk {start_from}")
+            )
+        elif saved_progress and not no_auto_resume:
+            start_from = saved_progress.get("last_completed_chunk", 0) + 1
+            if start_from > 0:
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"Resuming from previous run: chunk {start_from} "
+                        f"(progress: {saved_progress.get('progress', 0):.1f}%)"
+                    )
+                )
+        else:
+            start_from = 0
 
         self.stdout.write(f"\nTotal images to cache: {total_images}")
         self.stdout.write(f"Chunk size: {chunk_size}")
@@ -111,7 +152,7 @@ class Command(BaseCommand):
         if start_from > 0:
             self.stdout.write(
                 self.style.WARNING(
-                    f"Resuming from chunk {start_from + 1}/{total_chunks}"
+                    f"Starting from chunk {start_from + 1}/{total_chunks}\n"
                 )
             )
 
@@ -124,76 +165,115 @@ class Command(BaseCommand):
             "start_time": time.time(),
         }
 
-        # Process in chunks
-        for chunk_num in range(start_chunk, total_chunks):
-            offset = chunk_num * chunk_size
+        # Load previous stats if resuming
+        if saved_progress and not manual_start_from:
+            prev_stats = saved_progress.get("stats", {})
+            stats["total"] = prev_stats.get("total", 0)
+            stats["cached"] = prev_stats.get("cached", 0)
+            stats["skipped"] = prev_stats.get("skipped", 0)
+            stats["errors"] = prev_stats.get("errors", 0)
 
-            # Apply limit
-            remaining = total_images - offset
-            current_chunk_size = min(chunk_size, remaining) if limit else chunk_size
+        try:
+            # Process in chunks
+            for chunk_num in range(start_chunk, total_chunks):
+                offset = chunk_num * chunk_size
 
+                # Apply limit
+                remaining = total_images - offset
+                current_chunk_size = min(chunk_size, remaining) if limit else chunk_size
+
+                self.stdout.write(
+                    self.style.HTTP_INFO(
+                        f"\n[Chunk {chunk_num + 1}/{total_chunks}] "
+                        f"Processing images {offset + 1} to {offset + current_chunk_size}..."
+                    )
+                )
+
+                # Fetch images in this chunk with optimized query
+                images = (
+                    Images.objects.select_related("user", "category", "sub_category")
+                    .prefetch_related("keywords")
+                    .order_by("id")[offset : offset + current_chunk_size]
+                )
+
+                chunk_cached = 0
+                chunk_errors = 0
+                chunk_skipped = 0
+
+                for image in images:
+                    stats["total"] += 1
+
+                    try:
+                        # Cache this image
+                        result = self._cache_single_image(image, timeout, dry_run)
+
+                        if result == "cached":
+                            stats["cached"] += 1
+                            chunk_cached += 1
+                        elif result == "skipped":
+                            stats["skipped"] += 1
+                            chunk_skipped += 1
+
+                    except Exception as e:
+                        stats["errors"] += 1
+                        chunk_errors += 1
+                        self.stdout.write(
+                            self.style.ERROR(
+                                f"  ✗ Error caching {image.slug}: {str(e)}"
+                            )
+                        )
+
+                # Chunk summary
+                self.stdout.write(
+                    self.style.SUCCESS(
+                        f"  ✓ Chunk complete: {chunk_cached} cached, "
+                        f"{chunk_skipped} skipped, {chunk_errors} errors"
+                    )
+                )
+
+                # Save progress after each chunk
+                progress_percent = (stats["total"] / total_images) * 100
+                self._save_progress(chunk_num, stats, progress_percent, total_chunks)
+
+                # Progress summary
+                elapsed = time.time() - stats["start_time"]
+                rate = stats["total"] / elapsed if elapsed > 0 else 0
+                eta = (total_images - stats["total"]) / rate if rate > 0 else 0
+
+                self.stdout.write(
+                    f"  Progress: {progress_percent:.1f}% | "
+                    f"Rate: {rate:.1f} img/s | "
+                    f"ETA: {self._format_time(eta)}"
+                )
+
+                # Delay between chunks to avoid overloading
+                if chunk_num < total_chunks - 1:  # Don't delay after last chunk
+                    time.sleep(delay)
+
+            # Clear progress on successful completion
+            self._clear_progress()
+
+        except KeyboardInterrupt:
             self.stdout.write(
-                self.style.HTTP_INFO(
-                    f"\n[Chunk {chunk_num + 1}/{total_chunks}] "
-                    f"Processing images {offset + 1} to {offset + current_chunk_size}..."
+                self.style.WARNING(
+                    "\n\n⚠ Process interrupted! Progress has been saved."
                 )
             )
-
-            # Fetch images in this chunk with optimized query
-            images = (
-                Images.objects.select_related("user", "category", "sub_category")
-                .prefetch_related("keywords")
-                .order_by("id")[offset : offset + current_chunk_size]
-            )
-
-            chunk_cached = 0
-            chunk_errors = 0
-            chunk_skipped = 0
-
-            for image in images:
-                stats["total"] += 1
-
-                try:
-                    # Cache this image
-                    result = self._cache_single_image(image, timeout, dry_run)
-
-                    if result == "cached":
-                        stats["cached"] += 1
-                        chunk_cached += 1
-                    elif result == "skipped":
-                        stats["skipped"] += 1
-                        chunk_skipped += 1
-
-                except Exception as e:
-                    stats["errors"] += 1
-                    chunk_errors += 1
-                    self.stdout.write(
-                        self.style.ERROR(f"  ✗ Error caching {image.slug}: {str(e)}")
-                    )
-
-            # Chunk summary
             self.stdout.write(
                 self.style.SUCCESS(
-                    f"  ✓ Chunk complete: {chunk_cached} cached, "
-                    f"{chunk_skipped} skipped, {chunk_errors} errors"
+                    "Run the command again to resume from where you left off.\n"
                 )
             )
+            return
 
-            # Progress summary
-            progress = (stats["total"] / total_images) * 100
-            elapsed = time.time() - stats["start_time"]
-            rate = stats["total"] / elapsed if elapsed > 0 else 0
-            eta = (total_images - stats["total"]) / rate if rate > 0 else 0
-
+        except Exception as e:
+            self.stdout.write(self.style.ERROR(f"\n\n✗ Error occurred: {str(e)}"))
             self.stdout.write(
-                f"  Progress: {progress:.1f}% | "
-                f"Rate: {rate:.1f} img/s | "
-                f"ETA: {self._format_time(eta)}"
+                self.style.SUCCESS(
+                    "Progress has been saved. Run the command again to resume.\n"
+                )
             )
-
-            # Delay between chunks to avoid overloading
-            if chunk_num < total_chunks - 1:  # Don't delay after last chunk
-                time.sleep(delay)
+            raise
 
         # Final summary
         total_time = time.time() - stats["start_time"]
@@ -209,9 +289,10 @@ class Command(BaseCommand):
         if stats["errors"] > 0:
             self.stdout.write(self.style.ERROR(f"Errors: {stats['errors']}"))
         self.stdout.write(f"\nTotal time: {self._format_time(total_time)}")
-        self.stdout.write(
-            f"Average rate: {stats['total'] / total_time:.2f} images/second"
-        )
+        if total_time > 0:
+            self.stdout.write(
+                f"Average rate: {stats['total'] / total_time:.2f} images/second"
+            )
         self.stdout.write("")
 
     def _cache_single_image(self, image, timeout, dry_run):
@@ -277,7 +358,7 @@ class Command(BaseCommand):
 
         # Cache the response
         if not dry_run:
-            cache.set(cache_key, response_data)
+            cache.set(cache_key, response_data, timeout)
             self.stdout.write(
                 f"  ✓ {image.slug} (cached with {len(related_list)} related)"
             )
@@ -287,6 +368,37 @@ class Command(BaseCommand):
             )
 
         return "cached"
+
+    def _save_progress(self, chunk_num, stats, progress_percent, total_chunks):
+        """Save current progress to cache"""
+        progress_data = {
+            "last_completed_chunk": chunk_num,
+            "progress": progress_percent,
+            "total_chunks": total_chunks,
+            "stats": {
+                "total": stats["total"],
+                "cached": stats["cached"],
+                "skipped": stats["skipped"],
+                "errors": stats["errors"],
+            },
+            "timestamp": time.time(),
+        }
+        # Store progress with 7 day expiry
+        cache.set(self.PROGRESS_KEY, json.dumps(progress_data), 7 * 24 * 60 * 60)
+
+    def _get_progress(self):
+        """Retrieve saved progress from cache"""
+        progress_json = cache.get(self.PROGRESS_KEY)
+        if progress_json:
+            try:
+                return json.loads(progress_json)
+            except json.JSONDecodeError:
+                return None
+        return None
+
+    def _clear_progress(self):
+        """Clear saved progress"""
+        cache.delete(self.PROGRESS_KEY)
 
     def _format_time(self, seconds):
         """Format seconds into human-readable time"""
