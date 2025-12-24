@@ -7,7 +7,6 @@ from celery import shared_task
 from configuration.utils import get_cloudflare_config
 
 from images.models import Images
-from images.tasks import _delete_all_cache_variations
 
 logger = logging.getLogger(__name__)
 
@@ -72,6 +71,8 @@ def UPLOAD_IMAGES_TO_CLOUDFLARE(file_bytes_io, filename="upload.png"):
 
 @shared_task
 def delete_images_from_cloudflare(image_ids):
+    from images.services import cache_delete_for_cloudflare
+
     deleted = []
     failed = []
 
@@ -88,7 +89,7 @@ def delete_images_from_cloudflare(image_ids):
 
             if result.get("success"):
                 image.delete()
-                _delete_all_cache_variations(image.slug)
+                cache_delete_for_cloudflare(image.slug)
                 deleted.append(image_id)
             else:
                 failed.append({"id": image_id, "error": result.get("error")})
