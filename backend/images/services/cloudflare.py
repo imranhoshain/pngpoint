@@ -1,18 +1,21 @@
-import os
 import logging
-import requests
+import os
 import time
-from celery import shared_task
+
 import requests
-from images.models import Images
+from celery import shared_task
 from configuration.utils import get_cloudflare_config
+
+from images.models import Images
+from images.tasks import _delete_all_cache_variations
 
 logger = logging.getLogger(__name__)
 
-ALLOWED_VARIANTS = ['public', 'singleimage', 'singleimagemain']
+ALLOWED_VARIANTS = ["public", "singleimage", "singleimagemain"]
 
 MAX_RETRIES = 5
 RETRY_DELAY = 5
+
 
 def UPLOAD_IMAGES_TO_CLOUDFLARE(file_bytes_io, filename="upload.png"):
     """
@@ -25,7 +28,9 @@ def UPLOAD_IMAGES_TO_CLOUDFLARE(file_bytes_io, filename="upload.png"):
     if ext.lower() != ".png":
         raise ValueError("Only .png images are allowed")
 
-    upload_url = f"https://api.cloudflare.com/client/v4/accounts/{config.account_id}/images/v1"
+    upload_url = (
+        f"https://api.cloudflare.com/client/v4/accounts/{config.account_id}/images/v1"
+    )
     headers = {"Authorization": f"Bearer {config.api_key}"}
     files = {"file": (filename, file_bytes_io)}
 
@@ -51,14 +56,19 @@ def UPLOAD_IMAGES_TO_CLOUDFLARE(file_bytes_io, filename="upload.png"):
             image_url = variants[0]
             break
         else:
-            logger.info(f"Variants not ready yet for {filename}, retrying {attempt+1}/{MAX_RETRIES}...")
+            logger.info(
+                f"Variants not ready yet for {filename}, retrying {attempt + 1}/{MAX_RETRIES}..."
+            )
             time.sleep(RETRY_DELAY)
 
     if not image_url:
-        raise ValueError(f"Cloudflare did not return a valid URL for {filename} after retries")
+        raise ValueError(
+            f"Cloudflare did not return a valid URL for {filename} after retries"
+        )
 
     logger.info(f"image_id ---- {image_id}, cloudflare_url ---- {image_url}")
     return {"id": image_id, "url": image_url}
+
 
 @shared_task
 def delete_images_from_cloudflare(image_ids):
@@ -71,23 +81,25 @@ def delete_images_from_cloudflare(image_ids):
             cloudflare_id = image.cloudflare_id
 
             if not cloudflare_id:
-                failed.append({'id': image_id, 'error': 'No Cloudflare ID found'})
+                failed.append({"id": image_id, "error": "No Cloudflare ID found"})
                 continue
 
             result = NUMBER_OF_IMAGE_DELETE_FROM_CLOUDFLARE(cloudflare_id)
 
-            if result.get('success'):
+            if result.get("success"):
                 image.delete()
+                _delete_all_cache_variations(image.slug)
                 deleted.append(image_id)
             else:
-                failed.append({'id': image_id, 'error': result.get('error')})
+                failed.append({"id": image_id, "error": result.get("error")})
 
         except Images.DoesNotExist:
-            failed.append({'id': image_id, 'error': 'Image not found in DB'})
+            failed.append({"id": image_id, "error": "Image not found in DB"})
         except Exception as e:
-            failed.append({'id': image_id, 'error': str(e)})
+            failed.append({"id": image_id, "error": str(e)})
 
     return {"deleted": deleted, "failed": failed}
+
 
 def NUMBER_OF_IMAGE_DELETE_FROM_CLOUDFLARE(image_id):
     config = get_cloudflare_config()
@@ -95,9 +107,7 @@ def NUMBER_OF_IMAGE_DELETE_FROM_CLOUDFLARE(image_id):
     api_token = config.api_key
 
     url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1/{image_id}"
-    headers = {
-        "Authorization": f"Bearer {api_token}"
-    }
+    headers = {"Authorization": f"Bearer {api_token}"}
 
     try:
         response = requests.delete(url, headers=headers, timeout=10)
@@ -120,44 +130,46 @@ def NUMBER_OF_IMAGE_DELETE_FROM_CLOUDFLARE(image_id):
     except Exception as e:
         return {"success": False, "error": f"Unexpected error: {str(e)}"}
 
+
 def GET_IMAGE_URL_FROM_CLOUDFLARE(image_id, variant="public"):
     config = get_cloudflare_config()
-    
+
     if variant not in ALLOWED_VARIANTS:
         variant = "public"
     return f"https://{config.images_domain}/{config.account_hash}/{image_id}/{variant}"
 
+
 def GET_SINGLE_IMAGE_URL_FROM_CLOUDFLARE(image_id, variant="singleimage"):
     config = get_cloudflare_config()
-    
+
     if variant not in ALLOWED_VARIANTS:
         variant = "singleimage"
     return f"https://{config.images_domain}/{config.account_hash}/{image_id}/{variant}"
 
+
 def GET_SINGLE_MAIN_IMAGE_URL_FROM_CLOUDFLARE(image_id, variant="singleimagemain"):
     config = get_cloudflare_config()
-    
+
     if variant not in ALLOWED_VARIANTS:
         variant = "singleimagemain"
     return f"https://{config.images_domain}/{config.account_hash}/{image_id}/{variant}"
+
 
 def SINGLE_IMAGE_DELETE_FROM_CLOUDFLARE(image_id):
     config = get_cloudflare_config()
 
     account_id = config.account_id
-    print('account id -- ', account_id)
+    print("account id -- ", account_id)
     api_token = config.api_key
-    print('api token -- ', api_token)
+    print("api token -- ", api_token)
 
     url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1/{image_id}"
 
-    headers = {
-        "Authorization": f"Bearer {api_token}"
-    }
+    headers = {"Authorization": f"Bearer {api_token}"}
 
     try:
         response = requests.delete(url, headers=headers)
-        print('response -- ', response)
+        print("response -- ", response)
         response.raise_for_status()
 
         result = response.json()
@@ -167,15 +179,14 @@ def SINGLE_IMAGE_DELETE_FROM_CLOUDFLARE(image_id):
             return {"success": False, "error": result.get("errors", [])}
     except Exception as e:
         return {"success": False, "error": str(e)}
-    
+
+
 def DELETE_ALL_IMAGE_FROM_CLOUDFLARE():
     config = get_cloudflare_config()
     account_id = config.account_id
     api_token = config.api_key
     base_url = f"https://api.cloudflare.com/client/v4/accounts/{account_id}/images/v1"
-    headers = {
-        "Authorization": f"Bearer {api_token}"
-    }
+    headers = {"Authorization": f"Bearer {api_token}"}
 
     try:
         response = requests.get(base_url, headers=headers)
@@ -183,7 +194,10 @@ def DELETE_ALL_IMAGE_FROM_CLOUDFLARE():
         images_data = response.json()
 
         if not images_data.get("success"):
-            return {"success": False, "error": "Could not fetch images from Cloudflare."}
+            return {
+                "success": False,
+                "error": "Could not fetch images from Cloudflare.",
+            }
 
         deleted = []
         failed = []
@@ -198,14 +212,7 @@ def DELETE_ALL_IMAGE_FROM_CLOUDFLARE():
             except Exception as e:
                 failed.append({"image_id": image_id, "error": str(e)})
 
-        return {
-            "success": True,
-            "deleted": deleted,
-            "failed": failed
-        }
+        return {"success": True, "deleted": deleted, "failed": failed}
 
     except Exception as e:
-        return {
-            "success": False,
-            "error": str(e)
-        }
+        return {"success": False, "error": str(e)}
