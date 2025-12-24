@@ -3,6 +3,7 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    restart: unless-stopped
     env_file:
       - ./frontend/.env
     expose:
@@ -38,6 +39,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    restart: unless-stopped
     env_file:
       - ./backend/.env
     command: daphne --http-timeout 300 -b 0.0.0.0 -p 8000 app.asgi:application
@@ -77,6 +79,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    restart: unless-stopped
     env_file:
       - ./backend/.env
     depends_on:
