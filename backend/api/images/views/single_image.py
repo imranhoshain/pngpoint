@@ -120,7 +120,7 @@ class SingleImageView(viewsets.ViewSet):
 
         # ---------------- CACHE THE RESPONSE ----------------
         # Cache for 1 hour (3600 seconds) - adjust timeout as needed
-        cache.set(cache_key, response_data, timeout=3600)
+        cache.set(cache_key, response_data, timeout=None)
         print(f"Response cached with key: {cache_key}")
 
         return Response(response_data, status=status.HTTP_200_OK)
