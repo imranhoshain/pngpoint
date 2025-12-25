@@ -126,7 +126,7 @@ def cache_single_image_task(self, slug):
             "message": "Image with related images fetched successfully.",
         }
         cache_key = f"single_image:{slug}"
-        cache.set(cache_key, response_data, timeout=None)
+        cache.set(cache_key, response_data)
 
         logger.info(
             f"Successfully cached image: {slug} with {len(related_list)} related images"

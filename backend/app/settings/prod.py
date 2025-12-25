@@ -131,7 +131,7 @@ if REDIS_CACHE_URL and USE_REDIS and not DEBUG:
         "default": {
             "BACKEND": "django_redis.cache.RedisCache",
             "LOCATION": REDIS_CACHE_URL,
-            "TIMEOUT": 300,
+            "TIMEOUT": None,
             "OPTIONS": {
                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
             },
