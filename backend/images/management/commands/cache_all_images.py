@@ -304,7 +304,7 @@ class Command(BaseCommand):
 
         # Check if already cached
         if cache.get(cache_key) and not dry_run:
-            self.stdout.write(f"  → {image.slug} (already cached) → {cache_key}")
+            self.stdout.write(f"  → {image.slug} (already cached)")
             return "cached"
 
         # Get keywords
@@ -360,7 +360,7 @@ class Command(BaseCommand):
         if not dry_run:
             cache.set(cache_key, response_data)
             self.stdout.write(
-                f"  ✓ {image.slug} (cached with {len(related_list)} related)"
+                f"  ✓ {image.slug} (cached with {len(related_list)} related) → {cache_key}"
             )
         else:
             self.stdout.write(
