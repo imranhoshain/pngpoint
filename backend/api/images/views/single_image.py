@@ -1,3 +1,4 @@
+import logging
 from django.db.models import Prefetch
 from django.core.cache import cache
 from rest_framework import viewsets, status
@@ -14,6 +15,8 @@ from images.services.cloudflare import (
 from core.utils import GENERATE_SLUG
 from api.throttling import PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle
 
+logger = logging.getLogger(__name__)
+
 class SingleImageView(viewsets.ViewSet):
     permission_classes = [AllowAny]
     renderer_classes = [JSONRenderer]
@@ -26,7 +29,7 @@ class SingleImageView(viewsets.ViewSet):
         
         # Create a unique cache key based on slug and query parameters
         cache_key = f"single_image:{slug}"
-        print(cache_key)
+        logger.info(f"Cache Key: {cache_key}")
         if search_term:
             cache_key += f":search:{GENERATE_SLUG(search_term)}"
         if keyword_term:
