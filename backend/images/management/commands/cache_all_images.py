@@ -358,7 +358,7 @@ class Command(BaseCommand):
 
         # Cache the response
         if not dry_run:
-            cache.set(cache_key, response_data, timeout)
+            cache.set(cache_key, response_data, timeout=None)
             self.stdout.write(
                 f"  ✓ {image.slug} (cached with {len(related_list)} related)"
             )
