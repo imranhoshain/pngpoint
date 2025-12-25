@@ -26,6 +26,7 @@ class SingleImageView(viewsets.ViewSet):
         
         # Create a unique cache key based on slug and query parameters
         cache_key = f"single_image:{slug}"
+        print(cache_key)
         if search_term:
             cache_key += f":search:{GENERATE_SLUG(search_term)}"
         if keyword_term:
