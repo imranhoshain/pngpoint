@@ -213,6 +213,9 @@ class Command(BaseCommand):
                         elif result == "skipped":
                             stats["skipped"] += 1
                             chunk_skipped += 1
+                        elif result == "error":
+                            stats["errors"] += 1
+                            chunk_errors += 1
 
                     except Exception as e:
                         stats["errors"] += 1
@@ -359,6 +362,17 @@ class Command(BaseCommand):
         # Cache the response
         if not dry_run:
             cache.set(cache_key, response_data)
+            
+            # Verify cache was set successfully
+            cached_data = cache.get(cache_key)
+            if cached_data is None:
+                self.stdout.write(
+                    self.style.ERROR(
+                        f"  ✗ {image.slug} (cache verification failed) → {cache_key}"
+                    )
+                )
+                return "error"
+            
             self.stdout.write(
                 f"  ✓ {image.slug} (cached with {len(related_list)} related) → {cache_key}"
             )
