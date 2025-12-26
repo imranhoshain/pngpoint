@@ -36,6 +36,7 @@ class SingleImageView(viewsets.ViewSet):
         if cached_data:
             print(f"Cache HIT for key: {cache_key}")
             cached_data["source"] = "cache"
+            cached_data["cache_key"] = cache_key
             return Response(cached_data, status=status.HTTP_200_OK)
         
         print(f"Cache MISS for key: {cache_key}")
