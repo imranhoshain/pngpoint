@@ -303,7 +303,7 @@ class Command(BaseCommand):
         Cache a single image with its related images.
         Returns: 'cached', 'skipped', or 'error'
         """
-        cache_key = f"single_image:{image.slug}"
+        cache_key = f"single_image:{str(image.slug)}"
 
         # Check if already cached
         if cache.get(cache_key) and not dry_run:
