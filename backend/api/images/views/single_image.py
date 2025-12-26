@@ -60,7 +60,7 @@ class SingleImageView(viewsets.ViewSet):
                 "message": "No keywords found for this image.",
             }
             # Cache for 1 hour (3600 seconds)
-            cache.set(cache_key, response_data, timeout=3600)
+            cache.set(cache_key, response_data)
             return Response(response_data, status=status.HTTP_200_OK)
 
         first_kw = main_keywords[0]
