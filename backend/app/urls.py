@@ -55,9 +55,9 @@ sitemaps = {
 }
 
 urlpatterns += [
-    path('sitemap.xml', index, {'sitemaps': sitemaps}, name='sitemap-index'),
-    path('sitemap-<section>.xml', sitemap, {'sitemaps': sitemaps}, name='sitemaps'),
-    path('robots.txt', robots_txt, name='robots_txt'),
+    path('api/v1/sitemap.xml', index, {'sitemaps': sitemaps}, name='sitemap-index'),
+    path('api/v1/sitemap-<section>.xml', sitemap, {'sitemaps': sitemaps}, name='sitemaps'),
+    path('api/1/robots.txt', robots_txt, name='robots_txt'),
 ]
 
 def custom_404(request, exception):
