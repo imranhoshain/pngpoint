@@ -30,6 +30,35 @@ if 'drf_spectacular' in settings.INSTALLED_APPS and settings.DEBUG:
         path(f'{BASE_API}/schema/swagger-ui/', SpectacularSwaggerView.as_view(), name='swagger_ui'),
         path(f'{BASE_API}/schema/redoc/', SpectacularRedocView.as_view(), name='redoc'),
     ]
+    
+from django.contrib import admin
+from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap, index
+from images.sitemaps import (
+    OptimizedImageSitemap,
+    RecentImagesSitemap,
+    PopularImagesSitemap,
+    CategorySitemap,
+    SubCategorySitemap,
+    StaticViewSitemap
+)
+from api.images.views.robots import robots_txt
+
+# Define all sitemaps
+sitemaps = {
+    'static': StaticViewSitemap,
+    'images': OptimizedImageSitemap,
+    'recent': RecentImagesSitemap,
+    'popular': PopularImagesSitemap,
+    'categories': CategorySitemap,
+    'subcategories': SubCategorySitemap,
+}
+
+urlpatterns += [
+    path('sitemap.xml', index, {'sitemaps': sitemaps}, name='sitemap-index'),
+    path('sitemap-<section>.xml', sitemap, {'sitemaps': sitemaps}, name='sitemaps'),
+    path('robots.txt', robots_txt, name='robots_txt'),
+]
 
 def custom_404(request, exception):
     return JsonResponse({

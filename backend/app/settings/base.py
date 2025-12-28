@@ -54,6 +54,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'django.contrib.sitemaps'
 
     'corsheaders',
     'rest_framework',
@@ -89,6 +91,9 @@ DDOS_BLOCK_DURATION = env.int('DDOS_BLOCK_DURATION', default=300)
 DDOS_SUSPICIOUS_THRESHOLD = env.int('DDOS_SUSPICIOUS_THRESHOLD', default=100)
 
 ROOT_URLCONF = 'app.urls'
+SITE_ID = 1
+SITEMAP_LIMIT = 50000
+
 
 TEMPLATES = [
     {
