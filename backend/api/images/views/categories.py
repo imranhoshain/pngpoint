@@ -43,7 +43,7 @@ class CategoriesViewSet(viewsets.ViewSet):
         invalidate_cache_prefix("sub_category_detail")
 
     # -------------------- List --------------------
-    # @cache_api_response(timeout=600, cache_key_prefix="categories")
+    @cache_api_response(timeout=600, cache_key_prefix="categories")
     def list(self, request):
         """GET all categories (accessible by all users)."""
         try:
@@ -79,7 +79,7 @@ class CategoriesViewSet(viewsets.ViewSet):
                 Categories.objects.prefetch_related('sub_categories'),
                 slug=slug
             )
-            serializer = SingleCategoriesSerializer(category)
+            serializer = SingleCategoriesSerializer(category,context={"request": request})
             return success_response(
                 message="Category retrieved successfully.",
                 data=serializer.data,
