@@ -59,7 +59,7 @@ class CategoriesViewSet(viewsets.ViewSet):
             for backend in list(self.filter_backends):
                 queryset = backend().filter_queryset(self.request, queryset, self)
 
-            serializer = CategoriesSerializer(queryset, many=True,context={"request": request})
+            serializer = CategoriesSerializer(queryset, many=True)
             return success_response("Categories retrieved successfully.", serializer.data)
 
         except Exception as e:
@@ -79,7 +79,7 @@ class CategoriesViewSet(viewsets.ViewSet):
                 Categories.objects.prefetch_related('sub_categories'),
                 slug=slug
             )
-            serializer = SingleCategoriesSerializer(category,context={"request": request})
+            serializer = SingleCategoriesSerializer(category)
             return success_response(
                 message="Category retrieved successfully.",
                 data=serializer.data,
