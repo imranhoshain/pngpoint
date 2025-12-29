@@ -59,7 +59,7 @@ class CategoriesViewSet(viewsets.ViewSet):
             for backend in list(self.filter_backends):
                 queryset = backend().filter_queryset(self.request, queryset, self)
 
-            serializer = CategoriesSerializer(queryset, many=True)
+            serializer = CategoriesSerializer(queryset, many=True,context={"request": request})
             return success_response("Categories retrieved successfully.", serializer.data)
 
         except Exception as e:
