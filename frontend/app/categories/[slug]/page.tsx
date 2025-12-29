@@ -87,7 +87,7 @@ export default function SingleCategory() {
                                 <div className="relative w-full h-64 md:h-72 overflow-hidden rounded">
                                     <Image
                                         className="w-full h-full object-cover transition-transform duration-1000 ease-in-out group-hover:scale-110"
-                                        src={sub_category.icon ? `${MEDIA_URL}${sub_category.icon}` : ""}
+                                        src={sub_category.icon}
                                         alt={sub_category.name}
                                         width={352}
                                         height={352}
