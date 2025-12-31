@@ -108,15 +108,40 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
         else return (bytes / (1024 * 1024)).toFixed(2) + " MB";
     };
 
-    const handleDownloadImage = (size: 'large' | 'medium' | 'small') => {
-        const url = `${SERVER_URL}/images/download/${image?.image?.id}/?size=${size}`;
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', '');
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        setIsDropdownOpen(false);
+    const handleDownloadImage = async (size: 'large' | 'medium' | 'small') => {
+        try {
+            const url = `${SERVER_URL}/images/download/${image?.image?.id}/?size=${size}`;
+            
+            // Fetch the file as a blob
+            const response = await fetch(url);
+            
+            if (!response.ok) {
+                throw new Error(`Download failed: ${response.statusText}`);
+            }
+            
+            const blob = await response.blob();
+            
+            // Create a download link
+            const blobUrl = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = blobUrl;
+            
+            // Set filename with proper extension
+            const filename = `image-${image?.image?.id}-${size}.jpg`;
+            link.setAttribute('download', filename);
+            
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            
+            // Clean up the blob URL
+            window.URL.revokeObjectURL(blobUrl);
+            
+            setIsDropdownOpen(false);
+        } catch (error) {
+            console.error('Download failed:', error);
+            alert('Failed to download image. Please try again.');
+        }
     };
 
     if (isLoading || sizeOptions.length === 0) {
@@ -125,9 +150,9 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
 
     return (
         <div className="relative" ref={dropdownRef}>
-            {/* Main Download Button */}
+            {/* Main Download Button - Removed order classes */}
             <button
-                className="flex flex-row flex-wrap items-center justify-between gap-x-2.5 w-full md:w-auto py-3 px-4 md:px-5 cursor-pointer text-sm md:text-base text-white bg-[#0077A2] hover:bg-[#006590] transition-colors rounded order-1 md:order-4"
+                className="flex flex-row flex-wrap items-center justify-between gap-x-2.5 w-full md:w-auto py-3 px-4 md:px-5 cursor-pointer text-sm md:text-base text-white bg-[#0077A2] hover:bg-[#006590] transition-colors rounded"
                 type="button"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >
