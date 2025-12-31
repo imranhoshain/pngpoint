@@ -32,49 +32,78 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
             setIsLoading(true);
             const options: SizeOption[] = [];
 
+            // Helper function to load image and get dimensions
+            const getImageDimensions = (url: string): Promise<{ width: number; height: number }> => {
+                return new Promise((resolve, reject) => {
+                    const img = new window.Image();
+                    img.onload = () => {
+                        resolve({ width: img.naturalWidth, height: img.naturalHeight });
+                    };
+                    img.onerror = () => {
+                        reject(new Error('Failed to load image'));
+                    };
+                    img.src = url;
+                });
+            };
+
             // Large size
             if (image.image.url) {
-                const largeSize = await getFileSize(image.image.url);
-                const img = new window.Image();
-                img.src = image.image.url;
-                options.push({
-                    label: 'Large',
-                    size: 'large',
-                    url: image.image.url,
-                    width: img.naturalWidth,
-                    height: img.naturalHeight,
-                    fileSize: largeSize,
-                });
+                try {
+                    const [largeSize, dimensions] = await Promise.all([
+                        getFileSize(image.image.url),
+                        getImageDimensions(image.image.url)
+                    ]);
+                    options.push({
+                        label: 'Large',
+                        size: 'large',
+                        url: image.image.url,
+                        width: dimensions.width,
+                        height: dimensions.height,
+                        fileSize: largeSize,
+                    });
+                } catch (error) {
+                    console.error('Error loading large image:', error);
+                }
             }
 
             // Medium size
             if (image.image.main_url) {
-                const mediumSize = await getFileSize(image.image.main_url);
-                const img = new window.Image();
-                img.src = image.image.main_url;
-                options.push({
-                    label: 'Medium',
-                    size: 'medium',
-                    url: image.image.main_url,
-                    width: img.naturalWidth,
-                    height: img.naturalHeight,
-                    fileSize: mediumSize,
-                });
+                try {
+                    const [mediumSize, dimensions] = await Promise.all([
+                        getFileSize(image.image.main_url),
+                        getImageDimensions(image.image.main_url)
+                    ]);
+                    options.push({
+                        label: 'Medium',
+                        size: 'medium',
+                        url: image.image.main_url,
+                        width: dimensions.width,
+                        height: dimensions.height,
+                        fileSize: mediumSize,
+                    });
+                } catch (error) {
+                    console.error('Error loading medium image:', error);
+                }
             }
 
             // Small size
             if (image.image.small_url) {
-                const smallSize = await getFileSize(image.image.small_url);
-                const img = new window.Image();
-                img.src = image.image.main_url;
-                options.push({
-                    label: 'Small',
-                    size: 'small',
-                    url: image.image.small_url,
-                    width: img.naturalWidth,
-                    height: img.naturalHeight,
-                    fileSize: smallSize,
-                });
+                try {
+                    const [smallSize, dimensions] = await Promise.all([
+                        getFileSize(image.image.small_url),
+                        getImageDimensions(image.image.small_url)  // Fixed: use small_url instead of main_url
+                    ]);
+                    options.push({
+                        label: 'Small',
+                        size: 'small',
+                        url: image.image.small_url,
+                        width: dimensions.width,
+                        height: dimensions.height,
+                        fileSize: smallSize,
+                    });
+                } catch (error) {
+                    console.error('Error loading small image:', error);
+                }
             }
 
             setSizeOptions(options);
