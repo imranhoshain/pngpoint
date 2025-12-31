@@ -109,7 +109,7 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
     };
 
     const handleDownloadImage = (size: 'large' | 'medium' | 'small') => {
-        const url = `${SERVER_URL}/images/download/${image?.image?.id}?size=${size}`;
+        const url = `${SERVER_URL}/images/download/${image?.image?.id}/?size=${size}`;
         const link = document.createElement('a');
         link.href = url;
         link.setAttribute('download', '');
