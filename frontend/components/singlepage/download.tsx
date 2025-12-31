@@ -33,12 +33,12 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
             const options: SizeOption[] = [];
 
             // Large size
-            if (image.image.main_url) {
-                const largeSize = await getFileSize(image.image.main_url);
+            if (image.image.url) {
+                const largeSize = await getFileSize(image.image.url);
                 options.push({
                     label: 'Large',
                     size: 'large',
-                    url: image.image.main_url,
+                    url: image.image.url,
                     width: image.image.width,
                     height: image.image.height,
                     fileSize: largeSize,
@@ -46,12 +46,12 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
             }
 
             // Medium size
-            if (image.image.url) {
-                const mediumSize = await getFileSize(image.image.url);
+            if (image.image.main_url) {
+                const mediumSize = await getFileSize(image.image.main_url);
                 options.push({
                     label: 'Medium',
                     size: 'medium',
-                    url: image.image.url,
+                    url: image.image.main_url,
                     width: image.image.medium_width || Math.floor(image.image.width * 0.6),
                     height: image.image.medium_height || Math.floor(image.image.height * 0.6),
                     fileSize: mediumSize,
@@ -108,40 +108,15 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
         else return (bytes / (1024 * 1024)).toFixed(2) + " MB";
     };
 
-    const handleDownloadImage = async (size: 'large' | 'medium' | 'small') => {
-        try {
-            const url = `${SERVER_URL}/images/download/${image?.image?.id}/?size=${size}`;
-            
-            // Fetch the file as a blob
-            const response = await fetch(url);
-            
-            if (!response.ok) {
-                throw new Error(`Download failed: ${response.statusText}`);
-            }
-            
-            const blob = await response.blob();
-            
-            // Create a download link
-            const blobUrl = window.URL.createObjectURL(blob);
-            const link = document.createElement('a');
-            link.href = blobUrl;
-            
-            // Set filename with proper extension
-            const filename = `image-${image?.image?.id}-${size}.jpg`;
-            link.setAttribute('download', filename);
-            
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Clean up the blob URL
-            window.URL.revokeObjectURL(blobUrl);
-            
-            setIsDropdownOpen(false);
-        } catch (error) {
-            console.error('Download failed:', error);
-            alert('Failed to download image. Please try again.');
-        }
+    const handleDownloadImage = (size: 'large' | 'medium' | 'small') => {
+        const url = `${SERVER_URL}/images/download/${image?.image?.cloudflare_id}?size=${size}`;
+        const link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', '');
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setIsDropdownOpen(false);
     };
 
     if (isLoading || sizeOptions.length === 0) {
@@ -150,9 +125,9 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
 
     return (
         <div className="relative" ref={dropdownRef}>
-            {/* Main Download Button - Removed order classes */}
+            {/* Main Download Button */}
             <button
-                className="flex flex-row flex-wrap items-center justify-between gap-x-2.5 w-full md:w-auto py-3 px-4 md:px-5 cursor-pointer text-sm md:text-base text-white bg-[#0077A2] hover:bg-[#006590] transition-colors rounded"
+                className="flex flex-row flex-wrap items-center gap-x-2.5 w-fit py-3 px-4 md:px-5 cursor-pointer text-sm md:text-base text-white bg-[#0077A2] rounded order-1 md:order-4"
                 type="button"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
             >

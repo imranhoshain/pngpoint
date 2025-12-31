@@ -52,8 +52,8 @@ class DownloadImageViewSet(viewsets.ViewSet):
             raise Http404("Image not found")
         size = request.query_params.get('size', 'medium').lower()
         size_variant_map = {
-            'large': 'singleimagemain',
-            'medium': 'singleimage',
+            'large': 'singleimage',
+            'medium': 'singleimagemain',
             'small': 'public'
         }
         variant = size_variant_map.get(size, 'singleimage')
