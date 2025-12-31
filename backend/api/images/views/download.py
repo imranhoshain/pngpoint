@@ -50,8 +50,14 @@ class DownloadImageViewSet(viewsets.ViewSet):
             image = Images.objects.get(cloudflare_id=image_id)
         except Images.DoesNotExist:
             raise Http404("Image not found")
-
-        variant = "singleimage" 
+        size = request.query_params.get('size', 'medium').lower()
+        size_variant_map = {
+            'large': 'singleimagemain',
+            'medium': 'singleimage',
+            'small': 'public'
+        }
+        variant = size_variant_map.get(size, 'singleimage')
+        
         image_url = f"https://{config.images_domain}/{config.account_hash}/{image_id}/{variant}"
 
         try:
@@ -59,11 +65,10 @@ class DownloadImageViewSet(viewsets.ViewSet):
             response.raise_for_status()
         except requests.exceptions.RequestException:
             raise Http404("Unable to fetch image from Cloudflare.")
-
         image.download_count += 1
         image.save(update_fields=["download_count"])
-
-        filename = f"{slugify(image.title or image_id)}.png"
+        size_suffix = f"_{size}" if size != 'medium' else ""
+        filename = f"{slugify(image.title or image_id)}{size_suffix}.png"
         content_type = response.headers.get("Content-Type", "image/png")
 
         return HttpResponse(

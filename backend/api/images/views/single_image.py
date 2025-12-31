@@ -11,6 +11,7 @@ from api.images.serializers.single_image import SingleImageSerializer
 from images.services.cloudflare import (
     GET_SINGLE_IMAGE_URL_FROM_CLOUDFLARE,
     GET_SINGLE_MAIN_IMAGE_URL_FROM_CLOUDFLARE,
+    GET_IMAGE_URL_FROM_CLOUDFLARE
 )
 from core.utils import GENERATE_SLUG
 from api.throttling import PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle
@@ -107,9 +108,11 @@ class SingleImageView(viewsets.ViewSet):
         if image.cloudflare_id:
             cf_url = GET_SINGLE_IMAGE_URL_FROM_CLOUDFLARE(image.cloudflare_id)
             main_url = GET_SINGLE_MAIN_IMAGE_URL_FROM_CLOUDFLARE(image.cloudflare_id)
+            small_url = GET_IMAGE_URL_FROM_CLOUDFLARE(image.cloudflare_id)
             main_image_data["cloudflare_url"] = cf_url
             main_image_data["url"] = cf_url
             main_image_data["main_url"] = main_url
+            main_image_data["small_url"] = small_url
 
         # ---------------- RESPONSE ----------------
         response_data = {
