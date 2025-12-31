@@ -16,6 +16,7 @@ import { AiOutlineFileText } from "react-icons/ai";
 import { PiImageSquareLight } from "react-icons/pi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { GoArrowDown } from "react-icons/go";
+import { HiChevronDown } from 'react-icons/hi';
 
 export const ReactIcons = {
     GoArrowDown,
@@ -45,5 +46,6 @@ export const ReactIcons = {
     FaLongArrowAltLeft,
     IoMdEye,
     IoMdEyeOff,
-    IoMdClose
+    IoMdClose,
+    HiChevronDown
 };
