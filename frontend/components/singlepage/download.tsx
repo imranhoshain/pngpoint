@@ -35,12 +35,14 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
             // Large size
             if (image.image.url) {
                 const largeSize = await getFileSize(image.image.url);
+                const img = new window.Image();
+                img.src = image.image.url;
                 options.push({
                     label: 'Large',
                     size: 'large',
                     url: image.image.url,
-                    width: image.image.width,
-                    height: image.image.height,
+                    width: img.naturalWidth,
+                    height: img.naturalHeight,
                     fileSize: largeSize,
                 });
             }
@@ -48,12 +50,14 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
             // Medium size
             if (image.image.main_url) {
                 const mediumSize = await getFileSize(image.image.main_url);
+                const img = new window.Image();
+                img.src = image.image.main_url;
                 options.push({
                     label: 'Medium',
                     size: 'medium',
                     url: image.image.main_url,
-                    width: image.image.medium_width || Math.floor(image.image.width * 0.6),
-                    height: image.image.medium_height || Math.floor(image.image.height * 0.6),
+                    width: img.naturalWidth,
+                    height: img.naturalHeight,
                     fileSize: mediumSize,
                 });
             }
@@ -61,12 +65,14 @@ export const Download: React.FC<ImageProps> = ({ image }) => {
             // Small size
             if (image.image.small_url) {
                 const smallSize = await getFileSize(image.image.small_url);
+                const img = new window.Image();
+                img.src = image.image.main_url;
                 options.push({
                     label: 'Small',
                     size: 'small',
                     url: image.image.small_url,
-                    width: image.image.small_width || Math.floor(image.image.width * 0.3),
-                    height: image.image.small_height || Math.floor(image.image.height * 0.3),
+                    width: img.naturalWidth,
+                    height: img.naturalHeight,
                     fileSize: smallSize,
                 });
             }
