@@ -16,7 +16,7 @@ services:
     - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
     
     # ADD THIS: Middleware for 10MB limit
-    - "traefik.http.middlewares.${ENVIRONMENT}-limit.buffering.maxRequestBodyBytes=10485760"
+    - "traefik.http.middlewares.${ENVIRONMENT}-limit.buffering.maxRequestBodyBytes=500000000"
     
     # HTTP router
     - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
