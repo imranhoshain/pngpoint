@@ -38,12 +38,12 @@ export default function Footer() {
                             <li className=" list-disc">
                                 <Link className="block w-fit text-sm xl:text-base font-normal uppercase" href={"/sub-categories/"}>sub categories</Link>
                             </li>
-                            <li className=" list-disc">
+                            {/* <li className=" list-disc">
                                 <Link className="block w-fit text-sm xl:text-base font-normal uppercase" href={"/user/login/"}>contributor login</Link>
                             </li>
                             <li className=" list-disc">
                                 <Link className="block w-fit text-sm xl:text-base font-normal uppercase" href={"/user/register/"}>contributor register</Link>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                     <div className="flex flex-col flex-wrap w-full">
