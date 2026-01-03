@@ -21,6 +21,7 @@ export default function ApprovedImagesComponent() {
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [selectedImageIds, setLocalSelectedImageIds] = useState<number[]>([]);
     const [isDeleting, setIsDeleting] = useState<boolean>(false); // loading state
+    const [lastClickedIndex, setLastClickedIndex] = useState<number | null>(null); // NEW: for shift selection
 
     const dispatch = useDispatch();
     const sideBar = useSelector((state: RootState) => state.imageSideBar.sideBar);
@@ -47,16 +48,44 @@ export default function ApprovedImagesComponent() {
         setLocalSelectedImageIds(updatedIds);
     };
 
-    const handleImageClick = (img: any) => {
-        dispatch(openSidebar());
-        dispatch(setSelectedMetadata(img));
+    // UPDATED: handleImageClick with shift selection support
+    const handleImageClick = (img: any, index: number, event: React.MouseEvent) => {
+        // Prevent default checkbox behavior
+        event.stopPropagation();
 
-        const updated = selectedImageIds.includes(img.id)
-            ? selectedImageIds.filter((id) => id !== img.id)
-            : [...selectedImageIds, img.id];
+        // Check if shift key is pressed and we have a previous selection
+        if (event.shiftKey && lastClickedIndex !== null) {
+            // Calculate range
+            const start = Math.min(lastClickedIndex, index);
+            const end = Math.max(lastClickedIndex, index);
+            
+            // Get all image IDs in the range
+            const rangeIds = images.slice(start, end + 1).map((item) => item.id);
+            
+            // Merge with existing selections (avoid duplicates)
+            const newSelectedIds = Array.from(new Set([...selectedImageIds, ...rangeIds]));
+            
+            updateSelectedImageIds(newSelectedIds);
+            dispatch(setSelectedImageIds(newSelectedIds));
+            
+            // Open sidebar with the clicked image
+            dispatch(openSidebar());
+            dispatch(setSelectedMetadata(img));
+        } else {
+            // Normal click behavior (toggle single image)
+            dispatch(openSidebar());
+            dispatch(setSelectedMetadata(img));
 
-        updateSelectedImageIds(updated);
-        dispatch(setSelectedImageIds(updated));
+            const updated = selectedImageIds.includes(img.id)
+                ? selectedImageIds.filter((id) => id !== img.id)
+                : [...selectedImageIds, img.id];
+
+            updateSelectedImageIds(updated);
+            dispatch(setSelectedImageIds(updated));
+            
+            // Update last clicked index
+            setLastClickedIndex(index);
+        }
     };
 
     const handleSideBarClose = () => {
@@ -97,6 +126,7 @@ export default function ApprovedImagesComponent() {
 
     const handleDeselectAll = () => {
         updateSelectedImageIds([]);
+        setLastClickedIndex(null); // Reset last clicked index
     };
 
     const handleDeleteSelected = async () => {
@@ -114,6 +144,7 @@ export default function ApprovedImagesComponent() {
             await NumberOfImagesDelete({ image_ids: selectedImageIds }).unwrap();
             alert("Selected images deleted successfully.");
             updateSelectedImageIds([]);
+            setLastClickedIndex(null); // Reset last clicked index
             refetch();
             dispatch(closeSidebar());
             dispatch(clearSelectedMetadata());
@@ -217,7 +248,7 @@ export default function ApprovedImagesComponent() {
                     <div className="flex flex-wrap items-center w-full h-full ">
                         {images.length > 0 ? (
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 lg:gap-5 py-5 w-full">
-                                {images.map((item) => {
+                                {images.map((item, index) => {
                                     const isSelected = selectedImageIds.includes(item.id);
                                     
                                     return (
@@ -227,7 +258,7 @@ export default function ApprovedImagesComponent() {
                                                 ? "border-blue-500"
                                                 : "border-gray-300"
                                                 }`}
-                                            onClick={() => handleImageClick(item)}
+                                            onClick={(e) => handleImageClick(item, index, e)}
                                         >
                                             <span>
                                                 <input
