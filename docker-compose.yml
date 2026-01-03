@@ -57,24 +57,30 @@ services:
 
       # redirect http → https
       - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
+      
+      # 200MB limit (increased from 100MB)
+      - "traefik.http.middlewares.${ENVIRONMENT}-limit.buffering.maxRequestBodyBytes=209715200"
 
-      # API over HTTP (redirects to HTTPS)
+      # API over HTTP (redirects to HTTPS) - NOW WITH SIZE LIMIT
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.entrypoints=web"
-      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.middlewares=${ENVIRONMENT}-https"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.middlewares=${ENVIRONMENT}-https,${ENVIRONMENT}-limit"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.priority=100"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.service=${ENVIRONMENT}-backend-svc"
 
-      # API over HTTPS
+      # API over HTTPS - WITH SIZE LIMIT
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.entrypoints=websecure"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.tls.certresolver=le"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.priority=100"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.middlewares=${ENVIRONMENT}-limit"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.service=${ENVIRONMENT}-backend-svc"
+      
       # Service definition for backend (Django / Daphne)
       - "traefik.http.services.${ENVIRONMENT}-backend-svc.loadbalancer.server.port=8000"
 
       - "traefik.docker.network=web"
+
 
   celery:
     build:
