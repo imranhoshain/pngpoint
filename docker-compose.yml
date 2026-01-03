@@ -12,28 +12,29 @@ services:
       - web
       - backend
     labels:
-      - "traefik.enable=true"
+    - "traefik.enable=true"
+    - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
+    
+    # 100MB limit
+    - "traefik.http.middlewares.${ENVIRONMENT}-limit.buffering.maxRequestBodyBytes=104857600"
+    
+    # HTTP router
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.entrypoints=web"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.middlewares=${ENVIRONMENT}-https"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.priority=100"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.service=${ENVIRONMENT}-backend-svc"
 
-      # redirect http → https
-      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
-
-      # HTTP router (redirects to HTTPS)
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.rule=Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.entrypoints=web"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.middlewares=${ENVIRONMENT}-https"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.priority=10"
-
-      # HTTPS router
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.rule=Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.entrypoints=websecure"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.tls.certresolver=le"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.priority=10"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.service=${ENVIRONMENT}-frontend-svc"
-      # Service definition for frontend
-      - "traefik.http.services.${ENVIRONMENT}-frontend-svc.loadbalancer.server.port=3000"
-
-      # Tell Traefik which docker network to use
-      - "traefik.docker.network=web"
+    # HTTPS router with middleware
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.entrypoints=websecure"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.tls.certresolver=le"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.priority=100"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.middlewares=${ENVIRONMENT}-limit"
+    - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.service=${ENVIRONMENT}-backend-svc"
+    
+    - "traefik.http.services.${ENVIRONMENT}-backend-svc.loadbalancer.server.port=8000"
+    - "traefik.docker.network=web"
 
   backend:
     build:
