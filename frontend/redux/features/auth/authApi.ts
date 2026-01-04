@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-// redux/features/auth/authApi.ts
 import { LoginResponseType } from "@/types/loginResponseType";
 import { apiSlice } from "../api/apiSlice";
 import { setAuth } from "./authSlice";
@@ -7,11 +6,6 @@ import { setAuth } from "./authSlice";
 export interface LoginPropsType {
     email: string;
     password: string;
-}
-
-export interface RefreshTokenResponse {
-    access: string;
-    refresh?: string;
 }
 
 export const authApi = apiSlice.injectEndpoints({
@@ -39,15 +33,6 @@ export const authApi = apiSlice.injectEndpoints({
                 }
             },
         }),
-        
-        refreshToken: builder.mutation<RefreshTokenResponse, { refresh: string }>({
-            query: (data) => ({
-                url: "/token/refresh/",
-                method: "POST",
-                body: data,
-            }),
-        }),
-        
         addRegister: builder.mutation({
             query: (data) => ({
                 url: '/accounts/user/register/',
@@ -55,21 +40,16 @@ export const authApi = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
-        
         addProfileChange: builder.mutation({
             query: (passwordData) => ({
                 url: '/accounts/user/profile/update/',
                 method: 'PATCH',
                 body: passwordData,
             }),
-            invalidatesTags: ['Profile'],
         }),
-        
         getUser: builder.query<any, void>({
             query: () => '/accounts/user/profile/',
-            providesTags: ['User'],
         }),
-        
         addChangePassword: builder.mutation({
             query: (passwordData) => ({
                 url: '/accounts/user/password/change/',
@@ -77,7 +57,6 @@ export const authApi = apiSlice.injectEndpoints({
                 body: passwordData,
             }),
         }),
-        
         addForgotPasswordEmail: builder.mutation({
             query: (data) => ({
                 url: '/accounts/user/forgot-password/',
@@ -85,7 +64,6 @@ export const authApi = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
-        
         addConfirmPassword: builder.mutation({
             query: ({ data, uidb64, token }) => ({
                 url: `/accounts/user/reset-password/${uidb64}/${token}/`,
@@ -93,11 +71,9 @@ export const authApi = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
-        
         addUsers: builder.query({
             query: () => '/accounts/users-list/',
         }),
-        
         addAdminProfileChange: builder.mutation({
             query: ({ id, ...data }) => ({
                 url: `/accounts/user/admin/update/${id}/`,
@@ -105,7 +81,6 @@ export const authApi = apiSlice.injectEndpoints({
                 body: data,
             }),
         }),
-        
         getUserDownloadCount: builder.query({
             query: () => '/accounts/user/download-count/',
         }),
@@ -114,7 +89,6 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
     useAddLoginMutation,
-    useRefreshTokenMutation,
     useAddRegisterMutation,
     useAddProfileChangeMutation,
     useGetUserQuery,
