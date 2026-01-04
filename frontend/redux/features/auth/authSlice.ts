@@ -2,7 +2,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import { setAuth, logout } from '../auth/authSlice';
-import { RootState } from '../../store';
+import type { RootState } from '../../store';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api',
@@ -28,6 +28,8 @@ const baseQueryWithReauth: BaseQueryFn<
         const refreshToken = state.auth.tokens.refresh_token;
 
         if (refreshToken) {
+            console.log('Attempting to refresh token...');
+            
             // Try to get a new access token
             const refreshResult = await baseQuery(
                 {
@@ -46,6 +48,8 @@ const baseQueryWithReauth: BaseQueryFn<
                     refresh?: string;
                 };
 
+                console.log('Token refreshed successfully');
+
                 api.dispatch(
                     setAuth({
                         user: state.auth.user,
@@ -60,10 +64,12 @@ const baseQueryWithReauth: BaseQueryFn<
                 result = await baseQuery(args, api, extraOptions);
             } else {
                 // Refresh failed, logout the user
+                console.log('Token refresh failed, logging out...');
                 api.dispatch(logout());
             }
         } else {
             // No refresh token available, logout
+            console.log('No refresh token available, logging out...');
             api.dispatch(logout());
         }
     }
