@@ -52,8 +52,6 @@ services:
     labels:
       - "traefik.enable=true"
 
-      - "traefik.http.middlewares.pngpoint-body-limit.buffering.maxRequestBodyBytes=104857600"
-
       # redirect http → https
       - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
 
