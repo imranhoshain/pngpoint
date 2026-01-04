@@ -33,6 +33,16 @@ export const authApi = apiSlice.injectEndpoints({
                 }
             },
         }),
+        refreshToken: builder.mutation<
+            { access: string; refresh?: string },
+            { refresh: string }
+        >({
+            query: (data) => ({
+                url: "/token/refresh/",
+                method: "POST",
+                body: data,
+            }),
+        }),
         addRegister: builder.mutation({
             query: (data) => ({
                 url: '/accounts/user/register/',
@@ -46,9 +56,11 @@ export const authApi = apiSlice.injectEndpoints({
                 method: 'PATCH',
                 body: passwordData,
             }),
+            invalidatesTags: ['Profile'],
         }),
         getUser: builder.query<any, void>({
             query: () => '/accounts/user/profile/',
+            providesTags: ['User'],
         }),
         addChangePassword: builder.mutation({
             query: (passwordData) => ({
@@ -89,6 +101,7 @@ export const authApi = apiSlice.injectEndpoints({
 
 export const {
     useAddLoginMutation,
+    useRefreshTokenMutation,
     useAddRegisterMutation,
     useAddProfileChangeMutation,
     useGetUserQuery,
