@@ -1,7 +1,8 @@
+// redux/features/api/apiSlice.ts
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import type { BaseQueryFn, FetchArgs, FetchBaseQueryError } from '@reduxjs/toolkit/query';
-import { setAuth, logout } from '../features/authSlice';
-import { RootState } from './store';
+import { setAuth, logout } from '../auth/authSlice';
+import { RootState } from '../../store';
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api',
