@@ -37,7 +37,7 @@ export const SearchingImage: React.FC = () => {
                     <h1 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-center uppercase">
                         Free download transparent png files
                     </h1>
-                    <h1 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-3xl font-normal text-center uppercase">
+                    <h1 className="text-white text-xl md:text-2xl lg:text-2xl xl:text-2xl font-normal text-center uppercase">
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     </h1>
                     <div className="flex flex-col flex-wrap w-full lg:w-[95%] xl:w-[60%] relative">
