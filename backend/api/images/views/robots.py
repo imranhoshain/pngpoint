@@ -27,7 +27,7 @@ def robots_txt(request):
         "Allow: /sub-categories/",
         "",
         "# Sitemap location",
-        f"Sitemap: {request.scheme}://{request.get_host()}/sitemap.xml",
+        "Sitemap: https://pngpoint.com/api/v1/sitemap.xml",
         "",
         "# Crawl-delay for polite crawling",
         "Crawl-delay: 1",
