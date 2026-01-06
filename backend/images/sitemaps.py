@@ -1,10 +1,5 @@
-"""
-Optimized Sitemap Configuration with Caching
-This version includes performance optimizations for large datasets
-"""
-
 from django.contrib.sitemaps import Sitemap
-from django.urls import reverse
+from django.contrib.sites.models import Site
 from django.core.cache import cache
 from django.db.models import F
 from .models import Images, Categories, SubCategories
@@ -14,6 +9,25 @@ from datetime import datetime, timedelta
 class CachedSitemap(Sitemap):
     """Base sitemap class with caching support"""
     cache_timeout = 3600  # 1 hour
+    
+    def get_urls(self, page=1, site=None, protocol=None):
+        """Override to force correct domain"""
+        try:
+            site = Site.objects.get(id=1)
+            if site.domain == 'example.com':
+                site.domain = 'pngpoint.com'
+                site.save()
+        except Site.DoesNotExist:
+            site = Site.objects.create(
+                id=1,
+                domain='pngpoint.com',
+                name='PNG Point'
+            )
+        
+        # Use https protocol
+        protocol = protocol or 'https'
+        
+        return super().get_urls(page=page, site=site, protocol=protocol)
     
     def get_cache_key(self):
         """Generate cache key for this sitemap"""
@@ -52,7 +66,7 @@ class OptimizedImageSitemap(CachedSitemap):
         return Images.objects.filter(
             status='approved'
         ).only(
-            'slug', 'updated_at', 'title'
+            'slug', 'updated_at', 'download_count'
         ).order_by('-created_at')
     
     def lastmod(self, obj):
@@ -80,7 +94,7 @@ class RecentImagesSitemap(CachedSitemap):
     priority = 0.9
     limit = 10000
     protocol = 'https'
-    cache_timeout = 1800  # 30 minutes
+    cache_timeout = 1800
     
     def _get_items(self):
         thirty_days_ago = datetime.now() - timedelta(days=30)
@@ -106,7 +120,7 @@ class PopularImagesSitemap(CachedSitemap):
     priority = 0.95
     limit = 5000
     protocol = 'https'
-    cache_timeout = 1800  # 30 minutes
+    cache_timeout = 1800
     
     def _get_items(self):
         return Images.objects.filter(
@@ -154,6 +168,23 @@ class StaticViewSitemap(Sitemap):
     priority = 1.0
     changefreq = 'daily'
     protocol = 'https'
+    
+    def get_urls(self, page=1, site=None, protocol=None):
+        """Override to force correct domain"""
+        try:
+            site = Site.objects.get(id=1)
+            if site.domain == 'example.com':
+                site.domain = 'pngpoint.com'
+                site.save()
+        except Site.DoesNotExist:
+            site = Site.objects.create(
+                id=1,
+                domain='pngpoint.com',
+                name='PNG Point'
+            )
+        
+        protocol = protocol or 'https'
+        return super().get_urls(page=page, site=site, protocol=protocol)
 
     def items(self):
         return ['home','about', 'contact', 'privacy', 'terms','license']

@@ -276,4 +276,3 @@ LOGGING = {
         },
     },
 }
-SITE_DOMAIN = 'pngpoint.com'
