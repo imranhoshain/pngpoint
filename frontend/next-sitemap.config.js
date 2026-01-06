@@ -12,7 +12,7 @@ module.exports = {
       { userAgent: '*', allow: '/' },
     ],
     additionalSitemaps: [
-      `${siteUrl}/sitemap.xml`,
+      `${siteUrl}/api/v1/sitemap.xml`,
     ],
   },
 };
