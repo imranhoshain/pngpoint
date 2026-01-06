@@ -55,13 +55,13 @@ sitemaps = {
 }
 
 urlpatterns += [
-    path('robots.txt', robots_txt, name='robots_txt'),
-    path('sitemap.xml', index, {
+    path('api/v1/robots.txt', robots_txt, name='robots_txt'),
+    path('sitemap-pages.xml', index, {
         'sitemaps': sitemaps,
         'sitemap_url_name': 'sitemap-section',
     }, name='sitemap-index'),
     
-    path('sitemap-<section>.xml', sitemap, {
+    path('sitemap-pages-<section>.xml', sitemap, {
         'sitemaps': sitemaps,
     }, name='sitemap-section'),
 ]
