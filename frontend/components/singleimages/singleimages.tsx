@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { getFetchData } from "@/utils/getFetchData";
 import { SERVER_URL } from "@/utils/api";
-import Head from "next/head";
 
 import { MainImage } from "../singlepage/mainimage";
 import { Content } from "../singlepage/content";
@@ -186,42 +185,9 @@ export const SingleImages: React.FC<SingleImagesProps> = ({ image, pageUrl, slug
         };
     }, [title, keyword]);
 
-    // Prepare meta data
-    const pageTitle = singleImageData?.image?.title || 'Image Details';
-    const pageDescription = singleImageData?.image?.description || 
-                           singleImageData?.image?.alt_description || 
-                           'View and download high-quality images';
-    const imageUrl = singleImageData?.image?.urls?.regular || 
-                     singleImageData?.image?.url || 
-                     '';
-    const imageAlt = singleImageData?.image?.alt_description || pageTitle;
-
     // RENDER IMMEDIATELY - Always show something, never return null
     return (
         <>
-            {/* Meta Tags for SEO */}
-            <Head>
-                <title>{pageTitle}</title>
-                <meta name="description" content={pageDescription} />
-                
-                {/* Open Graph / Facebook */}
-                <meta property="og:type" content="website" />
-                <meta property="og:title" content={pageTitle} />
-                <meta property="og:description" content={pageDescription} />
-                {imageUrl && <meta property="og:image" content={imageUrl} />}
-                <meta property="og:url" content={pageUrl} />
-                
-                {/* Twitter */}
-                <meta name="twitter:card" content="summary_large_image" />
-                <meta name="twitter:title" content={pageTitle} />
-                <meta name="twitter:description" content={pageDescription} />
-                {imageUrl && <meta name="twitter:image" content={imageUrl} />}
-                {imageAlt && <meta name="twitter:image:alt" content={imageAlt} />}
-                
-                {/* Additional Meta Tags */}
-                <link rel="canonical" href={pageUrl} />
-            </Head>
-
             {/* Main Image Section - ALWAYS visible */}
             <div className="grid grid-cols-1 md:grid-cols-[60%_35%] lg:grid-cols-[60%_35%] xl:grid-cols-[57%_40%] gap-5 lg:gap-10">
                 {isLoadingMain ? (
