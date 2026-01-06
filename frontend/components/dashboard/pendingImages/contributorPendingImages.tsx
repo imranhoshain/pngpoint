@@ -19,7 +19,7 @@ import { RootState } from "@/redux/store";
 import { ImagesResponse } from "@/types/imagesResponse";
 import { ReactIcons } from "@/utils/reactIcons";
 import Image from "next/image";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { SelectedImageSidebar } from "../seletedSideBarImage/seletedSideBarImage";
 
@@ -27,16 +27,14 @@ export default function ContributorPendingImages() {
     const [value, setValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
-    const [lastClickedIndex, setLastClickedIndex] = useState<number | null>(null);
+    const [selectedImageIds, setLocalSelectedImageIds] = useState<number[]>([]);
     const [isDeleting, setIsDeleting] = useState<boolean>(false);
+    const [lastClickedIndex, setLastClickedIndex] = useState<number | null>(null); // NEW: for shift selection
 
     const dispatch = useDispatch();
     const sideBar = useSelector((state: RootState) => state.imageSideBar.sideBar);
     const selectedMetadata = useSelector(
         (state: RootState) => state.imageSideBar.selectedMetadata
-    );
-    const selectedImageIds = useSelector(
-        (state: RootState) => state.imageSideBar.selectedImageIds || []
     );
 
     const { data, isLoading, isError, refetch } = useGetUserPendingImagesQuery(
@@ -52,29 +50,35 @@ export default function ContributorPendingImages() {
     const count: number = data?.count ?? 0;
     const totalPages: number = Math.ceil(count / 100);
 
-    // Sync selectedMetadata with updated image data after refetch
-    useEffect(() => {
-        if (selectedMetadata && images.length > 0) {
-            const updatedImage = images.find(img => img.id === selectedMetadata.id);
-            if (updatedImage && JSON.stringify(updatedImage) !== JSON.stringify(selectedMetadata)) {
-                dispatch(setSelectedMetadata(updatedImage));
-            }
-        }
-    }, [images, selectedMetadata, dispatch]);
+    const updateSelectedImageIds = (updatedIds: number[]) => {
+        setLocalSelectedImageIds(updatedIds);
+    };
 
+    // UPDATED: handleImageClick with shift selection support
     const handleImageClick = (img: any, index: number, event: React.MouseEvent) => {
+        // Prevent default checkbox behavior
         event.stopPropagation();
 
+        // Check if shift key is pressed and we have a previous selection
         if (event.shiftKey && lastClickedIndex !== null) {
+            // Calculate range
             const start = Math.min(lastClickedIndex, index);
             const end = Math.max(lastClickedIndex, index);
+            
+            // Get all image IDs in the range
             const rangeIds = images.slice(start, end + 1).map((item) => item.id);
+            
+            // Merge with existing selections (avoid duplicates)
             const newSelectedIds = Array.from(new Set([...selectedImageIds, ...rangeIds]));
             
+            updateSelectedImageIds(newSelectedIds);
             dispatch(setSelectedImageIds(newSelectedIds));
+            
+            // Open sidebar with the clicked image
             dispatch(openSidebar());
             dispatch(setSelectedMetadata(img));
         } else {
+            // Normal click behavior (toggle single image)
             dispatch(openSidebar());
             dispatch(setSelectedMetadata(img));
 
@@ -82,7 +86,10 @@ export default function ContributorPendingImages() {
                 ? selectedImageIds.filter((id) => id !== img.id)
                 : [...selectedImageIds, img.id];
 
+            updateSelectedImageIds(updated);
             dispatch(setSelectedImageIds(updated));
+            
+            // Update last clicked index
             setLastClickedIndex(index);
         }
     };
@@ -119,12 +126,13 @@ export default function ContributorPendingImages() {
 
     const handleSelectAll = () => {
         const currentPageIds = images.map((img) => img.id);
+        updateSelectedImageIds(currentPageIds);
         dispatch(setSelectedImageIds(currentPageIds));
     };
 
     const handleDeselectAll = () => {
-        dispatch(setSelectedImageIds([]));
-        setLastClickedIndex(null);
+        updateSelectedImageIds([]);
+        setLastClickedIndex(null); // Reset last clicked index
     };
 
     const handleDeleteSelected = async () => {
@@ -141,11 +149,12 @@ export default function ContributorPendingImages() {
         try {
             await NumberOfImagesDelete({ image_ids: selectedImageIds }).unwrap();
             alert("Selected images deleted successfully.");
-            dispatch(clearSelectedImageIds());
-            setLastClickedIndex(null);
+            updateSelectedImageIds([]);
+            setLastClickedIndex(null); // Reset last clicked index
             refetch();
             dispatch(closeSidebar());
             dispatch(clearSelectedMetadata());
+            dispatch(clearSelectedImageIds());
         } catch (err) {
             console.error("Delete failed:", err);
             alert("Failed to delete images.");
@@ -176,6 +185,7 @@ export default function ContributorPendingImages() {
 
     return (
         <div className="flex flex-row flex-wrap justify-between px-2.5 lg:px-10 pb-1 lg:pb-2.5 w-full h-full relative">
+            {/* Overlay spinner when deleting */}
             {isDeleting && (
                 <div className="absolute inset-0 z-50 flex flex-col items-center justify-center bg-black/40">
                     <div className="w-14 h-14 border-4 border-white border-t-transparent rounded-full animate-spin mb-4"></div>
@@ -185,6 +195,7 @@ export default function ContributorPendingImages() {
                 </div>
             )}
 
+            {/* Top bar */}
             <div className="flex flex-col lg:flex-row items-center justify-between gap-2 lg:gap-4 py-2 w-full">
                 <h4 className="text-xs lg:text-base font-semibold">
                     Pending images: {count}
@@ -232,8 +243,9 @@ export default function ContributorPendingImages() {
                 </div>
             </div>
 
+            {/* Images */}
             <div className={`flex flex-row flex-wrap ${sideBar ? "w-[79%]" : "w-full"} justify-between h-[80%] lg:h-[85%] relative overflow-hidden overflow-x-hidden overflow-y-scroll scrollbar-width`}>
-                <div className={`flex flex-row flex-wrap w-full`}>
+                <div className={`flex flex-row flex-wrap  ${sideBar ? "w-[79%]" : "w-full"}`}>
                     <div className="flex flex-wrap items-center w-full h-full">
                         {images.length > 0 ? (
                             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2.5 lg:gap-5 py-5 w-full">
@@ -243,11 +255,10 @@ export default function ContributorPendingImages() {
                                     return (
                                         <div
                                             key={item.id}
-                                            className={`flex flex-col items-center shadow-sm px-2.5 py-2.5 rounded-md border relative cursor-pointer ${
-                                                isSelected
-                                                    ? "border-blue-500"
-                                                    : "border-gray-300"
-                                            }`}
+                                            className={`flex flex-col items-center shadow-sm px-2.5 py-2.5 rounded-md border relative cursor-pointer ${isSelected
+                                                ? "border-blue-500"
+                                                : "border-gray-300"
+                                                }`}
                                             onClick={(e) => handleImageClick(item, index, e)}
                                         >
                                             <span>
@@ -279,9 +290,18 @@ export default function ContributorPendingImages() {
                                                 </span>
                                                 <span
                                                     className={`block w-2 h-2 rounded-full 
-                                                    ${item.status === "approved" ? "bg-green-600" : ""}
-                                                    ${item.status === "rejected" ? "bg-red-600" : ""}
-                                                    ${item.status === "pending" ? "bg-yellow-500" : ""}`}
+                                                    ${item.status === "approved"
+                                                            ? "bg-green-600"
+                                                            : ""
+                                                        }
+                                                    ${item.status === "rejected"
+                                                            ? "bg-red-600"
+                                                            : ""
+                                                        }
+                                                    ${item.status === "pending"
+                                                            ? "bg-yellow-500"
+                                                            : ""
+                                                        }`}
                                                 ></span>
                                             </div>
                                         </div>
@@ -295,30 +315,31 @@ export default function ContributorPendingImages() {
                         )}
                     </div>
                 </div>
+
             </div>
 
-            {sideBar && selectedMetadata && (
-                <div className="w-full lg:w-[20%] h-[90%] relative mt-5 overflow-hidden overflow-x-hidden overflow-y-scroll scrollbar-width">
-                    <button
-                        className="absolute top-0.5 right-0.5 z-50 bg-black text-white p-0.5 cursor-pointer rounded-full"
-                        onClick={handleSideBarClose}
-                    >
-                        <IoMdClose className="text-lg" />
-                    </button>
-                    <SelectedImageSidebar 
-                        selectedImageData={selectedMetadata} 
-                        refetch={refetch} 
-                    />
-                </div>
-            )}
+            {/* Sidebar */}
+                {sideBar && selectedMetadata && (
+                    <div className="w-full lg:w-[20%] h-[90%] relative mt-5 overflow-hidden overflow-x-hidden overflow-y-scroll scrollbar-width">
+                        <button
+                            className="absolute top-0.5 right-0.5 z-50 bg-black text-white p-0.5 cursor-pointer rounded-full"
+                            onClick={handleSideBarClose}
+                        >
+                            <IoMdClose className="text-lg" />
+                        </button>
+                        <SelectedImageSidebar selectedImageData={selectedMetadata} refetch={refetch} />
+                    </div>
+                )}
 
+            {/* Pagination */}
             <div className="flex flex-col flex-wrap justify-center items-center w-full h-[5%]">
-                <Pagination
-                    totalPages={totalPages}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
-                />
-            </div>
+                            <Pagination
+                                    totalPages={totalPages}
+                                    currentPage={currentPage}
+                                    onPageChange={handlePageChange}
+                            />
+                        </div>
+
         </div>
     );
 }
