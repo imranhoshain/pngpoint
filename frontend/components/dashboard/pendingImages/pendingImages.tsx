@@ -4,7 +4,7 @@
 import Pagination from "@/components/pagination/pagination";
 import { useAddCSVUploadMutation } from "@/redux/features/images/csvApi";
 import {
-    useGetUserPendingImagesQuery,
+    useGetPendingImagesQuery,
     useNumberOfImagesDeleteMutation,
 } from "@/redux/features/images/pendingApi";
 import {
@@ -23,7 +23,7 @@ import { useRef, useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { SelectedImageSidebar } from "../seletedSideBarImage/seletedSideBarImage";
 
-export default function ContributorPendingImages() {
+export default function PendingImagesComponent() {
     const [value, setValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
     const fileInputRef = useRef<HTMLInputElement | null>(null);
@@ -39,7 +39,7 @@ export default function ContributorPendingImages() {
         (state: RootState) => state.imageSideBar.selectedImageIds || []
     );
 
-    const { data, isLoading, isError, refetch } = useGetUserPendingImagesQuery(
+    const { data, isLoading, isError, refetch } = useGetPendingImagesQuery(
         { searchTerm: value, pageNumber: currentPage },
         { refetchOnMountOrArgChange: true }
     );
@@ -232,7 +232,7 @@ export default function ContributorPendingImages() {
                 </div>
             </div>
 
-            <div className={`flex flex-row flex-wrap ${sideBar ? "w-[79%]" : "w-full"} justify-between h-[80%] lg:h-[85%] relative overflow-hidden overflow-x-hidden overflow-y-scroll scrollbar-width`}>
+            <div className={`flex flex-row flex-wrap ${sideBar ? "w-[79%]" : "w-full"} justify-between h-[80%] lg:h-[93%] relative overflow-hidden overflow-x-hidden overflow-y-scroll scrollbar-width`}>
                 <div className={`flex flex-row flex-wrap w-full`}>
                     <div className="flex flex-wrap items-center w-full h-full">
                         {images.length > 0 ? (
@@ -312,13 +312,15 @@ export default function ContributorPendingImages() {
                 </div>
             )}
 
-            <div className="flex flex-col flex-wrap justify-center items-center w-full h-[5%]">
-                <Pagination
-                    totalPages={totalPages}
-                    currentPage={currentPage}
-                    onPageChange={handlePageChange}
-                />
-            </div>
+            {images.length > 100 && (
+                <div className="flex flex-col flex-wrap justify-center items-center w-full">
+                    <Pagination
+                        totalPages={totalPages}
+                        currentPage={currentPage}
+                        onPageChange={handlePageChange}
+                    />
+                </div>
+            )}
         </div>
     );
 }
