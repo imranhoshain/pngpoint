@@ -208,7 +208,8 @@ SIMPLE_JWT = {
     "AUTH_COOKIE_SAMESITE": "Lax",
 }
 SIMPLE_JWT["ACCESS_TOKEN_LIFETIME"] = timedelta(
-    minutes=env.int('ACCESS_TOKEN_LIFETIME_MINUTES', default=15)
+    # minutes=env.int('ACCESS_TOKEN_LIFETIME_MINUTES', default=15)
+    days=1
 )
 SIMPLE_JWT["REFRESH_TOKEN_LIFETIME"] = timedelta(
     days=env.int('REFRESH_TOKEN_LIFETIME_DAYS', default=14)
