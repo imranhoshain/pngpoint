@@ -35,14 +35,14 @@ class CachedSitemap(Sitemap):
     
     def items(self):
         """Override this in child classes"""
-        cache_key = self.get_cache_key()
-        items = cache.get(cache_key)
+        # cache_key = self.get_cache_key()
+        # items = cache.get(cache_key)
         
-        if items is None:
-            items = self._get_items()
-            cache.set(cache_key, items, self.cache_timeout)
+        # if items is None:
+        #     items = self._get_items()
+        #     cache.set(cache_key, items, self.cache_timeout)
         
-        return items
+        return self._get_items()
     
     def _get_items(self):
         """Implement this in child classes"""
@@ -55,7 +55,7 @@ class OptimizedImageSitemap(CachedSitemap):
     """
     changefreq = "weekly"
     priority = 0.8
-    limit = 50000
+    limit = 5000
     protocol = 'https'
     
     def _get_items(self):
@@ -92,7 +92,7 @@ class RecentImagesSitemap(CachedSitemap):
     """
     changefreq = "daily"
     priority = 0.9
-    limit = 10000
+    limit = 5000
     protocol = 'https'
     cache_timeout = 1800
     
