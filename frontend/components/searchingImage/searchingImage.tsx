@@ -35,10 +35,10 @@ export const SearchingImage: React.FC = () => {
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap items-center justify-center gap-y-5 w-full">
                     <h1 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-center uppercase">
-                        Free download transparent png files
+                        Free PNG Images Download with Transparent Background
                     </h1>
-                    <h1 className="text-white text-xl md:text-2xl lg:text-xl xl:text-xl font-normal text-center uppercase">
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+                    <h1 className="text-white text-xl md:text-2xl lg:text-l xl:text-l font-normal text-center uppercase">
+                        Download high quality PNG images with transparent backgrounds, perfect for design, web, and commercial use.
                     </h1>
                     <div className="flex flex-col flex-wrap w-full lg:w-[95%] xl:w-[60%] relative">
                         <input
