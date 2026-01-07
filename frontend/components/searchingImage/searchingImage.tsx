@@ -37,8 +37,8 @@ export const SearchingImage: React.FC = () => {
                     <h1 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-center uppercase">
                         Free PNG Images Download with Transparent Background
                     </h1>
-                    <h1 className="text-white text-lg md:text-xl lg:text-xl font-light text-center uppercase">
-                    Download high quality PNG images with transparent backgrounds, perfect for design, web, and commercial use
+                    <h1 className="text-white text-sm md:text-base lg:text-base font-light text-center">
+                        Download high quality PNG images with transparent backgrounds, perfect for design, web, and commercial use.
                     </h1>
                     <div className="flex flex-col flex-wrap w-full lg:w-[95%] xl:w-[60%] relative">
                         <input
