@@ -31,8 +31,8 @@ export default function UploadImagesComponent() {
             setImages((prev) => [...prev, ...newImages]);
 
             // Keep batches small to avoid server/gateway timeouts on large uploads
-            const batchSize = 1;
-            const limit = pLimit(6);
+            const batchSize = 3;
+            const limit = pLimit(2);
             const totalBatches = Math.ceil(newImages.length / batchSize);
             const uploadTasks = [];
 
