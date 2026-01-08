@@ -146,6 +146,8 @@ services:
 
 networks:
   web:
+    external: true
     name: web
   backend:
+    external: true
     name: backend
