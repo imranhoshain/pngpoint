@@ -45,7 +45,7 @@ services:
       - ./backend/static:/app/static
       - ./backend/media:/app/media
     expose:
-      - "8000"
+      - "8001:8000"
     networks:
       - web
       - backend
