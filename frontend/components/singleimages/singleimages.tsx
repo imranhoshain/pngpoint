@@ -18,13 +18,14 @@ interface SingleImagesProps {
     slug: string;
 }
 
-// Skeleton loader for main image
+// Skeleton loader for main image - UPDATED to match new layout
 const MainImageSkeleton = () => (
     <div className="w-full animate-pulse">
-        <div className="bg-gray-300 rounded-2xl w-full h-[400px] md:h-[500px] lg:h-[600px]"></div>
-        <div className="mt-4 space-y-3">
-            <div className="h-6 bg-gray-300 rounded w-3/4"></div>
-            <div className="h-4 bg-gray-300 rounded w-1/2"></div>
+        {/* Image skeleton - reduced height */}
+        <div className="bg-gray-300 rounded-2xl w-full h-[280px] md:h-[380px] lg:h-[420px]"></div>
+        {/* Description skeleton below image */}
+        <div className="mt-2.5 md:mt-5">
+            <div className="h-20 bg-gray-300 rounded-lg w-full"></div>
         </div>
     </div>
 );

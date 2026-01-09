@@ -15,7 +15,8 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
 
     return (
         <div className="flex flex-col flex-wrap gap-y-2.5 md:gap-y-5 w-full h-full">
-            <div className="relative rounded-2xl border border-gray-300 cursor-pointer shadow-md group h-full">
+            {/* Main Image Container - Reduced height */}
+            <div className="relative rounded-2xl border border-gray-300 cursor-pointer shadow-md group">
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
@@ -62,7 +63,7 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
                     
                     <div className={`flex flex-col flex-wrap justify-center items-center p-2.5 z-50 transition-opacity duration-500 ${isLoaded ? 'opacity-100' : 'opacity-0'}`}>
                         <Image
-                            className="w-auto h-auto max-h-[350px] md:max-h-[600px]"
+                            className="w-auto h-auto max-h-[280px] md:max-h-[380px] lg:max-h-[420px]"
                             src={image?.image?.main_url}
                             alt={image?.image?.title}
                             title={image?.image?.title}
@@ -75,6 +76,15 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
                     </div>
                 </div>
             </div>
+
+            {/* Description below image */}
+            {image?.image?.description && (
+                <div className="flex flex-col flex-wrap border border-gray-300 rounded-lg px-3 py-3 w-full bg-white shadow-sm">
+                    <p className="text-sm text-gray-700 leading-relaxed">
+                        {image?.image?.description}
+                    </p>
+                </div>
+            )}
         </div>
     );
 }
