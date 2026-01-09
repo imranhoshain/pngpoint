@@ -132,19 +132,6 @@ export const HomeFAQ = () => {
                             </div>
                         ))}
                     </div>
-
-                    {/* Contact Section */}
-                    <div className="flex flex-col items-center gap-y-3 mt-6 text-center">
-                        <p className="text-sm md:text-base text-gray-600">
-                            Still have questions?
-                        </p>
-                        <a
-                            href="/contact"
-                            className="px-6 py-2.5 bg-[#0077a2] hover:bg-[#005a7d] text-white font-semibold rounded-lg transition-colors duration-300"
-                        >
-                            Contact Us
-                        </a>
-                    </div>
                 </div>
             </div>
         </section>

@@ -16,7 +16,8 @@ import { Trendingtags } from "../trendingtags/trendingtags";
 import { setSearch } from "@/redux/features/getImages/getImageSlice";
 import { TrendingImagesPagination } from "../trendingimages/trendingImagesPagination";
 import { HomeCategories } from "../categories/homeCategories";
-import { HomeFAQ } from "../faq/homeFAQ"; // NEW IMPORT
+import { HomeReviews } from "../reviews/homeReviews"; // NEW IMPORT
+import { HomeFAQ } from "../faq/homeFAQ";
 
 interface ImagesData {
     count: number;
@@ -90,7 +91,8 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
             )}
             <HomeCategories />
             {/* <Trendingtags /> */}
-            <HomeFAQ /> {/* NEW COMPONENT ADDED */}
+            <HomeReviews />
+            <HomeFAQ />
             <Footer />
         </>
     );
