@@ -16,7 +16,9 @@ import { Trendingtags } from "../trendingtags/trendingtags";
 import { setSearch } from "@/redux/features/getImages/getImageSlice";
 import { TrendingImagesPagination } from "../trendingimages/trendingImagesPagination";
 import { HomeCategories } from "../categories/homeCategories";
-import { HomeReviews } from "../reviews/homeReviews"; // NEW IMPORT
+import { HowItWorks } from "../howItWorks/howItWorks"; // NEW IMPORT
+import { UseCases } from "../useCases/useCases"; // NEW IMPORT
+import { HomeReviews } from "../reviews/homeReviews";
 import { HomeFAQ } from "../faq/homeFAQ";
 
 interface ImagesData {
@@ -91,6 +93,8 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
             )}
             <HomeCategories />
             {/* <Trendingtags /> */}
+            <HowItWorks /> {/* NEW COMPONENT */}
+            <UseCases /> {/* NEW COMPONENT */}
             <HomeReviews />
             <HomeFAQ />
             <Footer />
