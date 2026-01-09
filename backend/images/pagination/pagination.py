@@ -2,9 +2,9 @@ from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
 
 class ImagesPagination(PageNumberPagination):
-    page_size = 100
+    page_size = 8
     page_size_query_param = 'page_size'
-    max_page_size = 100
+    max_page_size = 8
 
     def get_paginated_response(self, data):
         return Response({
