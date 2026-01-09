@@ -40,7 +40,19 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./backend/.env
-    command: daphne -b 0.0.0.0 -p 8000 --websocket_timeout 300 --ping_timeout 300 -t 300 app.asgi:application
+    command:
+      - daphne
+      - -b
+      - 0.0.0.0
+      - -p
+      - "8000"
+      - --websocket_timeout
+      - "300"
+      - --ping_timeout
+      - "300"
+      - -t
+      - "300"
+      - app.asgi:application
     volumes:
       - ./backend/static:/app/static
       - ./backend/media:/app/media
