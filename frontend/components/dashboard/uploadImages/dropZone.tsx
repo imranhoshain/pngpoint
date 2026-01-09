@@ -86,9 +86,14 @@ export const DropZone: React.FC<Props> = ({ onDrop, images }: Props) => {
                                 </div>
                             )}
                             {img.status === "error" && (
-                                <div className="absolute inset-0 bg-black/50 flex flex-col items-center justify-center rounded text-white text-xs text-center p-2 border border-gray-300">
-                                    <XCircle className="w-6 h-6 text-red-500 mb-1 absolute top-1 right-1" />
-                                    <p className="text-sm font-normal">{img.errorMessage || "Upload failed"}</p>
+                                <div className="absolute inset-0 bg-black/70 flex flex-col items-center justify-center rounded text-white text-xs p-2 border border-red-500">
+                                    <XCircle className="w-8 h-8 text-red-500 mb-2" />
+                                    <p className="text-xs font-semibold mb-1 break-all text-center px-1">
+                                        {img.file.name}
+                                    </p>
+                                    <p className="text-xs font-normal text-center px-1 text-red-200">
+                                        {img.errorMessage || "Upload failed"}
+                                    </p>
                                 </div>
                             )}
                         </div>
