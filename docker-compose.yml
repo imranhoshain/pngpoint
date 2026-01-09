@@ -40,7 +40,7 @@ services:
       dockerfile: Dockerfile
     env_file:
       - ./backend/.env
-    command: daphne -b 0.0.0.0 -p 8000 app.asgi:application
+    command: daphne -b 0.0.0.0 -p 8000 --websocket-timeout 300 --ping-timeout 300 app.asgi:application
     volumes:
       - ./backend/static:/app/static
       - ./backend/media:/app/media
@@ -54,6 +54,11 @@ services:
 
       # redirect http → https
       - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
+      
+      # Buffering middleware for large uploads
+      - "traefik.http.middlewares.pngpoint-upload-buffer.buffering.maxRequestBodyBytes=52428800"
+      - "traefik.http.middlewares.pngpoint-upload-buffer.buffering.memRequestBodyBytes=5242880"
+      - "traefik.http.middlewares.pngpoint-upload-buffer.buffering.maxResponseBodyBytes=52428800"
 
       # API over HTTP (redirects to HTTPS)
       - "traefik.http.routers.pngpoint-backend-api-web.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && PathPrefix(`/api/`)"
@@ -67,6 +72,7 @@ services:
       - "traefik.http.routers.pngpoint-backend-api-secure.entrypoints=websecure"
       - "traefik.http.routers.pngpoint-backend-api-secure.tls.certresolver=le"
       - "traefik.http.routers.pngpoint-backend-api-secure.priority=100"
+      - "traefik.http.routers.pngpoint-backend-api-secure.middlewares=pngpoint-upload-buffer"
       - "traefik.http.routers.pngpoint-backend-api-secure.service=pngpoint-backend-svc"
 
       # Service definition for backend (Django / Daphne)
