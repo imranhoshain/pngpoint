@@ -82,6 +82,9 @@ class ImagesUploadAPIView(APIView):
 
         for i, image_file in enumerate(images):
             try:
+                return Response({
+                    "is_entered":True
+                }, status=200)
                 temp_path = None
                 try:
                     title = titles[i].strip()
