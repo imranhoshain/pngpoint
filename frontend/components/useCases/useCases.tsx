@@ -94,12 +94,12 @@ export const UseCases = () => {
                         <p className="text-sm md:text-base leading-relaxed max-w-4xl mx-auto mb-6">
                             Find the perfect free PNG images with transparent backgrounds at Pngpoint, the trusted resource for designers, content creators, and businesses worldwide. Every high-quality PNG file is royalty-free and ready for personal or commercial use, optimized for both web design and AI workflows. Our library is designed for easy search, direct PNG download, and seamless integration into any project. Explore our massive free PNG collection of HD clipart, icons, and illustrations—all curated for quality and reliability. Start creating with Pngpoint today and bring your ideas to life effortlessly.
                         </p>
-                        <a
+                        {/* <a
                             href="#search"
                             className="inline-block px-8 py-3 bg-white text-[#0077a2] font-semibold rounded-lg hover:bg-gray-100 transition-colors duration-300 shadow-lg"
                         >
                             Explore PNG Library
-                        </a>
+                        </a> */}
                     </div>
                 </div>
             </div>
