@@ -60,7 +60,7 @@ export const SearchingImage: React.FC = () => {
                             dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
                         />
                     </div>
-                    <div className="flex flex-row flex-wrap gap-1.5 md:gap-3.5 items-center justify-center w-full lg:w-[95%] xl:w-[62%] pb-2.5">
+                    {/* <div className="flex flex-row flex-wrap gap-1.5 md:gap-3.5 items-center justify-center w-full lg:w-[95%] xl:w-[62%] pb-2.5">
                         {category_list?.map((item: any) => (
                             <div key={item.id}>
                                 <Link
@@ -72,7 +72,7 @@ export const SearchingImage: React.FC = () => {
                                 </Link>
                             </div>
                         ))}
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>
