@@ -54,11 +54,6 @@ services:
 
       # redirect http → https
       - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
-      
-      # Buffering middleware for large uploads
-      - "traefik.http.middlewares.pngpoint-upload-buffer.buffering.maxRequestBodyBytes=52428800"
-      - "traefik.http.middlewares.pngpoint-upload-buffer.buffering.memRequestBodyBytes=5242880"
-      - "traefik.http.middlewares.pngpoint-upload-buffer.buffering.maxResponseBodyBytes=52428800"
 
       # API over HTTP (redirects to HTTPS)
       - "traefik.http.routers.pngpoint-backend-api-web.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && PathPrefix(`/api/`)"
@@ -72,7 +67,6 @@ services:
       - "traefik.http.routers.pngpoint-backend-api-secure.entrypoints=websecure"
       - "traefik.http.routers.pngpoint-backend-api-secure.tls.certresolver=le"
       - "traefik.http.routers.pngpoint-backend-api-secure.priority=100"
-      - "traefik.http.routers.pngpoint-backend-api-secure.middlewares=pngpoint-upload-buffer"
       - "traefik.http.routers.pngpoint-backend-api-secure.service=pngpoint-backend-svc"
 
       # Service definition for backend (Django / Daphne)
