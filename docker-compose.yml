@@ -3,33 +3,34 @@ services:
     build:
       context: ./frontend
       dockerfile: Dockerfile
+    restart: unless-stopped
     env_file:
       - ./frontend/.env
     expose:
       - "3000"
     networks:
       - web
+      - backend
     labels:
       - "traefik.enable=true"
 
       # redirect http → https
-      - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
 
       # HTTP router (redirects to HTTPS)
-      - "traefik.http.routers.pngpoint-frontend-web.rule=Host(`pngpoint.com`) || Host(`www.pngpoint.com`)"
-      - "traefik.http.routers.pngpoint-frontend-web.entrypoints=web"
-      - "traefik.http.routers.pngpoint-frontend-web.middlewares=pngpoint-https"
-      - "traefik.http.routers.pngpoint-frontend-web.priority=10"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.rule=Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.entrypoints=web"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.middlewares=${ENVIRONMENT}-https"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.priority=10"
 
       # HTTPS router
-      - "traefik.http.routers.pngpoint-frontend-secure.rule=Host(`pngpoint.com`) || Host(`www.pngpoint.com`)"
-      - "traefik.http.routers.pngpoint-frontend-secure.entrypoints=websecure"
-      - "traefik.http.routers.pngpoint-frontend-secure.tls.certresolver=le"
-      - "traefik.http.routers.pngpoint-frontend-secure.priority=10"
-      - "traefik.http.routers.pngpoint-frontend-secure.service=pngpoint-frontend-svc"
-
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.rule=Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.entrypoints=websecure"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.tls.certresolver=le"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.priority=10"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.service=${ENVIRONMENT}-frontend-svc"
       # Service definition for frontend
-      - "traefik.http.services.pngpoint-frontend-svc.loadbalancer.server.port=3000"
+      - "traefik.http.services.${ENVIRONMENT}-frontend-svc.loadbalancer.server.port=3000"
 
       # Tell Traefik which docker network to use
       - "traefik.docker.network=web"
@@ -38,9 +39,10 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    restart: unless-stopped
     env_file:
       - ./backend/.env
-    command: daphne -b 0.0.0.0 -p 8000 app.asgi:application
+    command: daphne --http-timeout 300 -b 0.0.0.0 -p 8000 app.asgi:application
     volumes:
       - ./backend/static:/app/static
       - ./backend/media:/app/media
@@ -53,24 +55,23 @@ services:
       - "traefik.enable=true"
 
       # redirect http → https
-      - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
 
       # API over HTTP (redirects to HTTPS)
-      - "traefik.http.routers.pngpoint-backend-api-web.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && PathPrefix(`/api/`)"
-      - "traefik.http.routers.pngpoint-backend-api-web.entrypoints=web"
-      - "traefik.http.routers.pngpoint-backend-api-web.middlewares=pngpoint-https"
-      - "traefik.http.routers.pngpoint-backend-api-web.priority=100"
-      - "traefik.http.routers.pngpoint-backend-api-web.service=pngpoint-backend-svc"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.entrypoints=web"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.middlewares=${ENVIRONMENT}-https"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.priority=100"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.service=${ENVIRONMENT}-backend-svc"
 
       # API over HTTPS
-      - "traefik.http.routers.pngpoint-backend-api-secure.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && PathPrefix(`/api/`)"
-      - "traefik.http.routers.pngpoint-backend-api-secure.entrypoints=websecure"
-      - "traefik.http.routers.pngpoint-backend-api-secure.tls.certresolver=le"
-      - "traefik.http.routers.pngpoint-backend-api-secure.priority=100"
-      - "traefik.http.routers.pngpoint-backend-api-secure.service=pngpoint-backend-svc"
-
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.entrypoints=websecure"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.tls.certresolver=le"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.priority=100"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.service=${ENVIRONMENT}-backend-svc"
       # Service definition for backend (Django / Daphne)
-      - "traefik.http.services.pngpoint-backend-svc.loadbalancer.server.port=8000"
+      - "traefik.http.services.${ENVIRONMENT}-backend-svc.loadbalancer.server.port=8000"
 
       - "traefik.docker.network=web"
 
@@ -78,6 +79,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
+    restart: unless-stopped
     env_file:
       - ./backend/.env
     depends_on:
@@ -106,24 +108,23 @@ services:
       - "traefik.enable=true"
 
       # redirect http → https
-      - "traefik.http.middlewares.pngpoint-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
 
       # HTTP → assets (static + media), then redirect to HTTPS
-      - "traefik.http.routers.pngpoint-assets-web.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
-      - "traefik.http.routers.pngpoint-assets-web.entrypoints=web"
-      - "traefik.http.routers.pngpoint-assets-web.middlewares=pngpoint-https"
-      - "traefik.http.routers.pngpoint-assets-web.priority=95"
-      - "traefik.http.routers.pngpoint-assets-web.service=pngpoint-assets-svc"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-web.entrypoints=web"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-web.middlewares=${ENVIRONMENT}-https"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-web.priority=95"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-web.service=${ENVIRONMENT}-assets-svc"
 
       # HTTPS → assets (static + media)
-      - "traefik.http.routers.pngpoint-assets-secure.rule=(Host(`pngpoint.com`) || Host(`www.pngpoint.com`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
-      - "traefik.http.routers.pngpoint-assets-secure.entrypoints=websecure"
-      - "traefik.http.routers.pngpoint-assets-secure.tls.certresolver=le"
-      - "traefik.http.routers.pngpoint-assets-secure.priority=95"
-      - "traefik.http.routers.pngpoint-assets-secure.service=pngpoint-assets-svc"
-
+      - "traefik.http.routers.${ENVIRONMENT}-assets-secure.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-secure.entrypoints=websecure"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-secure.tls.certresolver=le"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-secure.priority=95"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-secure.service=${ENVIRONMENT}-assets-svc"
       # Service definition for assets (nginx)
-      - "traefik.http.services.pngpoint-assets-svc.loadbalancer.server.port=80"
+      - "traefik.http.services.${ENVIRONMENT}-assets-svc.loadbalancer.server.port=80"
 
       - "traefik.docker.network=web"
 
