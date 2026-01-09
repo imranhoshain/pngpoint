@@ -89,7 +89,7 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
                 <TrendingImagesPagination count={imagesData?.count} />
             )}
             <HomeCategories />
-            <Trendingtags />
+            {/* <Trendingtags /> */}
             <HomeFAQ /> {/* NEW COMPONENT ADDED */}
             <Footer />
         </>

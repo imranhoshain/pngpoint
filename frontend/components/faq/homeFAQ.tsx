@@ -50,6 +50,26 @@ const faqData: FAQItem[] = [
         id: 8,
         question: "Are the images high quality and high resolution?",
         answer: "Yes! We ensure all our PNG images are high quality and suitable for professional use. Most images are available in high resolution, perfect for both digital and print projects. You can see the image dimensions before downloading."
+    },
+    {
+        id: 9,
+        question: "Can I edit the PNG images after downloading?",
+        answer: "Absolutely! You can edit our PNG images using any image editing software like Photoshop, GIMP, Canva, or even online editors. The transparent background makes it easy to integrate them into your designs and modify them as needed."
+    },
+    {
+        id: 10,
+        question: "How often do you add new PNG images?",
+        answer: "We regularly update our collection with fresh PNG images. New images are added daily across various categories to ensure you always have access to the latest and most trending graphics for your projects."
+    },
+    {
+        id: 11,
+        question: "Do you have PNG images for specific industries?",
+        answer: "Yes! Our extensive collection includes PNG images for various industries including business, education, healthcare, technology, food, fashion, and more. Browse our categories to find images specific to your industry needs."
+    },
+    {
+        id: 12,
+        question: "What's the difference between PNG and JPG?",
+        answer: "PNG files support transparency and maintain quality without compression loss, making them ideal for graphics, logos, and designs. JPG files are better for photographs and don't support transparency, but have smaller file sizes. We focus on PNG to give you the most versatile format."
     }
 ];
 
@@ -62,7 +82,7 @@ export const HomeFAQ = () => {
 
     return (
         <section className="relative top-0 left-0 right-0 py-10 lg:py-16 w-full bg-gradient-to-b from-white to-gray-50">
-            <div className="max-w-screen-xl container mx-auto px-2.5 lg:px-5 w-full">
+            <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap gap-y-8 w-full">
                     {/* Header */}
                     <div className="flex flex-col flex-wrap justify-center items-center gap-y-3 text-center w-full">
@@ -74,26 +94,26 @@ export const HomeFAQ = () => {
                         </p>
                     </div>
 
-                    {/* FAQ Items */}
-                    <div className="flex flex-col gap-y-3 w-full max-w-4xl mx-auto">
+                    {/* FAQ Items - Two Column Layout */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 lg:gap-5 w-full">
                         {faqData.map((faq) => (
                             <div
                                 key={faq.id}
-                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md"
+                                className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden transition-all duration-300 hover:shadow-md h-fit"
                             >
                                 <button
                                     onClick={() => toggleFAQ(faq.id)}
                                     className="w-full flex justify-between items-center p-4 md:p-5 text-left hover:bg-gray-50 transition-colors duration-200"
                                     aria-expanded={openId === faq.id}
                                 >
-                                    <h3 className="text-base md:text-lg font-semibold text-gray-800 pr-4">
+                                    <h3 className="text-sm md:text-base font-semibold text-gray-800 pr-4">
                                         {faq.question}
                                     </h3>
                                     <span className="flex-shrink-0 text-[#0077a2]">
                                         {openId === faq.id ? (
-                                            <ChevronUp className="w-5 h-5 md:w-6 md:h-6" />
+                                            <ChevronUp className="w-5 h-5" />
                                         ) : (
-                                            <ChevronDown className="w-5 h-5 md:w-6 md:h-6" />
+                                            <ChevronDown className="w-5 h-5" />
                                         )}
                                     </span>
                                 </button>
@@ -111,6 +131,19 @@ export const HomeFAQ = () => {
                                 </div>
                             </div>
                         ))}
+                    </div>
+
+                    {/* Contact Section */}
+                    <div className="flex flex-col items-center gap-y-3 mt-6 text-center">
+                        <p className="text-sm md:text-base text-gray-600">
+                            Still have questions?
+                        </p>
+                        <a
+                            href="/contact"
+                            className="px-6 py-2.5 bg-[#0077a2] hover:bg-[#005a7d] text-white font-semibold rounded-lg transition-colors duration-300"
+                        >
+                            Contact Us
+                        </a>
                     </div>
                 </div>
             </div>
