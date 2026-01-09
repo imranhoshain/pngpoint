@@ -16,7 +16,7 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
         <section className="relative top-0 left-0 right-0 py-5 w-full bg-[#FBFAFF]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap justify-center items-center gap-y-4 text-center w-full">
-                    <h2 className="text-lg md:text-2xl font-semibold text-center uppercase">Trending images for designers</h2>
+                    <h2 className="text-xl lg:text-3xl font-bold text-[#0077a2]">TRENDING IMAGES FOR DESIGNERS</h2>
                 </div>
                 <div className="flex flex-col flex-wrap w-full">
                     <>
