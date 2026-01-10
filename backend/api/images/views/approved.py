@@ -29,7 +29,7 @@ class ApprovedImagesViewSet(viewsets.ViewSet):
         
         queryset = Images.objects.filter(status="approved").select_related(
             'user', 'category', 'sub_category'
-        ).prefetch_related('keywords').order_by("-created_at")
+        ).prefetch_related('keywords').order_by("created_at")
 
         for backend in list(self.filter_backends):
             queryset = backend().filter_queryset(request, queryset, self)
