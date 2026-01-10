@@ -25,7 +25,7 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                 {images && images.map((image: any) => {
                                     return (
                                         <div className="block w-full h-full relative rounded-2xl border border-gray-300 shadow-sm group overflow-hidden" key={image.id}>
-                                            <script
+                                            {/* <script
                                                 type="application/ld+json"
                                                 dangerouslySetInnerHTML={{
                                                     __html: JSON.stringify({
@@ -59,7 +59,7 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                                         exifData: image.exifData || [],
                                                     }),
                                                 }}
-                                            />
+                                            /> */}
                                             <Link
                                                 className="flex flex-col flex-wrap justify-center items-center w-full min-h-[200px] sm:min-h-[220px] md:min-h-[250px] lg:min-h-[350px] h-full z-50 relative overflow-hidden"
                                                 href={`/image/${image.slug}/`}
