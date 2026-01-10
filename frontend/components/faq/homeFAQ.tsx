@@ -12,65 +12,80 @@ interface FAQItem {
 
 const faqData: FAQItem[] = [
     {
-        id: 1,
-        question: "What are PNG images and why should I use them?",
-        answer: "PNG (Portable Network Graphics) images are high-quality image files that support transparent backgrounds. They're perfect for logos, icons, graphics, and designs where you need to layer images without a white or colored background. PNG images maintain their quality without compression artifacts, making them ideal for professional design work."
-    },
-    {
-        id: 2,
-        question: "Are all the PNG images free to download?",
-        answer: "Yes! All PNG images on our platform are completely free to download and use. You can use them for personal projects, commercial projects, websites, presentations, and more without any cost. However, please check our license terms for specific usage guidelines."
-    },
-    {
-        id: 3,
-        question: "Do I need to create an account to download images?",
-        answer: "No account is required! You can browse and download any PNG image directly from our website without signing up. Simply find the image you want, click the download button, and it's yours to use."
-    },
-    {
-        id: 4,
-        question: "What image formats are available for download?",
-        answer: "We primarily offer PNG format for all our images to ensure transparency support and high quality. PNG files work seamlessly with design software like Photoshop, Illustrator, Canva, and can be used directly in web development and presentations."
-    },
-    {
-        id: 5,
-        question: "Can I use these images for commercial purposes?",
-        answer: "Yes, our PNG images can be used for both personal and commercial projects. You can use them in your business presentations, marketing materials, websites, products, and more. We provide royalty-free images for your convenience."
-    },
-    {
-        id: 6,
-        question: "How do I search for specific PNG images?",
-        answer: "Use our search bar at the top of the page to find specific images. You can search by keywords, browse by categories, or use our trending tags to discover popular images. Our advanced search helps you find exactly what you need quickly."
-    },
-    {
-        id: 7,
-        question: "What if I can't find the image I'm looking for?",
-        answer: "If you can't find a specific image, try using different search terms or browse our categories. We regularly update our collection with new PNG images. You can also check our trending section for popular and frequently downloaded images."
-    },
-    {
-        id: 8,
-        question: "Are the images high quality and high resolution?",
-        answer: "Yes! We ensure all our PNG images are high quality and suitable for professional use. Most images are available in high resolution, perfect for both digital and print projects. You can see the image dimensions before downloading."
-    },
-    {
-        id: 9,
-        question: "Can I edit the PNG images after downloading?",
-        answer: "Absolutely! You can edit our PNG images using any image editing software like Photoshop, GIMP, Canva, or even online editors. The transparent background makes it easy to integrate them into your designs and modify them as needed."
-    },
-    {
-        id: 10,
-        question: "How often do you add new PNG images?",
-        answer: "We regularly update our collection with fresh PNG images. New images are added daily across various categories to ensure you always have access to the latest and most trending graphics for your projects."
-    },
-    {
-        id: 11,
-        question: "Do you have PNG images for specific industries?",
-        answer: "Yes! Our extensive collection includes PNG images for various industries including business, education, healthcare, technology, food, fashion, and more. Browse our categories to find images specific to your industry needs."
-    },
-    {
-        id: 12,
-        question: "What's the difference between PNG and JPG?",
-        answer: "PNG files support transparency and maintain quality without compression loss, making them ideal for graphics, logos, and designs. JPG files are better for photographs and don't support transparency, but have smaller file sizes. We focus on PNG to give you the most versatile format."
-    }
+    "id": 1,
+    "question": "What is a PNG image and why is it popular for free downloads?",
+    "answer": "A PNG image is a high-quality image format that supports transparent backgrounds. It is popular for free downloads because designers can place it on any background without extra editing, and PNG files preserve sharp edges and clear details."
+  },
+  {
+    "id": 2,
+    "question": "Where can I legally download free PNG images?",
+    "answer": "You can legally download free PNG images from trusted websites that clearly display license information. These platforms explain how images can be used, so always review the license before downloading."
+  },
+  {
+    "id": 3,
+    "question": "Do free PNGs come with transparent backgrounds?",
+    "answer": "Many free PNGs include transparent backgrounds, but not all of them. Transparent PNGs are usually labeled clearly, so it’s best to check the preview or file details."
+  },
+  {
+    "id": 4,
+    "question": "Are free PNGs safe to download?",
+    "answer": "Yes, free PNGs are safe to download when sourced from reputable websites. Trusted sites scan files and provide clear usage terms. Avoid unknown or misleading download pages."
+  },
+  {
+    "id": 5,
+    "question": "Can I use free PNGs for commercial projects?",
+    "answer": "Yes, many free PNGs allow commercial use depending on their license. This includes use in websites, advertisements, and products. Always confirm the license before using them commercially."
+  },
+  {
+    "id": 6,
+    "question": "Do I need to credit the creator when using a free PNG?",
+    "answer": "Some free PNGs require attribution, while others do not. The requirement depends on the license, and if credit is needed, it is usually mentioned clearly."
+  },
+  {
+    "id": 7,
+    "question": "What resolution or size should I look for in a free PNG?",
+    "answer": "You should choose a PNG with high resolution for better quality. Large images are ideal for print and detailed designs, while smaller PNGs are suitable for web use."
+  },
+  {
+    "id": 8,
+    "question": "Can I edit or modify free PNGs?",
+    "answer": "In most cases, free PNGs can be edited. This includes resizing, cropping, and changing colors. Any restrictions on editing are listed in the license terms."
+  },
+  {
+    "id": 9,
+    "question": "How do I verify the license of a free PNG?",
+    "answer": "You can verify the license by checking the image’s download page. Look for a license section or usage notes to understand how the image can be used."
+  },
+  {
+    "id": 10,
+    "question": "Are there free PNG collections with icons and logos?",
+    "answer": "Yes, many websites offer free PNG collections that include icons and logos. These are useful for apps, websites, and presentations, but branding and trademark rules should always be checked."
+  },
+  {
+    "id": 11,
+    "question": "Can I download multiple PNGs at once?",
+    "answer": "Some platforms allow bulk or pack downloads, while others only offer single-image downloads. This depends on how the website organizes its image library."
+  },
+  {
+    "id": 12,
+    "question": "What about PNGs with backgrounds (non-transparent)?",
+    "answer": "Not all PNG images are transparent. Some include solid or styled backgrounds, which work well for posters, banners, and social media graphics."
+  },
+  {
+    "id": 13,
+    "question": "How do PNGs compare to SVGs for web design?",
+    "answer": "PNGs are image-based and easy to use across platforms, while SVGs are vector-based and scale without quality loss. PNGs are better for detailed visuals, whereas SVGs are ideal for icons and simple shapes."
+  },
+  {
+    "id": 14,
+    "question": "Can I use free PNGs in print projects?",
+    "answer": "Yes, free PNGs can be used in print projects if the resolution is high enough. Always check the DPI, image size, and ensure the license allows print usage."
+  },
+  {
+    "id": 15,
+    "question": "What should I do if I can’t find a suitable free PNG image?",
+    "answer": "You can try different keywords, browse related categories, or combine multiple PNGs creatively. If needed, custom design tools can help you create the image you want."
+  }
 ];
 
 export const HomeFAQ = () => {

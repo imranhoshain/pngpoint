@@ -37,9 +37,9 @@ export const SearchingImage: React.FC = () => {
                     <h1 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-center">
                         Free PNG Images Download with Transparent Background
                     </h1>
-                    <h1 className="text-white text-sm md:text-base lg:text-base font-light text-center">
-                        Download high quality PNG images with transparent backgrounds, perfect for design, web, and commercial use.
-                    </h1>
+                    <h2 className="text-white text-sm md:text-base lg:text-base font-light text-center">
+                        Download high-quality, royalty-free PNG images with transparent backgrounds for design, web, branding, and commercial use.
+                    </h2>
                     <div className="flex flex-col flex-wrap w-full lg:w-[95%] xl:w-[60%] relative">
                         <input
                             className="bg-transparent text-white placeholder:text-white text-sm xl:text-base font-normal pl-4 md:pl-5 pr-[12%] md:pr-20 py-3 sm:py-4 border md:border-2 border-white outline-none rounded-full w-full [&::-webkit-search-decoration]:appearance-none [&::-webkit-search-cancel-button]:appearance-none [&::-webkit-search-results-button]:appearance-none [&::-webkit-search-results-decoration]:appearance-none"

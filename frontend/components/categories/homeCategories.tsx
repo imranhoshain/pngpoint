@@ -51,7 +51,7 @@ export const HomeCategories = () => {
                                 key={category.id}
                             >
                                 <div className="relative w-full aspect-square overflow-hidden">
-                                    <Image
+                                    <img
                                         className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
                                         src={category.icon ? `${MEDIA_URL}${category.icon}` : ""}
                                         alt={category.name}

@@ -69,7 +69,7 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                                     style={{ backgroundImage: `url(${bgShape.src})` }}
                                                 ></div>
                                                 <div className="flex flex-col flex-wrap justify-center items-center z-50">
-                                                    <Image
+                                                    <img
                                                         className="w-auto h-auto object-fill"
                                                         src={image.cloudflare_url}
                                                         alt={image.title}
