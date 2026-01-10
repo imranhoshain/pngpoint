@@ -8,7 +8,7 @@ from images.models import Images
 from rest_framework.permissions import AllowAny
 from api.images.serializers.approved import ApprovedImagesSerializer
 from images.filters.filters import ImageFilterKeyword
-from images.pagination.pagination import ImagesPagination
+from images.pagination.pagination import ImagesPagination,HomePageImagesPagination
 from api.decorators import cache_api_response
 from api.throttling import BurstRateThrottle, SustainedRateThrottle, PublicEndpointThrottle
 
@@ -18,6 +18,34 @@ class ApprovedImagesViewSet(viewsets.ViewSet):
     filter_backends = [DjangoFilterBackend]
     filterset_class = ImageFilterKeyword
     pagination_class = ImagesPagination
+    throttle_classes = [PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle]
+
+    @cache_api_response(timeout=300, cache_key_prefix="approved_images")
+    def list(self, request, *args, **kwargs):
+        """
+        Serve the approved images from the cache.
+        If not cached, set it to cache using DB query + paginate.
+        """
+        
+        queryset = Images.objects.filter(status="approved").select_related(
+            'user', 'category', 'sub_category'
+        ).prefetch_related('keywords').order_by("created_at")
+
+        for backend in list(self.filter_backends):
+            queryset = backend().filter_queryset(request, queryset, self)
+
+        paginator = self.pagination_class()
+        page = paginator.paginate_queryset(queryset, request, view=self)
+        serializer = ApprovedImagesSerializer(page, many=True)
+        response = paginator.get_paginated_response(serializer.data)
+        return response
+    
+class HomePageApprovedImagesViewSet(viewsets.ViewSet):
+    permission_classes = [AllowAny]
+    renderer_classes = [JSONRenderer]
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = ImageFilterKeyword
+    pagination_class = HomePageImagesPagination
     throttle_classes = [PublicEndpointThrottle, BurstRateThrottle, SustainedRateThrottle]
 
     @cache_api_response(timeout=300, cache_key_prefix="approved_images")

@@ -1,7 +1,7 @@
 from django.urls import path
 from api.images.views.single_image import SingleImageView
 from api.images.views.download import DownloadImageViewSet, AllImageDownloadCountViewSet, AllImageContributorDownloadCountViewSet
-from api.images.views.approved import ApprovedImagesViewSet, ApprovedImagesLenghtView, UserApprovedImagesViewSet, UserApprovedImagesLengthView
+from api.images.views.approved import ApprovedImagesViewSet, ApprovedImagesLenghtView, UserApprovedImagesViewSet, UserApprovedImagesLengthView,HomePageApprovedImagesViewSet
 from api.images.views.total import TotalImagesViewSet, TotalImagesLenghtView, UserTotalImagesViewSet, UserTotalImagesLengthView
 from api.images.views.pending import PendingImagesViewSet, PendingImagesLenghtView, UserPendingImagesViewSet, UserPendingImagesLengthView
 from api.images.views.rejected import RejectedImagesViewSet, RejectedImagesLenghtView, UserRejectedImagesViewSet, UserRejectedImagesLengthView
@@ -111,6 +111,11 @@ urlpatterns = [
         'approved',
         ApprovedImagesViewSet.as_view({ 'get' : 'list' }),
         name='approved_images'
+    ),
+    path(
+        'approved/home',
+        HomePageApprovedImagesViewSet.as_view({ 'get' : 'list' }),
+        name='home-page-approved_images'
     ),
     path(
         'user/approved',
