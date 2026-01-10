@@ -19,13 +19,10 @@ export const Header = () => {
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap justify-center items-center w-full">
                     <Link className="block w-fit" href={"/"}>
-                        <Image
+                        <img
                             className="w-40 md:w-56 h-auto"
-                            src={Logo}
+                            src="/PNGPOINT-White-logo.png"
                             alt="pngpoint"
-                            loading="eager"
-                            priority
-                            decoding="async"
                             onClick={() => handleLogo()}
                         />
                     </Link>
