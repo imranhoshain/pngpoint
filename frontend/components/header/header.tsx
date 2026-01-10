@@ -21,7 +21,7 @@ export const Header = () => {
                     <Link className="block w-fit" href={"/"}>
                         <img
                             className="w-40 md:w-56 h-auto"
-                            src="/PNGPOINT-White-logo.png"
+                            src="/PNGPOINT-White-logo.webp"
                             alt="pngpoint"
                             onClick={() => handleLogo()}
                         />

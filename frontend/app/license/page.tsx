@@ -15,7 +15,12 @@ export default function License() {
                             License & Usage Policy - {siteConfig.siteName}
                         </h1>
                         <p className="text-gray-700 mb-6">
-                            Welcome to <span className="font-semibold">{siteConfig.siteName}</span>,
+                            Welcome to <a 
+                                href="https://pngpoint.com" 
+                                className="font-semibold text-[#0077a2] hover:text-[#005a7d] hover:underline transition-colors"
+                            >
+                                {siteConfig.siteName}
+                            </a>,
                             your free source for high-quality PNG images with transparent
                             backgrounds. To ensure clarity for our users and contributors,
                             please read our license and usage policy carefully.

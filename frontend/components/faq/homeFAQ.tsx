@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-"use client";
-
 import { useState } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
@@ -24,7 +21,7 @@ const faqData: FAQItem[] = [
   {
     "id": 3,
     "question": "Do free PNGs come with transparent backgrounds?",
-    "answer": "Many free PNGs include transparent backgrounds, but not all of them. Transparent PNGs are usually labeled clearly, so it’s best to check the preview or file details."
+    "answer": "Many free PNGs include transparent backgrounds, but not all of them. Transparent PNGs are usually labeled clearly, so it's best to check the preview or file details."
   },
   {
     "id": 4,
@@ -54,7 +51,7 @@ const faqData: FAQItem[] = [
   {
     "id": 9,
     "question": "How do I verify the license of a free PNG?",
-    "answer": "You can verify the license by checking the image’s download page. Look for a license section or usage notes to understand how the image can be used."
+    "answer": "You can verify the license by checking the image's download page. Look for a license section or usage notes to understand how the image can be used."
   },
   {
     "id": 10,
@@ -83,12 +80,36 @@ const faqData: FAQItem[] = [
   },
   {
     "id": 15,
-    "question": "What should I do if I can’t find a suitable free PNG image?",
+    "question": "What should I do if I can't find a suitable free PNG image?",
     "answer": "You can try different keywords, browse related categories, or combine multiple PNGs creatively. If needed, custom design tools can help you create the image you want."
   }
 ];
 
-export const HomeFAQ = () => {
+const renderAnswerWithLink = (answer: string, id: number) => {
+  // Only apply link to FAQ #9
+  if (id === 9) {
+    const parts = answer.split(/(license)/gi);
+    return parts.map((part, index) => {
+      if (part.toLowerCase() === 'license') {
+        return (
+          <a
+            key={index}
+            href="https://pngpoint.com/license"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-[#0077a2] hover:text-[#005a7d] underline font-medium"
+          >
+            {part}
+          </a>
+        );
+      }
+      return part;
+    });
+  }
+  return answer;
+};
+
+export default function HomeFAQ() {
     const [openId, setOpenId] = useState<number | null>(null);
 
     const toggleFAQ = (id: number) => {
@@ -140,7 +161,7 @@ export const HomeFAQ = () => {
                                 >
                                     <div className="p-4 md:p-5 pt-0 md:pt-0 border-t border-gray-100">
                                         <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                                            {faq.answer}
+                                            {renderAnswerWithLink(faq.answer, faq.id)}
                                         </p>
                                     </div>
                                 </div>
@@ -151,4 +172,4 @@ export const HomeFAQ = () => {
             </div>
         </section>
     );
-};
+}

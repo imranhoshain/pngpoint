@@ -18,9 +18,9 @@ export const FooterLogo: React.FC = () => {
 
     return (
         <Link className="block w-fit" href={"/"}>
-            <Image
+            <img
                 className="w-40 lg:w-44 xl:w-52 h-auto"
-                src={Logo}
+                src="/PNGPOINT-White-logo.webp"
                 alt="pngpoint"
                 loading="lazy"
                 decoding="async"
