@@ -8,6 +8,7 @@ interface UseCase {
     icon: any;
     title: string;
     description: string;
+    hasButton?: boolean;
 }
 
 const useCasesData: UseCase[] = [
@@ -40,6 +41,13 @@ const useCasesData: UseCase[] = [
         icon: Cpu,
         title: "High-Resolution PNGs for AI & Tech Enthusiasts",
         description: "AI and tech enthusiasts can integrate our PNG for generative AI workflows, including Canva, MidJourney, DALL·E, and ChatGPT prompts. Our files are structured for seamless multimodal applications, making them the perfect PNG for AI tools and other advanced design platforms. High-resolution AI PNG image assets allow tools to generate digital outputs with extreme precision. Creators can perform a free PNG download to incorporate icons, illustrations, or graphics directly into their PNG for ChatGPT visual prompts without any background editing issues."
+    },
+    {
+        id: 6,
+        icon: Sparkles,
+        title: "About Pngpoint",
+        description: "PNGPoint offers a curated collection of transparent PNG graphics for modern digital work. Designers, developers, brands, creators, and overall users can access free, reusable visual assets with clear licenses and fast downloads. The organized library and simple navigation make completing creative projects easy for personal or commercial use.",
+        hasButton: true
     }
 ];
 
@@ -78,32 +86,19 @@ export const UseCases = () => {
                                     <p className="text-sm md:text-base text-gray-700 leading-relaxed">
                                         {useCase.description}
                                     </p>
+                                    {useCase.hasButton && (
+                                        <div className="flex justify-start mt-6">
+                                            <a
+                                                href="https://pngpoint.com/about"
+                                                className="inline-block px-6 py-2.5 bg-[#0077a2] text-white font-semibold rounded-lg hover:bg-[#005a7d] transition-colors duration-300 shadow-md"
+                                            >
+                                                Read More
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
                             );
                         })}
-                    </div>
-
-                    {/* About Section */}
-                    <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-6 lg:p-8 shadow-md border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                        <div className="flex items-start gap-4 mb-4">
-                            <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#0077a2] to-[#005a7d] rounded-lg flex items-center justify-center">
-                                <Sparkles className="w-7 h-7 text-white" />
-                            </div>
-                            <h3 className="text-lg md:text-xl font-bold text-gray-800 leading-tight">
-                                About Pngpoint
-                            </h3>
-                        </div>
-                        <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-6">
-                            PNGPoint offers a curated collection of transparent PNG graphics for modern digital work. Designers, developers, brands, creators, and overall users can access free, reusable visual assets with clear licenses and fast downloads. The organized library and simple navigation make completing creative projects easy for personal or commercial use.
-                        </p>
-                        <div className="flex justify-start">
-                            <a
-                                href="https://pngpoint.com/about"
-                                className="inline-block px-6 py-2.5 bg-[#0077a2] text-white font-semibold rounded-lg hover:bg-[#005a7d] transition-colors duration-300 shadow-md"
-                            >
-                                Read More
-                            </a>
-                        </div>
                     </div>
 
                     {/* Conclusion Section */}
