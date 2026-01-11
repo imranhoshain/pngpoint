@@ -81,7 +81,7 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
             {image?.image?.description && (
                 <div className="flex flex-col flex-wrap border border-gray-300 rounded-lg px-3 py-3 w-full bg-white shadow-sm">
                     <p className="text-sm text-gray-700 leading-relaxed">
-                        {image?.image?.description}
+                        Download high-quality {image?.image?.description} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.
                     </p>
                 </div>
             )}

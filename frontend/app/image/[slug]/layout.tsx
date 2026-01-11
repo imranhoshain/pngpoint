@@ -32,7 +32,7 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
 
         return {
             title: `${data.title || "Image"} - PNGPoint`,
-            description: data.description || "High-quality PNG image from PNGPoint",
+            description: `Download high-quality ${data.description || "High-quality PNG image from PNGPoint"} PNG with a transparent background, free to use for personal or commercial projects.`,
             alternates: { canonical: getImageUrl(slug) },
             openGraph: {
                 title: `${data.title || "Image"} - PNGPoint`,

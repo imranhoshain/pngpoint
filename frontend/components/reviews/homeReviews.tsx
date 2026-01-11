@@ -18,29 +18,29 @@ interface Review {
 const reviewsData: Review[] = [
     {
         id: 1,
-        name: "Sarah Johnson",
+        name: "Daniel Morris",
         role: "Graphic Designer",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
         rating: 5,
-        review: "This platform has been a game-changer for my design projects! The quality of PNG images is outstanding, and the transparent backgrounds save me so much time. I no longer need to spend hours removing backgrounds myself. The variety of categories is impressive, and I can always find exactly what I need. Highly recommended for any designer!",
+        review: "PNGPoint is a reliable platform for good royalty-free PNG images with transparent backgrounds. I use it regularly for web and design projects. The images are clean, organized, and easy to download. Licensing is clear, which builds trust. PNGPoint saves time and helps create professional visuals quickly for the Creative Design Team.",
         date: "2 weeks ago"
     },
     {
         id: 2,
-        name: "Michael Chen",
+        name: "Daniel Cooper",
         role: "Web Developer",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
         rating: 5,
-        review: "As a web developer, I need high-quality images that load fast and look great. This site delivers every time! The download process is seamless, and the images are optimized perfectly for web use. The search functionality is intuitive, and I love that I don't need to sign up to download. It's become my go-to resource for all my client projects.",
+        review: "PNG Point is my go-to platform for clean, transparent free PNG images for professional design work. The quality is impressive, and licenses are clear. I save valuable time on every project. Search is fast, downloads are smooth, and usage feels reliable. Perfect for web design, branding, marketing, and commercial visuals used by creative teams day ok.",
         date: "1 month ago"
     },
     {
         id: 3,
-        name: "Emily Rodriguez",
+        name: "Sarah Mitchell",
         role: "Marketing Manager",
         avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
         rating: 5,
-        review: "Absolutely fantastic resource for our marketing campaigns! The free access to high-quality PNG images has significantly reduced our design costs. The images are professional, diverse, and perfect for social media, presentations, and print materials. The trending section helps us stay current with design trends. This platform is a must-have for any marketing team!",
+        review: "PNGPoint makes finding high-quality transparent PNG images simple and stress-free. I regularly use it for web design and marketing visuals. The images load fast, look professional, and work perfectly in commercial projects. Clear licensing and easy search make PNGPoint a dependable resource for designers and content creators worldwide.",
         date: "3 weeks ago"
     }
 ];
