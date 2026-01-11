@@ -38,4 +38,5 @@ export interface ImagesResponse {
   keywords: KeywordsResponse[];
   category: CategoriesResponse | null;
   sub_category: SubCategoriesResponse | null;
+  sequence: number;
 }
