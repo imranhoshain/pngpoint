@@ -84,14 +84,19 @@ export const UseCases = () => {
                     </div>
 
                     {/* About Section */}
-                    <div className="bg-gradient-to-br from-white to-blue-50 rounded-2xl p-8 lg:p-12 border border-gray-200 shadow-lg">
-                        <h2 className="text-2xl lg:text-3xl font-bold text-[#0077a2] mb-4 text-center">
-                            About Pngpoint
-                        </h2>
-                        <p className="text-sm md:text-base text-gray-700 leading-relaxed max-w-4xl mx-auto text-center mb-6">
+                    <div className="bg-gradient-to-br from-white to-blue-50 rounded-xl p-6 lg:p-8 shadow-md border border-gray-200 hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                        <div className="flex items-start gap-4 mb-4">
+                            <div className="flex-shrink-0 w-14 h-14 bg-gradient-to-br from-[#0077a2] to-[#005a7d] rounded-lg flex items-center justify-center">
+                                <Sparkles className="w-7 h-7 text-white" />
+                            </div>
+                            <h3 className="text-lg md:text-xl font-bold text-gray-800 leading-tight">
+                                About Pngpoint
+                            </h3>
+                        </div>
+                        <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-6">
                             PNGPoint offers a curated collection of transparent PNG graphics for modern digital work. Designers, developers, brands, creators, and overall users can access free, reusable visual assets with clear licenses and fast downloads. The organized library and simple navigation make completing creative projects easy for personal or commercial use.
                         </p>
-                        <div className="flex justify-center">
+                        <div className="flex justify-start">
                             <a
                                 href="https://pngpoint.com/about"
                                 className="inline-block px-6 py-2.5 bg-[#0077a2] text-white font-semibold rounded-lg hover:bg-[#005a7d] transition-colors duration-300 shadow-md"
