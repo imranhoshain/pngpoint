@@ -153,7 +153,13 @@ export const SelectedImageSidebar: React.FC<SelectedImageSidebarProps> = ({
         // Check if multiple images are selected
         if (selectedImageIds.length > 1) {
             // BULK UPDATE
-            const payload = {
+            const payload: {
+                image_ids: number[];
+                status?: any;
+                category?: any;
+                sub_category?: any;
+                sequence?: number;
+            } = {
                 image_ids: selectedImageIds,
                 status: formData.status,
                 category: formData.category,
@@ -161,15 +167,13 @@ export const SelectedImageSidebar: React.FC<SelectedImageSidebarProps> = ({
                 sequence: formData.sequence ? parseInt(formData.sequence) : undefined
             };
 
-            // Remove undefined values
-            Object.keys(payload).forEach(key => {
-                if (payload[key] === undefined || payload[key] === "") {
-                    delete payload[key];
-                }
-            });
+            // Remove undefined values using type-safe approach
+            const cleanedPayload = Object.fromEntries(
+                Object.entries(payload).filter(([_, value]) => value !== undefined && value !== "")
+            ) as typeof payload;
 
             try {
-                await bulkImageUpdate(payload).unwrap();
+                await bulkImageUpdate(cleanedPayload).unwrap();
                 toast.success("Bulk update successful!");
                 dispatch(closeSidebar());
                 dispatch(clearSelectedMetadata());
