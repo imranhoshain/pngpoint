@@ -31,7 +31,7 @@ class ApprovedImagesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Images
         fields = [
-            'id', 'cloudflare_id', 'cloudflare_url', 'title', 'slug',
+            'id', 'cloudflare_id', 'cloudflare_url', 'title', 'slug','sequence',
             'description', 'status', 'download_count', 'created_at',
             'user', 'keywords', 'category', 'sub_category', 'created_at',
         ]
