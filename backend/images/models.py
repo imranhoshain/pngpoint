@@ -162,6 +162,7 @@ class Images(models.Model):
         blank=True, 
         related_name='images'
     )
+    sequence = models.IntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug and self.title:

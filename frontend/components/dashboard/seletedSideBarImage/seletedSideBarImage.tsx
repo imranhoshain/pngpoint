@@ -121,7 +121,8 @@ export const SelectedImageSidebar: React.FC<SelectedImageSidebarProps> = ({
             status: selectedImageData?.status || "",
             keywords: defaultKeywords,
             category: selectedImageData?.category?.id ?? "",
-            sub_category: selectedImageData?.sub_category?.id ?? ""
+            sub_category: selectedImageData?.sub_category?.id ?? "",
+            sequence: selectedImageData?.sequence ?? ""
         });
 
         setKeywords(defaultKeywords);
@@ -157,7 +158,15 @@ export const SelectedImageSidebar: React.FC<SelectedImageSidebarProps> = ({
                 status: formData.status,
                 category: formData.category,
                 sub_category: formData.sub_category,
+                sequence: formData.sequence ? parseInt(formData.sequence) : undefined
             };
+
+            // Remove undefined values
+            Object.keys(payload).forEach(key => {
+                if (payload[key] === undefined || payload[key] === "") {
+                    delete payload[key];
+                }
+            });
 
             try {
                 await bulkImageUpdate(payload).unwrap();
@@ -187,6 +196,13 @@ export const SelectedImageSidebar: React.FC<SelectedImageSidebarProps> = ({
         if (formData.status !== selectedImageData.status) payload.status = formData.status;
         if (formData.category !== selectedImageData?.category?.id) payload.category = formData.category;
         if (formData.sub_category !== selectedImageData?.sub_category?.id) payload.sub_category = formData.sub_category;
+        
+        // Handle sequence field - convert to integer
+        const sequenceValue = formData.sequence ? parseInt(formData.sequence) : null;
+        const originalSequence = selectedImageData?.sequence ?? null;
+        if (sequenceValue !== originalSequence) {
+            payload.sequence = sequenceValue;
+        }
 
         const originalKeywords = (selectedImageData?.keywords || []).map((k: any) => k.name);
         const currentKeywords = keywords.map((k) => k.name);
@@ -323,6 +339,21 @@ export const SelectedImageSidebar: React.FC<SelectedImageSidebarProps> = ({
                             {subCategories.map((sub: any) => (
                                 <option value={sub.id} key={sub.id}>
                                     {sub.name}
+                                </option>
+                            ))}
+                        </select>
+                    </Field>
+
+                    {/* SEQUENCE FIELD */}
+                    <Field label="Sequence" error={errors.sequence}>
+                        <select
+                            className="border border-gray-300 py-2.5 px-2.5 rounded w-full"
+                            {...register("sequence")}
+                        >
+                            <option value="">Select sequence</option>
+                            {Array.from({ length: 20 }, (_, i) => i + 1).map((num) => (
+                                <option value={num} key={num}>
+                                    {num}
                                 </option>
                             ))}
                         </select>
