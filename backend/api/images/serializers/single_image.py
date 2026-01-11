@@ -10,4 +10,4 @@ class SingleImageSerializer(serializers.ModelSerializer):
     keywords = KeywordsSerializer(many=True, read_only=True)
     class Meta:
         model = Images
-        fields = ['id', 'cloudflare_id', 'cloudflare_url', 'created_at', 'description', 'slug', 'title', 'keywords', 'created_at']
+        fields = ['id', 'cloudflare_id', 'cloudflare_url', 'created_at', 'description', 'slug', 'title', 'keywords', 'created_at','sequence']
