@@ -55,7 +55,7 @@ class OptimizedImageSitemap(CachedSitemap):
     """
     changefreq = "weekly"
     priority = 0.8
-    limit = 5000
+    limit = 10000
     protocol = 'https'
     
     def _get_items(self):
