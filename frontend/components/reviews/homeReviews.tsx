@@ -20,7 +20,7 @@ const reviewsData: Review[] = [
         id: 1,
         name: "Daniel Morris",
         role: "Graphic Designer",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah",
+        avatar: "/Daniel_Morris.webp",
         rating: 5,
         review: "PNGPoint is a reliable platform for good royalty-free PNG images with transparent backgrounds. I use it regularly for web and design projects. The images are clean, organized, and easy to download. Licensing is clear, which builds trust. PNGPoint saves time and helps create professional visuals quickly for the Creative Design Team.",
         date: "2 weeks ago"
@@ -29,7 +29,7 @@ const reviewsData: Review[] = [
         id: 2,
         name: "Daniel Cooper",
         role: "Web Developer",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Michael",
+        avatar: "/Daniel_Cooper.webp",
         rating: 5,
         review: "PNG Point is my go-to platform for clean, transparent free PNG images for professional design work. The quality is impressive, and licenses are clear. I save valuable time on every project. Search is fast, downloads are smooth, and usage feels reliable. Perfect for web design, branding, marketing, and commercial visuals used by creative teams day ok.",
         date: "1 month ago"
@@ -38,7 +38,7 @@ const reviewsData: Review[] = [
         id: 3,
         name: "Sarah Mitchell",
         role: "Marketing Manager",
-        avatar: "https://api.dicebear.com/7.x/avataaars/svg?seed=Emily",
+        avatar: "/Sarah_Mitchell.webp",
         rating: 5,
         review: "PNGPoint makes finding high-quality transparent PNG images simple and stress-free. I regularly use it for web design and marketing visuals. The images load fast, look professional, and work perfectly in commercial projects. Clear licensing and easy search make PNGPoint a dependable resource for designers and content creators worldwide.",
         date: "3 weeks ago"
