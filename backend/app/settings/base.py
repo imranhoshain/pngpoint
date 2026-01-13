@@ -174,7 +174,7 @@ REST_FRAMEWORK = {
         'sustained': '1000/hour',
         'public': '600/minute',
         'token_refresh': '200/minute',
-        'upload': '2000/hour',
+        'upload': '500/hour',
     },
 }
 
