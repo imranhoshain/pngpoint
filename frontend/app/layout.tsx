@@ -100,6 +100,7 @@ export default function RootLayout({
             <head>
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
+                <meta name="p:domain_verify" content="c4d1b017f0884994340d0fe3f090b469"/>
             </head>
             <body className={`${interFont.variable} antialiased`}>
                 <ReduxProvider>
