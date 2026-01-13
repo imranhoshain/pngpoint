@@ -118,9 +118,6 @@ export const HomeCategories = () => {
                                         {/* Hover view - name and description */}
                                         {description && (
                                             <div className="absolute inset-0 p-3 flex flex-col justify-center items-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-black/80">
-                                                <h3 className="text-sm md:text-base text-white font-semibold text-center mb-2">
-                                                    {category.name}
-                                                </h3>
                                                 <p className="text-xs text-gray-200 text-center line-clamp-4 px-1">
                                                     {description}
                                                 </p>
