@@ -36,6 +36,7 @@ class DDoSProtectionMiddleware:
         
         try:
             client_ip = self.get_client_ip(request)
+            print(f"ip:{client_ip},max_limit:{self.MAX_REQUESTS_PER_WINDOW},current_request:{self.get_cache_key(client_ip, 'count')}")
             
             if self.is_blocked(client_ip):
                 logger.warning(f"Blocked request from IP: {client_ip}")
