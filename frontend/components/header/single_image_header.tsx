@@ -5,21 +5,78 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import Logo from "../../public/PNGPOINT-White-logo.png";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setTitle } from "@/redux/features/getImages/getImageSlice";
 import { getSearchSchema } from "@/utils/searchSchema";
 
-export const SingleImageHeader: React.FC = () => {
+interface SingleImageHeaderProps {
+    imageData?: {
+        title?: string;
+        description?: string;
+        caption?: string;
+        pageUrl?: string;
+        fileUrl?: string;
+        thumbnailUrl?: string;
+        width?: number;
+        height?: number;
+        fileSize?: string;
+        keywords?: string[];
+        publishDate?: string;
+        modifiedDate?: string;
+        categoryPageUrl?: string;
+        categoryName?: string;
+    };
+}
+
+export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData }) => {
     const { IoSearchOutline } = ReactIcons;
     const dispatch = useDispatch();
     const title = useSelector((state: RootState) => state.search.title);
+    
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const val = e.target.value;
         dispatch(setTitle(val));
     };
-    const schema = getSearchSchema(title);
+    
+    const searchSchema = getSearchSchema(title);
+
+    // Generate ImageObject schema
+    const imageSchema = imageData ? {
+        "@context": "https://schema.org",
+        "@type": "ImageObject",
+        "name": imageData.title,
+        "description": imageData.description,
+        "caption": imageData.caption,
+        "url": imageData.pageUrl,
+        "contentUrl": imageData.fileUrl,
+        "thumbnailUrl": imageData.thumbnailUrl,
+        "fileFormat": "image/png",
+        "encodingFormat": "image/png",
+        "width": imageData.width,
+        "height": imageData.height,
+        "contentSize": imageData.fileSize,
+        "keywords": imageData.keywords,
+        "creator": {
+            "@type": "Organization",
+            "name": "PNGPoint",
+            "url": "https://pngpoint.com/"
+        },
+        "creditText": "Image by PNGPoint",
+        "license": "https://pngpoint.com/license",
+        "acquireLicensePage": "https://pngpoint.com/acquire-license",
+        "copyrightNotice": "© 2026 PNGPoint. All rights reserved.",
+        "datePublished": imageData.publishDate,
+        "dateModified": imageData.modifiedDate,
+        "mainEntityOfPage": imageData.pageUrl,
+        "representativeOfPage": true,
+        "isPartOf": {
+            "@type": "WebPage",
+            "url": imageData.categoryPageUrl,
+            "name": imageData.categoryName
+        }
+    } : null;
+
     return (
         <header className="relative top-0 left-0 right-0 py-1.5 w-full bg-[#0077a2]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
@@ -47,10 +104,20 @@ export const SingleImageHeader: React.FC = () => {
                         <button className="absolute right-3 md:right-5 top-1/2 -translate-y-1/2 cursor-pointer" type="button">
                             <IoSearchOutline className="text-white text-3xl md:text-4xl font-bold" />
                         </button>
+                        
+                        {/* Search Schema */}
                         <script
                             type="application/ld+json"
-                            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+                            dangerouslySetInnerHTML={{ __html: JSON.stringify(searchSchema) }}
                         />
+                        
+                        {/* ImageObject Schema */}
+                        {imageSchema && (
+                            <script
+                                type="application/ld+json"
+                                dangerouslySetInnerHTML={{ __html: JSON.stringify(imageSchema) }}
+                            />
+                        )}
                     </div>
                 </div>
             </div>

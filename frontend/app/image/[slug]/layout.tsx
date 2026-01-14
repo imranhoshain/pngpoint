@@ -65,10 +65,52 @@ export async function generateMetadata({ params }: GenerateMetadataProps): Promi
     }
 }
 
-export default function ImageRootLayout({ children }: { children: React.ReactNode }) {
+async function getImageData(slug: string) {
+    try {
+        const res = await fetch(`${SERVER_URL}/images/${slug}`, {
+            next: { revalidate: 120 },
+        });
+
+        if (!res.ok) return null;
+
+        const imageResdata = await res.json();
+        const data = imageResdata?.image;
+
+        return {
+            title: data.title,
+            description: data.description,
+            caption: data.caption || data.title,
+            pageUrl: getImageUrl(slug),
+            fileUrl: data.cloudflare_url,
+            thumbnailUrl: data.thumbnail_url || data.cloudflare_url,
+            width: data.width,
+            height: data.height,
+            fileSize: data.file_size,
+            keywords: data.keywords || data.tags || [],
+            publishDate: data.created_at || new Date().toISOString(),
+            modifiedDate: data.updated_at || new Date().toISOString(),
+            categoryPageUrl: data.category_url || "https://pngpoint.com/",
+            categoryName: data.category_name || "Images"
+        };
+    } catch (error: any) {
+        console.error(error.message);
+        return null;
+    }
+}
+
+export default async function ImageRootLayout({ 
+    children, 
+    params 
+}: { 
+    children: React.ReactNode;
+    params: Promise<{ slug: string }>;
+}) {
+    const { slug } = await params;
+    const imageData = await getImageData(slug);
+
     return (
         <section className="relative top-0 left-0 right-0 w-full">
-            <SingleImageHeader />
+            <SingleImageHeader imageData={imageData || undefined} />
             {children}
             <Footer />
         </section>
