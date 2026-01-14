@@ -129,7 +129,7 @@ export default function SingleCategory() {
 
                         {/* Additional Content for Animals Category */}
                         {isAnimalCategory && (
-                            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full">
+                            <div className="flex flex-col gap-y-6 w-full max-w-5xl mx-auto">
                                 <div className="prose prose-lg max-w-none">
                                     <h2 className="text-lg lg:text-2xl font-semibold text-center text-gray-700">
                                         High-resolution, royalty-free, and ready to use
@@ -143,7 +143,7 @@ export default function SingleCategory() {
                                 </div>
 
                                 {/* Why Choose Section */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full">
+                                <div className="bg-white rounded-lg p-6 lg:p-8 shadow-sm border border-gray-200">
                                     <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
                                         Why Choose Our Animal PNG Collection
                                     </h2>
@@ -173,7 +173,7 @@ export default function SingleCategory() {
                         {isAnimalCategory && (
                             <>
                                 {/* Popular Use Cases */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full">
+                                <div className="flex flex-col gap-y-6 w-full max-w-5xl mx-auto mt-8">
                                     <div className="bg-white rounded-lg p-6 lg:p-8 shadow-sm border border-gray-200">
                                         <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
                                             Popular Use Cases
@@ -215,7 +215,7 @@ export default function SingleCategory() {
                                 </div>
 
                                 {/* Licensing & Download Info */}
-                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full">
+                                <div className="flex flex-col gap-y-6 w-full max-w-5xl mx-auto">
                                     <div className="bg-white rounded-lg p-6 lg:p-8 shadow-sm border border-gray-200">
                                         <h2 className="text-xl lg:text-3xl font-bold text-gray-900 mb-4">
                                             Licensing & Usage Rights
