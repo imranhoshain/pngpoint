@@ -74,7 +74,7 @@ class NumberOfImageDeleteView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        delete_images_from_cloudflare(image_ids)
+        delete_images_from_cloudflare.delay(image_ids)
 
         return Response(
             {
