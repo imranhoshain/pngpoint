@@ -83,6 +83,9 @@ export default function SingleCategory() {
     const isAnimalCategory = slug === 'animals';
     const categoryName = category?.data?.name || '';
     const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
+    
+    // Get the first subcategory slug for Featured Gallery
+    const firstSubCategorySlug = sub_categories && sub_categories.length > 0 ? sub_categories[0].slug : undefined;
 
     return (
         <>
@@ -136,11 +139,12 @@ export default function SingleCategory() {
             {/* Additional Sections for Animals Category */}
             {isAnimalCategory && (
                 <>
-                    <FeaturedGalleryPreview />
+                    <BrowseAnimalCategories />
+                    {/* Pass the first subcategory slug to FeaturedGalleryPreview */}
+                    <FeaturedGalleryPreview subCategorySlug={firstSubCategorySlug} />
                     <IntroductionContent />
                     <PopularUseCases />
                     <LicensingDownload />
-                    {/* <BrowseAnimalCategories /> */}
                     <EducationKidsAssets />
                     <BrandingStudioToolkit />
                     <AboutPngpoint />

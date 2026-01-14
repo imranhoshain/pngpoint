@@ -43,15 +43,6 @@ export const BrowseAnimalCategories = () => {
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap gap-y-10 w-full">
                     {/* Header */}
-                    <div className="flex flex-col flex-wrap justify-center items-center gap-y-4 text-center w-full">
-                        <h2 className="text-2xl lg:text-4xl font-bold text-[#0077a2]">
-                            Browse Animal Categories
-                        </h2>
-                        <p className="text-sm md:text-base font-normal text-gray-600 max-w-4xl">
-                            Finding the right Animal PNG should be fast and intuitive. That&apos;s why the collection is organized by animal type, species, and creative style. Each category helps you reach the exact PNG you need without extra searching. Simply click a category and explore a filtered gallery instantly.
-                        </p>
-                    </div>
-
                     {/* Categories Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 w-full">
                         {/* Core Animal Types */}
