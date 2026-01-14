@@ -42,7 +42,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
         setLoading(true);
         try {
             const res = await fetch(
-                `${SERVER_URL}/images/sub-categories/${subCategorySlug}?page=${page}&limit=20`
+                `${SERVER_URL}/image/sub-categories/${subCategorySlug}?page=${page}&limit=20`
             );
             if (!res.ok) throw new Error("Failed to fetch images");
             const data = await res.json();
