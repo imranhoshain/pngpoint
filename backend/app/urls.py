@@ -42,7 +42,6 @@ from images.sitemaps import (
     SubCategorySitemap,
     StaticViewSitemap
 )
-from api.images.views.robots import robots_txt
 
 # Define all sitemaps
 sitemaps = {
@@ -55,7 +54,6 @@ sitemaps = {
 }
 
 urlpatterns += [
-    path('api/v1/robots.txt', robots_txt, name='robots_txt'),
     path('api/v1/sitemap.xml', index, {
         'sitemaps': sitemaps,
         'sitemap_url_name': 'sitemap-section',

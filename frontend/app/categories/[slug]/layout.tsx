@@ -24,6 +24,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         const SingleCategoryResdata = await res.json();
         const data = SingleCategoryResdata?.data;
 
+        // Custom metadata for animals category
+        if (slug === 'animals') {
+            return {
+                title: "Animal PNG Images – Free, Transparent & High-Quality",
+                description: "Browse free Animal PNGs with transparent backgrounds. Perfect for web, print, branding, and education. High-quality, royalty-free, easy-to-download images.",
+                alternates: { canonical: getCategoryUrl(slug) },
+            };
+        }
+
         return {
             title: `Browse All PNG Image ${data.name} | Free Transparent PNGs | PNGPoint`,
             description: "Discover our full collection of PNG images, neatly organized by category for quick and easy downloads.",
