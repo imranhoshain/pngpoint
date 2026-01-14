@@ -85,7 +85,10 @@ export default function SingleCategory() {
     const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
     
     // Get the first subcategory slug for Featured Gallery
-    const firstSubCategorySlug = sub_categories && sub_categories.length > 0 ? sub_categories[0].slug : undefined;
+    // Special handling for animals category to use farm-animals-png
+    const firstSubCategorySlug = isAnimalCategory 
+        ? 'farm-animals-png' 
+        : (sub_categories && sub_categories.length > 0 ? sub_categories[0].slug : undefined);
 
     return (
         <>
