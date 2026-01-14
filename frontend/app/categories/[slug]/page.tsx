@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { MEDIA_URL, SERVER_URL } from "@/utils/api";
+import { SearchingImage } from "@/components/searchingImage/searchingImage";
 import AnimalFAQ from "@/components/animalFAQ/AnimalFAQ";
 import { IntroductionContent } from "@/components/introductionContent/IntroductionContent";
 import { PopularUseCases } from "@/components/popularUseCases/PopularUseCases";
@@ -83,6 +84,9 @@ export default function SingleCategory() {
 
     return (
         <>
+            <>
+                <SearchingImage />
+            </>
             <section className="relative top-0 left-0 right-0 py-2.5 lg:py-10 w-full bg-[#FBFAFF]">
                 <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                     <div className="flex flex-col flex-wrap gap-y-2.5 lg:gap-y-10 w-full">
