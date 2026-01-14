@@ -47,8 +47,8 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
             if (!res.ok) throw new Error("Failed to fetch images");
             const data = await res.json();
             
-            setImages(data?.data?.images || []);
-            setTotalPages(Math.ceil((data?.data?.total || 20) / 20));
+            setImages(data?.results?.images || []);
+            setTotalPages(Math.ceil((data?.count || 20) / 20));
         } catch (err: any) {
             console.error("Error fetching images:", err);
             setImages([]);
