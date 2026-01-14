@@ -81,31 +81,28 @@ export default function SingleCategory() {
     // ------------------ Normal UI ------------------
     const sub_categories = category?.data?.sub_categories;
     const isAnimalCategory = slug === 'animals';
+    const categoryName = category?.data?.name || '';
+    const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
 
     return (
         <>
-            <>
-                <SearchingImage />
-            </>
+            {/* Pass category slug and name to SearchingImage */}
+            <SearchingImage 
+                categorySlug={categorySlug}
+                categoryName={categoryName}
+            />
+            
             <section className="relative top-0 left-0 right-0 py-2.5 lg:py-10 w-full bg-[#FBFAFF]">
                 <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                     <div className="flex flex-col flex-wrap gap-y-2.5 lg:gap-y-10 w-full">
                         {/* Header Section */}
-                        <div className="flex flex-col flex-wrap items-center justify-center w-full gap-y-3">
-                            {isAnimalCategory ? (
-                                <>
-                                    <h1 className="text-2xl lg:text-4xl font-bold text-center">
-                                        Animal PNG Images with Transparent Background
-                                    </h1>
-                                    <h2 className="text-lg lg:text-2xl font-semibold text-center text-gray-700">
-                                        High-resolution, royalty-free, and ready to use
-                                    </h2>
-                                </>
-                            ) : (
-                                <h1 className="text-2xl lg:text-4xl font-bold text-center">
-                                    All PNG Image {category?.data?.name} - Free Transparent Downloads
-                                </h1>
-                            )}
+                        <div className="flex flex-col flex-wrap justify-center items-center gap-y-4 text-center w-full">
+                            <h2 className="text-2xl lg:text-4xl font-bold text-[#0077a2]">
+                                Browse {categoryName} Categories
+                            </h2>
+                            <p className="text-sm md:text-base font-normal text-gray-600 max-w-4xl">
+                                Finding the right {categoryName} PNG should be fast and intuitive. That&apos;s why the collection is organized by {categoryName} type, species, and creative style. Each category helps you reach the exact PNG you need without extra searching. Simply click a category and explore a filtered gallery instantly.
+                            </p>
                         </div>
 
                         {/* Subcategories Grid */}
@@ -143,7 +140,7 @@ export default function SingleCategory() {
                     <IntroductionContent />
                     <PopularUseCases />
                     <LicensingDownload />
-                    <BrowseAnimalCategories />
+                    {/* <BrowseAnimalCategories /> */}
                     <EducationKidsAssets />
                     <BrandingStudioToolkit />
                     <AboutPngpoint />
