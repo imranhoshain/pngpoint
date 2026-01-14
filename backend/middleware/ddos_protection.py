@@ -17,7 +17,7 @@ def is_cache_available():
 
 class DDoSProtectionMiddleware:
     RATE_LIMIT_WINDOW = 60
-    MAX_REQUESTS_PER_WINDOW = getattr(settings, 'DDOS_MAX_REQUESTS', 120)
+    MAX_REQUESTS_PER_WINDOW = getattr(settings, 'DDOS_MAX_REQUESTS', 2000)
     BLOCK_DURATION = getattr(settings, 'DDOS_BLOCK_DURATION', 300)
     SUSPICIOUS_THRESHOLD = getattr(settings, 'DDOS_SUSPICIOUS_THRESHOLD', 100)
 

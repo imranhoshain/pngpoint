@@ -86,7 +86,7 @@ MIDDLEWARE = [
     "middleware.ddos_protection.SecurityHeadersMiddleware",
 ]
 
-DDOS_MAX_REQUESTS = env.int('DDOS_MAX_REQUESTS', default=120)
+DDOS_MAX_REQUESTS = env.int('DDOS_MAX_REQUESTS', default=2000)
 DDOS_BLOCK_DURATION = env.int('DDOS_BLOCK_DURATION', default=300)
 DDOS_SUSPICIOUS_THRESHOLD = env.int('DDOS_SUSPICIOUS_THRESHOLD', default=100)
 
