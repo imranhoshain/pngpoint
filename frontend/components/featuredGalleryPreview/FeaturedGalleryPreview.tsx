@@ -97,11 +97,13 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
                                             >
                                                 <div className="relative w-full aspect-square overflow-hidden rounded">
                                                     <Image
-                                                        className="w-full h-full object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
+                                                        className="w-auto h-auto object-fill"
                                                         src={image.cloudflare_url}
-                                                        alt={image.title || "Animal PNG"}
-                                                        width={300}
-                                                        height={300}
+                                                        alt={image.title}
+                                                        title={image.title}
+                                                        content={image.description}
+                                                        width={352}
+                                                        height={352}
                                                     />
                                                 </div>
                                                 <h4 className="mt-2 text-sm font-medium text-gray-800 truncate text-center">
