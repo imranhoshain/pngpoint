@@ -98,7 +98,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
                                                 <div className="relative w-full aspect-square overflow-hidden rounded">
                                                     <Image
                                                         className="w-full h-full object-contain transition-transform duration-500 ease-in-out group-hover:scale-110"
-                                                        src={image.image ? `${MEDIA_URL}${image.image}` : "/placeholder.png"}
+                                                        src={image.cloudflare_url}
                                                         alt={image.title || "Animal PNG"}
                                                         width={300}
                                                         height={300}
