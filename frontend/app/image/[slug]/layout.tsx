@@ -5,6 +5,7 @@ import { SERVER_URL } from "@/utils/api";
 import { getImageUrl } from "@/config/site";
 import { Metadata } from "next";
 import React from "react";
+import Script from "next/script";
 
 type GenerateMetadataProps = {
     params: Promise<{ slug: string }>;
@@ -108,11 +109,59 @@ export default async function ImageRootLayout({
     const { slug } = await params;
     const imageData = await getImageData(slug);
 
+    // Generate ImageObject schema
+    const imageSchema = imageData ? {
+        "@context": "https://schema.org",
+        "@type": "ImageObject",
+        "name": imageData.title,
+        "description": imageData.description,
+        "caption": imageData.caption,
+        "url": imageData.pageUrl,
+        "contentUrl": imageData.fileUrl,
+        "thumbnailUrl": imageData.thumbnailUrl,
+        "fileFormat": "image/png",
+        "encodingFormat": "image/png",
+        "width": imageData.width,
+        "height": imageData.height,
+        "contentSize": imageData.fileSize,
+        "keywords": imageData.keywords,
+        "creator": {
+            "@type": "Organization",
+            "name": "PNGPoint",
+            "url": "https://pngpoint.com/"
+        },
+        "creditText": "Image by PNGPoint",
+        "license": "https://pngpoint.com/license",
+        "acquireLicensePage": "https://pngpoint.com/acquire-license",
+        "copyrightNotice": "© 2026 PNGPoint. All rights reserved.",
+        "datePublished": imageData.publishDate,
+        "dateModified": imageData.modifiedDate,
+        "mainEntityOfPage": imageData.pageUrl,
+        "representativeOfPage": true,
+        "isPartOf": {
+            "@type": "WebPage",
+            "url": imageData.categoryPageUrl,
+            "name": imageData.categoryName
+        }
+    } : null;
+
     return (
-        <section className="relative top-0 left-0 right-0 w-full">
-            <SingleImageHeader imageData={imageData || undefined} />
-            {children}
-            <Footer />
-        </section>
+        <>
+            {/* Add schema to head using Next.js Script component */}
+            {imageSchema && (
+                <Script
+                    id="image-schema"
+                    type="application/ld+json"
+                    strategy="beforeInteractive"
+                    dangerouslySetInnerHTML={{ __html: JSON.stringify(imageSchema) }}
+                />
+            )}
+            
+            <section className="relative top-0 left-0 right-0 w-full">
+                <SingleImageHeader />
+                {children}
+                <Footer />
+            </section>
+        </>
     );
 }

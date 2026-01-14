@@ -42,7 +42,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
         setLoading(true);
         try {
             const res = await fetch(
-                `${SERVER_URL}/image/sub-categories/${subCategorySlug}?page=${page}&limit=20`
+                `${SERVER_URL}/images/sub-categories/${subCategorySlug}?page=${page}&limit=20`
             );
             if (!res.ok) throw new Error("Failed to fetch images");
             const data = await res.json();
@@ -91,7 +91,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
                                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 w-full">
                                         {images.map((image: any) => (
                                             <Link
-                                                href={`/images/${image.slug}`}
+                                                href={`/image/${image.slug}`}
                                                 key={image.id}
                                                 className="group relative block w-full overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 bg-white p-3"
                                             >
