@@ -68,7 +68,7 @@ export default function SingleCategory() {
                         <path
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            d="M12 8v4m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9-9 4.03-9 9-9 9 4.03 9 9z"
+                            d="M12 8v4m0 4h.01M21 12c0 4.97-4.03 9-9 9s-9-4.03-9 9-4.03-9 9-9 9 4.03 9 9z"
                         />
                     </svg>
                     <h1 className="text-2xl font-bold text-red-600 mb-2">Oops! Something went wrong</h1>
@@ -81,8 +81,12 @@ export default function SingleCategory() {
     // ------------------ Normal UI ------------------
     const sub_categories = category?.data?.sub_categories;
     const isAnimalCategory = slug === 'animals';
+    const isBuildingsCategory = slug === 'buildings-and-architecture';
     const categoryName = category?.data?.name || '';
     const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
+    
+    // Determine if we should show the browse categories section
+    const shouldShowBrowseCategories = isAnimalCategory || isBuildingsCategory;
     
     // Get the first subcategory slug for Featured Gallery
     // Special handling for animals category to use farm-animals-png
@@ -139,10 +143,14 @@ export default function SingleCategory() {
                 </div>
             </section>
 
+            {/* Browse Categories Section - Shows for animals and buildings-and-architecture */}
+            {shouldShowBrowseCategories && (
+                <BrowseAnimalCategories categorySlug={categorySlug} />
+            )}
+
             {/* Additional Sections for Animals Category */}
             {isAnimalCategory && (
                 <>
-                    <BrowseAnimalCategories />
                     {/* Pass the first subcategory slug to FeaturedGalleryPreview */}
                     <FeaturedGalleryPreview subCategorySlug={firstSubCategorySlug} />
                     <IntroductionContent />
