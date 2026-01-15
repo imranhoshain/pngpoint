@@ -8,6 +8,9 @@ interface LicensingDownloadProps {
 }
 
 export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
+    // Determine if this is buildings category
+    const isBuildingsCategory = categorySlug === 'buildings-and-architecture';
+
     // Animals content
     const animalsContent = {
         title: "Licensing & Download Information",
@@ -39,13 +42,13 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         licensing: {
             title: "Key Points",
             description: "Every Building and Architecture PNG comes with a transparent, easy-to-understand license. You can confidently use these assets without worrying about legal issues.",
-            keyPoints: [
-                { label: "Royalty-Free:", text: "Use PNGs for both digital and print projects without extra fees." },
-                { label: "Commercial Use Allowed:", text: "Perfect for branding, marketing, presentations, and client work." },
-                { label: "No Attribution Needed:", text: "Most PNGs don't require credit, unless specified in the license." }
-            ],
             proTip: "Always double-check the license information displayed on each image page to ensure your intended use aligns with the terms. This helps maintain compliance for commercial or educational projects."
         },
+        licensingKeyPoints: [
+            { label: "Royalty-Free:", text: "Use PNGs for both digital and print projects without extra fees." },
+            { label: "Commercial Use Allowed:", text: "Perfect for branding, marketing, presentations, and client work." },
+            { label: "No Attribution Needed:", text: "Most PNGs don't require credit, unless specified in the license." }
+        ],
         download: {
             title: "Download Options & File Quality",
             description: "Access high-resolution Building and Architecture PNGs optimized for professional use. Download individual images or entire collections based on your project requirements.",
@@ -97,10 +100,10 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                             </p>
                             
                             {/* Key Points for Buildings, Pro Tip Box for Animals */}
-                            {categorySlug === 'buildings-and-architecture' && content.licensing.keyPoints ? (
+                            {isBuildingsCategory ? (
                                 <>
                                     <div className="space-y-3 mb-4">
-                                        {content.licensing.keyPoints.map((point, index) => (
+                                        {buildingsContent.licensingKeyPoints.map((point, index) => (
                                             <div key={index} className="flex items-start gap-3">
                                                 <span className="flex-shrink-0 w-2 h-2 bg-[#0077a2] rounded-full mt-2"></span>
                                                 <span className="text-sm md:text-base text-gray-700">
