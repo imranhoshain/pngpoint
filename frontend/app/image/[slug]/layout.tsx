@@ -111,38 +111,44 @@ export default async function ImageRootLayout({
 
     // Generate ImageObject schema
     const imageSchema = imageData ? {
-        "@context": "https://schema.org",
+    "@context": "https://schema.org",
+    "@graph": [
+        {
+        "@type": "WebPage",
+        "@id": imageData.pageUrl,
+        "url": imageData.pageUrl,
+        "name": imageData.title,
+        "description": imageData.description,
+        "primaryImageOfPage": {
+            "@id": `${imageData.pageUrl}#image`
+        }
+        },
+        {
         "@type": "ImageObject",
+        "@id": `${imageData.pageUrl}#image`,
         "name": imageData.title,
         "description": imageData.description,
         "caption": imageData.caption,
-        "url": imageData.pageUrl,
         "contentUrl": imageData.fileUrl,
         "thumbnailUrl": imageData.thumbnailUrl,
         "fileFormat": "image/png",
-        "encodingFormat": "image/png",
         "width": imageData.width,
         "height": imageData.height,
         "contentSize": imageData.fileSize,
-        "keywords": imageData.keywords,
+        "keywords": Array.isArray(imageData.keywords)
+            ? imageData.keywords.join(", ")
+            : imageData.keywords,
         "creator": {
             "@type": "Organization",
             "name": "PNGPoint",
             "url": "https://pngpoint.com/"
         },
-        "creditText": "Image by PNGPoint",
         "license": "https://pngpoint.com/license",
         "acquireLicensePage": "https://pngpoint.com/acquire-license",
-        "copyrightNotice": "© 2026 PNGPoint. All rights reserved.",
         "datePublished": imageData.publishDate,
-        "dateModified": imageData.modifiedDate,
-        "mainEntityOfPage": imageData.pageUrl,
-        "representativeOfPage": true,
-        "isPartOf": {
-            "@type": "WebPage",
-            "url": imageData.categoryPageUrl,
-            "name": imageData.categoryName
+        "dateModified": imageData.modifiedDate
         }
+    ]
     } : null;
 
     return (
