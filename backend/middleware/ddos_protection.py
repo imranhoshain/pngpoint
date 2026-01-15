@@ -99,7 +99,7 @@ class DDoSProtectionMiddleware:
             if current_count is None:
                 cache.set(count_key, 1, self.RATE_LIMIT_WINDOW)
             else:
-                cache.incr(count_key)
+                cache.set(count_key,current_count+1,self.RATE_LIMIT_WINDOW)
         except Exception:
             cache.set(count_key, 1, self.RATE_LIMIT_WINDOW)
 
