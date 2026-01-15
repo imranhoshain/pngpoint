@@ -159,7 +159,7 @@ export default function SingleCategory() {
                         categorySlug={categorySlug}
                     />
                     <IntroductionContent categorySlug={categorySlug} />
-                    <PopularUseCases />
+                    <PopularUseCases categorySlug={categorySlug} />
                     <LicensingDownload />
                     <EducationKidsAssets />
                     <BrandingStudioToolkit />
@@ -176,6 +176,7 @@ export default function SingleCategory() {
                         categorySlug={categorySlug}
                     />
                     <IntroductionContent categorySlug={categorySlug} />
+                    <PopularUseCases categorySlug={categorySlug} />
                 </>
             )}
 
