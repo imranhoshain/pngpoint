@@ -90,7 +90,7 @@ class DDoSProtectionMiddleware:
     def is_rate_limited(self, ip):
         count_key = self.get_cache_key(ip, 'count')
         request_count = cache.get(count_key, 0)
-        return request_count >= self.MAX_REQUESTS_PER_WINDOW
+        return request_count >= 2000
 
     def increment_request_count(self, ip):
         count_key = self.get_cache_key(ip, 'count')
