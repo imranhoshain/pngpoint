@@ -115,22 +115,27 @@ export default function SingleCategory() {
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 w-full">
                             {sub_categories?.map((sub_category: any) => (
                                 <Link
+                                    className="group relative block w-full overflow-hidden rounded-lg shadow-md hover:shadow-xl transition-shadow duration-300 bg-white"
                                     href={`/sub-categories/${sub_category.slug}`}
                                     key={sub_category.id}
-                                    className="group relative block w-full overflow-hidden rounded-lg shadow-lg bg-white py-2.5 px-2.5"
                                 >
-                                    <div className="relative w-full h-64 md:h-72 overflow-hidden rounded">
-                                        <Image
-                                            className="w-full h-full object-cover transition-transform duration-1000 ease-in-out group-hover:scale-110"
-                                            src={sub_category.icon ? `${MEDIA_URL}${sub_category.icon}` : ""}
+                                    <div className="relative w-full aspect-square overflow-hidden">
+                                        <img
+                                            className="w-full h-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110"
+                                            src={sub_category.icon ? `${MEDIA_URL}${category.icon}` : ""}
                                             alt={sub_category.name}
-                                            width={352}
-                                            height={352}
+                                            width={300}
+                                            height={300}
+                                            title={sub_category.name}
                                         />
-                                        <div className="absolute inset-0 bg-black bg-opacity-20 opacity-20 transition-opacity duration-700 ease-in-out group-hover:opacity-40"></div>
-                                        <h4 className="absolute left-1/2 bottom-8 text-lg md:text-xl text-white font-semibold transform -translate-x-1/2 text-center">
-                                            {sub_category.name}
-                                        </h4>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-80 group-hover:opacity-90 transition-opacity duration-300"></div>
+                                        
+                                        {/* Default view - just category name */}
+                                        <div className="absolute bottom-0 left-0 right-0 p-3 transition-opacity duration-300 group-hover:opacity-0">
+                                            <h3 className="text-sm md:text-base text-white font-semibold text-center line-clamp-2">
+                                                {sub_category.name}
+                                            </h3>
+                                        </div>
                                     </div>
                                 </Link>
                             ))}
