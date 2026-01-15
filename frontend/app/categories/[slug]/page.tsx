@@ -161,9 +161,10 @@ export default function SingleCategory() {
                     <IntroductionContent categorySlug={categorySlug} />
                     <PopularUseCases categorySlug={categorySlug} />
                     <LicensingDownload categorySlug={categorySlug} />
-                    <EducationKidsAssets />
-                    <BrandingStudioToolkit />
+                    <EducationKidsAssets categorySlug={categorySlug} />
+                    <BrandingStudioToolkit categoryName={categoryName} />
                     <AboutPngpoint />
+                    <AnimalFAQ categorySlug={categorySlug} categoryName={categoryName} />
                 </>
             )}
 
@@ -178,11 +179,12 @@ export default function SingleCategory() {
                     <IntroductionContent categorySlug={categorySlug} />
                     <PopularUseCases categorySlug={categorySlug} />
                     <LicensingDownload categorySlug={categorySlug} />
+                    <EducationKidsAssets categorySlug={categorySlug} />
+                    <BrandingStudioToolkit categoryName={categoryName} />
+                    <AboutPngpoint />
+                    <AnimalFAQ categorySlug={categorySlug} categoryName={categoryName} />
                 </>
             )}
-
-            {/* FAQ Section for Animals */}
-            {isAnimalCategory && <AnimalFAQ />}
         </>
     );
 }

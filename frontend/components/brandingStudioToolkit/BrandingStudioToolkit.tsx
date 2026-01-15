@@ -3,7 +3,11 @@
 
 import { Palette, Package, Megaphone, Lightbulb } from "lucide-react";
 
-export const BrandingStudioToolkit = () => {
+interface BrandingStudioToolkitProps {
+    categoryName?: string;
+}
+
+export const BrandingStudioToolkit = ({ categoryName = "Animal" }: BrandingStudioToolkitProps) => {
     const features = [
         {
             icon: Palette,
@@ -37,7 +41,7 @@ export const BrandingStudioToolkit = () => {
                             Branding & Studio Toolkit
                         </h2>
                         <p className="text-sm md:text-base font-normal text-gray-600 max-w-4xl">
-                            For designers and branding teams, Animal PNGs go beyond simple illustrations. You get logos, icons, and detailed illustrations ready for ads, packaging, or digital campaigns.
+                            For designers and branding teams, {categoryName} PNGs go beyond simple illustrations. You get logos, icons, and detailed illustrations ready for ads, packaging, or digital campaigns.
                         </p>
                     </div>
 
@@ -87,7 +91,7 @@ export const BrandingStudioToolkit = () => {
                             Elevate Your Brand Identity
                         </h3>
                         <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-3xl mx-auto">
-                            Access professional-grade Animal PNG assets designed specifically for branding projects. From startup logos to enterprise campaigns, our collection provides the visual foundation for memorable brand experiences.
+                            Access professional-grade {categoryName} PNG assets designed specifically for branding projects. From startup logos to enterprise campaigns, our collection provides the visual foundation for memorable brand experiences.
                         </p>
                     </div>
                 </div>
