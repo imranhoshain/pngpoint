@@ -8,63 +8,71 @@ import React from "react";
 import Script from "next/script";
 
 type GenerateMetadataProps = {
-    params: Promise<{ slug: string }>;
-};
+    params: { slug: string };
+    };
 
-export async function generateMetadata({ params }: GenerateMetadataProps): Promise<Metadata> {
-    const { slug } = await params; 
+    export async function generateMetadata(
+    { params }: GenerateMetadataProps
+    ): Promise<Metadata> {
+    const { slug } = params;
+
     try {
         const res = await fetch(`${SERVER_URL}/images/${slug}`, {
-            next: { revalidate: 120 },
+        next: { revalidate: 120 },
         });
 
         if (!res.ok) {
-            return {
-                title: "Image - PNGPoint",
-                description: "PNGPoint image details",
-                alternates: { canonical: getImageUrl(slug) },
-            };
+        return {
+            title: "Image - PNGPoint",
+            description: "PNGPoint image details",
+            alternates: {
+            canonical: getImageUrl(slug),
+            },
+        };
         }
 
         const imageResdata = await res.json();
         const data = imageResdata?.image;
-
         const imageUrl = data.cloudflare_url;
 
         return {
-            title: `${data.title || "Image"} - PNGPoint`,
-            description: `Download high-quality ${data.description || "High-quality PNG image from PNGPoint"} PNG with a transparent background, free to use for personal or commercial projects.`,
-            alternates: { canonical: getImageUrl(slug) },
-            openGraph: {
-                title: `${data.title || "Image"} - PNGPoint`,
-                description: data.description || "High-quality PNG image from PNGPoint",
-                url: getImageUrl(slug),
-                type: "website",
-                images: [
-                    {
-                        url: imageUrl,
-                        width: data.width || 450,
-                        height: data.height || 300,
-                        alt: data.title || "PNGPoint Image",
-                    },
-                ],
+        title: `${data.title} - PNGPoint`,
+        description: data.description,
+        alternates: {
+            canonical: getImageUrl(slug),
+        },
+        openGraph: {
+            title: `${data.title} - PNGPoint`,
+            description: data.description,
+            url: getImageUrl(slug),
+            type: "website",
+            images: [
+            {
+                url: imageUrl,
+                width: data.width,
+                height: data.height,
+                alt: data.title,
             },
-            twitter: {
-                card: "summary_large_image",
-                title: data.title || "Image - PNGPoint",
-                description: data.description || "High-quality PNG image from PNGPoint",
-                images: [imageUrl],
-            },
+            ],
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: data.title,
+            description: data.description,
+            images: [imageUrl],
+        },
         };
-    } catch (error: any) {
-        console.error(error.message);
+    } catch {
         return {
-            title: "Image - PNGPoint",
-            description: "PNGPoint image details",
-            alternates: { canonical: getImageUrl(slug) },
+        title: "Image - PNGPoint",
+        description: "PNGPoint image details",
+        alternates: {
+            canonical: getImageUrl(slug),
+        },
         };
     }
-}
+    }
+
 
 async function getImageData(slug: string) {
     try {
@@ -99,15 +107,16 @@ async function getImageData(slug: string) {
     }
 }
 
-export default async function ImageRootLayout({ 
-    children, 
-    params 
-}: { 
+export default async function ImageRootLayout({
+    children,
+    params,
+    }: {
     children: React.ReactNode;
-    params: Promise<{ slug: string }>;
-}) {
-    const { slug } = await params;
+    params: { slug: string };
+    }) {
+    const { slug } = params;
     const imageData = await getImageData(slug);
+
 
     // Generate ImageObject schema
     const imageSchema = imageData ? {
