@@ -160,7 +160,7 @@ export default function SingleCategory() {
                     />
                     <IntroductionContent categorySlug={categorySlug} />
                     <PopularUseCases categorySlug={categorySlug} />
-                    <LicensingDownload />
+                    <LicensingDownload categorySlug={categorySlug} />
                     <EducationKidsAssets />
                     <BrandingStudioToolkit />
                     <AboutPngpoint />
@@ -177,6 +177,7 @@ export default function SingleCategory() {
                     />
                     <IntroductionContent categorySlug={categorySlug} />
                     <PopularUseCases categorySlug={categorySlug} />
+                    <LicensingDownload categorySlug={categorySlug} />
                 </>
             )}
 
