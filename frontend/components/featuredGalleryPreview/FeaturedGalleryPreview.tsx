@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { Image as ImageIcon, Check, ChevronLeft, ChevronRight } from "lucide-react";
+import { Image as ImageIcon, Check, ChevronLeft, ChevronRight, Filter } from "lucide-react";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -9,28 +9,63 @@ import { MEDIA_URL, SERVER_URL } from "@/utils/api";
 
 interface FeaturedGalleryPreviewProps {
     subCategorySlug?: string;
+    categorySlug?: string;
 }
 
-export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPreviewProps) => {
+export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: FeaturedGalleryPreviewProps) => {
     const [images, setImages] = useState<any[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [totalPages, setTotalPages] = useState<number>(1);
 
-    const showcaseHighlights = [
-        "High-Resolution Animal PNG for sharp detail",
-        "Transparent Background PNG for clean overlays",
-        "Royalty-Free PNG assets with clear usage terms"
-    ];
+    // Animals content
+    const animalsContent = {
+        title: "Featured Gallery Preview",
+        description: "Get a quick look at our most downloaded Animal PNG images in one place. This preview highlights high-resolution files with transparent backgrounds, ready for real projects. You can spot quality at a glance and download with confidence.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-Resolution Animal PNG for sharp detail",
+            "Transparent Background PNG for clean overlays",
+            "Royalty-Free PNG assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Kids Projects",
+            "Branding"
+        ],
+        footerText: "Use filters to narrow results instantly and find the right PNG without extra clicks."
+    };
 
-    const smartFilters = [
-        "Free Download",
-        "Commercial Use",
-        "Print Use",
-        "Education",
-        "Kids Projects",
-        "Branding"
-    ];
+    // Buildings & Architecture content
+    const buildingsContent = {
+        title: "Gallery Preview & Live Demos",
+        description: "Explore our Building and Architecture PNG gallery with an interactive experience that makes finding the right visual effortless. Each PNG preview is designed to help you quickly evaluate quality, style, and usability before downloading.",
+        showcaseTitle: "Preview Features",
+        showcaseItems: [
+            "Hover Zoom: Examine details instantly without opening a new page.",
+            "License Summary: See usage rights clearly for each PNG.",
+            "Quick Actions: Add images to your lightbox for later or download previews instantly."
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Category",
+            "Style",
+            "Color",
+            "Resolution",
+            "Commercial Use",
+            "Print Ready"
+        ],
+        footerText: "This gallery ensures a smooth workflow for designers, architects, and marketers—saving time while giving full clarity on licensing and visual quality."
+    };
+
+    // Select content based on category
+    const content = categorySlug === 'buildings-and-architecture' 
+        ? buildingsContent 
+        : animalsContent;
 
     useEffect(() => {
         if (subCategorySlug) {
@@ -72,10 +107,10 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
                     {/* Header */}
                     <div className="flex flex-col flex-wrap justify-center items-center gap-y-4 text-center w-full">
                         <h2 className="text-2xl lg:text-4xl font-bold text-[#0077a2]">
-                            Featured Gallery Preview
+                            {content.title}
                         </h2>
                         <p className="text-sm md:text-base font-normal text-gray-600 max-w-4xl">
-                            Get a quick look at our most downloaded Animal PNG images in one place. This preview highlights high-resolution files with transparent backgrounds, ready for real projects. You can spot quality at a glance and download with confidence.
+                            {content.description}
                         </p>
                     </div>
 
@@ -173,24 +208,24 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
 
                     {/* Content Grid */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-10 w-full">
-                        {/* Showcase Highlights */}
+                        {/* Showcase Highlights / Preview Features */}
                         <div className="bg-white rounded-xl p-6 lg:p-8 shadow-lg border border-gray-200">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-12 h-12 bg-gradient-to-br from-[#0077a2] to-[#005a7d] rounded-lg flex items-center justify-center">
                                     <ImageIcon className="w-6 h-6 text-white" />
                                 </div>
                                 <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
-                                    Showcase Highlights
+                                    {content.showcaseTitle}
                                 </h3>
                             </div>
                             <ul className="space-y-4">
-                                {showcaseHighlights.map((highlight, index) => (
+                                {content.showcaseItems.map((item, index) => (
                                     <li key={index} className="flex items-start gap-3">
                                         <div className="flex-shrink-0 w-6 h-6 bg-[#0077a2] rounded-full flex items-center justify-center mt-0.5">
                                             <Check className="w-4 h-4 text-white" />
                                         </div>
                                         <span className="text-sm md:text-base text-gray-700 leading-relaxed">
-                                            {highlight}
+                                            {item}
                                         </span>
                                     </li>
                                 ))}
@@ -201,16 +236,14 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
                         <div className="bg-white rounded-xl p-6 lg:p-8 shadow-lg border border-gray-200">
                             <div className="flex items-center gap-3 mb-6">
                                 <div className="w-12 h-12 bg-gradient-to-br from-[#0077a2] to-[#005a7d] rounded-lg flex items-center justify-center">
-                                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
-                                    </svg>
+                                    <Filter className="w-6 h-6 text-white" />
                                 </div>
                                 <h3 className="text-xl lg:text-2xl font-bold text-gray-800">
-                                    Smart Filters
+                                    {content.filtersTitle}
                                 </h3>
                             </div>
                             <div className="grid grid-cols-2 gap-3">
-                                {smartFilters.map((filter, index) => (
+                                {content.filters.map((filter, index) => (
                                     <div
                                         key={index}
                                         className="bg-gradient-to-br from-blue-50 to-white border border-[#0077a2] rounded-lg px-4 py-3 text-center hover:shadow-md transition-shadow duration-300"
@@ -221,13 +254,18 @@ export const FeaturedGalleryPreview = ({ subCategorySlug }: FeaturedGalleryPrevi
                                     </div>
                                 ))}
                             </div>
+                            {categorySlug === 'buildings-and-architecture' && (
+                                <p className="mt-4 text-xs md:text-sm text-gray-600 text-center">
+                                    Browse by Category, Style, Color, or Resolution to find exactly what fits your project.
+                                </p>
+                            )}
                         </div>
                     </div>
 
                     {/* Footer Text */}
                     <div className="bg-gradient-to-r from-[#0077a2] to-[#005a7d] rounded-2xl p-6 lg:p-8 text-center">
                         <p className="text-base lg:text-lg text-white font-medium">
-                            Use filters to narrow results instantly and find the right PNG without extra clicks.
+                            {content.footerText}
                         </p>
                     </div>
                 </div>

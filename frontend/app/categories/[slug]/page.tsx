@@ -89,9 +89,11 @@ export default function SingleCategory() {
     const shouldShowBrowseCategories = isAnimalCategory || isBuildingsCategory;
     
     // Get the first subcategory slug for Featured Gallery
-    // Special handling for animals category to use farm-animals-png
+    // Special handling for specific categories
     const firstSubCategorySlug = isAnimalCategory 
         ? 'farm-animals-png' 
+        : isBuildingsCategory
+        ? 'commercial-buildings-png'
         : (sub_categories && sub_categories.length > 0 ? sub_categories[0].slug : undefined);
 
     return (
@@ -151,14 +153,28 @@ export default function SingleCategory() {
             {/* Additional Sections for Animals Category */}
             {isAnimalCategory && (
                 <>
-                    {/* Pass the first subcategory slug to FeaturedGalleryPreview */}
-                    <FeaturedGalleryPreview subCategorySlug={firstSubCategorySlug} />
+                    {/* Pass the first subcategory slug and category slug to FeaturedGalleryPreview */}
+                    <FeaturedGalleryPreview 
+                        subCategorySlug={firstSubCategorySlug} 
+                        categorySlug={categorySlug}
+                    />
                     <IntroductionContent />
                     <PopularUseCases />
                     <LicensingDownload />
                     <EducationKidsAssets />
                     <BrandingStudioToolkit />
                     <AboutPngpoint />
+                </>
+            )}
+
+            {/* Additional Sections for Buildings & Architecture Category */}
+            {isBuildingsCategory && (
+                <>
+                    {/* Pass the first subcategory slug and category slug to FeaturedGalleryPreview */}
+                    <FeaturedGalleryPreview 
+                        subCategorySlug={firstSubCategorySlug} 
+                        categorySlug={categorySlug}
+                    />
                 </>
             )}
 
