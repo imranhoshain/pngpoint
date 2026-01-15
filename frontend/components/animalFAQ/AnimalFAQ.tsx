@@ -180,7 +180,7 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         return parts.map((part, index) => {
             if (part.toLowerCase() === 'license' || part.toLowerCase() === 'licensing') {
                 return (
-                    
+                    <a
                         key={index}
                         href="https://pngpoint.com/license"
                         target="_blank"
