@@ -83,7 +83,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
             const data = await res.json();
             
             setImages(data?.results?.images || []);
-            setTotalPages(Math.ceil((data?.count || 20) / 20));
+            setTotalPages(Math.ceil((data?.count || 100) / 100));
         } catch (err: any) {
             console.error("Error fetching images:", err);
             setImages([]);
