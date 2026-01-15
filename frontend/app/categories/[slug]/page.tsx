@@ -158,7 +158,7 @@ export default function SingleCategory() {
                         subCategorySlug={firstSubCategorySlug} 
                         categorySlug={categorySlug}
                     />
-                    <IntroductionContent />
+                    <IntroductionContent categorySlug={categorySlug} />
                     <PopularUseCases />
                     <LicensingDownload />
                     <EducationKidsAssets />
@@ -175,6 +175,7 @@ export default function SingleCategory() {
                         subCategorySlug={firstSubCategorySlug} 
                         categorySlug={categorySlug}
                     />
+                    <IntroductionContent categorySlug={categorySlug} />
                 </>
             )}
 
