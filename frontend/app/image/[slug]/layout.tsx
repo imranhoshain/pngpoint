@@ -12,13 +12,13 @@ import Script from "next/script";
 ========================= */
 
 type GenerateMetadataProps = {
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 };
 
 export async function generateMetadata(
   { params }: GenerateMetadataProps
 ): Promise<Metadata> {
-  const { slug } = params;
+  const { slug } = await params;
 
   try {
     const res = await fetch(`${SERVER_URL}/images/${slug}`, {
@@ -122,9 +122,9 @@ export default async function ImageRootLayout({
   params,
 }: {
   children: React.ReactNode;
-  params: { slug: string };
+  params: Promise<{ slug: string }>;
 }) {
-  const { slug } = params;
+  const { slug } = await params;
   const imageData = await getImageData(slug);
 
   const imageSchema = imageData
