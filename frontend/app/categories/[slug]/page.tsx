@@ -84,17 +84,13 @@ export default function SingleCategory() {
     const isBuildingsCategory = slug === 'buildings-and-architecture';
     const categoryName = category?.data?.name || '';
     const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
-    
-    // Determine if we should show the browse categories section
-    const shouldShowBrowseCategories = isAnimalCategory || isBuildingsCategory;
-    
-    // Get the first subcategory slug for Featured Gallery
-    // Special handling for specific categories
     const firstSubCategorySlug = isAnimalCategory 
         ? 'farm-animals-png' 
         : isBuildingsCategory
         ? 'commercial-buildings-png'
         : (sub_categories && sub_categories.length > 0 ? sub_categories[0].slug : undefined);
+    const availableCategory = ["animals","buildings-and-architecture"]
+    const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (
         <>
@@ -144,38 +140,13 @@ export default function SingleCategory() {
                     </div>
                 </div>
             </section>
-
-            {/* Browse Categories Section - Shows for animals and buildings-and-architecture */}
-            {shouldShowBrowseCategories && (
-                <BrowseAnimalCategories categorySlug={categorySlug} />
-            )}
-
-            {/* Additional Sections for Animals Category */}
-            {isAnimalCategory && (
+            {isContentAvailable && (
                 <>
-                    {/* Pass the first subcategory slug and category slug to FeaturedGalleryPreview */}
                     <FeaturedGalleryPreview 
                         subCategorySlug={firstSubCategorySlug} 
                         categorySlug={categorySlug}
                     />
-                    <IntroductionContent categorySlug={categorySlug} />
-                    <PopularUseCases categorySlug={categorySlug} />
-                    <LicensingDownload categorySlug={categorySlug} />
-                    <EducationKidsAssets categorySlug={categorySlug} />
-                    <BrandingStudioToolkit categoryName={categoryName} />
-                    <AboutPngpoint />
-                    <AnimalFAQ categorySlug={categorySlug} categoryName={categoryName} />
-                </>
-            )}
-
-            {/* Additional Sections for Buildings & Architecture Category */}
-            {isBuildingsCategory && (
-                <>
-                    {/* Pass the first subcategory slug and category slug to FeaturedGalleryPreview */}
-                    <FeaturedGalleryPreview 
-                        subCategorySlug={firstSubCategorySlug} 
-                        categorySlug={categorySlug}
-                    />
+                    <BrowseAnimalCategories categorySlug={categorySlug} />
                     <IntroductionContent categorySlug={categorySlug} />
                     <PopularUseCases categorySlug={categorySlug} />
                     <LicensingDownload categorySlug={categorySlug} />
