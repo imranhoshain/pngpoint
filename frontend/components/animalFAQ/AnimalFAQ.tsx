@@ -170,10 +170,89 @@ const buildingFaqData: FAQItem[] = [
     }
 ];
 
+const businessFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Business PNG image?",
+        answer: "A Business PNG is a transparent image used for presentations, websites, marketing, and branding without background issues."
+    },
+    {
+        id: 2,
+        question: "Why use PNG for business visuals?",
+        answer: "PNG supports transparency and sharp edges, making layouts cleaner and easier to manage."
+    },
+    {
+        id: 3,
+        question: "Are Business PNGs free to use?",
+        answer: "Some are free, others are premium. Always check license details before use."
+    },
+    {
+        id: 4,
+        question: "Can I use Business PNGs commercially?",
+        answer: "Yes, many allow commercial use. Look for \"Royalty-Free\" or \"Commercial Use Allowed.\""
+    },
+    {
+        id: 5,
+        question: "Do Business PNGs work for presentations?",
+        answer: "Yes. They are ideal for pitch decks, reports, and client presentations."
+    },
+    {
+        id: 6,
+        question: "Are high-resolution Business PNGs available?",
+        answer: "Most files are HD and suitable for both screen and print use."
+    },
+    {
+        id: 7,
+        question: "Can I edit Business PNG images?",
+        answer: "Yes, resizing and recoloring are usually allowed. Check the license to confirm."
+    },
+    {
+        id: 8,
+        question: "What industries use Business PNGs most?",
+        answer: "Marketing, finance, startups, education, SaaS, and corporate teams."
+    },
+    {
+        id: 9,
+        question: "Are these PNGs good for branding?",
+        answer: "Yes. Icons, logos, and illustrations support consistent branding."
+    },
+    {
+        id: 10,
+        question: "What does royalty-free mean here?",
+        answer: "You can reuse the image across projects without extra fees, within license terms."
+    },
+    {
+        id: 11,
+        question: "Can Business PNG images be used for client projects?",
+        answer: "Yes. Most Business PNG images allow use in client work, including presentations, websites, and marketing materials. Always review the license to confirm client redistribution rules."
+    },
+    {
+        id: 12,
+        question: "Are Business PNGs suitable for social media marketing?",
+        answer: "Absolutely. Business PNGs work well for social posts, ads, thumbnails, and story graphics because transparent backgrounds blend cleanly with any design layout."
+    },
+    {
+        id: 13,
+        question: "Do Business PNG images work for print materials like brochures?",
+        answer: "Yes. High-resolution Business PNGs are suitable for brochures, flyers, banners, and reports. Always check that the file is high resolution (preferably 300 dpi) before printing."
+    },
+    {
+        id: 14,
+        question: "Can I use Business PNGs in SaaS dashboards or apps?",
+        answer: "Yes. Many teams use Business PNG icons and illustrations in dashboards, apps, and UI sections. PNG transparency makes them easy to integrate without visual conflicts."
+    },
+    {
+        id: 15,
+        question: "How do I choose the right Business PNG for my project?",
+        answer: "Start by defining your use case—presentation, website, branding, or education. Then filter by style, resolution, and license to ensure the PNG fits both design and legal needs."
+    }
+];
+
 const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string): React.ReactNode => {
     const shouldApplyLink = 
         (categorySlug === 'animals' && id === 4) || 
-        (categorySlug === 'buildings-and-architecture' && id === 6);
+        (categorySlug === 'buildings-and-architecture' && id === 6) ||
+        (categorySlug === 'business' && (id === 3 || id === 7 || id === 11));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -204,7 +283,9 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
         setOpenId(openId === id ? null : id);
     };
 
-    const faqData = categorySlug === 'buildings-and-architecture' ? buildingFaqData : animalFaqData;
+    const faqData = categorySlug === 'buildings-and-architecture' ? buildingFaqData : 
+                    categorySlug === 'business' ? businessFaqData : 
+                    animalFaqData;
 
     return (
         <section className="relative top-0 left-0 right-0 py-10 lg:py-16 w-full bg-gradient-to-b from-white to-gray-50">

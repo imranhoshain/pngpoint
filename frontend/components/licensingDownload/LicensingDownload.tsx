@@ -63,11 +63,42 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
             description: "Access our complete Architecture PNG library with clear licensing and instant downloads. Professional-quality assets ready for architectural presentations, marketing materials, and design projects."
         }
     };
+    const businessContent = {
+        title: "Licensing, Rights & Usage",
+        subtitle: "Transparent, easy-to-understand licenses for confident use",
+        licensing: {
+            title: "Key Points",
+            description: "Every Business comes with a transparent, easy-to-understand license. You can confidently use these assets without worrying about legal issues.",
+            proTip: "Always double-check the license information displayed on each image page to ensure your intended use aligns with the terms. This helps maintain compliance for commercial or educational projects."
+        },
+        licensingKeyPoints: [
+            { label: "Royalty-Free:", text: "Use PNGs for both digital and print projects without extra fees." },
+            { label: "Commercial Use Allowed:", text: "Perfect for branding, marketing, presentations, and client work." },
+            { label: "No Attribution Needed:", text: "Most PNGs don't require credit, unless specified in the license." }
+        ],
+        download: {
+            title: "Download Options & File Quality",
+            description: "Access high-resolution Business optimized for professional use. Download individual images or entire collections based on your project requirements.",
+            features: [
+                "High-resolution files suitable for print and web",
+                "Transparent backgrounds for seamless integration",
+                "Organized collections by building type and style"
+            ]
+        },
+        cta: {
+            title: "Start Building Your Vision",
+            description: "Access our complete Architecture PNG library with clear licensing and instant downloads. Professional-quality assets ready for architectural presentations, marketing materials, and design projects."
+        }
+    };
 
-    // Select content based on category
-    const content = categorySlug === 'buildings-and-architecture' 
-        ? buildingsContent 
-        : animalsContent;
+    const availableCat: Record<string, typeof animalsContent> = {
+        animals: animalsContent,
+        "buildings-and-architecture": buildingsContent,
+        business: businessContent,
+    };
+
+    // Fallback to animalsContent if categorySlug is not found
+    const content = categorySlug && availableCat[categorySlug] ? availableCat[categorySlug] : animalsContent;
 
     return (
         <section className="relative top-0 left-0 right-0 py-10 lg:py-16 w-full bg-gradient-to-b from-gray-50 to-white">

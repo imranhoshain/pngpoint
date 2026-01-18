@@ -80,10 +80,46 @@ export const EducationKidsAssets = ({ categorySlug }: EducationKidsAssetsProps) 
         }
     };
 
-    // Select content based on category
-    const content = categorySlug === 'buildings-and-architecture' 
-        ? buildingsContent 
-        : animalsContent;
+    const businessContent = {
+        title: "Education & Kids-Friendly Assets",
+        description: "Teachers, parents, and educators love these PNGs because they're safe, clear, and easy to understand. Use them in worksheets, school presentations, learning apps, or classroom projects. We've personally used these assets for interactive lessons, and students stay engaged when visuals are sharp and distraction-free.",
+        features: [
+            {
+                icon: GraduationCap,
+                title: "Worksheets",
+                description: "Create engaging learning materials"
+            },
+            {
+                icon: Presentation,
+                title: "School Presentations",
+                description: "Make lessons visually appealing"
+            },
+            {
+                icon: Laptop,
+                title: "Learning Apps",
+                description: "Build interactive educational tools"
+            },
+            {
+                icon: BookOpen,
+                title: "Classroom Projects",
+                description: "Support creative academic work"
+            }
+        ],
+        bottomCard: {
+            title: "Perfect for Educational Use",
+            description: "Whether you need a transparent PNG background for a teaching aid or a specific graphic for a report, our site ensures students and educators can work efficiently. All images are optimized for PowerPoint and Google Slides.",
+            icon: GraduationCap
+        }
+    };
+
+    const availableCat: Record<string, typeof animalsContent> = {
+        animals: animalsContent,
+        "buildings-and-architecture": buildingsContent,
+        business: businessContent,
+    };
+
+    // Fallback to animalsContent if categorySlug is not found
+    const content = categorySlug && availableCat[categorySlug] ? availableCat[categorySlug] : animalsContent;
 
     const isBuildingsCategory = categorySlug === 'buildings-and-architecture';
 

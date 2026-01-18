@@ -64,10 +64,41 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
-    // Select content based on category
-    const content = categorySlug === 'buildings-and-architecture' 
-        ? buildingsContent 
-        : animalsContent;
+    const businessContent = {
+        title: "Popular Use Cases",
+        description: "One thing I’ve learned over time—business teams lose hours fixing visuals. Clean PNGs remove that problem. When assets are transparent and consistent, work moves faster.",
+        useCases: [
+            {
+                icon: Presentation,
+                title: "For Designers & Marketers",
+                description: "Business PNGs work perfectly for ads, landing pages, and social creatives. I’ve used them in campaigns where speed and clarity mattered most."
+            },
+            {
+                icon: TrendingUp,
+                title: "For Presentations & Reports",
+                description: "Consultants and teams use these PNGs in pitch decks and reports to explain ideas clearly without clutter."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Web & Digital Media",
+                description: "Business PNGs improve UI sections, blog visuals, and feature blocks without slowing down pages."
+            },
+            {
+                icon: Briefcase,
+                title: "Industry-Specific",
+                description: "Startups, agencies, SaaS companies, educators, and corporate teams rely on these visuals to communicate ideas clearly and professionally."
+            }
+        ]
+    };
+
+    const availableCat: Record<string, typeof animalsContent> = {
+        animals: animalsContent,
+        "buildings-and-architecture": buildingsContent,
+        business: businessContent,
+    };
+
+    // Fallback to animalsContent if categorySlug is not found
+    const content = categorySlug && availableCat[categorySlug] ? availableCat[categorySlug] : animalsContent;
 
     return (
         <section className="relative top-0 left-0 right-0 py-10 lg:py-16 w-full bg-white">

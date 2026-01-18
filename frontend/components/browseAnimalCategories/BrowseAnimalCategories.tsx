@@ -104,12 +104,58 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category links to a filtered gallery with previews, alt text, and practical use-case tips for designers, marketers, and educators."
     };
 
-    // Select content based on category slug
-    const content = categorySlug === 'animals' 
-        ? animalsContent 
-        : categorySlug === 'buildings-and-architecture'
-        ? buildingsContent
-        : null;
+    const businessContent = {
+        categories: [
+            {
+                title: "Core Business Types",
+                items: [
+                    "Corporate Business PNG",
+                    "Startup Business PNG",
+                    "Small Business PNG",
+                    "Office & Workplace PNG",
+                    "Professional Team PNG"
+                ]
+            },
+            {
+                title: "Industry & Function",
+                items: [
+                    "Finance & Accounting PNG",
+                    "Marketing & Advertising PNG",
+                    "Sales & Growth PNG",
+                    "E-commerce Business PNG",
+                    "Technology & SaaS PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Flat Business PNG",
+                    "Minimal Business PNG",
+                    "Isometric Business PNG",
+                    "Business Silhouette PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Business Icons PNG",
+                    "Business Logo PNG",
+                    "Business Illustration PNG",
+                    "Business Clipart PNG",
+                    "Business Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category leads to a clean, filtered gallery for fast downloads."
+    };
+    const availableCat: Record<string, typeof animalsContent> = {
+        animals: animalsContent,
+        "buildings-and-architecture": buildingsContent,
+        business: businessContent,
+    };
+
+    // Fallback to animalsContent if categorySlug is not found
+    const content = categorySlug && availableCat[categorySlug] ? availableCat[categorySlug] : animalsContent;
 
     // Don't render if no matching content
     if (!content) return null;

@@ -63,11 +63,40 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
             ]
         }
     };
+    const businessContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Business PNG images help professionals work faster when they need clean visuals for presentations, websites, or marketing materials. If you’re looking for transparent business graphics that fit any background, this page gives you a clear solution without extra editing. At PNGPoint, we’ve used business PNGs in pitch decks, landing pages, and client proposals, and clean assets always save time. That’s why this collection focuses on high-resolution, transparent PNG files with clear licenses you can trust. Browse the business PNG library and pick visuals that support your goals today."
+        ],
+        mainTitle: "Why Choose Our Business PNG Collection",
+        mainDescription: "Creating business visuals should feel efficient, not frustrating.This collection is designed for marketers, designers, founders, and educators who need ready-to-use Business PNG images that fit real workflows. Because the files are clean and consistent, you spend less time fixing visuals and more time delivering results.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Corporate, finance, marketing, startup, office, and e-commerce visuals" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD resolution, sharp edges" },
+                { label: "Flexible usage:", text: "Websites, presentations, branding, print, and education" },
+                { label: "Clear licensing:", text: "Simple terms explained before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Curated business-focused PNG assets",
+                "Regular updates with modern styles",
+                "Consistent licensing across categories"
+            ]
+        }
+    };
 
-    // Select content based on category
-    const content = categorySlug === 'buildings-and-architecture' 
-        ? buildingsContent 
-        : animalsContent;
+    const availableCat: Record<string, typeof animalsContent> = {
+        animals: animalsContent,
+        "buildings-and-architecture": buildingsContent,
+        business: businessContent,
+    };
+
+    // Fallback to animalsContent if categorySlug is not found
+    const content = categorySlug && availableCat[categorySlug] ? availableCat[categorySlug] : animalsContent;
 
     return (
         <section className="relative top-0 left-0 right-0 py-10 lg:py-16 w-full bg-gradient-to-b from-gray-50 to-white">
