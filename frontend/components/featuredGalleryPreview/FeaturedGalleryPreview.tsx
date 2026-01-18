@@ -62,10 +62,35 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "This gallery ensures a smooth workflow for designers, architects, and marketers—saving time while giving full clarity on licensing and visual quality."
     };
 
+    const businessContent = {
+        title: "Gallery Preview & Live Demos",
+        description: "Get a quick overview of our most downloaded Business PNG images.This preview highlights high-resolution files with transparent backgrounds that are ready for real business use.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-Resolution Business PNG for sharp clarity",
+            "Transparent Background PNG for clean layouts",
+            "Royalty-Free PNG assets with clear licenses"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Presentations",
+            "Branding",
+        ],
+        footerText: "Use filters to find exactly what you need in seconds"
+    };
+
     // Select content based on category
-    const content = categorySlug === 'buildings-and-architecture' 
-        ? buildingsContent 
-        : animalsContent;
+    const availableCat: Record<string, typeof animalsContent> = {
+        animals: animalsContent,
+        "buildings-and-architecture": buildingsContent,
+        business: businessContent,
+    };
+
+    // Fallback to animalsContent if categorySlug is not found
+    const content = categorySlug && availableCat[categorySlug] ? availableCat[categorySlug] : animalsContent;
 
     useEffect(() => {
         if (subCategorySlug) {
