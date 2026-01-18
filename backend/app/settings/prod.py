@@ -71,7 +71,7 @@ def get_csrf_trusted_origins():
     return list(set(origins))
 
 def get_cors_allowed_origins():
-    origins = []
+    origins = ["http://localhost:3000"]
     frontend_domain = os.getenv('FRONTEND_DOMAIN', '')
     if frontend_domain:
         origins.append(frontend_domain.rstrip('/'))
@@ -90,6 +90,7 @@ CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://.*\.replit\.dev$",
     r"^https://.*\.replit\.app$",
     r"^https://.*\.repl\.co$",
+    r"^http://.*\.repl\.co$",
 ]
 
 SECURE_BROWSER_XSS_FILTER = True
