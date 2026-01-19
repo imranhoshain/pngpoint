@@ -326,12 +326,91 @@ const cultureReligionFaqData: FAQItem[] = [
     }
 ];
 
+const drinksFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Drinks PNG image, and why is it useful?",
+        answer: "A Drinks PNG is a high-quality raster image with a transparent background, ideal for web, print, and marketing designs."
+    },
+    {
+        id: 2,
+        question: "Can I use Drinks PNGs for commercial projects?",
+        answer: "Yes, many Drinks PNGs allow commercial use. Check each file's license for confirmation."
+    },
+    {
+        id: 3,
+        question: "Are Drinks PNGs free to download?",
+        answer: "Some are free, while others are premium with extended commercial rights."
+    },
+    {
+        id: 4,
+        question: "Can I edit or customize Drinks PNGs?",
+        answer: "Yes, you can resize, recolor, or combine PNGs in compatible software."
+    },
+    {
+        id: 5,
+        question: "What file formats are available for Drinks PNGs?",
+        answer: "Transparent PNGs, HD PNGs, vector versions (SVG), and clipart illustrations."
+    },
+    {
+        id: 6,
+        question: "Do you offer drinks PNGs suitable for social media?",
+        answer: "Yes, optimized for Instagram, Facebook, Pinterest, and web banners."
+    },
+    {
+        id: 7,
+        question: "Can I use Drinks PNGs for educational purposes?",
+        answer: "Absolutely, these are perfect for nutrition, health, and beverage-themed educational projects."
+    },
+    {
+        id: 8,
+        question: "How do I ensure PNGs display well on web pages?",
+        answer: "Use proper resolution: 72–150 dpi for screens, 300 dpi for print. Transparent backgrounds ensure clean overlays."
+    },
+    {
+        id: 9,
+        question: "Are there specific drink types like coffee, tea, or cocktails?",
+        answer: "Yes, the collection is organized by beverage type and style for easy browsing."
+    },
+    {
+        id: 10,
+        question: "Can I download multiple drinks PNGs at once?",
+        answer: "Yes, the library allows batch downloads to streamline workflow."
+    },
+    {
+        id: 11,
+        question: "Can I use Drinks PNGs for packaging design?",
+        answer: "Yes, these PNGs are perfect for product labels, bottles, cartons, and promotional packaging."
+    },
+    {
+        id: 12,
+        question: "Are the Drinks PNGs suitable for presentations and slides?",
+        answer: "Definitely! Transparent backgrounds and high-resolution make them ideal for PowerPoint, Keynote, or Google Slides."
+    },
+    {
+        id: 13,
+        question: "Do you provide seasonal or themed Drinks PNGs?",
+        answer: "Yes, you can find holiday drinks, summer beverages, and festive cocktail PNGs in the collection."
+    },
+    {
+        id: 14,
+        question: "Can I use Drinks PNGs in mobile apps or games?",
+        answer: "Absolutely. All PNGs are optimized for digital use, including apps, games, and interactive media."
+    },
+    {
+        id: 15,
+        question: "Are these Drinks PNGs updated regularly?",
+        answer: "Yes, the library is continuously updated with new drinks, styles, and trendy beverage graphics."
+    }
+];
+
 const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string): React.ReactNode => {
     const shouldApplyLink = 
         (categorySlug === 'animals' && id === 4) || 
         (categorySlug === 'buildings-and-architecture' && id === 6) ||
         (categorySlug === 'business' && (id === 3 || id === 7 || id === 11)) ||
-        (categorySlug === 'culture-and-religion' && id === 4);
+        (categorySlug === 'culture-and-religion' && id === 4) ||
+        (categorySlug === 'drinks' && id === 2);
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -365,6 +444,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
     const faqData = categorySlug === 'buildings-and-architecture' ? buildingFaqData : 
                     categorySlug === 'business' ? businessFaqData :
                     categorySlug === 'culture-and-religion' ? cultureReligionFaqData :
+                    categorySlug === 'drinks' ? drinksFaqData :
                     animalFaqData;
 
     return (

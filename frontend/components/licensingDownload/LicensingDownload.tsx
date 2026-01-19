@@ -8,10 +8,11 @@ interface LicensingDownloadProps {
 }
 
 export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
-    // Determine if this is buildings or culture-religion category
+    // Determine if this is buildings, culture-religion, business, or drinks category
     const isBuildingsCategory = categorySlug === 'buildings-and-architecture';
     const isCultureReligionCategory = categorySlug === 'culture-and-religion';
     const isBusinessCategory = categorySlug === 'business';
+    const isDrinksCategory = categorySlug === 'drinks';
 
     // Animals content
     const animalsContent = {
@@ -118,11 +119,36 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Drinks content
+    const drinksContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "All Drinks PNGs are royalty-free, many allowing commercial and print use. Any attribution requirements are clearly mentioned. Always verify license info before download.",
+            proTip: "Always verify license info before download to keep your projects safe and compliant."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Download single or multiple PNGs, free or HD. Transparent backgrounds make it easy to integrate into any project.",
+            features: [
+                "Single or bulk downloads for faster workflow",
+                "HD and standard resolution options available",
+                "Transparent backgrounds ensure clean, professional results"
+            ]
+        },
+        cta: {
+            title: "Start Downloading Today",
+            description: "Access our complete Drinks PNG library with clear licensing and instant downloads. High-quality beverage graphics ready for web, print, and marketing projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
+        drinks: drinksContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
@@ -158,7 +184,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                 {content.licensing.description}
                             </p>
                             
-                            {/* Key Points for Buildings/Business, Pro Tip Box for Animals/Culture */}
+                            {/* Key Points for Buildings/Business, Pro Tip Box for Animals/Culture/Drinks */}
                             {(isBuildingsCategory || isBusinessCategory) ? (
                                 <>
                                     <div className="space-y-3 mb-4">

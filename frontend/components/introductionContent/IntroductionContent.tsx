@@ -119,11 +119,40 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Drinks content
+    const drinksContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Drinks PNG images save time for designers, marketers, and educators who need clean, ready-to-use visuals. From coffee cups to soda bottles, these transparent graphics work on any background. At PNGPoint, we've used drinks PNGs in websites, social media posts, and branding campaigns to ensure visual clarity and efficiency.",
+            "This collection focuses on high-quality, transparent PNG files with clear usage terms you can trust. Explore the drinks PNG library and select images that fit your project today."
+        ],
+        mainTitle: "Why Choose Our Drinks PNG Collection",
+        mainDescription: "Finding the perfect drink graphics should be easy and fast. This collection is curated for creators needing clean, reusable Drinks PNG images that integrate seamlessly into any project. Every file prioritizes clarity, flexibility, and practical usability. Spend less time editing and more time creating.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide variety:", text: "Coffee, tea, soda, juice, cocktails, wine, beer, milkshakes, energy drinks" },
+                { label: "High-quality formats:", text: "Transparent PNG, HD images, sharp edges, clean cut-outs" },
+                { label: "Flexible usage:", text: "Websites, marketing, print designs, social media, presentations" },
+                { label: "Clear licensing:", text: "Easy-to-understand usage terms, no confusion before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated Drinks PNG files",
+                "Regular updates with new beverages and styles",
+                "Consistent licensing across the collection"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
+        drinks: drinksContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

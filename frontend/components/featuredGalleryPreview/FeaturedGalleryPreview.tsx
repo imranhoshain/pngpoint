@@ -104,12 +104,35 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to narrow results quickly and reach the right PNG without unnecessary clicks."
     };
 
+    // Drinks content
+    const drinksContent = {
+        title: "Featured Gallery Preview",
+        description: "Preview our most downloaded Drinks PNGs. High-resolution files with transparent backgrounds, perfect for web, print, and marketing campaigns.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution drinks PNGs for sharp detail",
+            "Transparent background PNGs for clean overlays",
+            "Royalty-free assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Social Media",
+            "Marketing Campaigns",
+            "Branding"
+        ],
+        footerText: "Use filters to narrow results instantly and find the right PNG without extra clicks."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
+        drinks: drinksContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

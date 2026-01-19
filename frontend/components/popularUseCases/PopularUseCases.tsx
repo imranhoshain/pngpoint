@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { Palette, GraduationCap, Globe, Building2, Presentation, Users, Briefcase, TrendingUp, FileText } from "lucide-react";
+import { Palette, GraduationCap, Globe, Building2, Presentation, Users, Briefcase, TrendingUp, FileText, Coffee } from "lucide-react";
 
 interface PopularUseCasesProps {
     categorySlug?: string;
@@ -119,11 +119,40 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Drinks content
+    const drinksContent = {
+        title: "Popular Use Cases",
+        description: "Clean Drinks PNGs save hours that would otherwise be spent on editing. Perfect for designers, marketers, and content creators.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Use drinks PNGs for banners, posters, packaging, or social media visuals. Drop them straight into your design software for immediate use."
+            },
+            {
+                icon: TrendingUp,
+                title: "For Marketing & Social Media",
+                description: "Create ads, Instagram posts, and campaign visuals quickly with high-quality beverage graphics."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education & Presentations",
+                description: "Teachers and presenters can visually illustrate topics like nutrition, health, or beverage culture using these PNGs."
+            },
+            {
+                icon: Coffee,
+                title: "Industry-Specific",
+                description: "Cafes, restaurants, bars, beverage brands, and bloggers use these visuals to communicate clearly and professionally."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
+        drinks: drinksContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

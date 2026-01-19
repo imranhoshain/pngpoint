@@ -206,11 +206,52 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a filtered gallery, so downloads stay quick and stress-free."
     };
 
+    // Drinks content
+    const drinksContent = {
+        categories: [
+            {
+                title: "Core Drink Types",
+                items: [
+                    "Coffee PNG",
+                    "Tea PNG",
+                    "Soda PNG",
+                    "Juice PNG",
+                    "Cocktail PNG",
+                    "Wine PNG",
+                    "Beer PNG"
+                ]
+            },
+            {
+                title: "Drink Styles & Formats",
+                items: [
+                    "Cold Drinks PNG",
+                    "Hot Drinks PNG",
+                    "Cartoon Drinks PNG",
+                    "Realistic Drinks PNG",
+                    "Beverage Silhouette PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Drink Icons PNG",
+                    "Drink Logo PNG",
+                    "Drink Illustration PNG",
+                    "Drink Clipart PNG",
+                    "Drink Sticker PNG",
+                    "Drink Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery for quick, easy downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
+        drinks: drinksContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
