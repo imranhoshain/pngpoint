@@ -8,8 +8,10 @@ interface LicensingDownloadProps {
 }
 
 export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
-    // Determine if this is buildings category
+    // Determine if this is buildings or culture-religion category
     const isBuildingsCategory = categorySlug === 'buildings-and-architecture';
+    const isCultureReligionCategory = categorySlug === 'culture-and-religion';
+    const isBusinessCategory = categorySlug === 'business';
 
     // Animals content
     const animalsContent = {
@@ -63,6 +65,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
             description: "Access our complete Architecture PNG library with clear licensing and instant downloads. Professional-quality assets ready for architectural presentations, marketing materials, and design projects."
         }
     };
+
     const businessContent = {
         title: "Licensing, Rights & Usage",
         subtitle: "Transparent, easy-to-understand licenses for confident use",
@@ -91,10 +94,35 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Culture & Religion content
+    const cultureReligionContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe and respectful use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing should never be unclear, especially for cultural content. All Culture and Religion PNG images come with clear usage information. Most assets are royalty-free and allow commercial and print use. If attribution is required, it's clearly mentioned on the file page.",
+            proTip: "Always review the license details before downloading to keep projects compliant and stress-free."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Downloading is simple and flexible. Choose free Culture and Religion PNG downloads, HD files for print, or transparent PNGs for digital use. You can download single images or multiple assets to speed up your workflow.",
+            features: [
+                "Single images or bulk downloads available",
+                "HD resolution files for print and web use",
+                "Clean, ready-to-use files help you focus on storytelling instead of editing"
+            ]
+        },
+        cta: {
+            title: "Start Creating Meaningful Content",
+            description: "Access our complete Culture and Religion PNG library with clear licensing and instant downloads. High-quality, culturally accurate visuals ready for education, media, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
+        "culture-and-religion": cultureReligionContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
@@ -130,8 +158,8 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                 {content.licensing.description}
                             </p>
                             
-                            {/* Key Points for Buildings, Pro Tip Box for Animals */}
-                            {isBuildingsCategory ? (
+                            {/* Key Points for Buildings/Business, Pro Tip Box for Animals/Culture */}
+                            {(isBuildingsCategory || isBusinessCategory) ? (
                                 <>
                                     <div className="space-y-3 mb-4">
                                         {buildingsContent.licensingKeyPoints.map((point, index) => (

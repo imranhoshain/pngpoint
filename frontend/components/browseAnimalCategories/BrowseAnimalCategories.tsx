@@ -148,10 +148,69 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         ],
         footer: "Each category leads to a clean, filtered gallery for fast downloads."
     };
+
+    // Culture & Religion content
+    const cultureReligionContent = {
+        categories: [
+            {
+                title: "Core Culture & Religion Themes",
+                items: [
+                    "Culture PNG",
+                    "Religion PNG",
+                    "World Religions PNG",
+                    "Cultural Symbols PNG",
+                    "Religious Symbols PNG"
+                ]
+            },
+            {
+                title: "Religions & Belief Systems",
+                items: [
+                    "Islam PNG",
+                    "Christianity PNG",
+                    "Hinduism PNG",
+                    "Buddhism PNG",
+                    "Judaism PNG",
+                    "Sikhism PNG"
+                ]
+            },
+            {
+                title: "Traditions & Festivals",
+                items: [
+                    "Religious Festival PNG",
+                    "Cultural Festival PNG",
+                    "Prayer & Worship PNG",
+                    "Ritual & Ceremony PNG",
+                    "Spiritual Symbols PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Religious Icon PNG",
+                    "Culture Illustration PNG",
+                    "Cultural Silhouette PNG",
+                    "Minimal Religious PNG"
+                ]
+            },
+            {
+                title: "Creative & Educational Assets",
+                items: [
+                    "Culture Icon PNG",
+                    "Religion Logo PNG",
+                    "Cultural Clipart PNG",
+                    "Religious Vector PNG",
+                    "Culture Illustration PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a filtered gallery, so downloads stay quick and stress-free."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
+        "culture-and-religion": cultureReligionContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

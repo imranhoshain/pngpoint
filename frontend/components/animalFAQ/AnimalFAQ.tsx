@@ -248,11 +248,90 @@ const businessFaqData: FAQItem[] = [
     }
 ];
 
+const cultureReligionFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Culture and Religion PNG image?",
+        answer: "A Culture and Religion PNG is a transparent image representing cultural traditions, religious symbols, or spiritual concepts, designed for easy use in digital and print projects."
+    },
+    {
+        id: 2,
+        question: "Why use PNG for cultural and religious visuals?",
+        answer: "PNG supports transparency and great detail, making it ideal for overlays, presentations, and respectful visual storytelling."
+    },
+    {
+        id: 3,
+        question: "Are Culture and Religion PNGs free to use?",
+        answer: "Some assets are free, while others may be premium. Always check the license details listed on each file."
+    },
+    {
+        id: 4,
+        question: "Can I use these PNGs for commercial projects?",
+        answer: "Many PNGs allow commercial use, including branding and media. Confirm license terms before publishing."
+    },
+    {
+        id: 5,
+        question: "Do these PNGs have transparent backgrounds?",
+        answer: "Yes, most Culture and Religion PNGs include transparent backgrounds for seamless placement."
+    },
+    {
+        id: 6,
+        question: "Are these images suitable for education?",
+        answer: "Yes. Many are created for educational content, cultural studies, and learning platforms."
+    },
+    {
+        id: 7,
+        question: "What resolution should I choose?",
+        answer: "For web use, standard HD is sufficient. For print, select high-resolution or 300 dpi files when available."
+    },
+    {
+        id: 8,
+        question: "Can I edit or recolor these PNGs?",
+        answer: "Editing is usually allowed, but always confirms modification rights in the license terms."
+    },
+    {
+        id: 9,
+        question: "Are religious symbols used respectfully?",
+        answer: "The collection focuses on culturally accurate and neutral representations suitable for informational and creative use."
+    },
+    {
+        id: 10,
+        question: "What does royalty-free mean here?",
+        answer: "Royalty-free means you can reuse the image across projects without repeated fees, within license conditions."
+    },
+    {
+        id: 11,
+        question: "Can I use Culture and Religion PNGs for presentations or slideshows?",
+        answer: "Yes. These PNGs are perfect for educational presentations, lectures, webinars, and community workshops. Transparent backgrounds make them easy to layer over any slide or template."
+    },
+    {
+        id: 12,
+        question: "Are these PNGs suitable for social media posts?",
+        answer: "Absolutely. Use them for Instagram, Facebook, Pinterest, or Twitter to visually highlight cultural events, religious celebrations, or festivals without extra editing."
+    },
+    {
+        id: 13,
+        question: "How can I search for specific religions or festivals?",
+        answer: "Use the search bar or category filters like \"Islam PNG,\" \"Diwali PNG,\" or \"Christmas Symbols PNG\" to quickly find the visuals you need."
+    },
+    {
+        id: 14,
+        question: "Are the PNGs optimized for both web and print?",
+        answer: "Yes. Files come in high-resolution and standard web-friendly sizes, making them suitable for digital media, banners, brochures, and printed educational materials."
+    },
+    {
+        id: 15,
+        question: "Can I combine multiple Culture and Religion PNGs into one project?",
+        answer: "Yes. PNGs are fully compatible with design software like Photoshop, Illustrator, Canva, and PowerPoint, allowing layering, resizing, and combining while preserving transparency."
+    }
+];
+
 const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string): React.ReactNode => {
     const shouldApplyLink = 
         (categorySlug === 'animals' && id === 4) || 
         (categorySlug === 'buildings-and-architecture' && id === 6) ||
-        (categorySlug === 'business' && (id === 3 || id === 7 || id === 11));
+        (categorySlug === 'business' && (id === 3 || id === 7 || id === 11)) ||
+        (categorySlug === 'culture-and-religion' && id === 4);
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -284,7 +363,8 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
     };
 
     const faqData = categorySlug === 'buildings-and-architecture' ? buildingFaqData : 
-                    categorySlug === 'business' ? businessFaqData : 
+                    categorySlug === 'business' ? businessFaqData :
+                    categorySlug === 'culture-and-religion' ? cultureReligionFaqData :
                     animalFaqData;
 
     return (

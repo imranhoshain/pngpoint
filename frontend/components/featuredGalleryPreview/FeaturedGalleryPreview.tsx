@@ -82,11 +82,34 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to find exactly what you need in seconds"
     };
 
+    // Culture & Religion content
+    const cultureReligionContent = {
+        title: "Featured Gallery Preview",
+        description: "Get a quick overview of popular Culture and Religion PNG images in one place. This preview highlights high-resolution files with transparent backgrounds, ready for real-world use. You can assess quality instantly and download with confidence.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-Resolution Culture and Religion PNG files",
+            "Transparent Background PNGs for clean overlays",
+            "Royalty-Free assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Ready",
+            "Education",
+            "Media & Editorial",
+            "Branding"
+        ],
+        footerText: "Use filters to narrow results quickly and reach the right PNG without unnecessary clicks."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
+        "culture-and-religion": cultureReligionContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -63,10 +63,11 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
             ]
         }
     };
+
     const businessContent = {
         subheading: "High-resolution, royalty-free, and ready to use",
         introText: [
-            "Business PNG images help professionals work faster when they need clean visuals for presentations, websites, or marketing materials. If you’re looking for transparent business graphics that fit any background, this page gives you a clear solution without extra editing. At PNGPoint, we’ve used business PNGs in pitch decks, landing pages, and client proposals, and clean assets always save time. That’s why this collection focuses on high-resolution, transparent PNG files with clear licenses you can trust. Browse the business PNG library and pick visuals that support your goals today."
+            "Business PNG images help professionals work faster when they need clean visuals for presentations, websites, or marketing materials. If you're looking for transparent business graphics that fit any background, this page gives you a clear solution without extra editing. At PNGPoint, we've used business PNGs in pitch decks, landing pages, and client proposals, and clean assets always save time. That's why this collection focuses on high-resolution, transparent PNG files with clear licenses you can trust. Browse the business PNG library and pick visuals that support your goals today."
         ],
         mainTitle: "Why Choose Our Business PNG Collection",
         mainDescription: "Creating business visuals should feel efficient, not frustrating.This collection is designed for marketers, designers, founders, and educators who need ready-to-use Business PNG images that fit real workflows. Because the files are clean and consistent, you spend less time fixing visuals and more time delivering results.",
@@ -89,10 +90,40 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Culture & Religion content
+    const cultureReligionContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Culture and Religion PNG images help creators communicate ideas that words alone often cannot. When you need clean visuals for beliefs, traditions, festivals, or cultural identity, transparent PNGs save time and reduce design friction.",
+            "If you're working on educational content, editorial projects, branding, or presentations, this page gives you ready-to-use Culture and Religion graphics that fit naturally on any background. At PNGPoint, we've seen how culturally accurate visuals improve clarity and respect in real projects.",
+            "That's why this collection focuses on high-quality, transparent PNG files with clear licensing. Explore the Culture and Religion PNG library and choose visuals that support your message with confidence."
+        ],
+        mainTitle: "Why Choose Our Culture and Religion PNG Collection",
+        mainDescription: "Finding culturally respectful visuals should feel clear and reliable, not risky or confusing. This collection is built for designers, educators, and creators who need accurate Culture and Religion PNG images that work instantly across projects. Each file emphasizes clarity, symbolism, and practical use. As a result, you spend less time searching and more time creating meaningful content.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Broad coverage:", text: "Global cultures, religions, traditions, rituals, and festivals" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD resolution, clean cut-outs" },
+                { label: "Flexible usage:", text: "Education, media, branding, print, web, and presentations" },
+                { label: "Clear licensing:", text: "Royalty-free terms explained upfront for safe usage" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Curated visuals focused on cultural accuracy",
+                "Regular updates with new themes and traditions",
+                "Consistent licensing across the entire collection"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
+        "culture-and-religion": cultureReligionContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { Palette, GraduationCap, Globe, Building2, Presentation, Users, Briefcase, TrendingUp } from "lucide-react";
+import { Palette, GraduationCap, Globe, Building2, Presentation, Users, Briefcase, TrendingUp, FileText } from "lucide-react";
 
 interface PopularUseCasesProps {
     categorySlug?: string;
@@ -66,12 +66,12 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
 
     const businessContent = {
         title: "Popular Use Cases",
-        description: "One thing I’ve learned over time—business teams lose hours fixing visuals. Clean PNGs remove that problem. When assets are transparent and consistent, work moves faster.",
+        description: "One thing I've learned over time—business teams lose hours fixing visuals. Clean PNGs remove that problem. When assets are transparent and consistent, work moves faster.",
         useCases: [
             {
                 icon: Presentation,
                 title: "For Designers & Marketers",
-                description: "Business PNGs work perfectly for ads, landing pages, and social creatives. I’ve used them in campaigns where speed and clarity mattered most."
+                description: "Business PNGs work perfectly for ads, landing pages, and social creatives. I've used them in campaigns where speed and clarity mattered most."
             },
             {
                 icon: TrendingUp,
@@ -91,10 +91,39 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Culture & Religion content
+    const cultureReligionContent = {
+        title: "Popular Use Cases",
+        description: "One common challenge appears again and again—explaining cultural or religious topics clearly without visual confusion. Clean PNG images solve that problem by removing background noise and focusing attention on meaning.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers & Creators",
+                description: "Designers use Culture and Religion PNGs in posters, campaigns, and digital artwork. Transparent backgrounds help visuals blend smoothly into layouts without extra editing."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education & Learning",
+                description: "Teachers and institutions rely on clear visuals to explain beliefs, traditions, and history. These PNGs support lessons, slides, worksheets, and e-learning materials with visual clarity."
+            },
+            {
+                icon: FileText,
+                title: "For Media & Editorial",
+                description: "Journalists, bloggers, and publishers use these assets to add context to articles about faith, traditions, and cultural events without misrepresentation."
+            },
+            {
+                icon: Users,
+                title: "Industry-Specific",
+                description: "NGOs, cultural organizations, museums, religious institutions, and community platforms use these PNGs to communicate respectfully and consistently across media."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
+        "culture-and-religion": cultureReligionContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
