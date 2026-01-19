@@ -3,7 +3,12 @@
 
 import { Sparkles, Download, Shield, Zap } from "lucide-react";
 
-export const AboutPngpoint = () => {
+interface AboutProps {
+    categorySlug?: string;
+    categoryName?: string;
+}
+
+export const AboutPngpoint = ({ categorySlug = 'animals', categoryName = 'Animal' }: AboutProps) => {
     const features = [
         {
             icon: Download,
@@ -48,7 +53,7 @@ export const AboutPngpoint = () => {
                     {/* Main Content */}
                     <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-200">
                         <p className="text-base md:text-lg text-gray-700 leading-relaxed text-center max-w-5xl mx-auto mb-8">
-                            Animal PNGs at PNGPoint provide a curated collection of high-quality, transparent images for designers, educators, developers, and content creators. Whether you&apos;re building websites, creating educational materials, or designing branding assets, our library makes it easy to find clean, ready-to-use graphics. All PNGs are royalty-free, clear-licensed, and optimized for web, print, and commercial projects. With fast downloads, organized categories, and consistent quality, PNGPoint helps you create professional visuals quickly and efficiently.
+                            {categoryName} PNGs at PNGPoint provide a curated collection of high-quality, transparent images for designers, educators, developers, and content creators. Whether you&apos;re building websites, creating educational materials, or designing branding assets, our library makes it easy to find clean, ready-to-use graphics. All PNGs are royalty-free, clear-licensed, and optimized for web, print, and commercial projects. With fast downloads, organized categories, and consistent quality, PNGPoint helps you create professional visuals quickly and efficiently.
                         </p>
 
                         {/* Features Grid */}

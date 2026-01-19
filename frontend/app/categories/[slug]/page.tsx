@@ -152,7 +152,7 @@ export default function SingleCategory() {
                     <LicensingDownload categorySlug={categorySlug} />
                     <EducationKidsAssets categorySlug={categorySlug} />
                     <BrandingStudioToolkit categoryName={categoryName} />
-                    <AboutPngpoint />
+                    <AboutPngpoint categorySlug={categorySlug} categoryName={categoryName}/>
                     <AnimalFAQ categorySlug={categorySlug} categoryName={categoryName} />
                 </>
             )}
