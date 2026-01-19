@@ -126,6 +126,27 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to narrow results instantly and find the right PNG without extra clicks."
     };
 
+    // Food content
+    const foodContent = {
+        title: "Featured Gallery Preview",
+        description: "See the most downloaded Food PNG images in one place. This preview highlights high-resolution files with transparent backgrounds, ready for real use. You can check the quality at a glance and download with confidence.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution Food PNG for sharp detail",
+            "Transparent background PNG for clean overlays",
+            "Royalty-free assets with clear usage rights"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Branding"
+        ],
+        footerText: "Filters help you find the right Food PNG faster."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -133,6 +154,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
+        food: foodContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

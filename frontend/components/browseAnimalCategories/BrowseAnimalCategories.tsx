@@ -246,12 +246,62 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery for quick, easy downloads."
     };
 
+    // Food content
+    const foodContent = {
+        categories: [
+            {
+                title: "Core Food Types",
+                items: [
+                    "Fruits PNG",
+                    "Vegetables PNG",
+                    "Fast Food PNG",
+                    "Snacks PNG",
+                    "Desserts PNG",
+                    "Street Food PNG"
+                ]
+            },
+            {
+                title: "Meals & Ingredients",
+                items: [
+                    "Breakfast Food PNG",
+                    "Lunch & Dinner PNG",
+                    "Ingredients PNG",
+                    "Spices PNG",
+                    "Bakery Items PNG",
+                    "Seafood PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Realistic Food PNG",
+                    "Cartoon Food PNG",
+                    "Cute Food PNG",
+                    "Food Silhouette PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Food Icons PNG",
+                    "Food Logo PNG",
+                    "Food Illustration PNG",
+                    "Food Clipart PNG",
+                    "Food Sticker PNG",
+                    "Food Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery, so downloads stay fast and stress-free."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
+        food: foodContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

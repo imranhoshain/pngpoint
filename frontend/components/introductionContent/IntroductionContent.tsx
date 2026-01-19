@@ -147,12 +147,42 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Food content
+    const foodContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Food PNG images save time when you need clean visuals for menus, marketing, or digital content. If you want transparent food graphics that blend smoothly into any background, this page gives you exactly that.",
+            "Designers, educators, and content creators often struggle with messy backgrounds. Transparent food PNGs solve that problem fast. You can place them anywhere without extra editing.",
+            "That's why this collection focuses on high-quality Food PNG files with clear licensing. Browse the food PNG library and choose images that fit your project with confidence."
+        ],
+        mainTitle: "Why Choose Our Food PNG Collection",
+        mainDescription: "Finding usable food images should feel easy, not frustrating. This collection is built for people who want ready-to-use Food PNGs that work across real projects. Each file focuses on clarity, flexibility, and everyday usability. As a result, you spend less time editing and more time creating.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Fruits, vegetables, fast food, desserts, drinks, meals, and ingredients" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD resolution, clean cut-outs" },
+                { label: "Flexible usage:", text: "Menus, ads, websites, print, education, and branding" },
+                { label: "Clear licensing:", text: "Simple usage terms shown before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated Food PNG images",
+                "Regular updates with new food items and styles",
+                "Consistent licensing across categories"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
+        food: foodContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

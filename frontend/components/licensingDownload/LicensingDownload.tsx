@@ -8,11 +8,12 @@ interface LicensingDownloadProps {
 }
 
 export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
-    // Determine if this is buildings, culture-religion, business, or drinks category
+    // Determine category type
     const isBuildingsCategory = categorySlug === 'buildings-and-architecture';
     const isCultureReligionCategory = categorySlug === 'culture-and-religion';
     const isBusinessCategory = categorySlug === 'business';
     const isDrinksCategory = categorySlug === 'drinks';
+    const isFoodCategory = categorySlug === 'food';
 
     // Animals content
     const animalsContent = {
@@ -143,12 +144,37 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Food content
+    const foodContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing stays simple and transparent. All Food PNG images are royalty-free, and many allow commercial and print use. If attribution is required, it's clearly mentioned on the image page.",
+            proTip: "Always review the license details before downloading to avoid confusion later."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Downloading is quick and flexible. Choose free Food PNGs, HD files, or transparent background images based on your project. You can download single images or multiple files at once. Clean files help you focus on creativity, not editing.",
+            features: [
+                "Single images or bulk downloads available",
+                "HD and standard resolution options for different needs",
+                "Clean, ready-to-use files that save editing time"
+            ]
+        },
+        cta: {
+            title: "Start Downloading Today",
+            description: "Access our complete Food PNG library with clear licensing and instant downloads. High-quality food graphics ready for menus, marketing, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
+        food: foodContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
@@ -184,7 +210,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                 {content.licensing.description}
                             </p>
                             
-                            {/* Key Points for Buildings/Business, Pro Tip Box for Animals/Culture/Drinks */}
+                            {/* Key Points for Buildings/Business, Pro Tip Box for Animals/Culture/Drinks/Food */}
                             {(isBuildingsCategory || isBusinessCategory) ? (
                                 <>
                                     <div className="space-y-3 mb-4">
@@ -211,7 +237,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                     <div className="flex items-start gap-3">
                                         <Lightbulb className="w-5 h-5 text-[#0077a2] flex-shrink-0 mt-0.5" />
                                         <p className="text-sm md:text-base text-gray-700">
-                                            <strong className="text-[#0077a2]">Pro tip:</strong> {content.licensing.proTip}
+                                            <strong className="text-[#0077a2]">Tip:</strong> {content.licensing.proTip}
                                         </p>
                                     </div>
                                 </div>

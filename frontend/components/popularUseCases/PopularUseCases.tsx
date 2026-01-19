@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { Palette, GraduationCap, Globe, Building2, Presentation, Users, Briefcase, TrendingUp, FileText, Coffee } from "lucide-react";
+import { Palette, GraduationCap, Globe, Building2, Presentation, Users, Briefcase, TrendingUp, FileText, Coffee, UtensilsCrossed } from "lucide-react";
 
 interface PopularUseCasesProps {
     categorySlug?: string;
@@ -147,12 +147,41 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Food content
+    const foodContent = {
+        title: "Popular Use Cases",
+        description: "People often lose time fixing food images instead of using them. Transparent Food PNGs remove that hassle. When the background is already clean, work becomes easier.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Menu designs, posters, ads, and packaging need clean visuals. Food PNGs drop straight into layouts and keep designs sharp and professional."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers and students use food PNGs for lessons, charts, and presentations. Simple visuals help explain nutrition, meals, and food groups clearly."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Food bloggers, recipe sites, and marketers use PNGs in headers, thumbnails, and social posts. Clean images improve clarity and engagement."
+            },
+            {
+                icon: UtensilsCrossed,
+                title: "Industry-Specific",
+                description: "Restaurants, cafes, food brands, delivery apps, and nutrition platforms use food PNGs to communicate faster and connect visually."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
         business: businessContent,
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
+        food: foodContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

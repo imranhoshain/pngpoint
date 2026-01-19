@@ -404,13 +404,92 @@ const drinksFaqData: FAQItem[] = [
     }
 ];
 
+const foodFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Food PNG image?",
+        answer: "A Food PNG is an image with a transparent background. It allows easy placement on any design without visible borders."
+    },
+    {
+        id: 2,
+        question: "Are Food PNG images free to use?",
+        answer: "Some are free, while others may be premium. Always check the license shown on the image page."
+    },
+    {
+        id: 3,
+        question: "Can I use Food PNGs for restaurant menus?",
+        answer: "Yes. Many Food PNGs support commercial and print use, making them suitable for menus and ads."
+    },
+    {
+        id: 4,
+        question: "What resolution should I choose for Food PNGs?",
+        answer: "Use lower resolution for web and 300 dpi for print projects like posters or menus."
+    },
+    {
+        id: 5,
+        question: "Can I edit or resize Food PNG images?",
+        answer: "Yes. Most licenses allow resizing and basic editing. Premium files often allow full customization."
+    },
+    {
+        id: 6,
+        question: "What does a transparent background mean in Food PNG images?",
+        answer: "A transparent background means only the food item is visible. You can place it on any color, photo, or design without a white box."
+    },
+    {
+        id: 7,
+        question: "Are Food PNG images suitable for social media posts?",
+        answer: "Yes. Food PNGs work well for Instagram, Facebook, ads, and thumbnails because they look clean and professional on any background."
+    },
+    {
+        id: 8,
+        question: "Can Food PNGs be used for food delivery apps or menus?",
+        answer: "Many Food PNGs allow commercial use, making them suitable for delivery apps, digital menus, and promotional graphics. Always confirm the license first."
+    },
+    {
+        id: 9,
+        question: "What is the difference between Food PNG and Food JPG images?",
+        answer: "PNG files support transparent backgrounds, while JPG files do not. PNGs are better for overlays and design flexibility."
+    },
+    {
+        id: 10,
+        question: "Are high-resolution Food PNGs good for print materials?",
+        answer: "Yes. High-resolution Food PNGs can be used for posters, flyers, packaging, and menus when the file meets print-quality standards."
+    },
+    {
+        id: 11,
+        question: "Can I use Food PNG images in presentations or slides?",
+        answer: "Absolutely. Food PNGs are ideal for presentations because they blend smoothly into slides without distracting backgrounds."
+    },
+    {
+        id: 12,
+        question: "Do Food PNG images affect website loading speed?",
+        answer: "Large PNG files can increase load time. For best performance, choose optimized sizes or compress images without losing quality."
+    },
+    {
+        id: 13,
+        question: "Are Food PNGs safe for kids' educational content?",
+        answer: "Yes. Many Food PNGs are designed for learning materials, food charts, and classroom projects. Check usage rights for educational distribution."
+    },
+    {
+        id: 14,
+        question: "Can I recolor or modify Food PNG images?",
+        answer: "Most licenses allow basic edits like resizing or recoloring. Premium files usually allow more advanced customization."
+    },
+    {
+        id: 15,
+        question: "How do I choose the right Food PNG for branding projects?",
+        answer: "Select PNGs with consistent style, clean edges, and clear licensing. Consistent visuals help strengthen brand identity."
+    }
+];
+
 const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string): React.ReactNode => {
     const shouldApplyLink = 
         (categorySlug === 'animals' && id === 4) || 
         (categorySlug === 'buildings-and-architecture' && id === 6) ||
         (categorySlug === 'business' && (id === 3 || id === 7 || id === 11)) ||
         (categorySlug === 'culture-and-religion' && id === 4) ||
-        (categorySlug === 'drinks' && id === 2);
+        (categorySlug === 'drinks' && id === 2) ||
+        (categorySlug === 'food' && (id === 2 || id === 3 || id === 5 || id === 8));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -445,6 +524,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'business' ? businessFaqData :
                     categorySlug === 'culture-and-religion' ? cultureReligionFaqData :
                     categorySlug === 'drinks' ? drinksFaqData :
+                    categorySlug === 'food' ? foodFaqData :
                     animalFaqData;
 
     return (
