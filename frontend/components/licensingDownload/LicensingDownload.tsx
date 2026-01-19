@@ -14,6 +14,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
     const isBusinessCategory = categorySlug === 'business';
     const isDrinksCategory = categorySlug === 'drinks';
     const isFoodCategory = categorySlug === 'food';
+    const isGraphicResourcesCategory = categorySlug === 'graphic-resources';
 
     // Animals content
     const animalsContent = {
@@ -168,6 +169,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Graphic Resources content
+    const graphicResourcesContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing is kept simple. All graphic resources are royalty-free, and most support commercial and print use. Any attribution requirements are clearly mentioned on individual asset pages.",
+            proTip: "Always review the license details before downloading to ensure full compliance."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Download single assets or complete packs based on your workflow. Choose transparent PNGs, scalable SVGs, or layered PSD and AI files depending on your needs. High-quality files help maintain consistency across digital and print designs.",
+            features: [
+                "Single assets or complete packs available",
+                "Multiple file formats: PNG, SVG, AI, PSD",
+                "High-quality files for digital and print consistency"
+            ]
+        },
+        cta: {
+            title: "Start Creating Today",
+            description: "Access our complete graphic resources library with clear licensing and instant downloads. High-quality design assets ready for websites, branding, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -175,6 +200,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
         food: foodContent,
+        "graphic-resources": graphicResourcesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
@@ -210,7 +236,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                 {content.licensing.description}
                             </p>
                             
-                            {/* Key Points for Buildings/Business, Pro Tip Box for Animals/Culture/Drinks/Food */}
+                            {/* Key Points for Buildings/Business, Pro Tip Box for others */}
                             {(isBuildingsCategory || isBusinessCategory) ? (
                                 <>
                                     <div className="space-y-3 mb-4">

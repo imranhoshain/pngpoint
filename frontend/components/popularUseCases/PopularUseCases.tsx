@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { Palette, GraduationCap, Globe, Building2, Presentation, Users, Briefcase, TrendingUp, FileText, Coffee, UtensilsCrossed } from "lucide-react";
+import { Palette, GraduationCap, Globe, Building2, Presentation, Users, Briefcase, TrendingUp, FileText, Coffee, UtensilsCrossed, Layers } from "lucide-react";
 
 interface PopularUseCasesProps {
     categorySlug?: string;
@@ -175,6 +175,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Graphic Resources content
+    const graphicResourcesContent = {
+        title: "Popular Use Cases",
+        description: "Many creators lose time fixing design assets instead of using them. Clean graphic resources eliminate that problem by offering ready-to-use visuals that fit seamlessly into projects.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Graphic resources streamline banner design, branding, and layout work. Clean vectors and icons drop directly into tools like Figma, Illustrator, or Photoshop with minimal adjustment."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Educators rely on clear visuals to explain ideas quickly. Graphic resources help build worksheets, presentations, and learning materials without visual clutter."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Websites, blogs, and digital campaigns benefit from lightweight, consistent graphics. Well-designed visuals improve engagement without slowing performance."
+            },
+            {
+                icon: Layers,
+                title: "Industry-Specific",
+                description: "Startups, agencies, SaaS products, marketers, and content creators use graphic resources to communicate clearly and professionally across platforms."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -182,6 +210,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
         food: foodContent,
+        "graphic-resources": graphicResourcesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

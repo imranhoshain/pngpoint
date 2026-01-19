@@ -176,6 +176,35 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Graphic Resources content
+    const graphicResourcesContent = {
+        subheading: "High-Quality Graphic Resources That Save Time",
+        introText: [
+            "Graphic resources help creators work faster by providing clean, ready-to-use visual assets. When you need icons, illustrations, vectors, or design elements that fit instantly into your project, this page removes the guesswork.",
+            "At PNGPoint, graphic resources are regularly used in website layouts, marketing materials, presentations, and branding work. Clean files reduce editing time and improve visual consistency.",
+            "That's why this collection focuses on high-quality formats with clear usage terms you can trust. Explore the graphic resources library and choose assets that match your creative goals."
+        ],
+        mainTitle: "Why Choose Our Graphic Resources Collection",
+        mainDescription: "Finding reliable design assets should feel simple, not overwhelming. This collection is built for designers, educators, marketers, and developers who need flexible graphic resources that work across multiple platforms. Each asset emphasizes clarity, usability, and real-world application. As a result, you spend less time adjusting visuals and more time building great designs.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Icons, illustrations, vectors, UI elements, infographics, and templates" },
+                { label: "High-quality formats:", text: "PNG, SVG, AI, PSD, and high-resolution raster files" },
+                { label: "Flexible usage:", text: "Websites, branding, print materials, presentations, and apps" },
+                { label: "Clear licensing:", text: "Straightforward terms with commercial use clearly stated" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated graphic assets",
+                "Regular updates with modern styles",
+                "Consistent licensing across categories"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -183,6 +212,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
         food: foodContent,
+        "graphic-resources": graphicResourcesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

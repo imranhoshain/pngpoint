@@ -295,6 +295,42 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery, so downloads stay fast and stress-free."
     };
 
+    // Graphic Resources content
+    const graphicResourcesContent = {
+        categories: [
+            {
+                title: "Core Graphic Types",
+                items: [
+                    "Icons & Symbols",
+                    "Illustrations",
+                    "Vectors & Line Art",
+                    "UI & UX Elements",
+                    "Mockups & Templates"
+                ]
+            },
+            {
+                title: "Design Styles",
+                items: [
+                    "Minimal & Flat Design",
+                    "Cartoon & Creative Graphics",
+                    "Realistic & Detailed Assets",
+                    "Silhouettes & Outline Graphics"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Logo Templates",
+                    "Infographics & Charts",
+                    "Backgrounds & Patterns",
+                    "Stickers & Clipart",
+                    "Social Media Graphics"
+                ]
+            }
+        ],
+        footer: "Each category is designed to speed up browsing and downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -302,6 +338,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         "culture-and-religion": cultureReligionContent,
         drinks: drinksContent,
         food: foodContent,
+        "graphic-resources": graphicResourcesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

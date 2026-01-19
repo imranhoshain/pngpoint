@@ -404,6 +404,84 @@ const drinksFaqData: FAQItem[] = [
     }
 ];
 
+const graphicResourcesFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What are graphic resources, and why are they useful?",
+        answer: "Graphic resources are ready-made design assets like icons, illustrations, and templates. They save time and improve visual consistency."
+    },
+    {
+        id: 2,
+        question: "Are these graphic resources free to use?",
+        answer: "Many assets are free, while others may be premium. Licensing details are clearly listed on each resource page."
+    },
+    {
+        id: 3,
+        question: "Can I use graphic resources for commercial projects?",
+        answer: "Yes, most resources support commercial use. Always verify the license before publishing."
+    },
+    {
+        id: 4,
+        question: "What file formats are available?",
+        answer: "Common formats include PNG, SVG, AI, and PSD, suitable for both digital and print work."
+    },
+    {
+        id: 5,
+        question: "Can I edit or customize the graphics?",
+        answer: "Most licenses allow resizing, recoloring, and editing. Premium assets often include full modification rights."
+    },
+    {
+        id: 6,
+        question: "Are these assets suitable for print projects?",
+        answer: "Yes. Many files are high-resolution and print-ready. Check DPI and format details before use."
+    },
+    {
+        id: 7,
+        question: "Can educators use these resources in classrooms?",
+        answer: "Absolutely. Many graphics are ideal for educational materials and presentations."
+    },
+    {
+        id: 8,
+        question: "How do I choose the right format for my project?",
+        answer: "Use PNG for quick visuals, SVG or AI for scalable designs, and PSD for layered editing."
+    },
+    {
+        id: 9,
+        question: "Do you offer modern and minimal design styles?",
+        answer: "Yes. Collections include flat, minimal, creative, and detailed design styles."
+    },
+    {
+        id: 10,
+        question: "What does \"royalty-free\" mean here?",
+        answer: "Royalty-free means you can reuse assets across projects without recurring fees, as long as you follow the license terms."
+    },
+    {
+        id: 11,
+        question: "Are these graphic resources suitable for mobile apps and UI design?",
+        answer: "Yes. Many graphic resources are optimized for mobile interfaces, dashboards, and app layouts. Scalable formats like SVG and vector files ensure clarity across different screen sizes."
+    },
+    {
+        id: 12,
+        question: "Do graphic resources affect website loading speed?",
+        answer: "Well-optimized graphics help maintain fast loading times. Lightweight SVGs and compressed PNGs improve performance while preserving visual quality."
+    },
+    {
+        id: 13,
+        question: "Can I use these graphic resources for social media content?",
+        answer: "Absolutely. Graphic resources work well for posts, ads, thumbnails, and stories. Consistent visuals help improve brand recognition across platforms."
+    },
+    {
+        id: 14,
+        question: "How often are new graphic resources added?",
+        answer: "New assets are added regularly to keep the library aligned with current design trends and modern use cases."
+    },
+    {
+        id: 15,
+        question: "Can I bundle multiple graphic resources into one project?",
+        answer: "Yes. Royalty-free licensing typically allows combining multiple assets within a single project, as long as license terms are followed."
+    }
+];
+
 const foodFaqData: FAQItem[] = [
     {
         id: 1,
@@ -489,7 +567,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'business' && (id === 3 || id === 7 || id === 11)) ||
         (categorySlug === 'culture-and-religion' && id === 4) ||
         (categorySlug === 'drinks' && id === 2) ||
-        (categorySlug === 'food' && (id === 2 || id === 3 || id === 5 || id === 8));
+        (categorySlug === 'food' && (id === 2 || id === 3 || id === 5 || id === 8)) ||
+        (categorySlug === 'graphic-resources' && (id === 2 || id === 3));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -525,6 +604,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'culture-and-religion' ? cultureReligionFaqData :
                     categorySlug === 'drinks' ? drinksFaqData :
                     categorySlug === 'food' ? foodFaqData :
+                    categorySlug === 'graphic-resources' ? graphicResourcesFaqData :
                     animalFaqData;
 
     return (
