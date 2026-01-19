@@ -89,7 +89,7 @@ export default function SingleCategory() {
         : isBuildingsCategory
         ? 'commercial-buildings-png'
         : (sub_categories && sub_categories.length > 0 ? sub_categories[0].slug : undefined);
-    const availableCategory = ["animals","buildings-and-architecture","business"]
+    const availableCategory = ["animals","buildings-and-architecture","business","culture-and-religion"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (
