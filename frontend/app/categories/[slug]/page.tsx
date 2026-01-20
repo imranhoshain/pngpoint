@@ -82,12 +82,15 @@ export default function SingleCategory() {
     const sub_categories = category?.data?.sub_categories;
     const isAnimalCategory = slug === 'animals';
     const isBuildingsCategory = slug === 'buildings-and-architecture';
+    const isCultureCategory = slug === 'culture-and-religion';
     const categoryName = category?.data?.name || '';
     const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
     const firstSubCategorySlug = isAnimalCategory 
         ? 'farm-animals-png' 
         : isBuildingsCategory
         ? 'commercial-buildings-png'
+        : isCultureCategory
+        ? 'artifacts-relics-png'
         : (sub_categories && sub_categories.length > 0 ? sub_categories[1].slug : undefined);
     const availableCategory = ["animals","buildings-and-architecture","business","culture-and-religion","drinks","food","graphic-resources"]
     const isContentAvailable = availableCategory.includes(categorySlug)
