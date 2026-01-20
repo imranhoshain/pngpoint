@@ -331,6 +331,53 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category is designed to speed up browsing and downloads."
     };
 
+    // Hobbies & Leisure content
+    const hobbiesLeisureContent = {
+        categories: [
+            {
+                title: "Popular Hobby Types",
+                items: [
+                    "Arts & Crafts Graphics",
+                    "Sports & Fitness Graphics",
+                    "Music & Dance Graphics",
+                    "Gaming & Esports Graphics",
+                    "Photography & Creative Arts"
+                ]
+            },
+            {
+                title: "Leisure & Lifestyle",
+                items: [
+                    "Travel & Adventure Graphics",
+                    "Outdoor & Nature Activities",
+                    "Relaxation & Wellness",
+                    "Reading & Learning",
+                    "DIY & Handmade Projects"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Flat Illustration Graphics",
+                    "Icon Sets",
+                    "Cartoon-Style Assets",
+                    "Minimal & Line Graphics",
+                    "Realistic Leisure Illustrations"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Hobby Icons",
+                    "Leisure Illustrations",
+                    "Activity Clipart",
+                    "Lifestyle Stickers",
+                    "Vector Graphics"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery for fast and easy downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -339,6 +386,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         drinks: drinksContent,
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
+        "hobbies-and-leisure": hobbiesLeisureContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -203,6 +203,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Hobbies & Leisure content
+    const hobbiesLeisureContent = {
+        title: "Popular Use Cases",
+        description: "Many people struggle with visuals that don't fit their creative ideas. Clean Hobbies and Leisure graphics remove that problem. When assets are ready to use, projects move faster and feel more enjoyable.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Designers use leisure graphics for posters, banners, and lifestyle branding. Clean icons and illustrations drop directly into layouts and stay consistent across designs."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers and students use hobby visuals to explain activities, projects, and interests. Simple graphics support understanding without distraction."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Social Media",
+                description: "Blogs, websites, and social platforms use Hobbies and Leisure visuals to connect emotionally. These graphics improve engagement without slowing performance."
+            },
+            {
+                icon: Users,
+                title: "Community & Niche Use",
+                description: "Fitness trainers, travel bloggers, gamers, artists, and hobby groups use these assets to communicate clearly and build identity."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -211,6 +239,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         drinks: drinksContent,
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
+        "hobbies-and-leisure": hobbiesLeisureContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

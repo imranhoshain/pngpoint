@@ -92,7 +92,7 @@ export default function SingleCategory() {
         : isCultureCategory
         ? 'artifacts-relics-png'
         : (sub_categories && sub_categories.length > 0 ? sub_categories[1].slug : undefined);
-    const availableCategory = ["animals","buildings-and-architecture","business","culture-and-religion","drinks","food","graphic-resources"]
+    const availableCategory = ["animals","buildings-and-architecture","business","culture-and-religion","drinks","food","graphic-resources","hobbies-and-leisure"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (

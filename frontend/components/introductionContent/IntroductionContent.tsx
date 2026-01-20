@@ -205,6 +205,34 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Hobbies & Leisure content
+    const hobbiesLeisureContent = {
+        subheading: "High-quality, royalty-free, and easy to use",
+        introText: [
+            "Hobbies and Leisure graphic resources help people express interests, relax creatively, and communicate ideas visually. When you need clean, ready-to-use visuals for fun activities, personal projects, or creative work, this page solves that need quickly and clearly.",
+            "These Hobbies and Leisure assets work well for digital design, educational content, social media, and branding. Because files come optimized and clearly licensed, you spend less time editing and more time enjoying the creative process. Explore the collection and choose visuals that match your passion today."
+        ],
+        mainTitle: "Why Choose Our Hobbies and Leisure Collection",
+        mainDescription: "Creative resources should feel inspiring, not complicated. This collection supports creators, educators, and hobbyists who need flexible Hobbies and Leisure graphics that work across platforms. Every asset focuses on clarity, relevance, and real-life use cases. As a result, your projects stay consistent, clean, and engaging.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Arts, crafts, sports, music, travel, gaming, fitness, and relaxation" },
+                { label: "High-quality formats:", text: "PNG, vector, illustrations, icons, and clipart" },
+                { label: "Flexible usage:", text: "Personal projects, websites, print, education, and branding" },
+                { label: "Clear licensing:", text: "Transparent usage terms explained upfront" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Curated Hobbies and Leisure graphic resources",
+                "Regular updates with trending leisure themes",
+                "Consistent licensing across categories"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -213,6 +241,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         drinks: drinksContent,
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
+        "hobbies-and-leisure": hobbiesLeisureContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

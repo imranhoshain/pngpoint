@@ -193,6 +193,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Hobbies & Leisure content
+    const hobbiesLeisureContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing stays simple and transparent. Most Hobbies and Leisure graphic resources are royalty-free and allow personal and commercial use. If attribution is required, it's clearly mentioned on the asset page.",
+            proTip: "Always review license details before downloading to avoid issues later."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Download single graphics or complete sets based on your needs. Choose free downloads, high-resolution files, or vector formats for scalable design. Clean files help you focus on creativity instead of technical fixes.",
+            features: [
+                "Single graphics or complete sets available",
+                "Free downloads and high-resolution options",
+                "Vector formats for scalable design"
+            ]
+        },
+        cta: {
+            title: "Start Creating Today",
+            description: "Access our complete Hobbies and Leisure library with clear licensing and instant downloads. High-quality graphics ready for creative projects and lifestyle branding."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -201,6 +225,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         drinks: drinksContent,
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
+        "hobbies-and-leisure": hobbiesLeisureContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -168,6 +168,27 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to narrow results quickly and stay focused."
     };
 
+    // Hobbies & Leisure content
+    const hobbiesLeisureContent = {
+        title: "Featured Gallery Preview",
+        description: "See a curated preview of popular Hobbies and Leisure graphic resources in one place. These assets highlight clean design, balanced colors, and versatile formats. Because every preview shows real-use quality, you can choose visuals with confidence.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution graphics for sharp detail",
+            "Transparent and flexible backgrounds",
+            "Royalty-free resources for repeated use"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Ready",
+            "Education Friendly",
+            "Social Media Use"
+        ],
+        footerText: "Filters help you find the right graphic faster, with fewer clicks."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -177,6 +198,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         drinks: drinksContent,
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
+        "hobbies-and-leisure": hobbiesLeisureContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

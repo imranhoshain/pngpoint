@@ -404,6 +404,85 @@ const drinksFaqData: FAQItem[] = [
     }
 ];
 
+const hobbiesLeisureFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What are Hobbies and Leisure graphic resources?",
+        answer: "They are visual assets designed around activities, interests, and free-time themes, used for design, education, and content creation."
+    },
+    {
+        id: 2,
+        question: "Are Hobbies and Leisure graphics free to use?",
+        answer: "Many assets are free, while others may be premium. Always check the license before use."
+    },
+    {
+        id: 3,
+        question: "Can I use these graphics for commercial projects?",
+        answer: "Yes, most resources allow commercial use. Verify licensing details on each asset page."
+    },
+    {
+        id: 4,
+        question: "What file formats are available?",
+        answer: "Common formats include PNG, SVG, vector files, illustrations, and icons."
+    },
+    {
+        id: 5,
+        question: "Are these resources suitable for education?",
+        answer: "Yes. Many assets are ideal for lessons, worksheets, and learning materials."
+    },
+    {
+        id: 6,
+        question: "Can I edit or customize the graphics?",
+        answer: "Most licenses allow resizing, recoloring, and basic editing. Check usage terms first."
+    },
+    {
+        id: 7,
+        question: "Do these graphics work for social media content?",
+        answer: "Absolutely. They are optimized for digital platforms and fast loading."
+    },
+    {
+        id: 8,
+        question: "Are there hobby-specific graphics available?",
+        answer: "Yes. Categories cover sports, art, music, travel, gaming, and more."
+    },
+    {
+        id: 9,
+        question: "What does royalty-free mean here?",
+        answer: "You can reuse the asset across projects without repeated fees, within license limits."
+    },
+    {
+        id: 10,
+        question: "How do I find the right leisure graphic quickly?",
+        answer: "Use category browsing and smart filters to narrow results based on use case."
+    },
+    {
+        id: 11,
+        question: "Are Hobbies and Leisure graphics suitable for mobile apps?",
+        answer: "Yes. Most graphics are optimized for digital use and work well in mobile apps, dashboards, and interactive platforms. Check resolution and format before use."
+    },
+    {
+        id: 12,
+        question: "Can I use these graphics for YouTube thumbnails or video content?",
+        answer: "Yes. Many Hobbies and Leisure graphics are ideal for video thumbnails, intros, and overlays. Always confirm the license for commercial video use."
+    },
+    {
+        id: 13,
+        question: "Do these resources support both print and digital projects?",
+        answer: "Yes. High-resolution and vector files support print materials, while optimized PNG and SVG files work well for web and digital screens."
+    },
+    {
+        id: 14,
+        question: "Are the Hobbies and Leisure graphics updated regularly?",
+        answer: "The collection is refreshed with new activities, trends, and creative styles to stay relevant for modern design and content needs."
+    },
+    {
+        id: 15,
+        question: "How do Hobbies and Leisure graphics improve user engagement?",
+        answer: "Visuals related to hobbies and leisure create emotional connection, improve clarity, and keep users engaged longer across websites, learning platforms, and social media."
+    }
+];
+
+
 const graphicResourcesFaqData: FAQItem[] = [
     {
         id: 1,
@@ -568,7 +647,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'culture-and-religion' && id === 4) ||
         (categorySlug === 'drinks' && id === 2) ||
         (categorySlug === 'food' && (id === 2 || id === 3 || id === 5 || id === 8)) ||
-        (categorySlug === 'graphic-resources' && (id === 2 || id === 3));
+        (categorySlug === 'graphic-resources' && (id === 2 || id === 3)) ||
+        (categorySlug === 'hobbies-and-leisure' && (id === 2 || id === 3));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -605,6 +685,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'drinks' ? drinksFaqData :
                     categorySlug === 'food' ? foodFaqData :
                     categorySlug === 'graphic-resources' ? graphicResourcesFaqData :
+                    categorySlug === 'hobbies-and-leisure' ? hobbiesLeisureFaqData :
                     animalFaqData;
 
     return (
