@@ -88,7 +88,7 @@ export default function SingleCategory() {
         ? 'farm-animals-png' 
         : isBuildingsCategory
         ? 'commercial-buildings-png'
-        : (sub_categories && sub_categories.length > 0 ? sub_categories[0].slug : undefined);
+        : (sub_categories && sub_categories.length > 0 ? sub_categories[1].slug : undefined);
     const availableCategory = ["animals","buildings-and-architecture","business","culture-and-religion","drinks","food","graphic-resources"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
