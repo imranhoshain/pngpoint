@@ -378,6 +378,53 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery for fast and easy downloads."
     };
 
+    // Industry content
+    const industryContent = {
+        categories: [
+            {
+                title: "Core Industry Types",
+                items: [
+                    "Manufacturing PNG",
+                    "Technology PNG",
+                    "Construction PNG",
+                    "Logistics & Transport PNG",
+                    "Energy & Utilities PNG",
+                    "Office & Corporate PNG"
+                ]
+            },
+            {
+                title: "Sector & Visuals",
+                items: [
+                    "Industrial Machinery PNG",
+                    "Electronics PNG",
+                    "Factory PNG",
+                    "Tools & Equipment PNG",
+                    "Industrial Icons PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Realistic Industry PNG",
+                    "Flat Design PNG",
+                    "Minimalist PNG",
+                    "Iconic PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Industry Logo PNG",
+                    "Infographic PNG",
+                    "Industry Illustration PNG",
+                    "Industry Sticker PNG",
+                    "Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category links directly to filtered galleries for fast, professional downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -387,6 +434,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
+        industry: industryContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

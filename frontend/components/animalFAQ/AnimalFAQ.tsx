@@ -482,6 +482,85 @@ const hobbiesLeisureFaqData: FAQItem[] = [
     }
 ];
 
+const industryFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is an Industry PNG image, and why is it useful?",
+        answer: "A raster image with transparent backgrounds, perfect for overlays, presentations, websites, or marketing materials without extra editing."
+    },
+    {
+        id: 2,
+        question: "Can I use Industry PNGs for commercial purposes?",
+        answer: "Yes. Many allow commercial use; always check licensing notes for clarity."
+    },
+    {
+        id: 3,
+        question: "Are these PNGs free to download?",
+        answer: "Some are free, others premium. Free files may have limited usage; premium packs include broader rights."
+    },
+    {
+        id: 4,
+        question: "What types of industry visuals are included?",
+        answer: "Factories, machinery, office equipment, energy, transport, logistics, technology, and industrial icons."
+    },
+    {
+        id: 5,
+        question: "Are Industry PNGs high-resolution?",
+        answer: "Yes, most are HD, suitable for presentations, print, banners, and web use."
+    },
+    {
+        id: 6,
+        question: "Can I use these images for corporate training?",
+        answer: "Absolutely. Designed for slides, e-learning, and reports with clean visuals."
+    },
+    {
+        id: 7,
+        question: "What file formats are available?",
+        answer: "Transparent PNG, vector PNG, icons, illustrations, and logos."
+    },
+    {
+        id: 8,
+        question: "Can I customize or edit Industry PNGs?",
+        answer: "Yes, resize, recolor, or combine in compatible software. License info confirms editing rights."
+    },
+    {
+        id: 9,
+        question: "How do I find PNGs for specific sectors?",
+        answer: "Use categories or filters like Manufacturing, Technology, Construction, or Logistics."
+    },
+    {
+        id: 10,
+        question: "Are these images suitable for marketing campaigns?",
+        answer: "Yes. High-quality, clear, and professional PNGs enhance digital and print campaigns."
+    },
+    {
+        id: 11,
+        question: "Can I use Industry PNGs for website banners or headers?",
+        answer: "Yes. Transparent backgrounds and high-resolution files make them perfect for website visuals, landing pages, and digital campaigns."
+    },
+    {
+        id: 12,
+        question: "Are there Industry PNGs for specific tools and machinery?",
+        answer: "Absolutely. The collection includes detailed PNGs of industrial tools, machines, equipment, and factory setups for professional use."
+    },
+    {
+        id: 13,
+        question: "Can Industry PNGs be used in print materials like brochures and flyers?",
+        answer: "Yes. Most files are HD and print-ready, ensuring sharp visuals for marketing brochures, flyers, reports, or posters."
+    },
+    {
+        id: 14,
+        question: "Do you provide Industry PNGs in different design styles?",
+        answer: "Yes. You can find realistic, flat design, minimalist, and icon-style PNGs tailored for corporate and industrial projects."
+    },
+    {
+        id: 15,
+        question: "How can I quickly find the Industry PNGs I need?",
+        answer: "Use category filters, sector tags, or style labels to instantly locate the perfect PNGs for manufacturing, technology, construction, energy, or logistics projects."
+    }
+];
+
+
 
 const graphicResourcesFaqData: FAQItem[] = [
     {
@@ -648,7 +727,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'drinks' && id === 2) ||
         (categorySlug === 'food' && (id === 2 || id === 3 || id === 5 || id === 8)) ||
         (categorySlug === 'graphic-resources' && (id === 2 || id === 3)) ||
-        (categorySlug === 'hobbies-and-leisure' && (id === 2 || id === 3));
+        (categorySlug === 'hobbies-and-leisure' && (id === 2 || id === 3)) ||
+        (categorySlug === 'industry' && (id === 2 || id === 3));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -686,6 +766,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'food' ? foodFaqData :
                     categorySlug === 'graphic-resources' ? graphicResourcesFaqData :
                     categorySlug === 'hobbies-and-leisure' ? hobbiesLeisureFaqData :
+                    categorySlug === 'industry' ? industryFaqData :
                     animalFaqData;
 
     return (

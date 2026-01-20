@@ -217,6 +217,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Industry content
+    const industryContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "All Industry PNGs are royalty-free, and most allow commercial and print use. Attribution is clearly noted if required. Always check licensing to ensure compliance.",
+            proTip: "Always check licensing to ensure compliance before using Industry PNGs in your projects."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Download individual files or sets in HD/high-resolution, transparent PNGs. Quickly grab multiple images for faster workflow, helping you focus on project execution rather than editing.",
+            features: [
+                "Individual files or complete sets available",
+                "HD/high-resolution transparent PNGs",
+                "Fast downloads for efficient workflows"
+            ]
+        },
+        cta: {
+            title: "Start Your Professional Projects",
+            description: "Access our complete Industry PNG library with clear licensing and instant downloads. High-quality industrial graphics ready for presentations, marketing, and corporate use."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -226,6 +250,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
+        industry: industryContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

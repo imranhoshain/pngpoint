@@ -233,6 +233,34 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Industry content
+    const industryContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Industry PNG images save time when professionals need clean, ready-to-use visuals for business presentations, industrial projects, or marketing materials. These transparent graphics work on any background, making workflows faster and more efficient. At PNGPoint, we've used Industry PNGs in corporate slides, marketing campaigns, and product designs, proving that clean, high-quality files simplify professional work.",
+            "This collection offers clear usage terms and consistently curated files you can trust. Explore the Industry PNG library and select images that perfectly fit your project today."
+        ],
+        mainTitle: "Why Choose Our Industry PNG Collection",
+        mainDescription: "Finding the right industrial graphics should be straightforward. Our collection is designed for business professionals, marketers, and designers who need reusable, high-quality Industry PNGs. Each file emphasizes clarity, flexibility, and real-world utility, helping you save editing time and focus on creating.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Factories, machinery, office equipment, industrial tools, energy, logistics, technology, and production visuals" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD resolution, crisp edges, clean cut-outs" },
+                { label: "Flexible usage:", text: "Websites, presentations, branding, print materials, corporate reports" },
+                { label: "Clear licensing:", text: "Easy-to-understand usage rights for hassle-free downloads" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated Industry PNG files",
+                "Regular updates with modern industrial graphics",
+                "Consistent licensing for all images"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -242,6 +270,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
+        industry: industryContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

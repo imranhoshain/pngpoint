@@ -189,6 +189,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Filters help you find the right graphic faster, with fewer clicks."
     };
 
+    // Industry content
+    const industryContent = {
+        title: "Featured Gallery Preview",
+        description: "Preview our most downloaded Industry PNGs. High-resolution, transparent files ready for presentations, websites, and print materials. Spot quality at a glance and download instantly.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution for sharp detail",
+            "Transparent backgrounds for professional overlays",
+            "Royalty-free with clear licensing"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Business Presentations",
+            "Corporate Branding",
+            "Marketing Materials"
+        ],
+        footerText: "Use filters to quickly find the right Industry PNG for your professional projects."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -199,6 +221,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
+        industry: industryContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

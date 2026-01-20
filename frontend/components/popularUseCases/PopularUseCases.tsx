@@ -231,6 +231,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Industry content
+    const industryContent = {
+        title: "Popular Use Cases",
+        description: "Industry PNGs reduce editing time, letting professionals focus on meaningful work. Transparent images drop directly into corporate presentations, marketing campaigns, or industrial reports, saving hours of preparation.",
+        useCases: [
+            {
+                icon: TrendingUp,
+                title: "For Marketers",
+                description: "Use in social media campaigns, product promotions, and digital ads. PNGs ensure visuals are crisp, clear, and professional."
+            },
+            {
+                icon: Presentation,
+                title: "For Corporate Presentations",
+                description: "Industry PNGs enhance slides, reports, and pitch decks with consistent, clean graphics that communicate effectively."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Add industrial visuals to websites, blogs, or newsletters to increase engagement without slowing page load."
+            },
+            {
+                icon: Building2,
+                title: "Sector-Specific",
+                description: "Engineering firms, factories, logistics companies, energy providers, and tech startups use these visuals to communicate complex concepts clearly and professionally."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -240,6 +268,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         food: foodContent,
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
+        industry: industryContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
