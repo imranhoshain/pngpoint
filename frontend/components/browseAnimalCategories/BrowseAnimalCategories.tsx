@@ -474,6 +474,44 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery, making downloads fast and stress-free."
     };
 
+    // Lifestyle content
+    const lifestyleContent = {
+        categories: [
+            {
+                title: "Core Lifestyle Types",
+                items: [
+                    "Fitness & Exercise PNG",
+                    "Wellness & Yoga PNG",
+                    "Travel & Adventure PNG",
+                    "Food & Drinks PNG",
+                    "Hobbies & Leisure PNG",
+                    "Fashion & Style PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Minimalist Lifestyle PNG",
+                    "Realistic Lifestyle PNG",
+                    "Cartoon & Fun Lifestyle PNG",
+                    "Silhouette Lifestyle PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Lifestyle Icons PNG",
+                    "Lifestyle Illustration PNG",
+                    "Lifestyle Sticker PNG",
+                    "Lifestyle Logo PNG",
+                    "Lifestyle Clipart PNG",
+                    "Lifestyle Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery for fast and easy downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -485,6 +523,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
         landscapes: landscapeContent,
+        lifestyle: lifestyleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

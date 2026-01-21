@@ -233,6 +233,29 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to narrow results instantly and find the right landscape PNG without extra clicks."
     };
 
+    // Lifestyle content
+    const lifestyleContent = {
+        title: "Featured Gallery Preview",
+        description: "Quickly explore the most downloaded Lifestyle PNGs. Preview high-resolution, transparent graphics ready for professional projects.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "HD resolution for crisp details",
+            "Transparent backgrounds for clean overlays",
+            "Royalty-free usage with clear licensing"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Social Media",
+            "Education",
+            "Personal Projects",
+            "Branding"
+        ],
+        footerText: "Use filters to find the perfect Lifestyle PNG faster and easier."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -245,6 +268,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
         landscapes: landscapeContent,
+        lifestyle: lifestyleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

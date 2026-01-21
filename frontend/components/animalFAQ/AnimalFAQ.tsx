@@ -579,7 +579,7 @@ const landscapeFaqData: FAQItem[] = [
     {
         id: 4,
         question: "Can I use Landscape PNGs for commercial projects?",
-        answer: "Yes, many allow commercial use. Look for Royalty-Free or Commercial Use Allowed labels."
+        answer: "Yes, many allow commercial use. Look for "Royalty-Free" or "Commercial Use Allowed" labels."
     },
     {
         id: 5,
@@ -637,6 +637,85 @@ const landscapeFaqData: FAQItem[] = [
         answer: "Start by defining your purpose—web, print, education, or branding. Then filter by resolution, style, and license. Preview the PNG on your layout to ensure it fits the mood and message clearly."
     }
 ];
+
+const lifestyleFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Lifestyle PNG image, and why is it useful?",
+        answer: "A Lifestyle PNG is a raster image with a transparent background. Perfect for overlays, social posts, presentations, and branding without a white border."
+    },
+    {
+        id: 2,
+        question: "Can I use these Lifestyle PNGs for commercial projects?",
+        answer: "Yes, many allow commercial use. Check license terms before using for brands, campaigns, or products."
+    },
+    {
+        id: 3,
+        question: "Are Lifestyle PNGs free to download?",
+        answer: "Some are free, while others are premium. Licensing details are shown for each file."
+    },
+    {
+        id: 4,
+        question: "What file formats are included?",
+        answer: "Mostly PNG with transparent backgrounds. Some collections include vector (SVG/AI) for scalable designs."
+    },
+    {
+        id: 5,
+        question: "Can I edit or customize Lifestyle PNGs?",
+        answer: "Yes. Resize, recolor, or combine them in compatible software, respecting license restrictions."
+    },
+    {
+        id: 6,
+        question: "What does "transparent background" mean in Lifestyle PNGs?",
+        answer: "It means only the object or person in the image is visible. You can place it over any color, photo, or design without white borders or backgrounds."
+    },
+    {
+        id: 7,
+        question: "Are these Lifestyle PNGs suitable for social media posts?",
+        answer: "Yes! They are optimized for web and social media, ensuring fast loading and high-quality display on Instagram, Facebook, Pinterest, and blogs."
+    },
+    {
+        id: 8,
+        question: "Can I use Lifestyle PNGs for presentations or educational content?",
+        answer: "Absolutely. Teachers, instructors, and online course creators can enhance slides, worksheets, and e-learning materials with engaging visuals."
+    },
+    {
+        id: 9,
+        question: "What resolution are Lifestyle PNGs available in?",
+        answer: "Most are high-resolution (HD) suitable for web, print, and large displays. You can choose 72–150 dpi for screens and 300 dpi for print projects."
+    },
+    {
+        id: 10,
+        question: "Do you offer themed Lifestyle PNG packs?",
+        answer: "Yes. Collections are categorized by fitness, wellness, travel, food, hobbies, fashion, and home décor for faster selection and better project organization."
+    },
+    {
+        id: 11,
+        question: "Can Lifestyle PNGs be used for commercial branding or marketing?",
+        answer: "Yes, many allow commercial use. Always check the license details to ensure compliance for ads, product packaging, or digital campaigns."
+    },
+    {
+        id: 12,
+        question: "Are Lifestyle PNGs compatible with design software?",
+        answer: "Yes. They work with Photoshop, Illustrator, Canva, Figma, PowerPoint, and most graphic design tools without extra formatting."
+    },
+    {
+        id: 13,
+        question: "Can I combine multiple Lifestyle PNGs into one design?",
+        answer: "Yes, you can layer or combine images to create custom compositions, collages, or graphics, respecting license restrictions."
+    },
+    {
+        id: 14,
+        question: "How do I search for a specific lifestyle PNG quickly?",
+        answer: "Use our category filters, keyword search, and style tags such as "Travel PNG," "Fitness PNG," or "Cartoon Lifestyle PNG" to find the perfect image instantly."
+    },
+    {
+        id: 15,
+        question: "Are Lifestyle PNGs updated regularly?",
+        answer: "Yes. Our collection is constantly refreshed with trending lifestyle themes, seasonal graphics, and popular styles to keep your projects modern and engaging."
+    }
+];
+
 
 
 
@@ -808,7 +887,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'graphic-resources' && (id === 2 || id === 3)) ||
         (categorySlug === 'hobbies-and-leisure' && (id === 2 || id === 3)) ||
         (categorySlug === 'industry' && (id === 2 || id === 3)) ||
-        (categorySlug === 'landscapes' && (id === 3 || id === 4));
+        (categorySlug === 'landscapes' && (id === 3 || id === 4)) ||
+        (categorySlug === 'lifestyle' && (id === 2 || id === 3 || id === 11));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -848,6 +928,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'hobbies-and-leisure' ? hobbiesLeisureFaqData :
                     categorySlug === 'industry' ? industryFaqData :
                     categorySlug === 'landscapes' ? landscapeFaqData :
+                    categorySlug === 'lifestyle' ? lifestyleFaqData :
                     animalFaqData;
 
     return (

@@ -265,6 +265,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Lifestyle content
+    const lifestyleContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "All Lifestyle PNGs are royalty-free, with many available for commercial, personal, and print projects. Attribution requirements, if any, are clearly noted. Always check the license before downloading to avoid any issues.",
+            proTip: "Always check the license before downloading to avoid any issues."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Select single PNGs or entire packs depending on your project. Choose free downloads, high-resolution, or transparent background files. Quick downloads save time for creative workflows.",
+            features: [
+                "Single PNGs or complete packs available",
+                "Free downloads and high-resolution options",
+                "Quick downloads for efficient workflows"
+            ]
+        },
+        cta: {
+            title: "Start Creating Today",
+            description: "Access our complete Lifestyle PNG library with clear licensing and instant downloads. High-quality lifestyle graphics ready for social media, branding, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -276,6 +300,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
         landscapes: landscapeContent,
+        lifestyle: lifestyleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

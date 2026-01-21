@@ -287,6 +287,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Lifestyle content
+    const lifestyleContent = {
+        title: "Popular Use Cases",
+        description: "Lifestyle PNGs save time and effort when creating content. With clean, transparent backgrounds, designers, educators, and creators can focus on storytelling instead of editing.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Use lifestyle PNGs in social media posts, banners, branding visuals, and presentation slides. Sharp edges and ready-to-use files make workflow seamless."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers, instructors, and e-learning creators can enhance lessons, slides, and worksheets using lifestyle visuals that are easy to understand and distraction-free."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Social Media",
+                description: "Lifestyle PNGs add visual appeal to blogs, social campaigns, or websites without slowing page load. Perfect for headers, thumbnails, or featured content."
+            },
+            {
+                icon: TrendingUp,
+                title: "Industry-Specific",
+                description: "Marketing agencies, wellness coaches, travel bloggers, food brands, and lifestyle influencers use these graphics to communicate ideas quickly and effectively."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -298,6 +326,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
         landscapes: landscapeContent,
+        lifestyle: lifestyleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

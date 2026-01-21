@@ -290,6 +290,34 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Lifestyle content
+    const lifestyleContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Lifestyle PNG images save time for creators who need clean, ready-to-use visuals for web, social media, presentations, or branding. If you want transparent lifestyle graphics—fitness, travel, food, hobbies, or wellness—this page gives you exactly what you need. At PNGPoint, we've applied lifestyle PNGs in web design, social campaigns, and print projects, making creative workflows smoother.",
+            "This collection focuses on high-quality, transparent PNG files with clear licensing. Browse the lifestyle PNG library and pick images that match your project instantly."
+        ],
+        mainTitle: "Why Choose Our Lifestyle PNG Collection",
+        mainDescription: "Finding the right lifestyle graphics should be simple and fast. This collection is curated for creators needing reusable, clear, and versatile Lifestyle PNG images. Each file is ready to drop into projects with minimal editing, letting you spend more time creating and less time adjusting.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Fitness, wellness, travel, food & drinks, hobbies, leisure, fashion, home decor" },
+                { label: "High-quality formats:", text: "Transparent PNG, HD resolution, sharp edges, clean cut-outs" },
+                { label: "Flexible usage:", text: "Websites, branding, social media, presentations, and print designs" },
+                { label: "Clear licensing:", text: "Easy-to-understand usage terms upfront, no surprises" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated lifestyle PNG files",
+                "Regular updates with fresh content and trending styles",
+                "Consistent licenses across the collection"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -301,6 +329,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
         landscapes: landscapeContent,
+        lifestyle: lifestyleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
