@@ -579,7 +579,7 @@ const landscapeFaqData: FAQItem[] = [
     {
         id: 4,
         question: "Can I use Landscape PNGs for commercial projects?",
-        answer: "Yes, many allow commercial use. Look for "Royalty-Free" or "Commercial Use Allowed" labels."
+        answer: "Yes, many allow commercial use. Look for Royalty-Free or Commercial Use Allowed labels."
     },
     {
         id: 5,
