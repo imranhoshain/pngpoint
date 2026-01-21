@@ -241,6 +241,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Landscape content
+    const landscapeContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing should never feel confusing. All Landscape PNG images here are royalty-free, and many allow commercial and print use. If attribution is required, it's clearly stated on the image page.",
+            proTip: "Always review the license details before downloading to keep your project safe and compliant."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Downloading landscape PNG images is simple and flexible. Choose free PNG downloads, HD landscape PNG files, or transparent background images based on your needs. You can download single images or multiple files at once for a faster workflow. Clean, ready-to-use files help you focus on creativity instead of image cleanup.",
+            features: [
+                "Single images or multiple files available",
+                "Free PNG downloads and HD landscape PNG options",
+                "Clean, ready-to-use files save editing time"
+            ]
+        },
+        cta: {
+            title: "Start Creating Today",
+            description: "Access our complete Landscape PNG library with clear licensing and instant downloads. High-quality landscape graphics ready for websites, presentations, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -251,6 +275,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
+        landscapes: landscapeContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

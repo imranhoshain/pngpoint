@@ -98,7 +98,10 @@ export default function SingleCategory() {
         : isIndustryCategory
         ? 'construction-engineering-png'
         : (sub_categories && sub_categories.length > 0 ? sub_categories[1].slug : undefined);
-    const availableCategory = ["animals","buildings-and-architecture","business","culture-and-religion","drinks","food","graphic-resources","hobbies-and-leisure","industry"]
+    const availableCategory = ["animals","buildings-and-architecture","business",
+        "culture-and-religion","drinks","food",
+        "graphic-resources","hobbies-and-leisure","industry",
+        "landscapes"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (

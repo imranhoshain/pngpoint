@@ -261,6 +261,35 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Landscape content
+    const landscapeContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Landscape PNG images help creators work faster when they need clean, natural visuals without background distractions. If you want transparent landscape graphics that blend easily into any design, this page solves that need clearly and efficiently.",
+            "Designers, educators, and marketers often rely on landscape PNGs for websites, presentations, learning materials, and branding visuals. Because these images come with transparent backgrounds, they drop into layouts smoothly and save editing time.",
+            "That's why this collection focuses on high-quality, transparent landscape PNG files with clear usage rights you can trust. Browse the landscape PNG library and choose visuals that fit your project with confidence."
+        ],
+        mainTitle: "Why Choose Our Landscape PNG Collection",
+        mainDescription: "Finding the right landscape visuals should feel simple, not overwhelming. This collection supports creators who need reusable, clean Landscape PNG images that work instantly across digital and print projects. Every file focuses on clarity, flexibility, and practical use. As a result, you spend less time adjusting images and more time creating meaningful designs.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Mountains, forests, beaches, deserts, cityscapes, countryside, and nature scenes" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD landscape PNGs, sharp edges, clean cut-outs" },
+                { label: "Flexible usage:", text: "Websites, presentations, branding, print materials, and education projects" },
+                { label: "Clear licensing:", text: "Royalty-free usage terms explained clearly before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Curated landscape PNG images with consistent quality",
+                "Regular updates with new scenery styles and locations",
+                "Clear and consistent licenses across the collection"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -271,6 +300,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
+        landscapes: landscapeContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

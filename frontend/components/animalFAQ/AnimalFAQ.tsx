@@ -560,6 +560,85 @@ const industryFaqData: FAQItem[] = [
     }
 ];
 
+const landscapeFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Landscape PNG image?",
+        answer: "A Landscape PNG is a raster image showing scenery with a transparent background, making it easy to place on any design without borders."
+    },
+    {
+        id: 2,
+        question: "Why use transparent landscape PNGs?",
+        answer: "Transparent backgrounds allow seamless placement on websites, presentations, and print designs without extra editing."
+    },
+    {
+        id: 3,
+        question: "Are Landscape PNG images free to use?",
+        answer: "Some are free, while others may be premium. Always check the license details on each image page."
+    },
+    {
+        id: 4,
+        question: "Can I use Landscape PNGs for commercial projects?",
+        answer: "Yes, many allow commercial use. Look for "Royalty-Free" or "Commercial Use Allowed" labels."
+    },
+    {
+        id: 5,
+        question: "Do you offer high-resolution Landscape PNG images?",
+        answer: "Yes. Most files are HD and suitable for both digital and print use."
+    },
+    {
+        id: 6,
+        question: "Can I edit Landscape PNG images?",
+        answer: "You can resize or combine them in design software, as long as the license allows modifications."
+    },
+    {
+        id: 7,
+        question: "Are Landscape PNGs suitable for education?",
+        answer: "Yes. They are widely used in presentations, worksheets, and learning platforms."
+    },
+    {
+        id: 8,
+        question: "What resolution is best for web or print?",
+        answer: "Use 72–150 dpi for screens and 300 dpi for print projects."
+    },
+    {
+        id: 9,
+        question: "Do Landscape PNGs work for branding?",
+        answer: "Yes. Many brands use them for headers, backgrounds, and campaign visuals."
+    },
+    {
+        id: 10,
+        question: "What does royalty-free mean for Landscape PNGs?",
+        answer: "Royalty-free means you can reuse the image across multiple projects without paying recurring fees, while following license terms."
+    },
+    {
+        id: 11,
+        question: "Can I use Landscape PNG images for social media posts?",
+        answer: "Yes. Landscape PNGs work well for social media banners, posts, ads, and stories. The transparent background helps the image blend naturally with text, colors, and layouts on any platform."
+    },
+    {
+        id: 12,
+        question: "Are Landscape PNG files optimized for fast website loading?",
+        answer: "Most Landscape PNG images are optimized for web use. For best performance, choose the right image size and compress files when allowed by the license to maintain speed without losing quality."
+    },
+    {
+        id: 13,
+        question: "Do Landscape PNGs support print projects like posters or brochures?",
+        answer: "Yes. Many Landscape PNG images are high-resolution and suitable for print. Always check the image dimensions and aim for 300 dpi when preparing files for posters, brochures, or large-format prints."
+    },
+    {
+        id: 14,
+        question: "Can Landscape PNG images be used in presentations or slides?",
+        answer: "Absolutely. Landscape PNGs are ideal for presentations because they add visual context without clutter. They work smoothly in PowerPoint, Google Slides, and other presentation tools."
+    },
+    {
+        id: 15,
+        question: "How do I choose the right Landscape PNG for my project?",
+        answer: "Start by defining your purpose—web, print, education, or branding. Then filter by resolution, style, and license. Preview the PNG on your layout to ensure it fits the mood and message clearly."
+    }
+];
+
+
 
 
 const graphicResourcesFaqData: FAQItem[] = [
@@ -728,7 +807,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'food' && (id === 2 || id === 3 || id === 5 || id === 8)) ||
         (categorySlug === 'graphic-resources' && (id === 2 || id === 3)) ||
         (categorySlug === 'hobbies-and-leisure' && (id === 2 || id === 3)) ||
-        (categorySlug === 'industry' && (id === 2 || id === 3));
+        (categorySlug === 'industry' && (id === 2 || id === 3)) ||
+        (categorySlug === 'landscapes' && (id === 3 || id === 4));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -767,6 +847,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'graphic-resources' ? graphicResourcesFaqData :
                     categorySlug === 'hobbies-and-leisure' ? hobbiesLeisureFaqData :
                     categorySlug === 'industry' ? industryFaqData :
+                    categorySlug === 'landscapes' ? landscapeFaqData :
                     animalFaqData;
 
     return (

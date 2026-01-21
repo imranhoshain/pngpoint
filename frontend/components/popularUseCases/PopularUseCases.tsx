@@ -259,6 +259,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Landscape content
+    const landscapeContent = {
+        title: "Popular Use Cases",
+        description: "Many creators lose time fixing backgrounds instead of building ideas. Clean landscape PNGs remove that friction. Because the background is already transparent, your focus stays on design, storytelling, and communication.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Landscape PNGs fit perfectly into banners, posters, website headers, and social media visuals. Clean edges and high resolution ensure professional results without extra editing steps."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers and students use landscape PNG images in geography lessons, presentations, worksheets, and digital learning tools. Clear visuals help explain concepts faster and keep attention focused."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Blogs, landing pages, and campaigns use landscape PNGs to add atmosphere without slowing performance. Lightweight files improve page experience while maintaining visual quality."
+            },
+            {
+                icon: Building2,
+                title: "Industry-Specific",
+                description: "Travel blogs, tourism brands, real estate websites, environmental NGOs, and media publishers rely on landscape PNG visuals to communicate place, mood, and context clearly."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -269,6 +297,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
+        landscapes: landscapeContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -211,6 +211,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to quickly find the right Industry PNG for your professional projects."
     };
 
+    // Landscape content
+    const landscapeContent = {
+        title: "Featured Gallery Preview",
+        description: "Get a quick look at the most downloaded Landscape PNG images in one place. This preview highlights high-resolution files with transparent backgrounds, ready for real projects. You can review quality instantly and download with confidence.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution Landscape PNG for detailed visuals",
+            "Transparent background PNG for seamless overlays",
+            "Royalty-free PNG assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Web Design",
+            "Branding"
+        ],
+        footerText: "Use filters to narrow results instantly and find the right landscape PNG without extra clicks."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -222,6 +244,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
+        landscapes: landscapeContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -425,6 +425,55 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category links directly to filtered galleries for fast, professional downloads."
     };
 
+    // Landscape content
+    const landscapeContent = {
+        categories: [
+            {
+                title: "Core Landscape Types",
+                items: [
+                    "Mountain Landscape PNG",
+                    "Forest Landscape PNG",
+                    "Beach Landscape PNG",
+                    "Desert Landscape PNG",
+                    "Countryside Landscape PNG",
+                    "City Landscape PNG"
+                ]
+            },
+            {
+                title: "Nature & Environment",
+                items: [
+                    "Sunrise & Sunset PNG",
+                    "Sky & Cloud Landscape PNG",
+                    "River & Lake PNG",
+                    "Snow Landscape PNG",
+                    "Waterfall PNG",
+                    "Island Landscape PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Realistic Landscape PNG",
+                    "Cartoon Landscape PNG",
+                    "Minimal Landscape PNG",
+                    "Landscape Silhouette PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Landscape Background PNG",
+                    "Nature Scene PNG",
+                    "Landscape Illustration PNG",
+                    "Landscape Clipart PNG",
+                    "Landscape Sticker PNG",
+                    "Landscape Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery, making downloads fast and stress-free."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -435,6 +484,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         "graphic-resources": graphicResourcesContent,
         "hobbies-and-leisure": hobbiesLeisureContent,
         industry: industryContent,
+        landscapes: landscapeContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
