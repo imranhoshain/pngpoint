@@ -579,7 +579,7 @@ const landscapeFaqData: FAQItem[] = [
     {
         id: 4,
         question: "Can I use Landscape PNGs for commercial projects?",
-        answer: "Yes, many allow commercial use. Look for "Royalty-Free" or "Commercial Use Allowed" labels."
+        answer: "Yes, many allow commercial use. Look for Royalty-Free or Commercial Use Allowed labels."
     },
     {
         id: 5,
@@ -666,7 +666,7 @@ const lifestyleFaqData: FAQItem[] = [
     },
     {
         id: 6,
-        question: "What does "transparent background" mean in Lifestyle PNGs?",
+        question: "What does transparent background mean in Lifestyle PNGs?",
         answer: "It means only the object or person in the image is visible. You can place it over any color, photo, or design without white borders or backgrounds."
     },
     {
@@ -707,7 +707,7 @@ const lifestyleFaqData: FAQItem[] = [
     {
         id: 14,
         question: "How do I search for a specific lifestyle PNG quickly?",
-        answer: "Use our category filters, keyword search, and style tags such as "Travel PNG," "Fitness PNG," or "Cartoon Lifestyle PNG" to find the perfect image instantly."
+        answer: "Use our category filters, keyword search, and style tags such as Travel PNG, Fitness PNG, or Cartoon Lifestyle PNG to find the perfect image instantly."
     },
     {
         id: 15,
