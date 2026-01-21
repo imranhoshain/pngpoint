@@ -85,6 +85,7 @@ export default function SingleCategory() {
     const isCultureCategory = slug === 'culture-and-religion';
     const isHobbyCategory = slug === 'hobbies-and-leisure';
     const isIndustryCategory = slug === 'industry';
+    const isLifeStyleCategory = slug === 'lifestyle';
     const categoryName = category?.data?.name || '';
     const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
     const firstSubCategorySlug = isAnimalCategory 
@@ -97,6 +98,8 @@ export default function SingleCategory() {
         ? 'arts-crafts-png'
         : isIndustryCategory
         ? 'construction-engineering-png'
+        :isLifeStyleCategory
+        ?'beauty-fashion-png'
         : (sub_categories && sub_categories.length > 0 ? sub_categories[1].slug : undefined);
     const availableCategory = ["animals","buildings-and-architecture","business",
         "culture-and-religion","drinks","food",
