@@ -71,11 +71,15 @@ def custom_404(request, exception):
         'error': 404
     }, status=404)
 
+import sys
+
 def custom_500(request):
+    type_, value, traceback = sys.exc_info()
     return JsonResponse({
         'success': False,
         'message': 'Internal server error',
-        'error': 500
+        'error': 500,
+        'error_details': str(value) if value else 'Unknown error'
     }, status=500)
 
 handler404 = 'app.urls.custom_404'
