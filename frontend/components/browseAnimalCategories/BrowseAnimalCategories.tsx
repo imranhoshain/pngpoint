@@ -559,6 +559,44 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery for fast and efficient downloads."
     };
 
+    // Plants & Flowers content
+    const plantsFlowersContent = {
+        categories: [
+            {
+                title: "Core Plant & Flower Types",
+                items: [
+                    "Flower PNGs",
+                    "Tree PNGs",
+                    "Shrub PNGs",
+                    "Herb & Leaf PNGs",
+                    "Cactus & Succulent PNGs",
+                    "Tropical Plant PNGs"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Realistic Plants & Flowers PNG",
+                    "Cute & Cartoon Flower PNG",
+                    "Silhouette Plant PNG",
+                    "Botanical Illustration PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Flower Face PNG",
+                    "Plant Icons PNG",
+                    "Flower Clipart PNG",
+                    "Plant Logo PNG",
+                    "Plant Sticker PNG",
+                    "Plant Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery, making downloads quick and stress-free."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -572,6 +610,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
         people: peopleContent,
+        "plants-and-flowers": plantsFlowersContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

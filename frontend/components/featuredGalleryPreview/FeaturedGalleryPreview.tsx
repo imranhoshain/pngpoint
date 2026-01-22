@@ -277,6 +277,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to find the perfect People PNG quickly and efficiently."
     };
 
+    // Plants & Flowers content
+    const plantsFlowersContent = {
+        title: "Featured Gallery Preview",
+        description: "Preview our most popular Plants & Flowers PNGs in one place. These high-resolution, transparent files are ready for real projects. Download with confidence and spot quality instantly.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "HD Plant & Flower PNGs for crisp detail",
+            "Transparent backgrounds for easy overlays",
+            "Royalty-free assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Kids Projects",
+            "Branding"
+        ],
+        footerText: "Use filters to find the right PNG without extra clicks."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -291,6 +313,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
         people: peopleContent,
+        "plants-and-flowers": plantsFlowersContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

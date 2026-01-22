@@ -343,6 +343,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Plants & Flowers content
+    const plantsFlowersContent = {
+        title: "Popular Use Cases",
+        description: "Clean, transparent plant PNGs save you hours. When the background is already transparent, you can focus on creating instead of editing.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Plant PNGs drop seamlessly into banners, posters, logos, and web layouts, making design faster and more professional."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers, parents, and educators use these PNGs in worksheets, slides, and interactive lessons. Clear visuals help students focus on learning."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Use plant PNGs on websites, blogs, and campaigns to add visual appeal without slowing down pages."
+            },
+            {
+                icon: Layers,
+                title: "Industry-Specific",
+                description: "Botanical bloggers, garden centers, nurseries, landscape designers, and environmental NGOs use these PNGs to communicate clearly and visually."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -356,6 +384,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
         people: peopleContent,
+        "plants-and-flowers": plantsFlowersContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -345,6 +345,34 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Plants & Flowers content
+    const plantsFlowersContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Plants & Flowers PNG images help you save time when you need clean, ready-to-use visuals for web design, learning materials, or creative projects. Transparent botanical graphics work seamlessly on any background, making your workflow smoother. At PNGPoint, we've used flower and plant PNGs in banners, web layouts, branding, and educational slides, and clean files always simplify the process.",
+            "This collection focuses on high-quality, transparent PNG files with clear licensing. Explore the Plants & Flowers PNG library to find visuals perfectly suited for your projects today."
+        ],
+        mainTitle: "Why Choose Our Plants & Flowers PNG Collection",
+        mainDescription: "Finding the right botanical graphics should be simple and fast. This collection is curated for creators who need reusable, high-quality Plants & Flowers PNGs that work instantly across all projects. Each file prioritizes clarity, flexibility, and practical application. Spend less time editing and more time creating.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Roses, tulips, lilies, wildflowers, trees, shrubs, tropical plants, and herbs" },
+                { label: "High-quality formats:", text: "Transparent PNGs, HD images, crisp edges, clean cut-outs" },
+                { label: "Flexible usage:", text: "Websites, print materials, educational resources, social media, and branding" },
+                { label: "Clear licensing:", text: "Simple usage terms, no confusion before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated plant and flower PNG files",
+                "Regular updates with new botanical styles",
+                "Consistent licensing across all files"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -358,6 +386,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
         people: peopleContent,
+        "plants-and-flowers": plantsFlowersContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

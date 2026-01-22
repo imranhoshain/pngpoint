@@ -313,6 +313,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Plants & Flowers content
+    const plantsFlowersContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "All Plants & Flowers PNG images are royalty-free. Many allow commercial and print use. Attribution requirements are clearly stated on each file page. Always double-check the license info before downloading.",
+            proTip: "Always double-check the license info before downloading."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Grab single images or full sets, choose free downloads or HD files, and ensure transparent backgrounds for seamless integration. Clean files save editing time.",
+            features: [
+                "Single images or complete sets available",
+                "Free downloads and HD file options",
+                "Transparent backgrounds for seamless integration"
+            ]
+        },
+        cta: {
+            title: "Start Creating Today",
+            description: "Access our complete Plants & Flowers PNG library with clear licensing and instant downloads. High-quality botanical graphics ready for web, print, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -326,6 +350,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
         people: peopleContent,
+        "plants-and-flowers": plantsFlowersContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

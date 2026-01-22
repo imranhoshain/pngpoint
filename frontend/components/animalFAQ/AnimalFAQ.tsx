@@ -794,6 +794,85 @@ const peopleFaqData: FAQItem[] = [
     }
 ];
 
+const plantsFlowersFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Plants & Flowers PNG, and why is it useful?",
+        answer: "A Plants & Flowers PNG is a raster image with a transparent background, making it easy to place on any design without a white box or border. These PNGs are perfect for web design, social media posts, educational materials, and creative projects."
+    },
+    {
+        id: 2,
+        question: "What does transparent background mean in plant PNGs?",
+        answer: "A transparent background means only the plant or flower is visible. You can overlay it on any color, pattern, or image, ensuring seamless integration into your designs."
+    },
+    {
+        id: 3,
+        question: "Are these plant PNGs free to download and use?",
+        answer: "Many PNGs in our collection are free, while some premium packs include additional designs and commercial rights. Always check the license information before downloading."
+    },
+    {
+        id: 4,
+        question: "Can I use Plants & Flowers PNGs for commercial projects?",
+        answer: "Yes! Most plant PNGs allow commercial use, including websites, branding, social media, and print designs. Always verify license terms on the specific image page."
+    },
+    {
+        id: 5,
+        question: "What is the difference between PNG, vector, and clipart for plants and flowers?",
+        answer: "PNG: Raster format, high-quality, transparent, ready-to-use for digital and print. Vector (SVG/AI): Scalable without losing quality, ideal for logos and illustrations. Clipart: Stylized or simplified illustrations, perfect for fun projects and graphics."
+    },
+    {
+        id: 6,
+        question: "Do you offer high-resolution plant PNGs?",
+        answer: "Yes, most plant and flower PNGs are HD or high-resolution, suitable for banners, posters, websites, and print projects."
+    },
+    {
+        id: 7,
+        question: "Can I use plant PNGs for kids' educational projects?",
+        answer: "Absolutely! Teachers and parents can use these PNGs for worksheets, slides, apps, or interactive lessons. Visuals are clear and distraction-free."
+    },
+    {
+        id: 8,
+        question: "How do I ensure the PNG looks good on my website or app?",
+        answer: "Choose the correct resolution: 72–150 dpi for screens, 300 dpi for print. Use images with transparent backgrounds and clean edges for seamless integration."
+    },
+    {
+        id: 9,
+        question: "What file sizes should I expect for plant PNGs?",
+        answer: "File sizes vary depending on resolution and detail. High-resolution PNGs can range from a few hundred KB to several MB. Optimize for the web if necessary."
+    },
+    {
+        id: 10,
+        question: "Can I edit or customize plant PNGs?",
+        answer: "Yes, you can resize, recolor, or combine PNGs in compatible software. Some premium packs allow full modification, while free PNGs may have restrictions."
+    },
+    {
+        id: 11,
+        question: "Are there plant PNGs specifically for branding or logos?",
+        answer: "Yes, the collection includes plant logos, icons, and botanical illustrations designed for branding. Check the license to confirm commercial use."
+    },
+    {
+        id: 12,
+        question: "Do you have plant PNGs with transparent backgrounds for print?",
+        answer: "Yes, most PNGs are print-ready. For large banners or posters, ensure the PNG has 300 dpi resolution for optimal quality."
+    },
+    {
+        id: 13,
+        question: "What does "royalty-free" mean for plant PNGs?",
+        answer: "Royalty-free means you can use the image in multiple projects without recurring fees. Always check for attribution or other limitations in the license."
+    },
+    {
+        id: 14,
+        question: "How can I find plant PNGs in specific styles (realistic, cartoon, cute)?",
+        answer: "Use the category filters or search keywords like "Realistic Plant PNG," "Cartoon Flower PNG," or "Cute Plant PNG." Preview thumbnails before downloading."
+    },
+    {
+        id: 15,
+        question: "Can I download plant PNGs for educational platforms or kids' projects?",
+        answer: "Yes! Many PNGs are designed for classrooms, apps, worksheets, and learning platforms. Always confirm distribution rights for commercial or public use."
+    }
+];
+
+
 
 
 
@@ -968,7 +1047,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'industry' && (id === 2 || id === 3)) ||
         (categorySlug === 'landscapes' && (id === 3 || id === 4)) ||
         (categorySlug === 'lifestyle' && (id === 2 || id === 3 || id === 11)) ||
-        (categorySlug === 'people' && (id === 3 || id === 4 || id === 10));
+        (categorySlug === 'people' && (id === 3 || id === 4 || id === 10)) ||
+        (categorySlug === 'plants-and-flowers' && (id === 3 || id === 4 || id === 11));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -1010,6 +1090,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'landscapes' ? landscapeFaqData :
                     categorySlug === 'lifestyle' ? lifestyleFaqData :
                     categorySlug === 'people' ? peopleFaqData :
+                    categorySlug === 'plants-and-flowers' ? plantsFlowersFaqData :
                     animalFaqData;
 
     return (

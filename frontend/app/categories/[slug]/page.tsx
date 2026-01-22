@@ -104,7 +104,7 @@ export default function SingleCategory() {
     const availableCategory = ["animals","buildings-and-architecture","business",
         "culture-and-religion","drinks","food",
         "graphic-resources","hobbies-and-leisure","industry",
-        "landscapes","lifestyle","people"]
+        "landscapes","lifestyle","people","plants-and-flowers"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (
