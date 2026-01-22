@@ -74,7 +74,11 @@ def custom_404(request, exception):
 import sys
 
 def custom_500(request):
-    type_, value, traceback = sys.exc_info()
+    type_, value, tb = sys.exc_info()
+    import traceback
+    print("CRITICAL 500 ERROR CAUGHT:", file=sys.stderr)
+    traceback.print_exc()  # Print to stderr directly
+    
     return JsonResponse({
         'success': False,
         'message': 'Internal server error',

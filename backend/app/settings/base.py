@@ -72,6 +72,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "middleware.debug.RequestDebugMiddleware",
     "corsheaders.middleware.CorsMiddleware",
     "middleware.ddos_protection.DDoSProtectionMiddleware",
     "middleware.ddos_protection.RequestSizeLimitMiddleware",
@@ -264,16 +265,30 @@ LOGGING = {
         'console': {
             'class': 'logging.StreamHandler',
         },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'debug.log'),
+            'level': 'INFO',
+        },
     },
     'loggers': {
         'django': {
-            'handlers': ['console'],
+            'handlers': ['console', 'file'],
             'level': 'INFO',
         },
         'images': {
-            'handlers': ['console'],
+            'handlers': ['console', 'file'],
             'level': 'INFO',
             'propagate': True,
+        },
+        'middleware': {
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        '': {  # Root logger
+            'handlers': ['console', 'file'],
+            'level': 'INFO',
         },
     },
 }
