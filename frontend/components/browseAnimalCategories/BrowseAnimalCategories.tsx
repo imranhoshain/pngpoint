@@ -512,6 +512,53 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery for fast and easy downloads."
     };
 
+    // People content
+    const peopleContent = {
+        categories: [
+            {
+                title: "Core People Types",
+                items: [
+                    "Male PNG",
+                    "Female PNG",
+                    "Children PNG",
+                    "Professional PNG",
+                    "Casual PNG",
+                    "Elderly PNG"
+                ]
+            },
+            {
+                title: "Nature & Activities",
+                items: [
+                    "People with Objects PNG",
+                    "Fitness & Sports PNG",
+                    "Business & Work PNG",
+                    "Lifestyle & Leisure PNG",
+                    "Cultural & Ethnic PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Realistic People PNG",
+                    "Cartoon People PNG",
+                    "Silhouette PNG",
+                    "Character Illustration PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Face PNG",
+                    "People Icons PNG",
+                    "People Logo PNG",
+                    "Stickers & Clipart PNG",
+                    "Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery for fast and efficient downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -524,6 +571,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         industry: industryContent,
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
+        people: peopleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

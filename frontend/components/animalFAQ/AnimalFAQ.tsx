@@ -716,6 +716,85 @@ const lifestyleFaqData: FAQItem[] = [
     }
 ];
 
+const peopleFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a People PNG image, and why is it useful?",
+        answer: "A People PNG is a raster image with a transparent background, perfect for overlays, logos, presentations, and social media visuals."
+    },
+    {
+        id: 2,
+        question: "What does transparent background mean in People PNGs?",
+        answer: "Only the person's shape is visible. You can place it on any background without a white border."
+    },
+    {
+        id: 3,
+        question: "Are People PNGs free to download and use?",
+        answer: "Some are free, others are premium. Check licensing for usage rights. Free downloads may have restrictions; premium offers full commercial rights."
+    },
+    {
+        id: 4,
+        question: "Can I use People PNGs for commercial projects?",
+        answer: "Yes. Many allow commercial use for websites, branding, and marketing campaigns. Always verify license terms."
+    },
+    {
+        id: 5,
+        question: "What is the difference between PNG, vector, and clipart for people?",
+        answer: "PNG: High-quality, transparent, ready-to-use raster images. Vector (AI/SVG): Scalable, best for logos and illustrations. Clipart: Stylized, simplified illustrations."
+    },
+    {
+        id: 6,
+        question: "Do you offer high-resolution or HD People PNG images?",
+        answer: "Yes. Most PNGs are HD, suitable for print, presentations, and large displays."
+    },
+    {
+        id: 7,
+        question: "Can I use People PNGs for kids' educational projects?",
+        answer: "Absolutely. Many are safe and easy to understand for worksheets, presentations, and e-learning apps."
+    },
+    {
+        id: 8,
+        question: "How do I ensure the PNG looks good on my website or app?",
+        answer: "Choose a suitable resolution: 72–150 dpi for screens, 300 dpi for print. Transparent backgrounds ensure seamless integration."
+    },
+    {
+        id: 9,
+        question: "What file sizes should I expect for People PNGs?",
+        answer: "File sizes vary by dimension and detail. HD PNGs can range from a few hundred KB to several MB."
+    },
+    {
+        id: 10,
+        question: "Can I edit or customize People PNGs?",
+        answer: "Yes. Resize, recolor, or combine PNGs in compatible software. Check the license for editing permissions."
+    },
+    {
+        id: 11,
+        question: "Can I use People PNGs in social media campaigns?",
+        answer: "Yes. Transparent people graphics are perfect for Instagram posts, Facebook ads, YouTube thumbnails, and other social media visuals. They add personality and engagement to campaigns."
+    },
+    {
+        id: 12,
+        question: "Are there People PNGs in different ethnicities and cultures?",
+        answer: "Absolutely. Our collection includes diverse people PNGs representing multiple ethnicities, cultural attire, and lifestyles for authentic, inclusive visuals."
+    },
+    {
+        id: 13,
+        question: "Can I use People PNGs for presentation slides?",
+        answer: "Yes. High-resolution PNGs with transparent backgrounds integrate seamlessly into PowerPoint, Google Slides, or Keynote, making your presentations visually engaging."
+    },
+    {
+        id: 14,
+        question: "Do you provide animated or character-style People PNGs?",
+        answer: "Yes. We offer cartoon, illustrated, and stylized character PNGs in addition to realistic images. Perfect for marketing, apps, or educational storytelling."
+    },
+    {
+        id: 15,
+        question: "How do I search for specific poses or actions in People PNGs?",
+        answer: "Use filters or keywords like working people PNG, running PNG, sitting PNG, or holding object PNG to quickly find the exact pose or activity you need."
+    }
+];
+
+
 
 
 
@@ -888,7 +967,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'hobbies-and-leisure' && (id === 2 || id === 3)) ||
         (categorySlug === 'industry' && (id === 2 || id === 3)) ||
         (categorySlug === 'landscapes' && (id === 3 || id === 4)) ||
-        (categorySlug === 'lifestyle' && (id === 2 || id === 3 || id === 11));
+        (categorySlug === 'lifestyle' && (id === 2 || id === 3 || id === 11)) ||
+        (categorySlug === 'people' && (id === 3 || id === 4 || id === 10));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -929,6 +1009,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'industry' ? industryFaqData :
                     categorySlug === 'landscapes' ? landscapeFaqData :
                     categorySlug === 'lifestyle' ? lifestyleFaqData :
+                    categorySlug === 'people' ? peopleFaqData :
                     animalFaqData;
 
     return (

@@ -256,6 +256,27 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to find the perfect Lifestyle PNG faster and easier."
     };
 
+    // People content
+    const peopleContent = {
+        title: "Featured Gallery Preview",
+        description: "See our most popular People PNG images in high resolution with transparent backgrounds. Preview highlights quality at a glance and download instantly.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "HD People PNG for sharp detail",
+            "Transparent backgrounds for overlays",
+            "Royalty-free with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Branding"
+        ],
+        footerText: "Use filters to find the perfect People PNG quickly and efficiently."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -269,6 +290,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         industry: industryContent,
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
+        people: peopleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -289,6 +289,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // People content
+    const peopleContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "All People PNG images are royalty-free. Most allow commercial, educational, and print use. Attribution notes appear when required. Always check the license info before downloading.",
+            proTip: "Always check the license info before downloading."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Single or multiple PNG downloads available. HD, transparent background, and high-resolution options streamline workflow and reduce editing time.",
+            features: [
+                "Single or multiple PNG downloads available",
+                "HD and high-resolution transparent backgrounds",
+                "Fast downloads for efficient workflows"
+            ]
+        },
+        cta: {
+            title: "Start Creating Today",
+            description: "Access our complete People PNG library with clear licensing and instant downloads. High-quality people graphics ready for websites, branding, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -301,6 +325,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         industry: industryContent,
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
+        people: peopleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

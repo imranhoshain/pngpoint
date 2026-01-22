@@ -315,6 +315,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // People content
+    const peopleContent = {
+        title: "Popular Use Cases",
+        description: "Clean people PNGs reduce editing time and make designs, presentations, and campaigns faster and more efficient.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "People PNGs fit banners, posters, and website headers instantly, maintaining sharpness and transparency."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers can use people PNGs in lessons, worksheets, or interactive slides for better engagement."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Websites, blogs, and social campaigns gain personality and relatability with clean people graphics."
+            },
+            {
+                icon: Building2,
+                title: "Industry-Specific",
+                description: "Marketing agencies, schools, NGOs, HR platforms, and e-learning apps use these PNGs for clear communication and visual storytelling."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -327,6 +355,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         industry: industryContent,
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
+        people: peopleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -318,6 +318,33 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // People content
+    const peopleContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "People PNG images save time for designers, educators, and content creators who need clean visuals. Transparent people graphics work on any background, making projects easier to execute. At PNGPoint, we've applied PNGs in web layouts, marketing campaigns, and educational presentations. Clean, high-resolution files simplify design work and increase productivity."
+        ],
+        mainTitle: "Why Choose Our People PNG Collection",
+        mainDescription: "Finding the right people graphics should be fast and simple. Our collection offers curated PNGs that are reusable across projects, with a focus on clarity, flexibility, and real-world use. Spend less time editing and more time creating.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Male, female, children, professionals, casual, ethnic diversity, poses, and activities" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD images, crisp edges, clean cut-outs" },
+                { label: "Flexible usage:", text: "Websites, branding, social media, educational slides, marketing campaigns" },
+                { label: "Clear licensing:", text: "Royalty-free, easy-to-understand usage terms" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated people PNGs",
+                "Regular updates with new poses, styles, and themes",
+                "Consistent, clear licensing"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -330,6 +357,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         industry: industryContent,
         landscapes: landscapeContent,
         lifestyle: lifestyleContent,
+        people: peopleContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
