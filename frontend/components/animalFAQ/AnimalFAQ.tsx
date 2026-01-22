@@ -857,13 +857,13 @@ const plantsFlowersFaqData: FAQItem[] = [
     },
     {
         id: 13,
-        question: "What does "royalty-free" mean for plant PNGs?",
+        question: "What does royalty-free mean for plant PNGs?",
         answer: "Royalty-free means you can use the image in multiple projects without recurring fees. Always check for attribution or other limitations in the license."
     },
     {
         id: 14,
         question: "How can I find plant PNGs in specific styles (realistic, cartoon, cute)?",
-        answer: "Use the category filters or search keywords like "Realistic Plant PNG," "Cartoon Flower PNG," or "Cute Plant PNG." Preview thumbnails before downloading."
+        answer: "Use the category filters or search keywords like Realistic Plant PNG, Cartoon Flower PNG, or Cute Plant PNG. Preview thumbnails before downloading."
     },
     {
         id: 15,
