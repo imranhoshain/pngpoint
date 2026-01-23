@@ -299,6 +299,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to find the right PNG without extra clicks."
     };
 
+    // Social Issues content
+    const socialIssuesContent = {
+        title: "Featured Gallery Preview",
+        description: "Get a quick overview of popular Social Issues PNG images in one place. This preview highlights transparent, high-resolution visuals suitable for real-world use. You can assess quality instantly and download without friction.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution Social Issues PNG for clear messaging",
+            "Transparent background PNG for clean layouts",
+            "Royalty-free assets with clear usage guidance"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Education",
+            "Nonprofit Campaigns",
+            "Print Ready",
+            "Social Media"
+        ],
+        footerText: "Filters help you reach the right PNG faster."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -314,6 +336,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         lifestyle: lifestyleContent,
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
+        "social-issues": socialIssuesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

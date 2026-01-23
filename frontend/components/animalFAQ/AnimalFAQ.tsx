@@ -872,6 +872,85 @@ const plantsFlowersFaqData: FAQItem[] = [
     }
 ];
 
+const socialIssuesFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Social Issues PNG image?",
+        answer: "A Social Issues PNG is a transparent image that represents social topics like education, equality, or healthcare. It helps communicate ideas clearly."
+    },
+    {
+        id: 2,
+        question: "Why use transparent background PNGs for social content?",
+        answer: "Transparent backgrounds allow seamless placement on any design without white borders."
+    },
+    {
+        id: 3,
+        question: "Are Social Issues PNGs free to use?",
+        answer: "Some are free, while others may have specific licenses. Always check usage details before downloading."
+    },
+    {
+        id: 4,
+        question: "Can I use these PNGs for awareness campaigns?",
+        answer: "Yes, many images support nonprofit, educational, and advocacy use."
+    },
+    {
+        id: 5,
+        question: "Are these PNGs suitable for educational platforms?",
+        answer: "Yes. They work well for lessons, presentations, and learning materials."
+    },
+    {
+        id: 6,
+        question: "Do you offer high-resolution Social Issues PNGs?",
+        answer: "Most files are HD and suitable for both digital and print use."
+    },
+    {
+        id: 7,
+        question: "Can I use them for social media posts?",
+        answer: "Yes. Transparent PNGs work well on banners, posts, and thumbnails."
+    },
+    {
+        id: 8,
+        question: "What file sizes should I expect?",
+        answer: "Sizes vary based on detail and resolution, usually from KBs to a few MBs."
+    },
+    {
+        id: 9,
+        question: "Can I edit these PNG images?",
+        answer: "In most cases, yes. Editing permissions depend on the license."
+    },
+    {
+        id: 10,
+        question: "Are these PNGs suitable for print materials?",
+        answer: "Yes, especially high-resolution files. Check for 300 DPI when printing."
+    },
+    {
+        id: 11,
+        question: "What does royalty-free mean here?",
+        answer: "It means you can reuse the image without repeated fees, following license rules."
+    },
+    {
+        id: 12,
+        question: "Are there icon-style Social Issues PNGs?",
+        answer: "Yes. Many files use simple icon-based designs for clarity."
+    },
+    {
+        id: 13,
+        question: "Can NGOs use these PNGs for reports?",
+        answer: "Yes. Many are designed for reports, presentations, and campaigns."
+    },
+    {
+        id: 14,
+        question: "How do I find PNGs for specific issues?",
+        answer: "Use category filters or keywords like Climate Change PNG or Education Issues PNG."
+    },
+    {
+        id: 15,
+        question: "Are these images appropriate for sensitive topics?",
+        answer: "Yes. The collection focuses on respectful and clear visual representation."
+    }
+];
+
+
 
 
 
@@ -1048,7 +1127,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'landscapes' && (id === 3 || id === 4)) ||
         (categorySlug === 'lifestyle' && (id === 2 || id === 3 || id === 11)) ||
         (categorySlug === 'people' && (id === 3 || id === 4 || id === 10)) ||
-        (categorySlug === 'plants-and-flowers' && (id === 3 || id === 4 || id === 11));
+        (categorySlug === 'plants-and-flowers' && (id === 3 || id === 4 || id === 11)) ||
+        (categorySlug === 'social-issues' && (id === 3 || id === 4 || id === 9));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -1091,6 +1171,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'lifestyle' ? lifestyleFaqData :
                     categorySlug === 'people' ? peopleFaqData :
                     categorySlug === 'plants-and-flowers' ? plantsFlowersFaqData :
+                    categorySlug === 'social-issues' ? socialIssuesFaqData :
                     animalFaqData;
 
     return (

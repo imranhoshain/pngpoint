@@ -371,6 +371,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Social Issues content
+    const socialIssuesContent = {
+        title: "Popular Use Cases",
+        description: "Many creators struggle to explain serious topics visually. Clean PNGs reduce that challenge and support better communication.",
+        useCases: [
+            {
+                icon: GraduationCap,
+                title: "For Education & Learning",
+                description: "Teachers and educators use Social Issues PNGs in slides, worksheets, and digital lessons. Simple visuals help students grasp complex ideas faster."
+            },
+            {
+                icon: Users,
+                title: "For Awareness Campaigns",
+                description: "Nonprofits and activists rely on transparent PNGs for posters, banners, and social media. Clear visuals strengthen messages and improve engagement."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Blogs, news platforms, and awareness websites use these PNGs to add clarity without slowing page speed. Transparent images blend naturally into layouts."
+            },
+            {
+                icon: Building2,
+                title: "Industry-Specific Use",
+                description: "NGOs, policy groups, research platforms, and community organizations use these visuals to explain data, highlight concerns, and support advocacy."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -385,6 +413,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         lifestyle: lifestyleContent,
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
+        "social-issues": socialIssuesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

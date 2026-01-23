@@ -337,6 +337,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Social Issues content
+    const socialIssuesContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing should never feel confusing. Most Social Issues PNG images are royalty-free and allow educational and awareness use. Commercial usage is clearly marked on each file. If attribution is required, it appears directly on the download page.",
+            proTip: "Always review the license before publishing to keep your project safe and compliant."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Downloading is simple and flexible. Choose from free Social Issues PNGs, HD files, or transparent background assets based on your needs. You can download individual images or select multiple files to speed up your workflow. Clean files help you focus on impact, not editing.",
+            features: [
+                "Individual images or multiple file selections",
+                "Free Social Issues PNGs and HD options",
+                "Transparent backgrounds for clean integration"
+            ]
+        },
+        cta: {
+            title: "Start Your Campaign Today",
+            description: "Access our complete Social Issues PNG library with clear licensing and instant downloads. High-quality awareness graphics ready for education, campaigns, and advocacy projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -351,6 +375,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         lifestyle: lifestyleContent,
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
+        "social-issues": socialIssuesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

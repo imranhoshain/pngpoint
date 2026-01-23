@@ -373,6 +373,35 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Social Issues content
+    const socialIssuesContent = {
+        subheading: "High-Resolution, Royalty-Free, and Ready to Use",
+        introText: [
+            "Social Issues PNG images help creators explain complex topics through clear visuals. When you need transparent graphics for education, advocacy, or digital campaigns, this collection offers a fast and simple solution.",
+            "Instead of spending time editing backgrounds, you can use ready-to-place PNGs that work on any design. These visuals support storytelling, awareness, and understanding across platforms.",
+            "That's why this library focuses on high-quality, transparent Social Issues PNGs with clear usage terms. Browse the collection and find images that support your message clearly and responsibly."
+        ],
+        mainTitle: "Why Choose Our Social Issues PNG Collection",
+        mainDescription: "Finding meaningful visuals for social topics should feel simple and trustworthy. This collection is designed for educators, designers, NGOs, and content creators who need reliable Social Issues PNG images. Every file supports clarity, ethical use, and flexible design needs. As a result, you can focus more on impact and less on editing.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Poverty, education, healthcare, equality, environment, human rights, and more" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD resolution, clean cut-outs" },
+                { label: "Flexible usage:", text: "Awareness campaigns, education materials, websites, print, and presentations" },
+                { label: "Clear licensing:", text: "Simple, upfront usage terms with no hidden confusion" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Curated Social Issues PNG collection",
+                "Regular updates with relevant global topics",
+                "Consistent licenses across categories"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -387,6 +416,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         lifestyle: lifestyleContent,
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
+        "social-issues": socialIssuesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

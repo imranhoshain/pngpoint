@@ -597,6 +597,53 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery, making downloads quick and stress-free."
     };
 
+    // Social Issues content
+    const socialIssuesContent = {
+        categories: [
+            {
+                title: "Core Social Topics",
+                items: [
+                    "Poverty & Hunger PNG",
+                    "Education Issues PNG",
+                    "Healthcare & Mental Health PNG",
+                    "Human Rights PNG",
+                    "Gender Equality PNG",
+                    "Child Welfare PNG"
+                ]
+            },
+            {
+                title: "Society & Community",
+                items: [
+                    "Disability Awareness PNG",
+                    "Refugee & Migration PNG",
+                    "Elderly Care PNG",
+                    "LGBTQ+ Awareness PNG",
+                    "Workers' Rights PNG"
+                ]
+            },
+            {
+                title: "Environment & Sustainability",
+                items: [
+                    "Climate Change PNG",
+                    "Pollution & Waste PNG",
+                    "Clean Energy PNG",
+                    "Water Crisis PNG",
+                    "Wildlife Protection PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Flat Illustration PNG",
+                    "Icon-Based Social Symbols PNG",
+                    "Realistic Concept PNG",
+                    "Minimal Awareness Graphics PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery, making discovery smooth and efficient."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -611,6 +658,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         lifestyle: lifestyleContent,
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
+        "social-issues": socialIssuesContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
