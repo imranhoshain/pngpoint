@@ -321,6 +321,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Filters help you reach the right PNG faster."
     };
 
+    // Science content
+    const scienceContent = {
+        title: "Featured Gallery Preview",
+        description: "See the most downloaded Science PNG images at a glance. This preview highlights transparent, high-resolution files used in real educational and professional projects. You can judge quality instantly and download without hesitation.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-Resolution Science PNG for clear detail",
+            "Transparent Background PNG for clean overlays",
+            "Royalty-Free assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Education",
+            "Print Ready",
+            "Presentation",
+            "App & Web Use"
+        ],
+        footerText: "Filters help you narrow results quickly and efficiently."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -337,6 +359,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
+        science: scienceContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

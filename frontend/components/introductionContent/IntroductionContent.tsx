@@ -402,6 +402,35 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Science content
+    const scienceContent = {
+        subheading: "High-Resolution, Royalty-Free, and Ready to Use",
+        introText: [
+            "Science PNG images make complex ideas easier to explain. When you need clean visuals for learning, teaching, or presentations, transparent science graphics save time and effort.",
+            "Instead of editing backgrounds, you can directly place these PNGs into slides, worksheets, websites, or apps. Clear visuals help students, teachers, and creators focus on concepts, not design problems.",
+            "That's why this collection offers high-quality Science PNG files with transparent backgrounds and clear usage terms. Explore the library and choose visuals that support accurate and engaging learning."
+        ],
+        mainTitle: "Why Choose Our Science PNG Collection",
+        mainDescription: "Finding reliable science graphics should be simple and stress-free. This collection is built for teachers, students, designers, researchers, and content creators. Every Science PNG focuses on accuracy, clarity, and flexibility across platforms. As a result, you spend less time fixing visuals and more time explaining ideas.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Physics, chemistry, biology, space, technology, and lab science" },
+                { label: "High-quality formats:", text: "Transparent PNG, HD resolution, clean edges" },
+                { label: "Flexible usage:", text: "Education, presentations, websites, print, and apps" },
+                { label: "Clear licensing:", text: "Easy-to-understand usage terms before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Curated science-focused PNG library",
+                "Regular updates with new topics and symbols",
+                "Consistent licenses across categories"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -417,6 +446,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
+        science: scienceContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

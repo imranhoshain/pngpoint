@@ -399,6 +399,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Science content
+    const scienceContent = {
+        title: "Popular Use Cases",
+        description: "Science visuals play a key role in learning and communication. Clean PNGs help reduce confusion and improve understanding.",
+        useCases: [
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers and students use Science PNGs in slides, textbooks, worksheets, and online classes. Simple visuals help explain theories, experiments, and processes clearly."
+            },
+            {
+                icon: Presentation,
+                title: "For Presentations & Research",
+                description: "Researchers and professionals use PNGs in reports, charts, and academic presentations. Transparent images keep layouts clean and professional."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Apps",
+                description: "Science blogs, learning platforms, and mobile apps use PNGs to explain ideas visually without slowing page speed."
+            },
+            {
+                icon: Building2,
+                title: "Industry-Specific Use",
+                description: "EdTech companies, science museums, publishers, and healthcare platforms rely on accurate science visuals to support trust and clarity."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -414,6 +442,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
+        science: scienceContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

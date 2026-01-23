@@ -950,6 +950,85 @@ const socialIssuesFaqData: FAQItem[] = [
     }
 ];
 
+const scienceFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Science PNG image?",
+        answer: "A Science PNG is a transparent image representing scientific concepts, tools, or symbols, used in education and design."
+    },
+    {
+        id: 2,
+        question: "Why are transparent backgrounds important for science visuals?",
+        answer: "They allow easy placement on slides, books, and apps without white borders."
+    },
+    {
+        id: 3,
+        question: "Are Science PNGs free to use?",
+        answer: "Some are free, while others have specific licenses. Always check usage terms."
+    },
+    {
+        id: 4,
+        question: "Can I use Science PNGs for educational projects?",
+        answer: "Yes. Most are designed for learning and teaching purposes."
+    },
+    {
+        id: 5,
+        question: "Do you provide high-resolution Science PNGs?",
+        answer: "Yes. Many files are suitable for print and large displays."
+    },
+    {
+        id: 6,
+        question: "Can these PNGs be used in presentations?",
+        answer: "Absolutely. They work well in PowerPoint, Google Slides, and PDFs."
+    },
+    {
+        id: 7,
+        question: "Are Science PNGs suitable for kids?",
+        answer: "Yes. Many visuals are simple and student-friendly."
+    },
+    {
+        id: 8,
+        question: "Can I edit Science PNG images?",
+        answer: "Editing is usually allowed, depending on the license."
+    },
+    {
+        id: 9,
+        question: "Are these PNGs suitable for websites and apps?",
+        answer: "Yes. They are optimized for digital platforms."
+    },
+    {
+        id: 10,
+        question: "What does royalty-free mean here?",
+        answer: "You can reuse images without repeated fees, following license rules."
+    },
+    {
+        id: 11,
+        question: "Are there science icon PNGs available?",
+        answer: "Yes. Icon-style PNGs are available for clean layouts."
+    },
+    {
+        id: 12,
+        question: "Can researchers use these PNGs in reports?",
+        answer: "Yes, especially for presentations and explanatory graphics."
+    },
+    {
+        id: 13,
+        question: "Are print-ready Science PNGs available?",
+        answer: "Yes. Check DPI and resolution before printing."
+    },
+    {
+        id: 14,
+        question: "How do I find PNGs for specific science topics?",
+        answer: "Use category filters or keywords like Chemistry PNG or Physics PNG."
+    },
+    {
+        id: 15,
+        question: "Are these images accurate for learning use?",
+        answer: "The collection focuses on clear and educationally appropriate visuals."
+    }
+];
+
+
 
 
 
@@ -1128,7 +1207,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'lifestyle' && (id === 2 || id === 3 || id === 11)) ||
         (categorySlug === 'people' && (id === 3 || id === 4 || id === 10)) ||
         (categorySlug === 'plants-and-flowers' && (id === 3 || id === 4 || id === 11)) ||
-        (categorySlug === 'social-issues' && (id === 3 || id === 4 || id === 9));
+        (categorySlug === 'social-issues' && (id === 3 || id === 4 || id === 9)) ||
+        (categorySlug === 'science' && (id === 3 || id === 4 || id === 8));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -1172,6 +1252,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'people' ? peopleFaqData :
                     categorySlug === 'plants-and-flowers' ? plantsFlowersFaqData :
                     categorySlug === 'social-issues' ? socialIssuesFaqData :
+                    categorySlug === 'science' ? scienceFaqData :
                     animalFaqData;
 
     return (

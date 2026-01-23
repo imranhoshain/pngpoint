@@ -644,6 +644,52 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery, making discovery smooth and efficient."
     };
 
+    // Science content
+    const scienceContent = {
+        categories: [
+            {
+                title: "Core Science Fields",
+                items: [
+                    "Physics PNG",
+                    "Chemistry PNG",
+                    "Biology PNG",
+                    "Earth Science PNG",
+                    "Environmental Science PNG"
+                ]
+            },
+            {
+                title: "STEM & Technology",
+                items: [
+                    "Space & Astronomy PNG",
+                    "Robotics PNG",
+                    "Artificial Intelligence PNG",
+                    "Engineering PNG",
+                    "Computer Science PNG"
+                ]
+            },
+            {
+                title: "Lab & Research",
+                items: [
+                    "Laboratory Equipment PNG",
+                    "Microscope PNG",
+                    "Molecule & Atom PNG",
+                    "DNA & Cell PNG",
+                    "Medical Science PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Flat Science Icons PNG",
+                    "Realistic Science Illustration PNG",
+                    "Cartoon Science PNG",
+                    "Minimal Science Symbols PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery for quick selection."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -659,6 +705,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         people: peopleContent,
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
+        science: scienceContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
