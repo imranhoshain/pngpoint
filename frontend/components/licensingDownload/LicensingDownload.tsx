@@ -409,6 +409,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // States of Mind content
+    const statesOfMindContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "All States of Mind visuals are royalty-free and most allow commercial and print use. If an image requires attribution, it is clearly noted. Always double-check licensing before download to ensure project safety.",
+            proTip: "Always double-check licensing before download to ensure project safety."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Download single images, full packs, or high-resolution transparent PNGs. Ready-to-use files save editing time and allow seamless integration into projects.",
+            features: [
+                "Single images or complete packs available",
+                "High-resolution transparent PNGs",
+                "Seamless integration into projects"
+            ]
+        },
+        cta: {
+            title: "Start Your Creative Project Today",
+            description: "Access our complete States of Mind library with clear licensing and instant downloads. High-quality emotional and mental state visuals ready for education, wellness, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -426,6 +450,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         "social-issues": socialIssuesContent,
         science: scienceContent,
         sports: sportsContent,
+        "states-of-mind": statesOfMindContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

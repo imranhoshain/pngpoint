@@ -365,6 +365,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to narrow results instantly and find the right PNG without extra clicks."
     };
 
+    // States of Mind content
+    const statesOfMindContent = {
+        title: "Featured Gallery Preview",
+        description: "Take a glance at our most popular States of Mind visuals. Each preview highlights high-resolution, ready-to-use images suitable for creative, educational, or professional projects.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution visuals for sharp detail",
+            "Transparent PNGs for clean overlays",
+            "Royalty-free assets with clear licensing"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Educational Use",
+            "Mindfulness & Wellness",
+            "Creative Projects"
+        ],
+        footerText: "Use filters to find the right visual quickly and efficiently."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -383,6 +405,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         "social-issues": socialIssuesContent,
         science: scienceContent,
         sports: sportsContent,
+        "states-of-mind": statesOfMindContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

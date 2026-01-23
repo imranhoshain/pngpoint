@@ -455,6 +455,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // States of Mind content
+    const statesOfMindContent = {
+        title: "Popular Use Cases",
+        description: "Using ready-made States of Mind visuals saves hours in design and education. Whether for presentations, mental health campaigns, social media content, or classroom activities, expressive visuals help communicate complex emotions quickly and clearly.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Visuals save time on creative projects such as posters, digital campaigns, infographics, and branding. Pre-made transparent images drop straight into your layout without extra editing."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers, psychologists, and content creators use these visuals to explain mental health concepts, learning strategies, or social-emotional lessons. Clear graphics keep students engaged and focused."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Websites, blogs, or social campaigns can communicate feelings, moods, and mental health awareness effectively using these visuals."
+            },
+            {
+                icon: Users,
+                title: "Industry-Specific",
+                description: "Psychologists, wellness apps, mental health campaigns, social projects, and educators use these images to visually convey complex concepts to their audiences."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -472,6 +500,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         "social-issues": socialIssuesContent,
         science: scienceContent,
         sports: sportsContent,
+        "states-of-mind": statesOfMindContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -86,7 +86,7 @@ export default function SingleCategory() {
     const isHobbyCategory = slug === 'hobbies-and-leisure';
     const isIndustryCategory = slug === 'industry';
     const isLifeStyleCategory = slug === 'lifestyle';
-    const isSportsCategory = slug === 'sports-equipment-athletes-png';
+    const isSportsCategory = slug === 'sports';
     const categoryName = category?.data?.name || '';
     const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
     const firstSubCategorySlug = isAnimalCategory 
@@ -108,7 +108,7 @@ export default function SingleCategory() {
         "culture-and-religion","drinks","food",
         "graphic-resources","hobbies-and-leisure","industry",
         "landscapes","lifestyle","people","plants-and-flowers",
-        "social-issues","science","sports"]
+        "social-issues","science","sports","states-of-mind"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (

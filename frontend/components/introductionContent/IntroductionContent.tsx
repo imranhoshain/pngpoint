@@ -459,6 +459,33 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // States of Mind content
+    const statesOfMindContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "States of Mind visuals help people communicate emotions, thoughts, and mental states clearly. Whether for presentations, educational projects, or creative designs, ready-to-use illustrations save time and effort. Our collection focuses on high-quality files with transparent backgrounds and clear usage rights. Explore the library and find images that match your project instantly."
+        ],
+        mainTitle: "Why Choose Our States of Mind Collection",
+        mainDescription: "Finding the right visual representation of emotions and mental states should feel simple. This collection is designed for creators, educators, and designers who need expressive, reusable visuals for projects. Every file emphasizes clarity, usability, and real-world application, so you can focus on creating rather than editing.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Emotions, moods, mental states, cognitive concepts, mindfulness, stress, happiness, anxiety, motivation, creativity" },
+                { label: "High-quality formats:", text: "Transparent PNGs, HD images, vector-ready illustrations" },
+                { label: "Flexible usage:", text: "Websites, branding, presentations, educational materials, social campaigns" },
+                { label: "Clear licensing:", text: "Simple terms, no confusion before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated States of Mind visuals",
+                "Regular updates with new styles and concepts",
+                "Consistent licenses across the collection"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -476,6 +503,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         "social-issues": socialIssuesContent,
         science: scienceContent,
         sports: sportsContent,
+        "states-of-mind": statesOfMindContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

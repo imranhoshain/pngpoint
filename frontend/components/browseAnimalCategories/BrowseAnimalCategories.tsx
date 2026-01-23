@@ -736,6 +736,46 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery for quick, stress-free downloads."
     };
 
+    // States of Mind content
+    const statesOfMindContent = {
+        categories: [
+            {
+                title: "Core Categories",
+                items: [
+                    "Positive Emotions",
+                    "Negative Emotions",
+                    "Cognitive & Mental States",
+                    "Mindfulness & Meditation",
+                    "Stress & Relaxation",
+                    "Motivation & Productivity"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Cartoon Illustrations",
+                    "Realistic Digital Art",
+                    "Minimalist Icons",
+                    "Silhouette Visuals",
+                    "Abstract Emotions"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Emotional Faces PNG",
+                    "Mental State Icons",
+                    "Mindfulness Illustrations",
+                    "Brain & Thought Graphics",
+                    "Motivational Clipart",
+                    "Conceptual Sticker PNG",
+                    "Vector Illustrations"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery for quick, stress-free downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -753,6 +793,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         "social-issues": socialIssuesContent,
         science: scienceContent,
         sports: sportsContent,
+        "states-of-mind": statesOfMindContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

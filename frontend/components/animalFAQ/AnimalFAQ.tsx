@@ -1106,6 +1106,85 @@ const sportsFaqData: FAQItem[] = [
     }
 ];
 
+const statesOfMindFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a States of Mind image, and why is it useful?",
+        answer: "A States of Mind image is a visual representation of an emotion, thought, or mental state. It communicates complex ideas quickly and clearly for educational, creative, or professional projects."
+    },
+    {
+        id: 2,
+        question: "What does transparent background mean in these visuals?",
+        answer: "Only the core illustration is visible, allowing placement over any background without borders or distractions."
+    },
+    {
+        id: 3,
+        question: "Are these States of Mind images free to download and use?",
+        answer: "Some images are free, while others may require purchase or attribution. Check each file's license."
+    },
+    {
+        id: 4,
+        question: "Can I use States of Mind images for commercial projects?",
+        answer: "Yes, many visuals allow commercial use. Always verify licensing terms before integrating into products or campaigns."
+    },
+    {
+        id: 5,
+        question: "What is the difference between PNG, vector, and clipart for States of Mind?",
+        answer: "PNG: Raster, ready-to-use, transparent. Vector: Scalable without quality loss, best for logos and design projects. Clipart: Simplified illustrations, ideal for education and presentations."
+    },
+    {
+        id: 6,
+        question: "Do you offer high-resolution States of Mind images?",
+        answer: "Yes, most are HD-quality suitable for print, banners, presentations, and digital media."
+    },
+    {
+        id: 7,
+        question: "Can I use these visuals for educational projects?",
+        answer: "Absolutely. They are designed to enhance understanding of emotions, mental states, and mindfulness in classrooms or apps."
+    },
+    {
+        id: 8,
+        question: "How do I ensure the image looks good on my website or app?",
+        answer: "Choose the correct resolution and ensure transparency is maintained. PNG or vector formats usually work best."
+    },
+    {
+        id: 9,
+        question: "What file sizes should I expect?",
+        answer: "File size varies with image complexity. HD images may range from a few hundred KB to several MB. Optimize for web if needed."
+    },
+    {
+        id: 10,
+        question: "Can I edit or customize States of Mind visuals?",
+        answer: "Yes, you can resize, recolor, or combine them in compatible software. Check licensing for editing permissions."
+    },
+    {
+        id: 11,
+        question: "Are there visuals specifically for branding or logos?",
+        answer: "Yes, look for States of Mind icons or vector illustrations with commercial licenses."
+    },
+    {
+        id: 12,
+        question: "Do you have print-ready transparent images?",
+        answer: "Yes, many visuals are 300 dpi and suitable for print, posters, or merchandise."
+    },
+    {
+        id: 13,
+        question: "What does royalty-free mean for States of Mind visuals?",
+        answer: "You can use them across multiple projects without recurring fees, following license terms."
+    },
+    {
+        id: 14,
+        question: "How can I find specific styles (realistic, cartoon, abstract)?",
+        answer: "Use filters or search keywords like Abstract Mood PNG, Cartoon Emotion Illustration, or Minimalist Mindset Icon."
+    },
+    {
+        id: 15,
+        question: "Can I download images for kids or classroom projects?",
+        answer: "Yes, many visuals are suitable for worksheets, interactive lessons, and educational apps."
+    }
+];
+
+
 
 
 
@@ -1288,7 +1367,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'plants-and-flowers' && (id === 3 || id === 4 || id === 11)) ||
         (categorySlug === 'social-issues' && (id === 3 || id === 4 || id === 9)) ||
         (categorySlug === 'science' && (id === 3 || id === 4 || id === 8)) ||
-        (categorySlug === 'sports' && (id === 3 || id === 4 || id === 10));
+        (categorySlug === 'sports' && (id === 3 || id === 4 || id === 10)) ||
+        (categorySlug === 'states-of-mind' && (id === 3 || id === 4 || id === 10));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -1334,6 +1414,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'social-issues' ? socialIssuesFaqData :
                     categorySlug === 'science' ? scienceFaqData :
                     categorySlug === 'sports' ? sportsFaqData :
+                    categorySlug === 'states-of-mind' ? statesOfMindFaqData :
                     animalFaqData;
 
     return (
