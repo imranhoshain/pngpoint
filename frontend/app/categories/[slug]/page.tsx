@@ -86,6 +86,7 @@ export default function SingleCategory() {
     const isHobbyCategory = slug === 'hobbies-and-leisure';
     const isIndustryCategory = slug === 'industry';
     const isLifeStyleCategory = slug === 'lifestyle';
+    const isSportsCategory = slug === 'sports-equipment-athletes-png';
     const categoryName = category?.data?.name || '';
     const categorySlug = typeof slug === 'string' ? slug : Array.isArray(slug) ? slug[0] : '';
     const firstSubCategorySlug = isAnimalCategory 
@@ -98,14 +99,16 @@ export default function SingleCategory() {
         ? 'arts-crafts-png'
         : isIndustryCategory
         ? 'construction-engineering-png'
-        :isLifeStyleCategory
-        ?'beauty-fashion-png'
+        : isLifeStyleCategory
+        ? 'beauty-fashion-png'
+        : isSportsCategory
+        ?'sports-equipment-athletes-png'
         : (sub_categories && sub_categories.length > 0 ? sub_categories[1].slug : undefined);
     const availableCategory = ["animals","buildings-and-architecture","business",
         "culture-and-religion","drinks","food",
         "graphic-resources","hobbies-and-leisure","industry",
         "landscapes","lifestyle","people","plants-and-flowers",
-        "social-issues","science"]
+        "social-issues","science","sports"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (

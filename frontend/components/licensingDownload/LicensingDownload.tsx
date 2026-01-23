@@ -385,6 +385,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Sports content
+    const sportsContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "All Sports PNGs are royalty-free, and most allow commercial and print use. Attribution notes are clearly mentioned where required. Always check license info before downloading.",
+            proTip: "Always check license info before downloading."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Download single images or multiple PNGs in HD/high-resolution. Transparent backgrounds ensure ready-to-use files for web, print, or branding projects.",
+            features: [
+                "Single images or multiple PNG downloads",
+                "HD/high-resolution transparent files",
+                "Ready-to-use for web, print, and branding"
+            ]
+        },
+        cta: {
+            title: "Start Your Sports Project Today",
+            description: "Access our complete Sports PNG library with clear licensing and instant downloads. High-quality sports graphics ready for design, education, and branding projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -401,6 +425,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
         science: scienceContent,
+        sports: sportsContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -431,6 +431,34 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Sports content
+    const sportsContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Sports PNG images save time when you need clean, ready-to-use visuals for design, learning, or business projects. Transparent sports graphics work on any background, solving your design challenges quickly. At Pngpoint, we've used sports PNGs in web layouts, posters, branding work, and school projects, and clean files always make the workflow smoother.",
+            "This collection highlights high-quality, transparent PNG files with clear usage terms you can trust. Explore our sports PNG library and pick the perfect visuals for your project today."
+        ],
+        mainTitle: "Why Choose Our Sports PNG Collection",
+        mainDescription: "Finding the right sports graphics should feel fast and easy. This collection is built for creators who need clean, reusable sports PNGs that work instantly across projects. Each file focuses on clarity, flexibility, and real-world use, saving you editing time and letting you focus on creating.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Football, Basketball, Cricket, Tennis, Olympics, Extreme Sports, Winter Sports, Gym & Fitness" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD PNG images, sharp edges, clean cut-outs" },
+                { label: "Flexible usage:", text: "Websites, branding, print designs, educational materials, and kids' projects" },
+                { label: "Clear licensing:", text: "Simple usage terms explained upfront, no confusion before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated sports PNG files",
+                "Regular updates with new games and sports styles",
+                "Consistent licenses across the collection"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -447,6 +475,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
         science: scienceContent,
+        sports: sportsContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

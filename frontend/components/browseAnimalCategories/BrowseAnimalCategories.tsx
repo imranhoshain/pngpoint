@@ -690,6 +690,52 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery for quick selection."
     };
 
+    // Sports content
+    const sportsContent = {
+        categories: [
+            {
+                title: "Core Sports Types",
+                items: [
+                    "Team Sports PNG",
+                    "Individual Sports PNG",
+                    "Extreme Sports PNG",
+                    "Winter Sports PNG",
+                    "Fitness & Gym PNG"
+                ]
+            },
+            {
+                title: "Nature & Equipment",
+                items: [
+                    "Balls & Equipment PNG",
+                    "Stadiums & Fields PNG",
+                    "Sports Accessories PNG",
+                    "Athlete Silhouettes PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Cartoon Sports PNG",
+                    "Realistic Sports PNG",
+                    "Silhouette Sports PNG",
+                    "Iconic Sports PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Sports Logos PNG",
+                    "Sports Icons PNG",
+                    "Sports Illustrations PNG",
+                    "Sports Clipart PNG",
+                    "Sports Stickers PNG",
+                    "Sports Vectors PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery for quick, stress-free downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -706,6 +752,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
         science: scienceContent,
+        sports: sportsContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

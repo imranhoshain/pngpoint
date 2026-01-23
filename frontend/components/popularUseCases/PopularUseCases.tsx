@@ -427,6 +427,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Sports content
+    const sportsContent = {
+        title: "Popular Use Cases",
+        description: "Clean sports PNGs save hours of editing time. With a transparent background, you can focus on work, not fixing images.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Designers can use sports PNGs for banners, posters, social media, and branding visuals. Sharp edges and clean transparency make them drop-ready."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers and parents use sports PNGs to create worksheets, presentations, and learning slides. Simple visuals help students focus without distraction."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Websites, blogs, and campaigns use sports PNGs to add dynamic visuals. They enhance headers, thumbnails, and featured sections efficiently."
+            },
+            {
+                icon: Users,
+                title: "Industry-Specific",
+                description: "Sports organizations, gyms, clubs, and media channels rely on these images for professional, clear, and emotional communication."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -443,6 +471,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
         science: scienceContent,
+        sports: sportsContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

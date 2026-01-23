@@ -1028,6 +1028,85 @@ const scienceFaqData: FAQItem[] = [
     }
 ];
 
+const sportsFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Sports PNG image, and why is it useful?",
+        answer: "A Sports PNG is a digital image of sports equipment, players, or activities with a transparent background. These images are perfect for web design, presentations, educational content, social media, or branding. Using ready-made PNGs saves time because you don't need to remove backgrounds or edit edges."
+    },
+    {
+        id: 2,
+        question: "What does transparent background mean in sports PNGs?",
+        answer: "It means only the sports element is visible, without any surrounding color or background. You can place the PNG on any surface, color, or layout, ensuring your design looks professional and clean."
+    },
+    {
+        id: 3,
+        question: "Are these Sports PNGs free to download and use?",
+        answer: "Some PNGs are free, while others may require purchase. Always check the licensing information for each file. Free PNGs may have limited usage rights, while premium packs often allow broader commercial applications."
+    },
+    {
+        id: 4,
+        question: "Can I use Sports PNGs for commercial projects?",
+        answer: "Yes, many Sports PNGs are available for commercial use, such as branding, merchandise, advertising, or digital campaigns. Always confirm the license terms before using them to ensure compliance."
+    },
+    {
+        id: 5,
+        question: "What is the difference between PNG, vector, and clipart for sports?",
+        answer: "PNG: Raster images with transparent backgrounds, ready-to-use. Vector (AI/SVG): Scalable without losing quality, ideal for logos and illustrations. Clipart: Simplified or stylized representations, best for presentations or educational materials."
+    },
+    {
+        id: 6,
+        question: "Do you offer high-resolution sports PNG images?",
+        answer: "Yes. Most Sports PNGs are high-resolution, suitable for print, banners, websites, or presentations. Check individual file details for exact resolution specifications."
+    },
+    {
+        id: 7,
+        question: "Can I use Sports PNGs for kids' educational projects?",
+        answer: "Absolutely. Sports PNGs help explain sports activities, rules, and equipment visually. They're suitable for classroom worksheets, slides, learning apps, or interactive games."
+    },
+    {
+        id: 8,
+        question: "How do I ensure the PNG looks good on my website or app?",
+        answer: "Use the correct resolution: 72–150 dpi for web, 300 dpi for print. Ensure the PNG has a transparent background and clean edges. Optimizing file size can also improve page loading speed."
+    },
+    {
+        id: 9,
+        question: "What file sizes should I expect for sports PNGs?",
+        answer: "File sizes vary based on dimensions and complexity. High-resolution images can range from a few hundred KB to several MB. For web use, compress files if allowed by the license to improve loading speed."
+    },
+    {
+        id: 10,
+        question: "Can I edit or customize sports PNGs?",
+        answer: "Yes. You can resize, recolor, or combine PNGs in compatible software. Premium PNG packs often allow full editing, but check the license for permission on modifications."
+    },
+    {
+        id: 11,
+        question: "Are there sports PNGs specifically for branding or logos?",
+        answer: "Yes. Look for Sports Logo PNGs or Icon PNGs designed for branding, marketing, and digital campaigns. Always verify that the license allows commercial use before using them in logos."
+    },
+    {
+        id: 12,
+        question: "Do you have sports PNGs with transparent backgrounds for print?",
+        answer: "Yes, many PNGs are print-ready with transparent backgrounds. Ensure the file is high-resolution (300 dpi) for banners, posters, or merchandise."
+    },
+    {
+        id: 13,
+        question: "What does royalty-free mean for sports PNGs?",
+        answer: "Royalty-free means you can use the PNG across multiple projects without paying recurring fees, as long as you follow the license terms. It does not automatically mean there are no restrictions, so read the license carefully."
+    },
+    {
+        id: 14,
+        question: "How can I find sports PNGs in specific styles (cartoon, realistic, silhouette)?",
+        answer: "Use filters or search keywords like Cartoon Sports PNG, Realistic Sports PNG, or Silhouette Sports PNG. Preview thumbnails and confirm licensing to ensure compatibility with your project."
+    },
+    {
+        id: 15,
+        question: "Can I download sports PNGs for educational platforms or kids' projects?",
+        answer: "Yes. Many Sports PNGs are suitable for educational use, online learning platforms, school projects, and interactive apps. Always confirm the license allows distribution in educational settings."
+    }
+];
+
+
 
 
 
@@ -1208,7 +1287,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'people' && (id === 3 || id === 4 || id === 10)) ||
         (categorySlug === 'plants-and-flowers' && (id === 3 || id === 4 || id === 11)) ||
         (categorySlug === 'social-issues' && (id === 3 || id === 4 || id === 9)) ||
-        (categorySlug === 'science' && (id === 3 || id === 4 || id === 8));
+        (categorySlug === 'science' && (id === 3 || id === 4 || id === 8)) ||
+        (categorySlug === 'sports' && (id === 3 || id === 4 || id === 10));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -1253,6 +1333,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'plants-and-flowers' ? plantsFlowersFaqData :
                     categorySlug === 'social-issues' ? socialIssuesFaqData :
                     categorySlug === 'science' ? scienceFaqData :
+                    categorySlug === 'sports' ? sportsFaqData :
                     animalFaqData;
 
     return (

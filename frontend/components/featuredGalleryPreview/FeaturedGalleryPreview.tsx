@@ -343,6 +343,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Filters help you narrow results quickly and efficiently."
     };
 
+    // Sports content
+    const sportsContent = {
+        title: "Featured Gallery Preview",
+        description: "Quickly view our most downloaded sports PNGs in one place. High-resolution files with transparent backgrounds are ready for real projects. Spot quality at a glance and download confidently.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-Resolution Sports PNG for sharp detail",
+            "Transparent Background PNG for clean overlays",
+            "Royalty-Free PNG assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Kids Projects",
+            "Branding"
+        ],
+        footerText: "Use filters to narrow results instantly and find the right PNG without extra clicks."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -360,6 +382,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         "plants-and-flowers": plantsFlowersContent,
         "social-issues": socialIssuesContent,
         science: scienceContent,
+        sports: sportsContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
