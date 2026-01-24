@@ -34,6 +34,66 @@ export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-5 basis-full">
                         {images?.map((image: any) => {
                             const isLoaded = loadedImages.has(image.id);
+                            const imageUrl = getImageUrl(image.slug);
+                            
+                            // Process keywords for schema
+                            let processedKeywords: string[] | undefined = undefined;
+                            if (image.keywords) {
+                                if (Array.isArray(image.keywords)) {
+                                    processedKeywords = image.keywords
+                                        .map((item: any) => item.name || item)
+                                        .filter(Boolean);
+                                } else if (typeof image.keywords === 'string') {
+                                    processedKeywords = image.keywords
+                                        .split(",")
+                                        .map((k: string) => k.trim())
+                                        .filter(Boolean);
+                                }
+                            }
+                            
+                            // Create image schema
+                            const imageSchema = {
+                                "@context": "https://schema.org",
+                                "@graph": [
+                                    {
+                                        "@type": "WebPage",
+                                        "@id": imageUrl,
+                                        "url": imageUrl,
+                                        "name": image.title,
+                                        "description": image.description || image.title,
+                                        "inLanguage": "en",
+                                        "primaryImageOfPage": {
+                                            "@id": `${imageUrl}#image`,
+                                        },
+                                    },
+                                    {
+                                        "@type": "ImageObject",
+                                        "@id": `${imageUrl}#image`,
+                                        "name": image.title,
+                                        "description": image.description || image.title,
+                                        "caption": image.caption || image.title,
+                                        "contentUrl": image.cloudflare_url,
+                                        "thumbnailUrl": image.thumbnail_url || image.cloudflare_url,
+                                        "encodingFormat": "image/png",
+                                        "width": image.width || 352,
+                                        "height": image.height || 352,
+                                        "contentSize": image.file_size ? `${image.file_size} KB` : undefined,
+                                        "keywords": processedKeywords,
+                                        "creator": {
+                                            "@type": "Organization",
+                                            "name": "PNGPoint",
+                                            "url": "https://pngpoint.com/",
+                                        },
+                                        "license": "https://pngpoint.com/license",
+                                        "acquireLicensePage": "https://pngpoint.com/license",
+                                        "creditText": "PNGPoint",
+                                        "copyrightNotice": "© PNGPoint",
+                                        "isAccessibleForFree": true,
+                                        "datePublished": image.created_at || new Date().toISOString(),
+                                        "dateModified": image.updated_at || new Date().toISOString(),
+                                    },
+                                ],
+                            };
                             
                             return (
                                 <div className="block w-full h-full relative rounded-2xl border border-gray-300 shadow-sm group" key={image.id} onClick={() => handleRelatedImageClick()}>
@@ -44,36 +104,7 @@ export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
                                         <script
                                             type="application/ld+json"
                                             dangerouslySetInnerHTML={{
-                                                __html: JSON.stringify({
-                                                    "@context": "https://schema.org",
-                                                    "@type": "ImageObject",
-                                                    name: image.title,
-                                                    description: image.description || image.title,
-                                                    author: {
-                                                        "@type": "Organization",
-                                                        name: siteConfig.siteName,
-                                                        url: siteConfig.url,
-                                                    },
-                                                    contentUrl: image.cloudflare_url,
-                                                    url: getImageUrl(image.slug),
-                                                    datePublished: new Date(image.created_at).toLocaleString("en-US", {
-                                                        timeZone: "Asia/Dhaka",
-                                                        year: "numeric",
-                                                        month: "2-digit",
-                                                        day: "2-digit",
-                                                        hour: "2-digit",
-                                                        minute: "2-digit",
-                                                        second: "2-digit",
-                                                    }),
-                                                    width: image.width || 352,
-                                                    height: image.height || 352,
-                                                    license: siteConfig.licenseUrl,
-                                                    copyrightHolder: {
-                                                        "@type": "Organization",
-                                                        name: siteConfig.siteName,
-                                                    },
-                                                    exifData: image.exifData || [],
-                                                }),
+                                                __html: JSON.stringify(imageSchema),
                                             }}
                                         /> 
                                         
