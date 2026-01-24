@@ -10,7 +10,28 @@ import { RootState } from "@/redux/store";
 import { setTitle } from "@/redux/features/getImages/getImageSlice";
 import { getSearchSchema } from "@/utils/searchSchema";
 
-export const SingleImageHeader: React.FC = () => {
+interface ImageData {
+    pageUrl: string;
+    title: string;
+    description: string;
+    caption: string;
+    fileUrl: string;
+    thumbnailUrl: string;
+    width: number;
+    height: number;
+    fileSize?: number;
+    keywords?: string;
+    publishDate: string;
+    modifiedDate: string;
+    categoryPageUrl?: string;
+    categoryName?: string;
+}
+
+interface SingleImageHeaderProps {
+    imageData?: ImageData | null;
+}
+
+export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData }) => {
     const { IoSearchOutline } = ReactIcons;
     const dispatch = useDispatch();
     const title = useSelector((state: RootState) => state.search.title);
@@ -21,6 +42,54 @@ export const SingleImageHeader: React.FC = () => {
     };
     
     const searchSchema = getSearchSchema(title);
+    
+    // Image schema
+    const imageSchema = imageData
+        ? {
+            "@context": "https://schema.org",
+            "@graph": [
+                {
+                    "@type": "WebPage",
+                    "@id": imageData.pageUrl,
+                    "url": imageData.pageUrl,
+                    "name": imageData.title,
+                    "description": imageData.description,
+                    "inLanguage": "en",
+                    "primaryImageOfPage": {
+                        "@id": `${imageData.pageUrl}#image`,
+                    },
+                },
+                {
+                    "@type": "ImageObject",
+                    "@id": `${imageData.pageUrl}#image`,
+                    "name": imageData.title,
+                    "description": imageData.description,
+                    "caption": imageData.caption,
+                    "contentUrl": imageData.fileUrl,
+                    "thumbnailUrl": imageData.thumbnailUrl,
+                    "encodingFormat": "image/png",
+                    "width": imageData.width,
+                    "height": imageData.height,
+                    "contentSize": imageData.fileSize ? `${imageData.fileSize} KB` : undefined,
+                    "keywords": imageData.keywords 
+                        ? imageData.keywords.split(",").map((k: string) => k.trim()).filter(Boolean)
+                        : undefined,
+                    "creator": {
+                        "@type": "Organization",
+                        "name": "PNGPoint",
+                        "url": "https://pngpoint.com/",
+                    },
+                    "license": "https://pngpoint.com/license",
+                    "acquireLicensePage": "https://pngpoint.com/license",
+                    "creditText": "PNGPoint",
+                    "copyrightNotice": "© PNGPoint",
+                    "isAccessibleForFree": true,
+                    "datePublished": imageData.publishDate,
+                    "dateModified": imageData.modifiedDate,
+                },
+            ],
+        }
+        : null;
 
     return (
         <header className="relative top-0 left-0 right-0 py-1.5 w-full bg-[#0077a2]">
@@ -50,11 +119,19 @@ export const SingleImageHeader: React.FC = () => {
                             <IoSearchOutline className="text-white text-3xl md:text-4xl font-bold" />
                         </button>
                         
-                        {/* Search Schema only */}
+                        {/* Search Schema */}
                         <script
                             type="application/ld+json"
                             dangerouslySetInnerHTML={{ __html: JSON.stringify(searchSchema) }}
                         />
+                        
+                        {/* Image Schema */}
+                        {imageSchema && (
+                            <script
+                                type="application/ld+json"
+                                dangerouslySetInnerHTML={{ __html: JSON.stringify(imageSchema) }}
+                            />
+                        )}
                     </div>
                 </div>
             </div>
