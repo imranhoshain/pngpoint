@@ -13,7 +13,7 @@ interface MainImageProps {
 }
 
 export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
-    const { IoInformationCircleOutline, AiOutlineFileText, PiImageSquareLight, HiOutlineDocumentText } = ReactIcons;
+    const { IoInformationCircleOutline, AiOutlineFileText, PiImageSquareLight } = ReactIcons;
 
     return (
         <div className="flex flex-col flex-wrap gap-y-2.5 lg:gap-y-2.5 w-full">
@@ -68,7 +68,7 @@ export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
                 {/* License */}
                 <div className="flex flex-row flex-wrap items-center justify-between py-1.5 px-1.5 gap-x-2.5 rounded w-full border border-gray-300 shadow-sm">
                     <div className="flex flex-row flex-wrap items-center gap-x-2.5">
-                        <HiOutlineDocumentText className="text-2xl md:text-3xl" />
+                        <AiOutlineFileText className="text-2xl md:text-3xl" />
                         <span className="text-sm font-normal">License</span>
                     </div>
                     <div>
