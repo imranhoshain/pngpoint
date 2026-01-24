@@ -60,7 +60,7 @@ export const RelatedImages: React.FC<ImagesProps> = ({ images }) => {
                                         "@id": imageUrl,
                                         "url": imageUrl,
                                         "name": image.title,
-                                        "description": image.description || image.title,
+                                        "description": `Download high-quality ${image.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.` || image.title,
                                         "inLanguage": "en",
                                         "primaryImageOfPage": {
                                             "@id": `${imageUrl}#image`,

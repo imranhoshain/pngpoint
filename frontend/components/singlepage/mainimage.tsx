@@ -49,7 +49,7 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
                 "@type": "ImageObject",
                 "@id": `${imageUrl}#image`,
                 "name": image?.image?.title,
-                "description": image?.image?.description || image?.image?.title,
+                "description": `Download high-quality ${image?.image?.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.` || image?.image?.title,
                 "caption": image?.image?.caption || image?.image?.title,
                 "contentUrl": image?.image?.cloudflare_url,
                 "thumbnailUrl": image?.image?.thumbnail_url || image?.image?.cloudflare_url,
