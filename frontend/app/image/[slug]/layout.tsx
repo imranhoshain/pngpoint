@@ -37,36 +37,49 @@ export async function generateMetadata(
 
     const imageResdata = await res.json();
     const data = imageResdata?.image;
+
+    // Validate required data exists
+    if (!data || !data.cloudflare_url) {
+      return {
+        title: "Image - PNGPoint",
+        description: "PNGPoint image details",
+        alternates: {
+          canonical: getImageUrl(slug),
+        },
+      };
+    }
+
     const imageUrl = data.cloudflare_url;
 
     return {
-      title: `${data.title} - PNGPoint`,
-      description: data.description,
+      title: `${data.title || 'Image'} - PNGPoint`,
+      description: data.description || 'PNGPoint image details',
       alternates: {
         canonical: getImageUrl(slug),
       },
       openGraph: {
-        title: `${data.title} - PNGPoint`,
-        description: data.description,
+        title: `${data.title || 'Image'} - PNGPoint`,
+        description: data.description || 'PNGPoint image details',
         url: getImageUrl(slug),
         type: "website",
         images: [
           {
             url: imageUrl,
-            width: data.width,
-            height: data.height,
-            alt: data.title,
+            width: data.width || 800,
+            height: data.height || 600,
+            alt: data.title || 'Image',
           },
         ],
       },
       twitter: {
         card: "summary_large_image",
-        title: data.title,
-        description: `Download high-quality ${data.description} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
+        title: data.title || 'Image',
+        description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
         images: [imageUrl],
       },
     };
-  } catch {
+  } catch (error) {
+    console.error('Error generating metadata:', error);
     return {
       title: "Image - PNGPoint",
       description: "PNGPoint image details",
@@ -85,30 +98,41 @@ async function getImageData(slug: string) {
   try {
     const res = await fetch(`${SERVER_URL}/images/${slug}`, {
       next: { revalidate: 120 },
+      cache: 'force-cache',
     });
 
-    if (!res.ok) return null;
+    if (!res.ok) {
+      console.error(`Failed to fetch image data: ${res.status} ${res.statusText}`);
+      return null;
+    }
 
     const imageResdata = await res.json();
     const data = imageResdata?.image;
 
+    // Validate essential data
+    if (!data || !data.cloudflare_url) {
+      console.error('Invalid image data structure');
+      return null;
+    }
+
     return {
-      title: data.title,
-      description: data.description,
-      caption: data.caption || data.title,
+      title: data.title || 'Untitled Image',
+      description: data.description || '',
+      caption: data.caption || data.title || 'Image',
       pageUrl: getImageUrl(slug),
       fileUrl: data.cloudflare_url,
       thumbnailUrl: data.thumbnail_url || data.cloudflare_url,
-      width: data.width,
-      height: data.height,
-      fileSize: data.file_size,
-      keywords: data.keywords || data.tags || [],
+      width: data.width || 800,
+      height: data.height || 600,
+      fileSize: data.file_size || 0,
+      keywords: data.keywords || data.tags || '',
       publishDate: data.created_at || new Date().toISOString(),
       modifiedDate: data.updated_at || new Date().toISOString(),
       categoryPageUrl: data.category_url || "https://pngpoint.com/",
       categoryName: data.category_name || "Images",
     };
-  } catch {
+  } catch (error) {
+    console.error('Error fetching image data:', error);
     return null;
   }
 }
@@ -127,7 +151,8 @@ export default async function ImageRootLayout({
   const { slug } = await params;
   const imageData = await getImageData(slug);
 
-    const imageSchema = imageData
+  // Only create schema if we have valid image data
+  const imageSchema = imageData
     ? {
         "@context": "https://schema.org",
         "@graph": [
@@ -153,8 +178,10 @@ export default async function ImageRootLayout({
             "encodingFormat": "image/png",
             "width": imageData.width,
             "height": imageData.height,
-            "contentSize": `${imageData.fileSize} KB`,
-            "keywords": imageData.keywords?.split(",").map((k: string) => k.trim()),
+            "contentSize": imageData.fileSize ? `${imageData.fileSize} KB` : undefined,
+            "keywords": typeof imageData.keywords === 'string' 
+              ? imageData.keywords.split(",").map((k: string) => k.trim()).filter(Boolean)
+              : imageData.keywords,
             "creator": {
               "@type": "Organization",
               "name": "PNGPoint",
@@ -178,7 +205,7 @@ export default async function ImageRootLayout({
         <Script
           id="image-schema"
           type="application/ld+json"
-          strategy="beforeInteractive"
+          strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(imageSchema),
           }}
