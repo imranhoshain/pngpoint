@@ -13,7 +13,7 @@ interface MainImageProps {
 }
 
 export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
-    const { IoInformationCircleOutline, AiOutlineFileText, PiImageSquareLight } = ReactIcons;
+    const { IoInformationCircleOutline, AiOutlineFileText, PiImageSquareLight, HiOutlineDocumentText } = ReactIcons;
 
     return (
         <div className="flex flex-col flex-wrap gap-y-2.5 lg:gap-y-2.5 w-full">
@@ -62,6 +62,24 @@ export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
                     </div>
                     <div>
                         <span className="text-sm font-normal">image/png</span>
+                    </div>
+                </div>
+
+                {/* License */}
+                <div className="flex flex-row flex-wrap items-center justify-between py-1.5 px-1.5 gap-x-2.5 rounded w-full border border-gray-300 shadow-sm">
+                    <div className="flex flex-row flex-wrap items-center gap-x-2.5">
+                        <HiOutlineDocumentText className="text-2xl md:text-3xl" />
+                        <span className="text-sm font-normal">License</span>
+                    </div>
+                    <div>
+                        <a 
+                            href="https://pngpoint.com/license" 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="text-sm font-normal text-blue-600 hover:text-blue-800 hover:underline"
+                        >
+                            View License
+                        </a>
                     </div>
                 </div>
             </div>
