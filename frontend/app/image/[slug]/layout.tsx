@@ -62,7 +62,7 @@ export async function generateMetadata(
       twitter: {
         card: "summary_large_image",
         title: data.title,
-        description: data.description,
+        description: `Download high-quality ${data.description} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
         images: [imageUrl],
       },
     };
@@ -162,7 +162,9 @@ export default async function ImageRootLayout({
               "url": "https://pngpoint.com/",
             },
             "license": "https://pngpoint.com/license",
-            "acquireLicensePage": "https://pngpoint.com/acquire-license",
+            "acquireLicensePage": "https://pngpoint.com/license",
+            "creditText": "PNGPoint",
+            "copyrightNotice": "© PNGPoint",
             "datePublished": imageData.publishDate,
             "dateModified": imageData.modifiedDate,
           },
