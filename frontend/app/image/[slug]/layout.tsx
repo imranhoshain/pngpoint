@@ -51,18 +51,21 @@ export async function generateMetadata(
 
     const imageUrl = data.cloudflare_url;
 
+    // Process keywords safely
+    const keywords = data.keywords && Array.isArray(data.keywords) 
+      ? data.keywords.map((item: any) => item.name || item).filter(Boolean).join(', ')
+      : '';
+
     return {
       title: `${data.title || 'Image'} - PNGPoint`,
-      description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.` || 'PNGPoint image details',
-      keywords:typeof data.keywords === 'string' 
-              ? data.keywords.split(",").map((k: string) => k.trim()).filter(Boolean)
-              : data.keywords,
+      description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
+      keywords: keywords || undefined,
       alternates: {
         canonical: getImageUrl(slug),
       },
       openGraph: {
         title: `${data.title || 'Image'} - PNGPoint`,
-        description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.` || 'PNGPoint image details',
+        description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
         url: getImageUrl(slug),
         type: "website",
         images: [
@@ -118,6 +121,22 @@ async function getImageData(slug: string) {
       return null;
     }
 
+    // Process keywords for schema
+    let processedKeywords = '';
+    if (data.keywords) {
+      if (Array.isArray(data.keywords)) {
+        processedKeywords = data.keywords.map((item: any) => item.name || item).filter(Boolean).join(',');
+      } else if (typeof data.keywords === 'string') {
+        processedKeywords = data.keywords;
+      }
+    } else if (data.tags) {
+      if (Array.isArray(data.tags)) {
+        processedKeywords = data.tags.map((item: any) => item.name || item).filter(Boolean).join(',');
+      } else if (typeof data.tags === 'string') {
+        processedKeywords = data.tags;
+      }
+    }
+
     return {
       title: data.title || 'Untitled Image',
       description: data.description || '',
@@ -128,7 +147,7 @@ async function getImageData(slug: string) {
       width: data.width || 800,
       height: data.height || 600,
       fileSize: data.file_size || 0,
-      keywords: data.keywords || data.tags || '',
+      keywords: processedKeywords,
       publishDate: data.created_at || new Date().toISOString(),
       modifiedDate: data.updated_at || new Date().toISOString(),
       categoryPageUrl: data.category_url || "https://pngpoint.com/",
@@ -182,9 +201,9 @@ export default async function ImageRootLayout({
             "width": imageData.width,
             "height": imageData.height,
             "contentSize": imageData.fileSize ? `${imageData.fileSize} KB` : undefined,
-            "keywords": typeof imageData.keywords === 'string' 
+            "keywords": imageData.keywords 
               ? imageData.keywords.split(",").map((k: string) => k.trim()).filter(Boolean)
-              : imageData.keywords,
+              : undefined,
             "creator": {
               "@type": "Organization",
               "name": "PNGPoint",
