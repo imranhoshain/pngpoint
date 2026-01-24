@@ -4,7 +4,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import bgShape from "../../public/bg-shape.jpg";
-import { siteConfig, getImageUrl } from "@/config/site";
+import { getImageUrl } from "@/config/site";
 
 interface MainImageProps {
     image: any;
@@ -12,6 +12,67 @@ interface MainImageProps {
 
 export const MainImage: React.FC<MainImageProps> = ({ image }) => {
     const [isLoaded, setIsLoaded] = useState(false);
+    
+    const imageUrl = getImageUrl(image?.image?.slug);
+    
+    // Process keywords for schema
+    let processedKeywords: string[] | undefined = undefined;
+    if (image?.image?.keywords) {
+        if (Array.isArray(image.image.keywords)) {
+            processedKeywords = image.image.keywords
+                .map((item: any) => item.name || item)
+                .filter(Boolean);
+        } else if (typeof image.image.keywords === 'string') {
+            processedKeywords = image.image.keywords
+                .split(",")
+                .map((k: string) => k.trim())
+                .filter(Boolean);
+        }
+    }
+    
+    // Create image schema
+    const imageSchema = {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebPage",
+                "@id": imageUrl,
+                "url": imageUrl,
+                "name": image?.image?.title,
+                "description": image?.image?.description || image?.image?.title,
+                "inLanguage": "en",
+                "primaryImageOfPage": {
+                    "@id": `${imageUrl}#image`,
+                },
+            },
+            {
+                "@type": "ImageObject",
+                "@id": `${imageUrl}#image`,
+                "name": image?.image?.title,
+                "description": image?.image?.description || image?.image?.title,
+                "caption": image?.image?.caption || image?.image?.title,
+                "contentUrl": image?.image?.cloudflare_url,
+                "thumbnailUrl": image?.image?.thumbnail_url || image?.image?.cloudflare_url,
+                "encodingFormat": "image/png",
+                "width": image?.image?.width || 500,
+                "height": image?.image?.height || 600,
+                "contentSize": image?.image?.file_size ? `${image.image.file_size} KB` : undefined,
+                "keywords": processedKeywords,
+                "creator": {
+                    "@type": "Organization",
+                    "name": "PNGPoint",
+                    "url": "https://pngpoint.com/",
+                },
+                "license": "https://pngpoint.com/license",
+                "acquireLicensePage": "https://pngpoint.com/license",
+                "creditText": "PNGPoint",
+                "copyrightNotice": "© PNGPoint",
+                "isAccessibleForFree": true,
+                "datePublished": image?.image?.created_at || new Date().toISOString(),
+                "dateModified": image?.image?.updated_at || new Date().toISOString(),
+            },
+        ],
+    };
 
     return (
         <div className="flex flex-col flex-wrap gap-y-2.5 md:gap-y-5 w-full h-full">
@@ -20,34 +81,7 @@ export const MainImage: React.FC<MainImageProps> = ({ image }) => {
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{
-                        __html: JSON.stringify({
-                            "@context": "https://schema.org",
-                            "@type": "ImageObject",
-                            name: image?.image?.title,
-                            description: image?.image?.description || image?.image?.title,
-                            author: {
-                                "@type": "Organization",
-                                name: siteConfig.siteName,
-                                url: siteConfig.url,
-                            },
-                            contentUrl: image?.image?.cloudflare_url,
-                            url: getImageUrl(image?.image?.slug),
-                            datePublished: image.created_at,
-                            creator: {
-                                "@type": "Organization",
-                                name: siteConfig.siteName,
-                            },
-                            acquireLicensePage: siteConfig.licenseUrl,
-                            copyrightNotice: siteConfig.copyright,
-                            width: image.width || 352,
-                            height: image.height || 352,
-                            license: siteConfig.licenseUrl,
-                            copyrightHolder: {
-                                "@type": "Organization",
-                                name: siteConfig.siteName,
-                            },
-                            exifData: image.exifData || [],
-                        }),
+                        __html: JSON.stringify(imageSchema),
                     }}
                 />
                 <div className="flex flex-col flex-wrap justify-center items-center w-full h-full z-50 relative overflow-hidden">
