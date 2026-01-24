@@ -287,7 +287,7 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f"Successfully cached: {stats['cached']}"))
         if stats["skipped"] > 0:
             self.stdout.write(
-                self.style.WARNING(f"Skipped (no keywords): {stats['skipped']}")
+                self.style.WARNING(f"Skipped (no slug words): {stats['skipped']}")
             )
         if stats["errors"] > 0:
             self.stdout.write(self.style.ERROR(f"Errors: {stats['errors']}"))
@@ -310,29 +310,33 @@ class Command(BaseCommand):
             self.stdout.write(f"  → {image.slug} (already cached)")
             return "cached"
 
-        # Get keywords
-        main_keywords = list(image.keywords.all().order_by("id"))
+        # ---------------- EXTRACT WORDS FROM MAIN IMAGE SLUG ----------------
+        # Split slug by hyphen to get individual words
+        slug_words = image.slug.split('-')
+        
+        # Convert slug words to keyword slugs for matching
+        slug_word_slugs = [word for word in slug_words if word]
 
-        if not main_keywords:
-            self.stdout.write(f"  - {image.slug} (no keywords, skipping)")
+        if not slug_word_slugs:
+            self.stdout.write(f"  - {image.slug} (no slug words, skipping)")
             return "skipped"
 
-        first_kw = main_keywords[0]
-        first_kw_slug = first_kw.slug
-
-        # Get related images (matching view logic)
+        # ---------------- RELATED IMAGES (keyword slug matches any word from main image slug) ----------------
+        # Get images that have keywords matching any of the slug words
         related_qs = (
-            Images.objects.filter(keywords__slug=first_kw_slug)
+            Images.objects.filter(keywords__slug__in=slug_word_slugs)
             .exclude(pk=image.pk)
             .prefetch_related("keywords")
             .distinct()
             .order_by("-created_at")
         )
 
+        # Filter to keep only images where at least one keyword matches our slug words
         related_list = []
         for img in related_qs:
-            img_keywords = list(img.keywords.all().order_by("id"))
-            if img_keywords and img_keywords[0].slug == first_kw_slug:
+            img_keywords = list(img.keywords.all())
+            # Check if any keyword from this image matches any word from main image slug
+            if any(kw.slug in slug_word_slugs for kw in img_keywords):
                 related_list.append(img)
 
         # Limit to 50
@@ -356,12 +360,12 @@ class Command(BaseCommand):
             "results": related_serializer.data,
             "image": main_image_data,
             "success": True,
-            "message": "Image with related images (based on first keyword) fetched successfully.",
+            "message": "Image with related images (based on slug word matching) fetched successfully.",
         }
 
         # Cache the response
         if not dry_run:
-            cache.set(cache_key, response_data)
+            cache.set(cache_key, response_data, timeout)
             
             # Verify cache was set successfully
             cached_data = cache.get(cache_key)

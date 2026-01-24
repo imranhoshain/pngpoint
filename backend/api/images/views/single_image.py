@@ -48,40 +48,45 @@ class SingleImageView(viewsets.ViewSet):
         if not image:
             return Response({"detail": "Not found."}, status=status.HTTP_404_NOT_FOUND)
 
-        # ---------------- MAIN IMAGE KEYWORDS ----------------
-        main_keywords = list(image.keywords.all().order_by("id"))
-        if not main_keywords:
+        # ---------------- EXTRACT WORDS FROM MAIN IMAGE SLUG ----------------
+        # Split slug by hyphen to get individual words
+        slug_words = slug.split('-')
+        print(f"Main image slug words: {slug_words}")
+        
+        # Convert slug words to keyword slugs for matching
+        slug_word_slugs = [word for word in slug_words if word]
+        print(f"Slug word slugs for matching: {slug_word_slugs}")
+
+        if not slug_word_slugs:
             response_data = {
                 "count": 0,
                 "results": [],
                 "image": SingleImageSerializer(image).data,
                 "success": True,
-                "message": "No keywords found for this image.",
+                "message": "No words found in slug to match keywords.",
             }
-            # Cache for 1 hour (3600 seconds)
-            cache.set(cache_key, response_data)
+            cache.set(cache_key, response_data, 3600)
             return Response(response_data, status=status.HTTP_200_OK)
 
-        first_kw = main_keywords[0]
-        first_kw_slug = first_kw.slug
-        print(f"Main image first keyword: {first_kw.name} ({first_kw_slug})")
-
-        # ---------------- RELATED IMAGES (first keyword match) ----------------
+        # ---------------- RELATED IMAGES (keyword slug matches any word from main image slug) ----------------
+        # Get images that have keywords matching any of the slug words
         related_qs = (
-            Images.objects.filter(keywords__slug=first_kw_slug)
+            Images.objects.filter(keywords__slug__in=slug_word_slugs)
             .exclude(pk=image.pk)
             .prefetch_related("keywords")
             .distinct()
             .order_by("-created_at")
         )
 
+        # Filter to keep only images where at least one keyword matches our slug words
         related_list = []
         for img in related_qs:
-            img_keywords = list(img.keywords.all().order_by("id"))
-            if img_keywords and img_keywords[0].slug == first_kw_slug:
+            img_keywords = list(img.keywords.all())
+            # Check if any keyword from this image matches any word from main image slug
+            if any(kw.slug in slug_word_slugs for kw in img_keywords):
                 related_list.append(img)
 
-        # limit to 50
+        # Limit to 50
         related_list = related_list[:50]
 
         # ---------------- OPTIONAL SEARCH / KEYWORD FILTERS (OR) ----------------
@@ -92,7 +97,7 @@ class SingleImageView(viewsets.ViewSet):
             if keyword_term:
                 slugs_to_match.append(GENERATE_SLUG(keyword_term))
 
-            # keep images if any keyword slug matches any of the slugs
+            # Keep images if any keyword slug matches any of the search/keyword slugs
             related_list = [
                 img for img in related_list
                 if any(kw.slug in slugs_to_match for kw in img.keywords.all())
@@ -116,12 +121,12 @@ class SingleImageView(viewsets.ViewSet):
             "results": related_serializer.data,
             "image": main_image_data,
             "success": True,
-            "message": "Image with related images (based on first keyword and optional search/keyword) fetched successfully.",
+            "message": "Image with related images (based on slug word matching) fetched successfully.",
         }
 
         # ---------------- CACHE THE RESPONSE ----------------
-        # Cache for 1 hour (3600 seconds) - adjust timeout as needed
-        cache.set(cache_key, response_data)
+        # Cache for 1 hour (3600 seconds)
+        cache.set(cache_key, response_data, 3600)
         print(f"Response cached with key: {cache_key}")
 
         return Response(response_data, status=status.HTTP_200_OK)
