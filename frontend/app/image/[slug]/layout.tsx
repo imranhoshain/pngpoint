@@ -127,7 +127,7 @@ export default async function ImageRootLayout({
   const { slug } = await params;
   const imageData = await getImageData(slug);
 
-  const imageSchema = imageData
+    const imageSchema = imageData
     ? {
         "@context": "https://schema.org",
         "@graph": [
@@ -137,6 +137,7 @@ export default async function ImageRootLayout({
             "url": imageData.pageUrl,
             "name": imageData.title,
             "description": imageData.description,
+            "inLanguage": "en",
             "primaryImageOfPage": {
               "@id": `${imageData.pageUrl}#image`,
             },
@@ -149,13 +150,11 @@ export default async function ImageRootLayout({
             "caption": imageData.caption,
             "contentUrl": imageData.fileUrl,
             "thumbnailUrl": imageData.thumbnailUrl,
-            "fileFormat": "image/png",
+            "encodingFormat": "image/png",
             "width": imageData.width,
             "height": imageData.height,
-            "contentSize": imageData.fileSize,
-            "keywords": Array.isArray(imageData.keywords)
-              ? imageData.keywords.join(", ")
-              : imageData.keywords,
+            "contentSize": `${imageData.fileSize} KB`,
+            "keywords": imageData.keywords?.split(",").map((k: string) => k.trim()),
             "creator": {
               "@type": "Organization",
               "name": "PNGPoint",
@@ -165,6 +164,7 @@ export default async function ImageRootLayout({
             "acquireLicensePage": "https://pngpoint.com/license",
             "creditText": "PNGPoint",
             "copyrightNotice": "© PNGPoint",
+            "isAccessibleForFree": true,
             "datePublished": imageData.publishDate,
             "dateModified": imageData.modifiedDate,
           },
