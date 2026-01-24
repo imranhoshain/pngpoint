@@ -1184,6 +1184,85 @@ const statesOfMindFaqData: FAQItem[] = [
     }
 ];
 
+const technologyFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Technology PNG image, and why is it useful?",
+        answer: "A Technology PNG is a raster image with a transparent background. It works well for overlays, UI elements, presentations, and digital designs."
+    },
+    {
+        id: 2,
+        question: "What does transparent background mean in Technology PNGs?",
+        answer: "Only the tech object is visible. You can place it on any background without white borders."
+    },
+    {
+        id: 3,
+        question: "Are Technology PNGs free to download?",
+        answer: "Some are free, while others are premium. Always check the license details before use."
+    },
+    {
+        id: 4,
+        question: "Can I use Technology PNGs for commercial projects?",
+        answer: "Yes, many allow commercial use. Look for Royalty-Free or Commercial Use Allowed labels."
+    },
+    {
+        id: 5,
+        question: "What's the difference between PNG, vector, and clipart?",
+        answer: "PNG: Ready-to-use raster with transparency. Vector: Scalable formats like SVG or AI. Clipart: Simplified illustrations."
+    },
+    {
+        id: 6,
+        question: "Do you offer high-resolution Technology PNG images?",
+        answer: "Yes. Many files support HD and print-quality use."
+    },
+    {
+        id: 7,
+        question: "Are these suitable for educational projects?",
+        answer: "Yes. Many Technology PNGs work well for STEM lessons and e-learning platforms."
+    },
+    {
+        id: 8,
+        question: "How do I ensure PNGs look good on websites or apps?",
+        answer: "Use optimized resolution and transparent backgrounds for clean UI integration."
+    },
+    {
+        id: 9,
+        question: "What file sizes should I expect?",
+        answer: "Sizes vary based on detail and resolution, from KBs to several MBs."
+    },
+    {
+        id: 10,
+        question: "Can I edit or customize Technology PNGs?",
+        answer: "Most licenses allow resizing and editing. Always verify first."
+    },
+    {
+        id: 11,
+        question: "Are there Technology PNGs for logos or branding?",
+        answer: "Yes. Look for Technology Logo PNGs or icon sets with commercial rights."
+    },
+    {
+        id: 12,
+        question: "Are Technology PNGs suitable for print?",
+        answer: "Yes, especially HD PNGs with proper resolution."
+    },
+    {
+        id: 13,
+        question: "What does royalty-free mean?",
+        answer: "You can reuse images without recurring fees, following license rules."
+    },
+    {
+        id: 14,
+        question: "How can I find specific styles like flat or 3D?",
+        answer: "Use keywords and filters such as 3D Technology PNG or Flat Tech Icons."
+    },
+    {
+        id: 15,
+        question: "Can I use Technology PNGs for educational platforms?",
+        answer: "Yes. Many are designed for learning tools, apps, and classrooms."
+    }
+];
+
+
 
 
 
@@ -1368,7 +1447,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'social-issues' && (id === 3 || id === 4 || id === 9)) ||
         (categorySlug === 'science' && (id === 3 || id === 4 || id === 8)) ||
         (categorySlug === 'sports' && (id === 3 || id === 4 || id === 10)) ||
-        (categorySlug === 'states-of-mind' && (id === 3 || id === 4 || id === 10));
+        (categorySlug === 'states-of-mind' && (id === 3 || id === 4 || id === 10)) ||
+        (categorySlug === 'technology' && (id === 3 || id === 4 || id === 10));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -1415,6 +1495,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'science' ? scienceFaqData :
                     categorySlug === 'sports' ? sportsFaqData :
                     categorySlug === 'states-of-mind' ? statesOfMindFaqData :
+                    categorySlug === 'technology' ? technologyFaqData :
                     animalFaqData;
 
     return (

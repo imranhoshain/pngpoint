@@ -776,6 +776,56 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery for quick, stress-free downloads."
     };
 
+    // Technology content
+    const technologyContent = {
+        categories: [
+            {
+                title: "Core Technology Types",
+                items: [
+                    "Computer PNG",
+                    "Laptop PNG",
+                    "Mobile Phone PNG",
+                    "Tablet PNG",
+                    "Server & Data Center PNG",
+                    "Hardware Devices PNG"
+                ]
+            },
+            {
+                title: "Digital & Software Themes",
+                items: [
+                    "Artificial Intelligence PNG",
+                    "Machine Learning PNG",
+                    "Cloud Computing PNG",
+                    "Cybersecurity PNG",
+                    "Blockchain PNG",
+                    "Internet & Network PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Flat Technology PNG",
+                    "3D Technology PNG",
+                    "Isometric Tech PNG",
+                    "Technology Icon PNG",
+                    "Technology Silhouette PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Technology Logo PNG",
+                    "Tech UI Elements PNG",
+                    "Technology Illustration PNG",
+                    "Technology Clipart PNG",
+                    "Tech Sticker PNG",
+                    "Technology Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery for fast and stress-free downloads."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -794,6 +844,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         science: scienceContent,
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
+        technology: technologyContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

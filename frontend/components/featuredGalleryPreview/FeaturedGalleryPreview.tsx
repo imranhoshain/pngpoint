@@ -387,6 +387,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to find the right visual quickly and efficiently."
     };
 
+    // Technology content
+    const technologyContent = {
+        title: "Featured Gallery Preview",
+        description: "Get a quick look at the most downloaded Technology PNG images in one place. This preview highlights transparent, high-resolution files ready for real digital and print use. You can spot quality instantly and choose assets without second guessing.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution Technology PNG for clear visuals",
+            "Transparent background PNG for smooth overlays",
+            "Royalty-free tech assets with clear usage rights"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "App & Web UI",
+            "Presentation",
+            "Education",
+            "Branding"
+        ],
+        footerText: "Use filters to narrow results quickly and find exactly what you need."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -406,6 +428,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         science: scienceContent,
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
+        technology: technologyContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

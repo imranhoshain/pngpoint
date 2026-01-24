@@ -486,6 +486,35 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Technology content
+    const technologyContent = {
+        subheading: "High-Resolution, Royalty-Free, and Ready to Use",
+        introText: [
+            "Technology PNG images help creators work faster with clean, ready-to-use visuals. When you need transparent tech graphics that blend smoothly into any background, this page gives you a clear and simple solution.",
+            "From websites and mobile apps to presentations and learning materials, transparent Technology PNGs reduce editing time and improve visual clarity. Clean files matter when accuracy and speed are important.",
+            "That's why this collection focuses on high-quality, transparent PNG images with clear usage rights. Explore the Technology PNG library and choose visuals that fit your digital projects today."
+        ],
+        mainTitle: "Why Choose Our Technology PNG Collection",
+        mainDescription: "Finding reliable technology graphics should feel easy, not time-consuming. This collection is built for designers, developers, educators, and marketers who need flexible Technology PNG images that work instantly. Each file is curated for clarity, accuracy, and real-world use. Because of that, you spend less time fixing visuals and more time completing your projects.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Devices, software, AI, data, networking, cloud, and digital tools" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD resolution, sharp details" },
+                { label: "Flexible usage:", text: "Websites, apps, presentations, branding, education" },
+                { label: "Clear licensing:", text: "Royalty-free usage with simple terms" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated Technology PNG assets",
+                "Regular updates with modern tech trends",
+                "Consistent quality and licensing across files"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -504,6 +533,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         science: scienceContent,
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
+        technology: technologyContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

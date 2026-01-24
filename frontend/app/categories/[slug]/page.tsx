@@ -108,7 +108,8 @@ export default function SingleCategory() {
         "culture-and-religion","drinks","food",
         "graphic-resources","hobbies-and-leisure","industry",
         "landscapes","lifestyle","people","plants-and-flowers",
-        "social-issues","science","sports","states-of-mind"]
+        "social-issues","science","sports","states-of-mind",
+        "technology"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (

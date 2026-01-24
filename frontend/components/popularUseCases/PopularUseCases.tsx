@@ -483,6 +483,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Technology content
+    const technologyContent = {
+        title: "Popular Use Cases",
+        description: "Many creators lose time fixing images instead of using them. Clean Technology PNGs remove that friction. With transparent backgrounds, visuals drop straight into your layout.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers & Creators",
+                description: "Technology PNGs fit perfectly into banners, dashboards, and marketing visuals. Sharp edges and consistent styles help designs look modern and professional."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education & Learning",
+                description: "Teachers and students use Technology PNGs in STEM lessons, slides, and worksheets. Clear visuals help explain abstract tech concepts without confusion."
+            },
+            {
+                icon: Globe,
+                title: "For Web & App Development",
+                description: "Websites and apps benefit from lightweight PNGs that load fast and stay crisp. Technology icons and UI graphics improve usability and visual flow."
+            },
+            {
+                icon: Building2,
+                title: "Industry-Specific Use",
+                description: "Startups, SaaS platforms, IT firms, tech blogs, and training centers use Technology PNGs to explain ideas clearly. The right visual often communicates faster than text."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -501,6 +529,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         science: scienceContent,
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
+        technology: technologyContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

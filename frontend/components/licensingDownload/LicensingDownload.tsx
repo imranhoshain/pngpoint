@@ -433,6 +433,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Technology content
+    const technologyContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing is kept simple and transparent. Most Technology PNG images are royalty-free and allow commercial and print use. If attribution is required, it's clearly mentioned on the image page.",
+            proTip: "Always review license details before downloading to keep your project compliant and safe."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Download single images or complete sets based on your workflow. Choose free Technology PNGs, HD files, or transparent background assets depending on your project needs. Clean, optimized files help you focus on building and designing instead of editing.",
+            features: [
+                "Single images or complete sets available",
+                "Free Technology PNGs and HD file options",
+                "Clean, optimized files for efficient workflow"
+            ]
+        },
+        cta: {
+            title: "Start Your Tech Project Today",
+            description: "Access our complete Technology PNG library with clear licensing and instant downloads. High-quality tech graphics ready for apps, websites, presentations, and digital products."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -451,6 +475,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         science: scienceContent,
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
+        technology: technologyContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
