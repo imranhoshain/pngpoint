@@ -53,7 +53,7 @@ export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData 
                     "@id": imageData.pageUrl,
                     "url": imageData.pageUrl,
                     "name": imageData.title,
-                    "description": imageData.description,
+                    "description": `Download high-quality ${imageData.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
                     "inLanguage": "en",
                     "primaryImageOfPage": {
                         "@id": `${imageData.pageUrl}#image`,
