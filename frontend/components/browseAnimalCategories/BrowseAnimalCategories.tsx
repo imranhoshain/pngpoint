@@ -826,6 +826,55 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         footer: "Each category opens a focused gallery for fast and stress-free downloads."
     };
 
+    // Environment content
+    const environmentContent = {
+        categories: [
+            {
+                title: "Core Environment Themes",
+                items: [
+                    "Nature & Environment PNG",
+                    "Climate Change PNG",
+                    "Pollution & Waste PNG",
+                    "Sustainability PNG",
+                    "Conservation PNG",
+                    "Renewable Energy PNG"
+                ]
+            },
+            {
+                title: "Nature & Ecosystems",
+                items: [
+                    "Forest & Trees PNG",
+                    "Ocean & Water PNG",
+                    "Mountains PNG",
+                    "Rivers & Lakes PNG",
+                    "Wildlife Habitat PNG",
+                    "Earth & Globe PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Flat Environment PNG",
+                    "Realistic Environment PNG",
+                    "Eco Icon PNG",
+                    "Environment Silhouette PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Environment Icons PNG",
+                    "Eco Logo PNG",
+                    "Sustainability Illustration PNG",
+                    "Environment Clipart PNG",
+                    "Earth Symbol PNG",
+                    "Green Energy Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery, making downloads quick and simple."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -845,6 +894,7 @@ export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) 
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
+        "the-environment": environmentContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

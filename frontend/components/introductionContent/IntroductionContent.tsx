@@ -515,6 +515,34 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         }
     };
 
+    // Environment content
+    const environmentContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Environment PNG images help people communicate sustainability ideas clearly and visually. When you need clean, transparent visuals for climate topics, eco projects, or educational content, this page delivers fast and simple solutions.",
+            "Transparent environment graphics work on any background, which makes them ideal for presentations, websites, and learning materials. That's why this collection focuses on high-quality PNG files with clear edges and reliable usage terms. Explore the Environment PNG library and choose visuals that support your message today."
+        ],
+        mainTitle: "Why Choose Our Environment PNG Collection",
+        mainDescription: "Finding the right environmental visuals should feel clear and stress-free. This collection is built for educators, designers, students, and organizations that need reusable Environment PNG images without extra editing. Each file emphasizes clarity, visual balance, and real-world usability. As a result, you spend less time fixing images and more time sharing ideas that matter.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Climate, nature, ecosystems, pollution, renewable energy, conservation" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD resolution, clean cut-outs" },
+                { label: "Flexible usage:", text: "Education, sustainability campaigns, branding, print, and digital media" },
+                { label: "Clear licensing:", text: "Straightforward usage terms explained before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Curated Environment PNG assets",
+                "Regular updates with new eco-focused visuals",
+                "Consistent licensing across the collection"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -534,6 +562,7 @@ export const IntroductionContent = ({ categorySlug }: IntroductionContentProps) 
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
+        "the-environment": environmentContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

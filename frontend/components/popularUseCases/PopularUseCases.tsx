@@ -511,6 +511,34 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         ]
     };
 
+    // Environment content
+    const environmentContent = {
+        title: "Popular Use Cases",
+        description: "People often lose time fixing visuals instead of sharing ideas. Clean Environment PNGs remove that friction. With transparent backgrounds, you can focus on impact, not image cleanup.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Designers use environment PNGs for posters, infographics, and campaign visuals. Clean transparency and sharp edges help designs stay professional across print and digital formats."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers and students rely on environment PNGs to explain climate, ecosystems, and sustainability topics. Simple visuals improve understanding and keep lessons focused."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Websites, blogs, and social campaigns use environment PNGs to support storytelling. Lightweight PNGs improve engagement without slowing pages down."
+            },
+            {
+                icon: Layers,
+                title: "Industry-Specific",
+                description: "Environmental NGOs, green startups, schools, researchers, and policy groups use these images to communicate awareness clearly and responsibly."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -530,6 +558,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
+        "the-environment": environmentContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

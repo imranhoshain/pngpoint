@@ -457,6 +457,30 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         }
     };
 
+    // Environment content
+    const environmentContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing should never feel confusing. All Environment PNG images are royalty-free, and many allow commercial and print use. If attribution is required, it's clearly shown on the image page.",
+            proTip: "Always check license details before downloading to keep projects safe and compliant."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Downloading is simple and flexible. Choose free Environment PNG downloads, HD files, or transparent background images based on your needs. Download single files or multiple assets for faster workflows. Clean files help you focus on your message, not editing.",
+            features: [
+                "Single files or multiple asset downloads",
+                "Free Environment PNG downloads and HD options",
+                "Clean files for message-focused workflows"
+            ]
+        },
+        cta: {
+            title: "Start Your Green Project Today",
+            description: "Access our complete Environment PNG library with clear licensing and instant downloads. High-quality eco graphics ready for education, sustainability campaigns, and environmental awareness."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -476,6 +500,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
+        "the-environment": environmentContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

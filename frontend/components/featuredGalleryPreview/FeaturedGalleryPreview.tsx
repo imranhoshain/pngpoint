@@ -409,6 +409,28 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         footerText: "Use filters to narrow results quickly and find exactly what you need."
     };
 
+    // Environment content
+    const environmentContent = {
+        title: "Featured Gallery Preview",
+        description: "Get a quick look at our most downloaded Environment PNG images in one place. This preview highlights transparent, high-resolution files designed for real-world projects. You can review quality instantly and download with confidence.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-Resolution Environment PNG for sharp detail",
+            "Transparent Background PNG for clean overlays",
+            "Royalty-Free PNG assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Awareness Campaigns",
+            "Branding"
+        ],
+        footerText: "Use filters to find the right PNG without extra clicks."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -429,6 +451,7 @@ export const FeaturedGalleryPreview = ({ subCategorySlug, categorySlug }: Featur
         sports: sportsContent,
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
+        "the-environment": environmentContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

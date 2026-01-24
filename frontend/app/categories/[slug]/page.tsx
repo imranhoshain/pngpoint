@@ -109,7 +109,7 @@ export default function SingleCategory() {
         "graphic-resources","hobbies-and-leisure","industry",
         "landscapes","lifestyle","people","plants-and-flowers",
         "social-issues","science","sports","states-of-mind",
-        "technology"]
+        "technology","the-environment"]
     const isContentAvailable = availableCategory.includes(categorySlug)
 
     return (

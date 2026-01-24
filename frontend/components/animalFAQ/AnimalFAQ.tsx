@@ -1262,6 +1262,85 @@ const technologyFaqData: FAQItem[] = [
     }
 ];
 
+const environmentFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is an Environment PNG image, and why is it useful?",
+        answer: "An Environment PNG is a transparent raster image focused on nature, climate, or sustainability topics. It works well for education, awareness, and design projects."
+    },
+    {
+        id: 2,
+        question: "What does transparent background mean in Environment PNGs?",
+        answer: "Only the main subject is visible. You can place the image on any background without white borders."
+    },
+    {
+        id: 3,
+        question: "Are these Environment PNGs free to download and use?",
+        answer: "Some are free, while others may be premium. Always check the license details on each file."
+    },
+    {
+        id: 4,
+        question: "Can I use Environment PNGs for commercial projects?",
+        answer: "Yes, many allow commercial use. Look for Royalty-Free or Commercial Use Allowed labels."
+    },
+    {
+        id: 5,
+        question: "What is the difference between PNG, vector, and clipart for environment graphics?",
+        answer: "PNG: Transparent, ready-to-use. Vector: Scalable without quality loss. Clipart: Simplified illustration style."
+    },
+    {
+        id: 6,
+        question: "Do you offer high-resolution Environment PNG images?",
+        answer: "Yes. Most files are HD and suitable for print and large displays."
+    },
+    {
+        id: 7,
+        question: "Can I use Environment PNGs for educational projects?",
+        answer: "Absolutely. Many assets are designed for classrooms, presentations, and learning platforms."
+    },
+    {
+        id: 8,
+        question: "How do I ensure the PNG looks good on my website or app?",
+        answer: "Use proper resolution, transparent backgrounds, and optimized file sizes for web."
+    },
+    {
+        id: 9,
+        question: "What does royalty-free mean for Environment PNGs?",
+        answer: "It means you can reuse the image across projects without recurring fees, within license terms."
+    },
+    {
+        id: 10,
+        question: "Can I edit or customize Environment PNG images?",
+        answer: "Yes, resizing and editing are usually allowed. Always confirm editing rights in the license."
+    },
+    {
+        id: 11,
+        question: "Are Environment PNG images suitable for sustainability presentations?",
+        answer: "Yes. Environment PNGs are ideal for sustainability slides, climate reports, and awareness presentations because they are clear, visual, and easy to place on any background."
+    },
+    {
+        id: 12,
+        question: "Can I use Environment PNGs for social media awareness campaigns?",
+        answer: "Absolutely. These PNGs work well for eco campaigns on Facebook, Instagram, LinkedIn, and websites due to their transparent backgrounds and lightweight format."
+    },
+    {
+        id: 13,
+        question: "Do Environment PNGs work for print materials like posters or banners?",
+        answer: "Yes. Many Environment PNG images are high-resolution and print-ready. For best results, choose files marked as HD or 300 DPI."
+    },
+    {
+        id: 14,
+        question: "Are Environment PNG images safe for student and classroom use?",
+        answer: "Yes. Most Environment PNGs are neutral, educational, and suitable for schools, universities, and learning platforms. Always check the license for distribution rules."
+    },
+    {
+        id: 15,
+        question: "How can I quickly find Environment PNGs related to climate change or sustainability?",
+        answer: "Use category filters or search terms like Climate Change PNG, Sustainability PNG, or Eco Icons PNG to narrow results and save time."
+    }
+];
+
+
 
 
 
@@ -1448,7 +1527,8 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'science' && (id === 3 || id === 4 || id === 8)) ||
         (categorySlug === 'sports' && (id === 3 || id === 4 || id === 10)) ||
         (categorySlug === 'states-of-mind' && (id === 3 || id === 4 || id === 10)) ||
-        (categorySlug === 'technology' && (id === 3 || id === 4 || id === 10));
+        (categorySlug === 'technology' && (id === 3 || id === 4 || id === 10)) ||
+        (categorySlug === 'the-environment' && (id === 3 || id === 4 || id === 10));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -1496,6 +1576,7 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'sports' ? sportsFaqData :
                     categorySlug === 'states-of-mind' ? statesOfMindFaqData :
                     categorySlug === 'technology' ? technologyFaqData :
+                    categorySlug === 'the-environment' ? environmentFaqData :
                     animalFaqData;
 
     return (
