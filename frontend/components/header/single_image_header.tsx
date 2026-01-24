@@ -120,10 +120,10 @@ export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData 
                         </button>
                         
                         {/* Search Schema */}
-                        <script
+                        {/* <script
                             type="application/ld+json"
                             dangerouslySetInnerHTML={{ __html: JSON.stringify(searchSchema) }}
-                        />
+                        /> */}
                         
                         {/* Image Schema */}
                         {imageSchema && (
