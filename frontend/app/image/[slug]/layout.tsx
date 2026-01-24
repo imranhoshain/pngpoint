@@ -53,13 +53,14 @@ export async function generateMetadata(
 
     return {
       title: `${data.title || 'Image'} - PNGPoint`,
-      description: data.description || 'PNGPoint image details',
+      description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.` || 'PNGPoint image details',
+      keywords:data.keywords,
       alternates: {
         canonical: getImageUrl(slug),
       },
       openGraph: {
         title: `${data.title || 'Image'} - PNGPoint`,
-        description: data.description || 'PNGPoint image details',
+        description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.` || 'PNGPoint image details',
         url: getImageUrl(slug),
         type: "website",
         images: [
