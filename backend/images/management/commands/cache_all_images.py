@@ -306,9 +306,9 @@ class Command(BaseCommand):
         cache_key = f"single_image:{str(image.slug)}"
 
         # Check if already cached
-        if cache.get(cache_key) and not dry_run:
-            self.stdout.write(f"  → {image.slug} (already cached)")
-            return "cached"
+        # if cache.get(cache_key) and not dry_run:
+        #     self.stdout.write(f"  → {image.slug} (already cached)")
+        #     return "cached"
 
         # ---------------- EXTRACT WORDS FROM MAIN IMAGE SLUG ----------------
         # Split slug by hyphen to get individual words
