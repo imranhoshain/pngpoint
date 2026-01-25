@@ -331,14 +331,22 @@ class Command(BaseCommand):
             .order_by("-created_at")
         )
 
-        # Filter to keep only images where at least one keyword matches our slug words
-        related_list = []
+        # Calculate match count for each image and store as tuples (image, match_count)
+        related_with_scores = []
         for img in related_qs:
-            img_keywords = list(img.keywords.all())
-            # Check if any keyword from this image matches any word from main image slug
-            if any(kw.slug in slug_word_slugs for kw in img_keywords):
-                related_list.append(img)
-
+            img_keyword_slugs = [kw.slug for kw in img.keywords.all()]
+            # Count how many slug words match this image's keywords
+            match_count = sum(1 for slug_word in slug_word_slugs if slug_word in img_keyword_slugs)
+            
+            if match_count > 0:
+                related_with_scores.append((img, match_count))
+        
+        # Sort by match_count (descending), then by created_at (descending)
+        related_with_scores.sort(key=lambda x: (-x[1], -x[0].created_at.timestamp()))
+        
+        # Extract just the images (without scores)
+        related_list = [img for img, _ in related_with_scores]
+        
         # Limit to 50
         related_list = related_list[:50]
 
@@ -360,7 +368,7 @@ class Command(BaseCommand):
             "results": related_serializer.data,
             "image": main_image_data,
             "success": True,
-            "message": "Image with related images (based on slug word matching) fetched successfully.",
+            "message": "Image with related images (sorted by keyword match count) fetched successfully.",
         }
 
         # Cache the response

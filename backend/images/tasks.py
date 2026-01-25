@@ -78,13 +78,8 @@ def cache_single_image_task(self, slug):
                 "message": "Image not found",
                 "deleted_cache_entries": deleted_count,
             }
-
-        # ---------------- EXTRACT WORDS FROM MAIN IMAGE SLUG ----------------
-        # Split slug by hyphen to get individual words
         slug_words = slug.split('-')
         logger.info(f"Main image slug words: {slug_words}")
-        
-        # Convert slug words to keyword slugs for matching
         slug_word_slugs = [word for word in slug_words if word]
         logger.info(f"Slug word slugs for matching: {slug_word_slugs}")
 
@@ -96,9 +91,6 @@ def cache_single_image_task(self, slug):
                 "message": "No words found in slug to match keywords",
                 "deleted_cache_entries": deleted_count,
             }
-
-        # ---------------- RELATED IMAGES (keyword slug matches any word from main image slug) ----------------
-        # Get images that have keywords matching any of the slug words
         related_qs = (
             Images.objects.filter(keywords__slug__in=slug_word_slugs)
             .exclude(pk=image.pk)
@@ -106,40 +98,31 @@ def cache_single_image_task(self, slug):
             .distinct()
             .order_by("-created_at")
         )
-
-        # Filter to keep only images where at least one keyword matches our slug words
-        related_list = []
+        related_with_scores = []
         for img in related_qs:
-            img_keywords = list(img.keywords.all())
-            # Check if any keyword from this image matches any word from main image slug
-            if any(kw.slug in slug_word_slugs for kw in img_keywords):
-                related_list.append(img)
-
-        # Limit to 50
+            img_keyword_slugs = [kw.slug for kw in img.keywords.all()]
+            match_count = sum(1 for slug_word in slug_word_slugs if slug_word in img_keyword_slugs)
+            
+            if match_count > 0:
+                related_with_scores.append((img, match_count))
+        related_with_scores.sort(key=lambda x: (-x[1], -x[0].created_at.timestamp()))
+        related_list = [img for img, _ in related_with_scores]
         related_list = related_list[:50]
-
-        # ---------------- SERIALIZE ----------------
         related_serializer = SingleImageSerializer(related_list, many=True)
         main_image_data = SingleImageSerializer(image).data
-
-        # ---------------- CLOUDFLARE URLS ----------------
         if image.cloudflare_id:
             cf_url = GET_SINGLE_IMAGE_URL_FROM_CLOUDFLARE(image.cloudflare_id)
             main_url = GET_SINGLE_MAIN_IMAGE_URL_FROM_CLOUDFLARE(image.cloudflare_id)
             main_image_data["cloudflare_url"] = cf_url
             main_image_data["url"] = cf_url
             main_image_data["main_url"] = main_url
-
-        # ---------------- RESPONSE DATA ----------------
         response_data = {
             "count": len(related_serializer.data),
             "results": related_serializer.data,
             "image": main_image_data,
             "success": True,
-            "message": "Image with related images (based on slug word matching) fetched successfully.",
+            "message": "Image with related images (sorted by keyword match count) fetched successfully.",
         }
-
-        # ---------------- CACHE THE RESPONSE ----------------
         cache_key = f"single_image:{slug}"
         cache.set(cache_key, response_data)
 
