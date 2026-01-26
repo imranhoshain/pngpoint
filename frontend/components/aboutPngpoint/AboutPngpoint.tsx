@@ -9,6 +9,53 @@ interface AboutProps {
 }
 
 export const AboutPngpoint = ({ categorySlug = 'animals', categoryName = 'Animal' }: AboutProps) => {
+    // Helper function to convert text with links
+    const processTextWithLinks = (text: string): React.ReactNode => {
+        const parts: React.ReactNode[] = [];
+        let lastIndex = 0;
+        
+        // Pattern to match: PNGPoint, transparent images, or words ending with 'license'
+        const pattern = /\b(PNGPoint|Pngpoint|transparent images|\w*license)\b/gi;
+        let match;
+        
+        while ((match = pattern.exec(text)) !== null) {
+            // Add text before the match
+            if (match.index > lastIndex) {
+                parts.push(text.substring(lastIndex, match.index));
+            }
+            
+            // Add the linked text
+            const matchedText = match[0];
+            let url = 'https://pngpoint.com/';
+            
+            // Determine the URL based on the matched text
+            if (matchedText.toLowerCase().endsWith('license')) {
+                url = 'https://pngpoint.com/license';
+            }
+            
+            parts.push(
+                <a
+                    key={match.index}
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#0077a2] hover:text-[#005a7d] underline font-medium"
+                >
+                    {matchedText}
+                </a>
+            );
+            
+            lastIndex = match.index + matchedText.length;
+        }
+        
+        // Add remaining text
+        if (lastIndex < text.length) {
+            parts.push(text.substring(lastIndex));
+        }
+        
+        return parts.length > 0 ? <>{parts}</> : text;
+    };
+
     const features = [
         {
             icon: Download,
@@ -53,7 +100,7 @@ export const AboutPngpoint = ({ categorySlug = 'animals', categoryName = 'Animal
                     {/* Main Content */}
                     <div className="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-8 lg:p-12 shadow-lg border border-gray-200">
                         <p className="text-base md:text-lg text-gray-700 leading-relaxed text-center max-w-5xl mx-auto mb-8">
-                            {categoryName} PNGs at PNGPoint provide a curated collection of high-quality, transparent images for designers, educators, developers, and content creators. Whether you&apos;re building websites, creating educational materials, or designing branding assets, our library makes it easy to find clean, ready-to-use graphics. All PNGs are royalty-free, clear-licensed, and optimized for web, print, and commercial projects. With fast downloads, organized categories, and consistent quality, PNGPoint helps you create professional visuals quickly and efficiently.
+                            {processTextWithLinks(`${categoryName} PNGs at PNGPoint provide a curated collection of high-quality, transparent images for designers, educators, developers, and content creators. Whether you're building websites, creating educational materials, or designing branding assets, our library makes it easy to find clean, ready-to-use graphics. All PNGs are royalty-free, clear-licensed, and optimized for web, print, and commercial projects. With fast downloads, organized categories, and consistent quality, PNGPoint helps you create professional visuals quickly and efficiently.`)}
                         </p>
 
                         {/* Features Grid */}
@@ -72,7 +119,7 @@ export const AboutPngpoint = ({ categorySlug = 'animals', categoryName = 'Animal
                                             {feature.title}
                                         </h3>
                                         <p className="text-sm text-gray-600 text-center">
-                                            {feature.description}
+                                            {processTextWithLinks(feature.description)}
                                         </p>
                                     </div>
                                 );
@@ -83,10 +130,10 @@ export const AboutPngpoint = ({ categorySlug = 'animals', categoryName = 'Animal
                     {/* CTA Section */}
                     <div className="bg-gradient-to-r from-[#0077a2] to-[#005a7d] rounded-2xl p-8 lg:p-10 text-center shadow-xl">
                         <h3 className="text-2xl lg:text-3xl font-bold text-white mb-4">
-                            Start Creating with PNGPoint Today
+                            {processTextWithLinks("Start Creating with PNGPoint Today")}
                         </h3>
                         <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-4xl mx-auto mb-6">
-                            Join thousands of designers, educators, and businesses who trust PNGPoint for their visual content needs. Explore our extensive library and bring your creative projects to life with professional-grade PNG assets.
+                            {processTextWithLinks("Join thousands of designers, educators, and businesses who trust PNGPoint for their visual content needs. Explore our extensive library and bring your creative projects to life with professional-grade PNG assets.")}
                         </p>
                         <a
                             href="https://pngpoint.com"

@@ -13,7 +13,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
     let lastIndex = 0;
     
     // Pattern to match: PNGPoint, transparent images, or words ending with 'license'
-    const pattern = /\b(PNGPoint|transparent images|\w*[Ll]icense)\b/g;
+    const pattern = /\b(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)\b/g;
     let match;
     
     while ((match = pattern.exec(text)) !== null) {
