@@ -655,7 +655,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
                             {content.mainTitle}
                         </h2>
                         <p className="text-base lg:text-lg text-gray-700 leading-relaxed mb-8">
-                            {content.mainDescription}
+                            {processTextWithLinks(content.mainDescription)}
                         </p>
                         
                         {/* Key Benefits */}
@@ -673,7 +673,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
                                     <li key={index} className="flex items-start gap-3">
                                         <span className="flex-shrink-0 w-2 h-2 bg-[#0077a2] rounded-full mt-2"></span>
                                         <span className="text-base text-gray-700">
-                                            <strong>{item.label}</strong> {item.text}
+                                            <strong>{item.label}</strong>{processTextWithLinks(item.text)}
                                         </span>
                                     </li>
                                 ))}

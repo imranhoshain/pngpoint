@@ -981,7 +981,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
                     {/* Footer Text */}
                     <div className="text-center">
                         <p className="text-base lg:text-lg text-gray-700">
-                            {content.footer}
+                            {processTextWithLinks(content.footer)}
                         </p>
                     </div>
                 </div>

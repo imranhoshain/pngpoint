@@ -623,7 +623,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
                             {content.title}
                         </h2>
                         <p className="text-sm md:text-base font-normal text-gray-600 max-w-4xl">
-                            {content.description}
+                            {processTextWithLinks(content.description)}
                         </p>
                     </div>
 
@@ -645,7 +645,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
                                         </h3>
                                     </div>
                                     <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                                        {useCase.description}
+                                        {processTextWithLinks(useCase.description)}
                                     </p>
                                 </div>
                             );

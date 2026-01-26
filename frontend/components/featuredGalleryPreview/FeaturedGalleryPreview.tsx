@@ -549,7 +549,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
                             {content.title}
                         </h2>
                         <p className="text-sm md:text-base font-normal text-gray-600 max-w-4xl">
-                            {content.description}
+                            {processTextWithLinks(content.description)}
                         </p>
                     </div>
 
@@ -704,7 +704,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
                     {/* Footer Text */}
                     <div className="bg-gradient-to-r from-[#0077a2] to-[#005a7d] rounded-2xl p-6 lg:p-8 text-center">
                         <p className="text-base lg:text-lg text-white font-medium">
-                            {content.footerText}
+                            {processTextWithLinks(content.footerText)}
                         </p>
                     </div>
                 </div>
