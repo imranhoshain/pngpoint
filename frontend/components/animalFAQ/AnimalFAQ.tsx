@@ -1618,9 +1618,9 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                                 </button>
                                 
                                 <div
-                                    className={'overflow-hidden transition-all duration-300 ease-in-out ${
+                                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
                                         openId === faq.id ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                                    }'}
+                                    }`}
                                 >
                                     <div className="p-4 md:p-5 pt-0 md:pt-0 border-t border-gray-100">
                                         <p className="text-sm md:text-base text-gray-700 leading-relaxed">
