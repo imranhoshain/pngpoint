@@ -5,6 +5,7 @@ import { ReduxProvider } from "@/lib/providers";
 import Notification from "@/components/notification/notification";
 import Scrollbar from "@/components/scrollbar/scrollbar";
 import { siteConfig } from "@/config/site";
+import Script from "next/script";
 
 const interFont = Inter({
     variable: "--font-inter",
@@ -103,6 +104,20 @@ export default function RootLayout({
                 <meta name="p:domain_verify" content="c4d1b017f0884994340d0fe3f090b469"/>
             </head>
             <body className={`${interFont.variable} antialiased`}>
+                {/* Google tag (gtag.js) */}
+                <Script
+                    src="https://www.googletagmanager.com/gtag/js?id=G-JF0VDSLP21"
+                    strategy="afterInteractive"
+                />
+                <Script id="google-analytics" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', 'G-JF0VDSLP21');
+                    `}
+                </Script>
+                
                 <ReduxProvider>
                     <Scrollbar />
                     <Notification />
