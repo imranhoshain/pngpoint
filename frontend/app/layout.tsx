@@ -99,14 +99,35 @@ export default function RootLayout({
     return (
         <html lang="en">
             <head>
+                {/* Google Tag Manager */}
+                <Script id="google-tag-manager" strategy="afterInteractive">
+                    {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                    })(window,document,'script','dataLayer','GTM-55NWGSDH');`}
+                </Script>
+                {/* End Google Tag Manager */}
+                
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
                 <meta name="p:domain_verify" content="c4d1b017f0884994340d0fe3f090b469"/>
             </head>
             <body className={`${interFont.variable} antialiased`}>
-                {/* Google tag (gtag.js) */}
+                {/* Google Tag Manager (noscript) */}
+                <noscript>
+                    <iframe 
+                        src="https://www.googletagmanager.com/ns.html?id=GTM-55NWGSDH"
+                        height="0" 
+                        width="0" 
+                        style={{display: 'none', visibility: 'hidden'}}
+                    />
+                </noscript>
+                {/* End Google Tag Manager (noscript) */}
+
+                {/* Google Analytics (gtag.js) */}
                 <Script
-                    src="https://www.googletagmanager.com/gtag/js?id=G-JF0VDSLP21"
+                    src="https://www.googletagmanager.com/gtag/js?id=G-JF0VD5LP21"
                     strategy="afterInteractive"
                 />
                 <Script id="google-analytics" strategy="afterInteractive">
@@ -114,9 +135,10 @@ export default function RootLayout({
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
                         gtag('js', new Date());
-                        gtag('config', 'G-JF0VDSLP21');
+                        gtag('config', 'G-JF0VD5LP21');
                     `}
                 </Script>
+                {/* End Google Analytics */}
                 
                 <ReduxProvider>
                     <Scrollbar />
