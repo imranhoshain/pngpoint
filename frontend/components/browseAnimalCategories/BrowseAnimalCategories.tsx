@@ -6,6 +6,55 @@ interface BrowseCategoriesProps {
 }
 
 export const BrowseAnimalCategories = ({ categorySlug }: BrowseCategoriesProps) => {
+
+// Helper function to convert text with links
+const processTextWithLinks = (text: string): React.ReactNode => {
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    
+    // Pattern to match: PNGPoint, transparent images, or words ending with 'license'
+    const pattern = /\b(PNGPoint|transparent images|\w*[Ll]icense)\b/g;
+    let match;
+    
+    while ((match = pattern.exec(text)) !== null) {
+        // Add text before the match
+        if (match.index > lastIndex) {
+            parts.push(text.substring(lastIndex, match.index));
+        }
+        
+        // Add the linked text
+        const matchedText = match[0];
+        let url = 'https://pngpoint.com/';
+        
+        // Determine the URL based on the matched text
+        if (matchedText.toLowerCase().includes('license')) {
+            url = 'https://pngpoint.com/license';
+        }
+        
+        parts.push(
+            <a
+                key={match.index}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#0077a2] hover:text-[#005a7d] underline font-medium"
+            >
+                {matchedText}
+            </a>
+        );
+        
+        lastIndex = match.index + matchedText.length;
+    }
+    
+    // Add remaining text
+    if (lastIndex < text.length) {
+        parts.push(text.substring(lastIndex));
+    }
+    
+    return parts.length > 0 ? <>{parts}</> : text;
+};
+
+
     // Animals content
     const animalsContent = {
         categories: [

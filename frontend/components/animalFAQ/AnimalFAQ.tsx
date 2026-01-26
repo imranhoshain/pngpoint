@@ -17,78 +17,78 @@ interface AnimalFAQProps {
 const animalFaqData: FAQItem[] = [
     {
         id: 1,
-        question: "What is an Animal PNG image, and why is it useful?",
-        answer: "An Animal PNG is a raster image with transparent backgrounds. Its clean edges make it perfect for overlays, logos, web design, and educational materials, without the worry of a white box behind the image."
+        question: "What is an Animal PNG, and why is it useful?",
+        answer: "An Animal PNG is a raster image with transparent backgrounds. Its clean edges make it ideal for web design, presentations, education, or social media. Using ready-made PNGs saves time since you do not need to remove backgrounds or edit shapes."
     },
     {
         id: 2,
-        question: "What does \"transparent background\" mean in Animal PNGs?",
-        answer: "It means only the animal shape is visible. You can place it on any background without a white border, making your designs look professional and seamless."
+        question: "What does 'transparent background' mean in Animal PNGs?",
+        answer: "It means only the animal shape is visible. You can place it on any background, ensuring your design looks clean without white borders or boxes."
     },
     {
         id: 3,
         question: "Are these Animal PNGs free to download and use?",
-        answer: "Some PNGs are free, while others are premium. Check the licensing note for each file. Free downloads may have limited usage; premium packs often include broader commercial rights."
+        answer: "Some PNGs are free, while others are premium. Check the licensing note for each file. Free versions may have basic usage rights, while premium packs often allow broader commercial use."
     },
     {
         id: 4,
         question: "Can I use Animal PNGs for commercial projects?",
-        answer: "Yes, many Animal PNGs are available for commercial use on websites, in branding, or on products. Always verify the license terms for clarity. Look for \"Royalty-Free\" or \"Commercial Use Allowed\" labels."
+        answer: "Yes, many Animal PNGs allow commercial use, such as branding, merchandise, advertising, or digital products. Always confirm the license terms before downloading."
     },
     {
         id: 5,
         question: "What is the difference between PNG, vector, and clipart for animals?",
-        answer: "PNG: Raster, high-quality, transparent. Ready-to-use for web and print. Vector (AI/SVG): Scalable without losing quality. Best for logos and illustrations. Clipart: Stylized illustrations, often simplified."
+        answer: "PNG: Raster, high-quality, transparent. Ready-to-use for web and print. Vector (AI/SVG): Scalable without losing quality. Best for logos and large prints. Clipart: Simplified or stylized graphics, often cartoon-style, ideal for presentations and kids' materials."
     },
     {
         id: 6,
         question: "Do you offer high-resolution or HD Animal PNG images?",
-        answer: "Yes, most Animal PNGs are high-resolution, suitable for print, banners, and large displays. Check each file's specs before downloading."
+        answer: "Yes, most Animal PNGs are high-resolution, suitable for print, banners, posters, and websites. Check individual file details for exact resolution."
     },
     {
         id: 7,
         question: "Can I use Animal PNGs for kids' educational projects?",
-        answer: "Absolutely. Many are designed for worksheets, presentations, and classroom visuals. Confirm the license if your project has commercial intent."
+        answer: "Absolutely. Many are designed for worksheets, presentations, and classroom displays. Visual clarity helps children focus on learning."
     },
     {
         id: 8,
         question: "How do I ensure the PNG looks good on my website or app?",
-        answer: "Choose a suitable resolution: 72–150 dpi for screens, 300 dpi for print. Ensure the PNG has a transparent background and clean edges."
+        answer: "Choose a suitable resolution: 72-150 dpi for screens, 300 dpi for print. Use PNGs with transparent backgrounds and clean edges. Compress file size if needed without losing quality."
     },
     {
         id: 9,
         question: "What file sizes should I expect for Animal PNGs?",
-        answer: "File size depends on dimensions and detail. High-resolution PNGs may range from a few hundred KB to several MB. For web use, optimize with compression if permitted."
+        answer: "File size depends on dimensions and detail. High-resolution PNGs may range from a few hundred KB to several MB. For web use, optimize file sizes without compromising quality."
     },
     {
         id: 10,
         question: "Can I edit or customize the Animal PNG?",
-        answer: "Yes, you can resize, recolor, or combine PNGs in compatible software. Check the license to confirm editing is allowed. Premium packs usually allow full modification."
+        answer: "Yes, you can resize, recolor, or combine PNGs in compatible software. Check the license for editing permissions. Premium packs often allow full customization."
     },
     {
         id: 11,
         question: "Are there Animal PNGs specifically for branding or logos?",
-        answer: "Yes. Look for Animal Logo PNGs or Icon PNGs. Ensure the license covers branding and commercial usage before using it for your brand."
+        answer: "Yes. Look for Animal Logo PNGs or Icon PNGs. Ensure the license covers commercial branding before use."
     },
     {
         id: 12,
         question: "Do you have Animal PNGs with transparent backgrounds for print?",
-        answer: "Yes, many PNGs are print-ready with transparent backgrounds. Verify the 300 dpi resolution for banners, posters, or merchandise."
+        answer: "Yes, many PNGs are print-ready with transparent backgrounds. Verify the resolution is 300 dpi or higher for large banners or posters."
     },
     {
         id: 13,
-        question: "What does \"royalty-free\" mean for Animal PNGs?",
-        answer: "Royalty-free means you can use the image across multiple projects without recurring fees, as long as you follow the license terms. It doesn't always mean zero restrictions, so read the license carefully."
+        question: "What does 'royalty-free' mean for Animal PNGs?",
+        answer: "Royalty-free means you can use the PNG across multiple projects without recurring fees, as long as you follow the license terms. It does not mean the image is free of all restrictions, so read the license carefully."
     },
     {
         id: 14,
         question: "How can I find Animal PNGs in specific styles (cute, realistic, cartoon)?",
-        answer: "Use search filters or keywords like \"Cute Animals PNG,\" \"Cartoon Animal PNG,\" or \"Realistic Animal PNG.\" Preview thumbnails and verify licensing to ensure project compatibility."
+        answer: "Use category filters or search keywords like 'Cute Animal PNG,' 'Realistic Animal PNG,' or 'Cartoon Animal PNG.' Preview the thumbnails to ensure the style matches your needs."
     },
     {
         id: 15,
         question: "Can I download Animal PNGs for educational platforms or kids' projects?",
-        answer: "Yes. Many are suitable for classroom use, learning apps, and student worksheets. Always verify distribution rights and license terms for educational use."
+        answer: "Yes. Many are suitable for classroom use, learning apps, and student worksheets. Confirm the license allows distribution or public use if required."
     }
 ];
 
@@ -161,12 +161,12 @@ const buildingFaqData: FAQItem[] = [
     {
         id: 14,
         question: "Can I customize colors in Architecture PNGs?",
-        answer: "Yes. Use masking or hue/saturation adjustments in editing software. For flat PNGs, use the \"Color Overlay\" tool to match the asset to your project's theme."
+        answer: "Yes. Use masking or hue/saturation adjustments in editing software. For flat PNGs, use the \'Color Overlay\' tool to match the asset to your project's theme."
     },
     {
         id: 15,
         question: "What metadata is essential for SEO and branding?",
-        answer: "Include descriptive Alt Text (e.g., \"Modern office building silhouette PNG\"), file resolution, and license type. This ensures accessibility and improves Google Image search rankings."
+        answer: "Include descriptive Alt Text (e.g., \'Modern office building silhouette PNG\'), file resolution, and license type. This ensures accessibility and improves Google Image search rankings."
     }
 ];
 
@@ -189,7 +189,7 @@ const businessFaqData: FAQItem[] = [
     {
         id: 4,
         question: "Can I use Business PNGs commercially?",
-        answer: "Yes, many allow commercial use. Look for \"Royalty-Free\" or \"Commercial Use Allowed.\""
+        answer: "Yes, many allow commercial use. Look for \'Royalty-Free\' or 'Commercial Use Allowed.'"
     },
     {
         id: 5,
@@ -312,7 +312,7 @@ const cultureReligionFaqData: FAQItem[] = [
     {
         id: 13,
         question: "How can I search for specific religions or festivals?",
-        answer: "Use the search bar or category filters like \"Islam PNG,\" \"Diwali PNG,\" or \"Christmas Symbols PNG\" to quickly find the visuals you need."
+        answer: "Use the search bar or category filters like \'Islam PNG,\' 'Diwali PNG,' or 'Christmas Symbols PNG' to quickly find the visuals you need."
     },
     {
         id: 14,
@@ -579,7 +579,7 @@ const landscapeFaqData: FAQItem[] = [
     {
         id: 4,
         question: "Can I use Landscape PNGs for commercial projects?",
-        answer: "Yes, many allow commercial use. Look for Royalty-Free or Commercial Use Allowed labels."
+        answer: "Yes, many allow commercial use. Look for 'Royalty-Free' or 'Commercial Use Allowed' labels."
     },
     {
         id: 5,
@@ -666,7 +666,7 @@ const lifestyleFaqData: FAQItem[] = [
     },
     {
         id: 6,
-        question: "What does transparent background mean in Lifestyle PNGs?",
+        question: "What does 'transparent background' mean in Lifestyle PNGs?",
         answer: "It means only the object or person in the image is visible. You can place it over any color, photo, or design without white borders or backgrounds."
     },
     {
@@ -707,7 +707,7 @@ const lifestyleFaqData: FAQItem[] = [
     {
         id: 14,
         question: "How do I search for a specific lifestyle PNG quickly?",
-        answer: "Use our category filters, keyword search, and style tags such as Travel PNG, Fitness PNG, or Cartoon Lifestyle PNG to find the perfect image instantly."
+        answer: "Use our category filters, keyword search, and style tags such as 'Travel PNG,' 'Fitness PNG,' or 'Cartoon Lifestyle PNG' to find the perfect image instantly."
     },
     {
         id: 15,
@@ -724,7 +724,7 @@ const peopleFaqData: FAQItem[] = [
     },
     {
         id: 2,
-        question: "What does transparent background mean in People PNGs?",
+        question: "What does 'transparent background' mean in People PNGs?",
         answer: "Only the person's shape is visible. You can place it on any background without a white border."
     },
     {
@@ -790,7 +790,7 @@ const peopleFaqData: FAQItem[] = [
     {
         id: 15,
         question: "How do I search for specific poses or actions in People PNGs?",
-        answer: "Use filters or keywords like working people PNG, running PNG, sitting PNG, or holding object PNG to quickly find the exact pose or activity you need."
+        answer: "Use filters or keywords like 'working people PNG,' 'running PNG,' 'sitting PNG,' or 'holding object PNG' to quickly find the exact pose or activity you need."
     }
 ];
 
@@ -802,7 +802,7 @@ const plantsFlowersFaqData: FAQItem[] = [
     },
     {
         id: 2,
-        question: "What does transparent background mean in plant PNGs?",
+        question: "What does 'transparent background' mean in plant PNGs?",
         answer: "A transparent background means only the plant or flower is visible. You can overlay it on any color, pattern, or image, ensuring seamless integration into your designs."
     },
     {
@@ -857,13 +857,13 @@ const plantsFlowersFaqData: FAQItem[] = [
     },
     {
         id: 13,
-        question: "What does royalty-free mean for plant PNGs?",
+        question: "What does 'royalty-free' mean for plant PNGs?",
         answer: "Royalty-free means you can use the image in multiple projects without recurring fees. Always check for attribution or other limitations in the license."
     },
     {
         id: 14,
         question: "How can I find plant PNGs in specific styles (realistic, cartoon, cute)?",
-        answer: "Use the category filters or search keywords like Realistic Plant PNG, Cartoon Flower PNG, or Cute Plant PNG. Preview thumbnails before downloading."
+        answer: "Use the category filters or search keywords like 'Realistic Plant PNG,' 'Cartoon Flower PNG,' or 'Cute Plant PNG.' Preview thumbnails before downloading."
     },
     {
         id: 15,
@@ -941,7 +941,7 @@ const socialIssuesFaqData: FAQItem[] = [
     {
         id: 14,
         question: "How do I find PNGs for specific issues?",
-        answer: "Use category filters or keywords like Climate Change PNG or Education Issues PNG."
+        answer: "Use category filters or keywords like 'Climate Change PNG' or 'Education Issues PNG.'"
     },
     {
         id: 15,
@@ -1019,7 +1019,7 @@ const scienceFaqData: FAQItem[] = [
     {
         id: 14,
         question: "How do I find PNGs for specific science topics?",
-        answer: "Use category filters or keywords like Chemistry PNG or Physics PNG."
+        answer: "Use category filters or keywords like 'Chemistry PNG' or 'Physics PNG.'"
     },
     {
         id: 15,
@@ -1036,7 +1036,7 @@ const sportsFaqData: FAQItem[] = [
     },
     {
         id: 2,
-        question: "What does transparent background mean in sports PNGs?",
+        question: "What does 'transparent background' mean in sports PNGs?",
         answer: "It means only the sports element is visible, without any surrounding color or background. You can place the PNG on any surface, color, or layout, ensuring your design looks professional and clean."
     },
     {
@@ -1091,13 +1091,13 @@ const sportsFaqData: FAQItem[] = [
     },
     {
         id: 13,
-        question: "What does royalty-free mean for sports PNGs?",
+        question: "What does 'royalty-free' mean for sports PNGs?",
         answer: "Royalty-free means you can use the PNG across multiple projects without paying recurring fees, as long as you follow the license terms. It does not automatically mean there are no restrictions, so read the license carefully."
     },
     {
         id: 14,
         question: "How can I find sports PNGs in specific styles (cartoon, realistic, silhouette)?",
-        answer: "Use filters or search keywords like Cartoon Sports PNG, Realistic Sports PNG, or Silhouette Sports PNG. Preview thumbnails and confirm licensing to ensure compatibility with your project."
+        answer: "Use filters or search keywords like 'Cartoon Sports PNG,' 'Realistic Sports PNG,' or 'Silhouette Sports PNG.' Preview thumbnails and confirm licensing to ensure compatibility with your project."
     },
     {
         id: 15,
@@ -1114,7 +1114,7 @@ const statesOfMindFaqData: FAQItem[] = [
     },
     {
         id: 2,
-        question: "What does transparent background mean in these visuals?",
+        question: "What does 'transparent background' mean in these visuals?",
         answer: "Only the core illustration is visible, allowing placement over any background without borders or distractions."
     },
     {
@@ -1169,13 +1169,13 @@ const statesOfMindFaqData: FAQItem[] = [
     },
     {
         id: 13,
-        question: "What does royalty-free mean for States of Mind visuals?",
+        question: "What does 'royalty-free' mean for States of Mind visuals?",
         answer: "You can use them across multiple projects without recurring fees, following license terms."
     },
     {
         id: 14,
         question: "How can I find specific styles (realistic, cartoon, abstract)?",
-        answer: "Use filters or search keywords like Abstract Mood PNG, Cartoon Emotion Illustration, or Minimalist Mindset Icon."
+        answer: "Use filters or search keywords like 'Abstract Mood PNG,' 'Cartoon Emotion Illustration,' or 'Minimalist Mindset Icon.'"
     },
     {
         id: 15,
@@ -1192,7 +1192,7 @@ const technologyFaqData: FAQItem[] = [
     },
     {
         id: 2,
-        question: "What does transparent background mean in Technology PNGs?",
+        question: "What does 'transparent background' mean in Technology PNGs?",
         answer: "Only the tech object is visible. You can place it on any background without white borders."
     },
     {
@@ -1203,7 +1203,7 @@ const technologyFaqData: FAQItem[] = [
     {
         id: 4,
         question: "Can I use Technology PNGs for commercial projects?",
-        answer: "Yes, many allow commercial use. Look for Royalty-Free or Commercial Use Allowed labels."
+        answer: "Yes, many allow commercial use. Look for 'Royalty-Free' or 'Commercial Use Allowed' labels."
     },
     {
         id: 5,
@@ -1247,13 +1247,13 @@ const technologyFaqData: FAQItem[] = [
     },
     {
         id: 13,
-        question: "What does royalty-free mean?",
+        question: "What does 'royalty-free' mean?",
         answer: "You can reuse images without recurring fees, following license rules."
     },
     {
         id: 14,
         question: "How can I find specific styles like flat or 3D?",
-        answer: "Use keywords and filters such as 3D Technology PNG or Flat Tech Icons."
+        answer: "Use keywords and filters such as '3D Technology PNG' or 'Flat Tech Icons.'"
     },
     {
         id: 15,
@@ -1270,7 +1270,7 @@ const environmentFaqData: FAQItem[] = [
     },
     {
         id: 2,
-        question: "What does transparent background mean in Environment PNGs?",
+        question: "What does 'transparent background' mean in Environment PNGs?",
         answer: "Only the main subject is visible. You can place the image on any background without white borders."
     },
     {
@@ -1281,7 +1281,7 @@ const environmentFaqData: FAQItem[] = [
     {
         id: 4,
         question: "Can I use Environment PNGs for commercial projects?",
-        answer: "Yes, many allow commercial use. Look for Royalty-Free or Commercial Use Allowed labels."
+        answer: "Yes, many allow commercial use. Look for 'Royalty-Free' or 'Commercial Use Allowed' labels."
     },
     {
         id: 5,
@@ -1305,7 +1305,7 @@ const environmentFaqData: FAQItem[] = [
     },
     {
         id: 9,
-        question: "What does royalty-free mean for Environment PNGs?",
+        question: "What does 'royalty-free' mean for Environment PNGs?",
         answer: "It means you can reuse the image across projects without recurring fees, within license terms."
     },
     {
@@ -1336,7 +1336,7 @@ const environmentFaqData: FAQItem[] = [
     {
         id: 15,
         question: "How can I quickly find Environment PNGs related to climate change or sustainability?",
-        answer: "Use category filters or search terms like Climate Change PNG, Sustainability PNG, or Eco Icons PNG to narrow results and save time."
+        answer: "Use category filters or search terms like 'Climate Change PNG,' 'Sustainability PNG,' or 'Eco Icons PNG' to narrow results and save time."
     }
 ];
 
@@ -1400,7 +1400,7 @@ const graphicResourcesFaqData: FAQItem[] = [
     },
     {
         id: 10,
-        question: "What does \"royalty-free\" mean here?",
+        question: "What does 'royalty-free' mean here?",
         answer: "Royalty-free means you can reuse assets across projects without recurring fees, as long as you follow the license terms."
     },
     {
@@ -1618,9 +1618,9 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                                 </button>
                                 
                                 <div
-                                    className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                                    className={'overflow-hidden transition-all duration-300 ease-in-out ${
                                         openId === faq.id ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-                                    }`}
+                                    }'}
                                 >
                                     <div className="p-4 md:p-5 pt-0 md:pt-0 border-t border-gray-100">
                                         <p className="text-sm md:text-base text-gray-700 leading-relaxed">
