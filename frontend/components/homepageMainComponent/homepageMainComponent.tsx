@@ -88,7 +88,7 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
             <Header />
             <SearchingImage />
             <Trendingimages imagesData={imagesData.images} />
-            {imagesData?.count > 100 && (
+            {imagesData?.count > 20 && (
                 <TrendingImagesPagination count={imagesData?.count} />
             )}
             <HomeCategories />
