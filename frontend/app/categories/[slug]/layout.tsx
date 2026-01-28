@@ -4,7 +4,7 @@ import { siteConfig } from "@/config/site";
 import { Metadata } from "next";
 import React from "react";
 
-const getCategoryUrl = (slug: string) => `${siteConfig.url}/categories/${slug}`;
+const getCategoryUrl = (slug: string) => `${siteConfig.url}/api/v1/images/categories/${slug}`;
 
 // Schema data mapping for different categories
 const categorySchemas: Record<string, any> = {
