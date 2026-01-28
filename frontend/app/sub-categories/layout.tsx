@@ -6,6 +6,9 @@ import React from "react";
 export const metadata: Metadata = {
     title: "Browse All PNG Image Sub Categories | Free Transparent PNGs | PNGPoint",
     description: "Discover our full collection of PNG images, neatly organized by category for quick and easy downloads.",
+    alternates: {
+    canonical: "https://pngpoint.com/sub-categories",
+  },
 };
 
 export default function SubCategoriesRootLayout({

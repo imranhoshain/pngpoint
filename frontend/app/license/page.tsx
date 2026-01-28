@@ -1,6 +1,15 @@
 import Footer from "@/components/footer/footer";
 import { Header } from "@/components/header/header";
+import { Metadata } from "next";
 import { siteConfig, getSiteHostname } from "@/config/site";
+
+export const metadata: Metadata = {
+  title: "License - PNGPoint",
+  description: "Read PNGPoint's licensing information to understand how you can use our PNG assets legally and responsibly.",
+  alternates: {
+    canonical: "https://pngpoint.com/license",
+  },
+};
 
 export default function License() {
     const hostname = getSiteHostname();

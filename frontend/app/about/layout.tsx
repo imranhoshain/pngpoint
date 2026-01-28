@@ -6,6 +6,9 @@ import React from "react";
 export const metadata: Metadata = {
     title: "About Us - PNGPoint",
     description: "Learn more about PNGPoint, our mission, vision, and the team dedicated to providing high-quality PNG assets for designers and creators.",
+    alternates: {
+        canonical: "https://pngpoint.com/about",
+    },
 };
 
 export default function AboutRootLayout({

@@ -6,6 +6,9 @@ import React from "react";
 export const metadata: Metadata = {
     title: "Contact Us - PNGPoint",
     description: "Get in touch with PNGPoint for any inquiries or support.",
+    alternates: {
+        canonical: "https://pngpoint.com/contact",
+    },
 };
 
 export default function ContactRootLayout({

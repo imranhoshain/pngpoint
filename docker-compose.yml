@@ -16,6 +16,7 @@ services:
 
       # redirect http → https
       - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.permanent=true"
 
       # HTTP router (redirects to HTTPS)
       - "traefik.http.routers.${ENVIRONMENT}-frontend-web.rule=Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)"

@@ -139,8 +139,8 @@ class PopularImagesSitemap(CachedSitemap):
 
 class CategorySitemap(CachedSitemap):
     """Sitemap for category pages"""
-    changefreq = "weekly"
-    priority = 0.7
+    changefreq = "daily"
+    priority = 1.0
     protocol = 'https'
     
     def _get_items(self):
@@ -152,8 +152,8 @@ class CategorySitemap(CachedSitemap):
 
 class SubCategorySitemap(CachedSitemap):
     """Sitemap for subcategory pages"""
-    changefreq = "weekly"
-    priority = 0.6
+    changefreq = "daily"
+    priority = 1.0
     protocol = 'https'
     
     def _get_items(self):
