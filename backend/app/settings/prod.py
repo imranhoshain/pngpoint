@@ -72,6 +72,7 @@ def get_csrf_trusted_origins():
 
 def get_cors_allowed_origins():
     origins = []
+    origins.append("https://www.pngpoint.com")
     frontend_domain = os.getenv('FRONTEND_DOMAIN', '')
     if frontend_domain:
         origins.append(frontend_domain.rstrip('/'))

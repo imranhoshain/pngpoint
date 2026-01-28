@@ -8,6 +8,55 @@ interface PopularUseCasesProps {
 }
 
 export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
+
+// Helper function to convert text with links
+const processTextWithLinks = (text: string): React.ReactNode => {
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    
+    // Pattern to match: PNGPoint, transparent images, or words ending with 'license'
+    const pattern = /(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)/g;
+    let match;
+    
+    while ((match = pattern.exec(text)) !== null) {
+        // Add text before the match
+        if (match.index > lastIndex) {
+            parts.push(text.substring(lastIndex, match.index));
+        }
+        
+        // Add the linked text
+        const matchedText = match[0];
+        let url = 'https://pngpoint.com/';
+        
+        // Determine the URL based on the matched text
+        if (matchedText.toLowerCase().includes('license')) {
+            url = 'https://pngpoint.com/license';
+        }
+        
+        parts.push(
+            <a
+                key={match.index}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#0077a2] hover:text-[#005a7d] underline font-medium"
+            >
+                {matchedText}
+            </a>
+        );
+        
+        lastIndex = match.index + matchedText.length;
+    }
+    
+    // Add remaining text
+    if (lastIndex < text.length) {
+        parts.push(text.substring(lastIndex));
+    }
+    
+    return parts.length > 0 ? <>{parts}</> : text;
+};
+
+
     // Animals content
     const animalsContent = {
         title: "Popular Use Cases",
@@ -574,7 +623,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
                             {content.title}
                         </h2>
                         <p className="text-sm md:text-base font-normal text-gray-600 max-w-4xl">
-                            {content.description}
+                            {processTextWithLinks(content.description)}
                         </p>
                     </div>
 
@@ -596,7 +645,7 @@ export const PopularUseCases = ({ categorySlug }: PopularUseCasesProps) => {
                                         </h3>
                                     </div>
                                     <p className="text-sm md:text-base text-gray-700 leading-relaxed">
-                                        {useCase.description}
+                                        {processTextWithLinks(useCase.description)}
                                     </p>
                                 </div>
                             );

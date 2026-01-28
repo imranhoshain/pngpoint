@@ -8,6 +8,55 @@ interface LicensingDownloadProps {
 }
 
 export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
+
+// Helper function to convert text with links
+const processTextWithLinks = (text: string): React.ReactNode => {
+    const parts: React.ReactNode[] = [];
+    let lastIndex = 0;
+    
+    // Pattern to match: PNGPoint, transparent images, or words ending with 'license'
+    const pattern = /(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)/g;
+    let match;
+    
+    while ((match = pattern.exec(text)) !== null) {
+        // Add text before the match
+        if (match.index > lastIndex) {
+            parts.push(text.substring(lastIndex, match.index));
+        }
+        
+        // Add the linked text
+        const matchedText = match[0];
+        let url = 'https://pngpoint.com/';
+        
+        // Determine the URL based on the matched text
+        if (matchedText.toLowerCase().includes('license')) {
+            url = 'https://pngpoint.com/license';
+        }
+        
+        parts.push(
+            <a
+                key={match.index}
+                href={url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[#0077a2] hover:text-[#005a7d] underline font-medium"
+            >
+                {matchedText}
+            </a>
+        );
+        
+        lastIndex = match.index + matchedText.length;
+    }
+    
+    // Add remaining text
+    if (lastIndex < text.length) {
+        parts.push(text.substring(lastIndex));
+    }
+    
+    return parts.length > 0 ? <>{parts}</> : text;
+};
+
+
     // Determine category type
     const isBuildingsCategory = categorySlug === 'buildings-and-architecture';
     const isCultureReligionCategory = categorySlug === 'culture-and-religion';
@@ -533,7 +582,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                 </h3>
                             </div>
                             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
-                                {content.licensing.description}
+                                {processTextWithLinks(content.licensing.description)}
                             </p>
                             
                             {/* Key Points for Buildings/Business, Pro Tip Box for others */}
@@ -553,7 +602,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                         <div className="flex items-start gap-3">
                                             <Lightbulb className="w-5 h-5 text-[#0077a2] flex-shrink-0 mt-0.5" />
                                             <p className="text-sm md:text-base text-gray-700">
-                                                <strong className="text-[#0077a2]">Pro Tip:</strong> {content.licensing.proTip}
+                                                <strong className="text-[#0077a2]">Pro Tip:</strong> {processTextWithLinks(content.licensing.proTip)}
                                             </p>
                                         </div>
                                     </div>
@@ -563,7 +612,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                     <div className="flex items-start gap-3">
                                         <Lightbulb className="w-5 h-5 text-[#0077a2] flex-shrink-0 mt-0.5" />
                                         <p className="text-sm md:text-base text-gray-700">
-                                            <strong className="text-[#0077a2]">Tip:</strong> {content.licensing.proTip}
+                                            <strong className="text-[#0077a2]">Tip:</strong> {processTextWithLinks(content.licensing.proTip)}
                                         </p>
                                     </div>
                                 </div>
@@ -581,7 +630,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                                 </h3>
                             </div>
                             <p className="text-sm md:text-base text-gray-700 leading-relaxed mb-4">
-                                {content.download.description}
+                                {processTextWithLinks(content.download.description)}
                             </p>
                             <div className="space-y-3">
                                 {content.download.features.map((feature, index) => (
@@ -600,7 +649,7 @@ export const LicensingDownload = ({ categorySlug }: LicensingDownloadProps) => {
                             {content.cta.title}
                         </h3>
                         <p className="text-sm md:text-base text-white/90 leading-relaxed max-w-3xl mx-auto">
-                            {content.cta.description}
+                            {processTextWithLinks(content.cta.description)}
                         </p>
                     </div>
                 </div>
