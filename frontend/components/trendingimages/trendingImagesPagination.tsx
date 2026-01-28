@@ -13,7 +13,7 @@ export const TrendingImagesPagination: React.FC<TrendingimagesPaginationProps> =
     const [currentPage, setCurrentPage] = useState<number>(1);
     const dispatch = useDispatch();
     const safeCount = count;
-    const totalPages: number = Math.ceil(safeCount / 20);
+    const totalPages: number = Math.ceil(safeCount / 100);
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
