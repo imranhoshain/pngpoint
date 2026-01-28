@@ -1642,7 +1642,7 @@ const categorySchemas: Record<string, any> = {
                         "name": "How can I search for specific religions or festivals?",
                         "acceptedAnswer": {
                             "@type": "Answer",
-                            "text": "Use the search bar or category filters like Islam PNG,Diwali PNG, or Christmas Symbols PNG to quickly find the visuals you need."
+                            "text": "Use the search bar or category filters like Islam PNG, Diwali PNG, or Christmas Symbols PNG to quickly find the visuals you need."
                         }
                     },
                     {
@@ -1701,20 +1701,15 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     }
 }
 
-export default function SingleCategoryRootLayout({
+export default async function SingleCategoryRootLayout({
     children,
     params,
 }: {
     children: React.ReactNode;
     params: Promise<{ slug: string }>;
 }) {
-    const [slug, setSlug] = React.useState<string>("");
-
-    React.useEffect(() => {
-        params.then((resolvedParams) => {
-            setSlug(resolvedParams.slug);
-        });
-    }, [params]);
+    // Await the params directly in the async server component
+    const { slug } = await params;
 
     // Get the schema for the current category
     const schema = categorySchemas[slug];
