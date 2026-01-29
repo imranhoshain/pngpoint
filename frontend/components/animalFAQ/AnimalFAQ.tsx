@@ -161,12 +161,12 @@ const buildingFaqData: FAQItem[] = [
     {
         id: 14,
         question: "Can I customize colors in Architecture PNGs?",
-        answer: "Yes. Use masking or hue/saturation adjustments in editing software. For flat PNGs, use the \'Color Overlay\' tool to match the asset to your project's theme."
+        answer: "Yes. Use masking or hue/saturation adjustments in editing software. For flat PNGs, use the 'Color Overlay' tool to match the asset to your project's theme."
     },
     {
         id: 15,
         question: "What metadata is essential for SEO and branding?",
-        answer: "Include descriptive Alt Text (e.g., \'Modern office building silhouette PNG\'), file resolution, and license type. This ensures accessibility and improves Google Image search rankings."
+        answer: "Include descriptive Alt Text (e.g., 'Modern office building silhouette PNG'), file resolution, and license type. This ensures accessibility and improves Google Image search rankings."
     }
 ];
 
@@ -189,7 +189,7 @@ const businessFaqData: FAQItem[] = [
     {
         id: 4,
         question: "Can I use Business PNGs commercially?",
-        answer: "Yes, many allow commercial use. Look for \'Royalty-Free\' or 'Commercial Use Allowed.'"
+        answer: "Yes, many allow commercial use. Look for 'Royalty-Free' or 'Commercial Use Allowed.'"
     },
     {
         id: 5,
@@ -312,7 +312,7 @@ const cultureReligionFaqData: FAQItem[] = [
     {
         id: 13,
         question: "How can I search for specific religions or festivals?",
-        answer: "Use the search bar or category filters like \'Islam PNG,\' 'Diwali PNG,' or 'Christmas Symbols PNG' to quickly find the visuals you need."
+        answer: "Use the search bar or category filters like 'Islam PNG,' 'Diwali PNG,' or 'Christmas Symbols PNG' to quickly find the visuals you need."
     },
     {
         id: 14,
@@ -1340,93 +1340,159 @@ const environmentFaqData: FAQItem[] = [
     }
 ];
 
-
-
-
-
-
-
-
-
-
-
-
-
-const graphicResourcesFaqData: FAQItem[] = [
+const transportFaqData: FAQItem[] = [
     {
         id: 1,
-        question: "What are graphic resources, and why are they useful?",
-        answer: "Graphic resources are ready-made design assets like icons, illustrations, and templates. They save time and improve visual consistency."
+        question: "What is a Transport PNG image, and why is it useful?",
+        answer: "A Transport PNG is a raster image with a transparent background. It's useful for designs, presentations, and education because it blends easily into any layout."
     },
     {
         id: 2,
-        question: "Are these graphic resources free to use?",
-        answer: "Many assets are free, while others may be premium. Licensing details are clearly listed on each resource page."
+        question: "What does 'transparent background' mean in transport PNGs?",
+        answer: "It means only the vehicle is visible, without a white or colored background, ensuring clean placement on any design."
     },
     {
         id: 3,
-        question: "Can I use graphic resources for commercial projects?",
-        answer: "Yes, most resources support commercial use. Always verify the license before publishing."
+        question: "Are these Transport PNGs free to download?",
+        answer: "Some images are free, while others are premium. Always check the license details on each image page."
     },
     {
         id: 4,
-        question: "What file formats are available?",
-        answer: "Common formats include PNG, SVG, AI, and PSD, suitable for both digital and print work."
+        question: "Can I use Transport PNGs for commercial projects?",
+        answer: "Yes, many transport PNGs allow commercial use. Look for 'royalty-free' or 'commercial use allowed' labels."
     },
     {
         id: 5,
-        question: "Can I edit or customize the graphics?",
-        answer: "Most licenses allow resizing, recoloring, and editing. Premium assets often include full modification rights."
+        question: "What is the difference between transport PNG, vector, and clipart?",
+        answer: "PNG files are ready-to-use with transparency. Vectors scale without quality loss. Clipart is usually more stylized."
     },
     {
         id: 6,
-        question: "Are these assets suitable for print projects?",
-        answer: "Yes. Many files are high-resolution and print-ready. Check DPI and format details before use."
+        question: "Do you offer high-resolution Transport PNG images?",
+        answer: "Yes. Most files are available in HD or high resolution, suitable for print and large displays."
     },
     {
         id: 7,
-        question: "Can educators use these resources in classrooms?",
-        answer: "Absolutely. Many graphics are ideal for educational materials and presentations."
+        question: "Can I use transport PNGs for kids' educational projects?",
+        answer: "Yes. Many images are designed for learning materials and children's projects. Confirm the license if used commercially."
     },
     {
         id: 8,
-        question: "How do I choose the right format for my project?",
-        answer: "Use PNG for quick visuals, SVG or AI for scalable designs, and PSD for layered editing."
+        question: "How do I ensure transport PNGs look good on websites?",
+        answer: "Choose the right resolution and use optimized file sizes for fast loading while keeping image clarity."
     },
     {
         id: 9,
-        question: "Do you offer modern and minimal design styles?",
-        answer: "Yes. Collections include flat, minimal, creative, and detailed design styles."
+        question: "Are there transport PNGs for branding or logos?",
+        answer: "Yes. Transport logo PNGs and icon PNGs are available. Always confirm branding rights before use."
     },
     {
         id: 10,
-        question: "What does 'royalty-free' mean here?",
-        answer: "Royalty-free means you can reuse assets across projects without recurring fees, as long as you follow the license terms."
+        question: "What does royalty-free mean for transport PNGs?",
+        answer: "Royalty-free means you can use the image multiple times without paying recurring fees, as long as you follow the license terms."
     },
     {
         id: 11,
-        question: "Are these graphic resources suitable for mobile apps and UI design?",
-        answer: "Yes. Many graphic resources are optimized for mobile interfaces, dashboards, and app layouts. Scalable formats like SVG and vector files ensure clarity across different screen sizes."
+        question: "Can I use Transport PNG images in mobile apps or UI designs?",
+        answer: "Yes. Transport PNGs with transparent backgrounds work well in mobile apps, dashboards, and UI layouts. They integrate smoothly into interfaces without visual clutter."
     },
     {
         id: 12,
-        question: "Do graphic resources affect website loading speed?",
-        answer: "Well-optimized graphics help maintain fast loading times. Lightweight SVGs and compressed PNGs improve performance while preserving visual quality."
+        question: "Are Transport PNG images suitable for print materials like posters or flyers?",
+        answer: "Many transport PNGs are print-ready. For best results, choose high-resolution files (300 dpi) to maintain sharp details in posters, banners, or brochures."
     },
     {
         id: 13,
-        question: "Can I use these graphic resources for social media content?",
-        answer: "Absolutely. Graphic resources work well for posts, ads, thumbnails, and stories. Consistent visuals help improve brand recognition across platforms."
+        question: "Do Transport PNGs include modern and future vehicles?",
+        answer: "Yes. The collection includes electric vehicles, smart transport icons, metro systems, and modern mobility visuals that fit future-focused designs."
     },
     {
         id: 14,
-        question: "How often are new graphic resources added?",
-        answer: "New assets are added regularly to keep the library aligned with current design trends and modern use cases."
+        question: "Can I recolor or resize Transport PNG images for my project?",
+        answer: "Most transport PNGs can be resized or recolored using standard design tools. Always review the license to confirm modification rights before editing."
     },
     {
         id: 15,
-        question: "Can I bundle multiple graphic resources into one project?",
-        answer: "Yes. Royalty-free licensing typically allows combining multiple assets within a single project, as long as license terms are followed."
+        question: "How can I find Transport PNGs for specific industries like logistics or travel?",
+        answer: "Use category filters or search terms such as 'Logistics Transport PNG,' 'Public Transport PNG,' or 'Travel Vehicle PNG' to quickly find industry-specific visuals."
+    }
+];
+
+const travelFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What is a Travel PNG image, and why is it useful?",
+        answer: "A Travel PNG is a transparent image related to travel themes like landmarks, transport, or tourism. It works well for overlays, websites, and presentations."
+    },
+    {
+        id: 2,
+        question: "What does 'transparent background' mean in Travel PNGs?",
+        answer: "Only the travel object or icon appears. You can place it on any background without a white box."
+    },
+    {
+        id: 3,
+        question: "Are Travel PNG images free to download?",
+        answer: "Some are free, while others are premium. Always check the license details on each file."
+    },
+    {
+        id: 4,
+        question: "Can I use Travel PNGs for commercial projects?",
+        answer: "Yes, many Travel PNGs allow commercial use. Look for 'royalty-free' or 'commercial use allowed' labels."
+    },
+    {
+        id: 5,
+        question: "What is the difference between Travel PNG, vector, and clipart?",
+        answer: "PNG files are ready-to-use with transparency. Vectors scale without quality loss. Clipart is usually simplified and stylized."
+    },
+    {
+        id: 6,
+        question: "Do you offer high-resolution Travel PNG images?",
+        answer: "Yes. Most Travel PNGs are high-resolution and suitable for print and large displays."
+    },
+    {
+        id: 7,
+        question: "Can Travel PNGs be used for educational projects?",
+        answer: "Yes. They work well for geography lessons, presentations, and student projects."
+    },
+    {
+        id: 8,
+        question: "How do I ensure a Travel PNG looks good on my website?",
+        answer: "Use optimized file sizes, clean transparency, and appropriate resolution for screens."
+    },
+    {
+        id: 9,
+        question: "Can I edit or customize Travel PNG images?",
+        answer: "Most licenses allow resizing and editing. Always confirm before modifying."
+    },
+    {
+        id: 10,
+        question: "What does 'royalty-free' mean for Travel PNGs?",
+        answer: "You can use the image across multiple projects without recurring fees, as long as license rules are followed."
+    },
+    {
+        id: 11,
+        question: "Are Travel PNG images suitable for social media posts and ads?",
+        answer: "Yes. Travel PNGs work well for social media graphics, ads, and thumbnails because transparent backgrounds blend easily with any design style or color."
+    },
+    {
+        id: 12,
+        question: "Can I use Travel PNGs for travel apps or booking platforms?",
+        answer: "Many Travel PNGs support app and platform use, including UI icons and visual elements. Always confirm the license for commercial or large-scale digital use."
+    },
+    {
+        id: 13,
+        question: "Do Travel PNG files work for print materials like brochures or posters?",
+        answer: "Yes. High-resolution Travel PNGs are suitable for brochures, posters, flyers, and banners. For best results, check for 300 dpi files before printing."
+    },
+    {
+        id: 14,
+        question: "How can I quickly find Travel PNGs for specific destinations or themes?",
+        answer: "Use category filters or keywords such as 'landmark PNG,' 'airport PNG,' 'beach travel PNG,' or 'world map PNG' to narrow results efficiently."
+    },
+    {
+        id: 15,
+        question: "Are Travel PNG images optimized for fast website performance?",
+        answer: "Most Travel PNGs are optimized for quality and size balance. For faster loading, you can compress files further without losing visual clarity, if the license allows."
     }
 ];
 
@@ -1508,6 +1574,84 @@ const foodFaqData: FAQItem[] = [
     }
 ];
 
+const graphicResourcesFaqData: FAQItem[] = [
+    {
+        id: 1,
+        question: "What are graphic resources, and why are they useful?",
+        answer: "Graphic resources are ready-made design assets like icons, illustrations, and templates. They save time and improve visual consistency."
+    },
+    {
+        id: 2,
+        question: "Are these graphic resources free to use?",
+        answer: "Many assets are free, while others may be premium. Licensing details are clearly listed on each resource page."
+    },
+    {
+        id: 3,
+        question: "Can I use graphic resources for commercial projects?",
+        answer: "Yes, most resources support commercial use. Always verify the license before publishing."
+    },
+    {
+        id: 4,
+        question: "What file formats are available?",
+        answer: "Common formats include PNG, SVG, AI, and PSD, suitable for both digital and print work."
+    },
+    {
+        id: 5,
+        question: "Can I edit or customize the graphics?",
+        answer: "Most licenses allow resizing, recoloring, and editing. Premium assets often include full modification rights."
+    },
+    {
+        id: 6,
+        question: "Are these assets suitable for print projects?",
+        answer: "Yes. Many files are high-resolution and print-ready. Check DPI and format details before use."
+    },
+    {
+        id: 7,
+        question: "Can educators use these resources in classrooms?",
+        answer: "Absolutely. Many graphics are ideal for educational materials and presentations."
+    },
+    {
+        id: 8,
+        question: "How do I choose the right format for my project?",
+        answer: "Use PNG for quick visuals, SVG or AI for scalable designs, and PSD for layered editing."
+    },
+    {
+        id: 9,
+        question: "Do you offer modern and minimal design styles?",
+        answer: "Yes. Collections include flat, minimal, creative, and detailed design styles."
+    },
+    {
+        id: 10,
+        question: "What does 'royalty-free' mean here?",
+        answer: "Royalty-free means you can reuse assets across projects without recurring fees, as long as you follow the license terms."
+    },
+    {
+        id: 11,
+        question: "Are these graphic resources suitable for mobile apps and UI design?",
+        answer: "Yes. Many graphic resources are optimized for mobile interfaces, dashboards, and app layouts. Scalable formats like SVG and vector files ensure clarity across different screen sizes."
+    },
+    {
+        id: 12,
+        question: "Do graphic resources affect website loading speed?",
+        answer: "Well-optimized graphics help maintain fast loading times. Lightweight SVGs and compressed PNGs improve performance while preserving visual quality."
+    },
+    {
+        id: 13,
+        question: "Can I use these graphic resources for social media content?",
+        answer: "Absolutely. Graphic resources work well for posts, ads, thumbnails, and stories. Consistent visuals help improve brand recognition across platforms."
+    },
+    {
+        id: 14,
+        question: "How often are new graphic resources added?",
+        answer: "New assets are added regularly to keep the library aligned with current design trends and modern use cases."
+    },
+    {
+        id: 15,
+        question: "Can I bundle multiple graphic resources into one project?",
+        answer: "Yes. Royalty-free licensing typically allows combining multiple assets within a single project, as long as license terms are followed."
+    }
+];
+
 const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string): React.ReactNode => {
     const shouldApplyLink = 
         (categorySlug === 'animals' && id === 4) || 
@@ -1528,7 +1672,9 @@ const renderAnswerWithLink = (answer: string, id: number, categorySlug?: string)
         (categorySlug === 'sports' && (id === 3 || id === 4 || id === 10)) ||
         (categorySlug === 'states-of-mind' && (id === 3 || id === 4 || id === 10)) ||
         (categorySlug === 'technology' && (id === 3 || id === 4 || id === 10)) ||
-        (categorySlug === 'the-environment' && (id === 3 || id === 4 || id === 10));
+        (categorySlug === 'the-environment' && (id === 3 || id === 4 || id === 10)) ||
+        (categorySlug === 'transport' && (id === 3 || id === 4 || id === 10)) ||
+        (categorySlug === 'travel' && (id === 3 || id === 4 || id === 10));
     
     if (shouldApplyLink) {
         const parts = answer.split(/(license|licensing)/gi);
@@ -1577,6 +1723,8 @@ export default function AnimalFAQ({ categorySlug = 'animals', categoryName = 'An
                     categorySlug === 'states-of-mind' ? statesOfMindFaqData :
                     categorySlug === 'technology' ? technologyFaqData :
                     categorySlug === 'the-environment' ? environmentFaqData :
+                    categorySlug === 'transport' ? transportFaqData :
+                    categorySlug === 'travel' ? travelFaqData :
                     animalFaqData;
 
     return (

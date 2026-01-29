@@ -924,6 +924,104 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         footer: "Each category opens a focused gallery, making downloads quick and simple."
     };
 
+    // Transport content
+    const transportContent = {
+        categories: [
+            {
+                title: "Core Transport Types",
+                items: [
+                    "Land Transport PNG",
+                    "Road Transport PNG",
+                    "Air Transport PNG",
+                    "Sea Transport PNG",
+                    "Public Transport PNG",
+                    "Private Transport PNG"
+                ]
+            },
+            {
+                title: "Vehicle Categories",
+                items: [
+                    "Car PNG",
+                    "Bus PNG",
+                    "Truck PNG",
+                    "Bike & Motorcycle PNG",
+                    "Train & Metro PNG",
+                    "Airplane & Helicopter PNG",
+                    "Ship & Boat PNG",
+                    "Electric Vehicle PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Transport Icons PNG",
+                    "Cartoon Transport PNG",
+                    "Realistic Transport PNG",
+                    "Transport Silhouette PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Transport Logo PNG",
+                    "Transport Illustration PNG",
+                    "Transport Clipart PNG",
+                    "Transport Sticker PNG",
+                    "Transport Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery, making downloads quick and stress-free."
+    };
+
+    // Travel content
+    const travelContent = {
+        categories: [
+            {
+                title: "Core Travel Types",
+                items: [
+                    "Travel Icons PNG",
+                    "Travel Essentials PNG",
+                    "Transportation Travel PNG",
+                    "Tourism Symbols PNG",
+                    "Adventure Travel PNG",
+                    "Holiday Travel PNG"
+                ]
+            },
+            {
+                title: "Locations & Destinations",
+                items: [
+                    "Famous Landmarks PNG",
+                    "City Travel PNG",
+                    "Beach & Island Travel PNG",
+                    "Mountain Travel PNG",
+                    "World Map & Globe PNG",
+                    "Airport & Hotel PNG"
+                ]
+            },
+            {
+                title: "Styles & Formats",
+                items: [
+                    "Cartoon Travel PNG",
+                    "Realistic Travel PNG",
+                    "Travel Silhouette PNG",
+                    "Minimal Travel Icons PNG"
+                ]
+            },
+            {
+                title: "Creative Assets",
+                items: [
+                    "Travel Logo PNG",
+                    "Travel Sticker PNG",
+                    "Travel Illustration PNG",
+                    "Travel Clipart PNG",
+                    "Travel Vector PNG"
+                ]
+            }
+        ],
+        footer: "Each category opens a focused gallery, making downloads simple and stress-free."
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -944,6 +1042,8 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
         "the-environment": environmentContent,
+        transport: transportContent,
+        travel: travelContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

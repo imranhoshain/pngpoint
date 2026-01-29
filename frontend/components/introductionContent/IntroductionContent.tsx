@@ -15,7 +15,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
     let lastIndex = 0;
     
     // Pattern to match: PNGPoint, transparent images, or words ending with 'license'
-    const pattern = /(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)/g;
+    const pattern = /(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)/g;
     let match;
     
     while ((match = pattern.exec(text)) !== null) {
@@ -592,6 +592,64 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         }
     };
 
+    // Transport content
+    const transportContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Transport PNG images help creators work faster by removing the need for background editing. When you need clean vehicle visuals for design, education, or business projects, transparent transport PNGs solve the problem instantly.",
+            "If your project requires cars, buses, trains, airplanes, or modern mobility graphics that blend into any layout, this collection makes it simple. At PNGPoint, transport PNGs are used across websites, presentations, branding materials, and kids' learning projects because clarity matters.",
+            "That's why this library focuses on high-quality transport PNG images with transparent backgrounds and clear usage rights. Browse the transport PNG collection and choose visuals that fit your project with confidence."
+        ],
+        mainTitle: "Why Choose Our Transport PNG Collection",
+        mainDescription: "Finding the right transport visuals should feel easy, not time-consuming. This collection is built for designers, educators, developers, and content creators who need reliable transport PNG images that work instantly. Each file is designed for flexibility, clarity, and real-world use. As a result, you spend less time editing images and more time building your project.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Cars, buses, trucks, trains, airplanes, ships, bikes, and electric vehicles" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD transport images, clean edges" },
+                { label: "Flexible usage:", text: "Websites, branding, print materials, education, and apps" },
+                { label: "Clear licensing:", text: "Royalty-free transport PNGs with usage details shown clearly" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Large library of curated transport PNG images",
+                "Regular updates with modern and future transport visuals",
+                "Consistent licensing across categories"
+            ]
+        }
+    };
+
+    // Travel content
+    const travelContent = {
+        subheading: "High-resolution, royalty-free, and ready to use",
+        introText: [
+            "Travel PNG images help creators save time when they need clean, ready-to-use visuals for travel design, tourism content, or digital storytelling. If you want transparent travel graphics that blend perfectly into any background, this page solves that need quickly and clearly.",
+            "Designers, educators, and marketers often use travel PNGs in websites, presentations, apps, and branding materials. Clean transparency removes extra editing work and keeps visuals professional.",
+            "That's why this collection focuses on high-quality Travel PNG files with clear licensing and reliable formats. Browse the travel PNG library and choose visuals that fit your project goals today."
+        ],
+        mainTitle: "Why Choose Our Travel PNG Collection",
+        mainDescription: "Finding travel-related graphics should feel easy, not frustrating. This collection is built for users who need reusable Travel PNG images that work instantly across different platforms. Every file focuses on clarity, flexibility, and real-world use. As a result, projects move faster with fewer edits.",
+        keyBenefits: {
+            title: "Key Benefits",
+            items: [
+                { label: "Wide coverage:", text: "Landmarks, transport, maps, luggage, travel icons, tourism symbols" },
+                { label: "High-quality formats:", text: "Transparent PNG files, HD PNG images, clean edges" },
+                { label: "Flexible usage:", text: "Websites, travel blogs, apps, print designs, education, branding" },
+                { label: "Clear licensing:", text: "Usage terms explained upfront, no confusion before download" }
+            ]
+        },
+        reliableSection: {
+            title: "What Makes It Reliable",
+            items: [
+                "Thousands of curated travel PNG assets",
+                "Regular updates with modern travel themes",
+                "Consistent licenses across the collection"
+            ]
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -612,6 +670,8 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
         "the-environment": environmentContent,
+        transport: transportContent,
+        travel: travelContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

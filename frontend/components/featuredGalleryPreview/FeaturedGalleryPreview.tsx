@@ -480,6 +480,50 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         footerText: "Use filters to find the right PNG without extra clicks."
     };
 
+    // Transport content
+    const transportContent = {
+        title: "Featured Gallery Preview",
+        description: "Get a quick look at the most downloaded Transport PNG images in one place. This preview highlights high-resolution PNG files with transparent backgrounds, ready for real projects. You can review image quality instantly and download with confidence.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-resolution transport PNG for sharp visuals",
+            "Transparent background PNG for clean overlays",
+            "Royalty-free transport assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Kids Projects",
+            "Branding"
+        ],
+        footerText: "Use filters to narrow results instantly and find the right transport PNG without extra clicks."
+    };
+
+    // Travel content
+    const travelContent = {
+        title: "Featured Gallery Preview",
+        description: "Get a quick look at the most downloaded Travel PNG images in one place. This preview highlights high-resolution files with transparent backgrounds, ready for real travel projects. Quality is easy to spot before you download.",
+        showcaseTitle: "Showcase Highlights",
+        showcaseItems: [
+            "High-Resolution Travel PNG for sharp detail",
+            "Transparent Background PNG for clean overlays",
+            "Royalty-Free PNG assets with clear usage terms"
+        ],
+        filtersTitle: "Smart Filters",
+        filters: [
+            "Free Download",
+            "Commercial Use",
+            "Print Use",
+            "Education",
+            "Branding",
+            "Tourism Projects"
+        ],
+        footerText: "Filters help narrow results instantly and save time."
+    };
+
     // Select content based on category
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
@@ -501,6 +545,8 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
         "the-environment": environmentContent,
+        transport: transportContent,
+        travel: travelContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

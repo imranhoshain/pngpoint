@@ -15,7 +15,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
     let lastIndex = 0;
     
     // Pattern to match: PNGPoint, transparent images, or words ending with 'license'
-    const pattern = /(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)/g;
+    const pattern = /(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)/g;
     let match;
     
     while ((match = pattern.exec(text)) !== null) {
@@ -530,6 +530,54 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         }
     };
 
+    // Transport content
+    const transportContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing should never feel confusing. All Transport PNG images are royalty-free, and many allow commercial and print use. If attribution is required, it's clearly mentioned on the image page.",
+            proTip: "Always review the license details before downloading to keep your projects safe and compliant."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Downloading is simple and flexible. Choose free transport PNG downloads, HD files, or transparent background images depending on your needs. You can download single images or multiple assets for faster workflows. Clean, ready-to-use transport PNGs help you focus on creativity instead of editing.",
+            features: [
+                "Single images or multiple assets for faster workflows",
+                "Free transport PNG downloads and HD file options",
+                "Clean, ready-to-use files save time"
+            ]
+        },
+        cta: {
+            title: "Start Your Transport Project Today",
+            description: "Access our complete Transport PNG library with clear licensing and instant downloads. High-quality transport graphics ready for websites, presentations, branding, and education."
+        }
+    };
+
+    // Travel content
+    const travelContent = {
+        title: "Licensing & Usage Rights",
+        subtitle: "Simple, transparent terms for safe project use",
+        licensing: {
+            title: "Licensing & Usage Rights",
+            description: "Licensing stays simple and transparent. All Travel PNG images are royalty-free, and many allow commercial and print use. If attribution is required, it's clearly mentioned on the image page.",
+            proTip: "Always review the license details before downloading to keep your projects safe and compliant."
+        },
+        download: {
+            title: "Download Options & File Quality",
+            description: "Downloading is simple and flexible. Choose free Travel PNG downloads, HD files, or transparent background images based on your needs. You can download single images or multiple files to speed up your workflow. Clean files help you focus on creativity, not editing.",
+            features: [
+                "Single images or multiple files available",
+                "Free Travel PNG downloads and HD options",
+                "Clean files save editing time"
+            ]
+        },
+        cta: {
+            title: "Start Your Travel Project Today",
+            description: "Access our complete Travel PNG library with clear licensing and instant downloads. High-quality travel graphics ready for tourism, websites, branding, and creative projects."
+        }
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -550,6 +598,8 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
         "the-environment": environmentContent,
+        transport: transportContent,
+        travel: travelContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found

@@ -15,7 +15,7 @@ const processTextWithLinks = (text: string): React.ReactNode => {
     let lastIndex = 0;
     
     // Pattern to match: PNGPoint, transparent images, or words ending with 'license'
-    const pattern = /(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)/g;
+    const pattern = /(PNGPoint|transparent images|Pngpoint|\w*[Ll]icense)/g;
     let match;
     
     while ((match = pattern.exec(text)) !== null) {
@@ -588,6 +588,62 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         ]
     };
 
+    // Transport content
+    const transportContent = {
+        title: "Popular Use Cases",
+        description: "One common challenge appears again and again—people waste time fixing image backgrounds. Clean transport PNGs remove that step entirely. With transparent backgrounds, visuals fit naturally into any layout.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Designers use transport PNGs in posters, banners, infographics, and branding layouts. Clean cut-outs help maintain sharp edges and visual consistency across projects."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers and parents rely on transport PNGs for worksheets, presentations, and learning apps. Clear vehicle visuals help students understand concepts faster without distractions."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Transport PNG images add clarity to websites, blogs, and campaigns. They work well in headers, icons, thumbnails, and UI elements without slowing page load times."
+            },
+            {
+                icon: Building2,
+                title: "Industry-Specific",
+                description: "Logistics companies, transport services, travel brands, startups, and mobility platforms use these visuals to communicate ideas clearly. The right transport image often explains more than text alone."
+            }
+        ]
+    };
+
+    // Travel content
+    const travelContent = {
+        title: "Popular Use Cases",
+        description: "Many people spend too much time fixing travel images instead of using them. Clean Travel PNGs remove that friction. With transparent backgrounds, designs stay focused and professional.",
+        useCases: [
+            {
+                icon: Palette,
+                title: "For Designers",
+                description: "Travel PNGs work well for posters, banners, social media ads, and brochures. Clean edges and sharp details help designs look polished without extra effort."
+            },
+            {
+                icon: GraduationCap,
+                title: "For Education",
+                description: "Teachers and students use travel PNGs for geography lessons, cultural projects, and presentations. Simple visuals support learning without distraction."
+            },
+            {
+                icon: Globe,
+                title: "For Web & Media",
+                description: "Travel blogs, booking sites, and tourism pages use PNGs to add clarity and visual interest. Lightweight images also support faster page loading."
+            },
+            {
+                icon: Building2,
+                title: "Industry-Specific",
+                description: "Tour agencies, airlines, hotels, travel bloggers, and tourism boards rely on travel PNGs to communicate destinations and services clearly."
+            }
+        ]
+    };
+
     const availableCat: Record<string, typeof animalsContent> = {
         animals: animalsContent,
         "buildings-and-architecture": buildingsContent,
@@ -608,6 +664,8 @@ const processTextWithLinks = (text: string): React.ReactNode => {
         "states-of-mind": statesOfMindContent,
         technology: technologyContent,
         "the-environment": environmentContent,
+        transport: transportContent,
+        travel: travelContent,
     };
 
     // Fallback to animalsContent if categorySlug is not found
