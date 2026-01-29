@@ -102,8 +102,8 @@ export default function SingleCategory() {
         : isLifeStyleCategory
         ? 'beauty-fashion-png'
         : isSportsCategory
-        ?'sports-equipment-athletes-png'
-        : (sub_categories && sub_categories.length > 0 ? sub_categories[1].slug : undefined);
+        ? 'sports-equipment-athletes-png'
+        : sub_categories?.[1]?.slug || sub_categories?.[0]?.slug;
     const availableCategory = ["animals","buildings-and-architecture","business",
         "culture-and-religion","drinks","food",
         "graphic-resources","hobbies-and-leisure","industry",
