@@ -38,76 +38,6 @@ export default function SingleSubCategories() {
         return () => { isMounted = false; };
     }, [slug, currentPage]);
 
-    // Helper function to process keywords
-    const processKeywords = (keywords: any): string[] | undefined => {
-        if (!keywords) return undefined;
-        
-        if (Array.isArray(keywords)) {
-            return keywords
-                .map((item: any) => item.name || item)
-                .filter(Boolean);
-        } else if (typeof keywords === 'string') {
-            return keywords
-                .split(",")
-                .map((k: string) => k.trim())
-                .filter(Boolean);
-        }
-        return undefined;
-    };
-
-    // Helper function to create enhanced schema for each image
-    const createImageSchema = (image: any) => {
-        const imageUrl = getImageUrl(image.slug);
-        const processedKeywords = processKeywords(image.keywords);
-
-        return {
-            "@context": "https://schema.org",
-            "@graph": [
-                {
-                    "@type": "WebPage",
-                    "@id": imageUrl,
-                    "url": imageUrl,
-                    "name": image.title,
-                    "description": `Download high-quality ${image.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects.`,
-                    "inLanguage": "en",
-                    "primaryImageOfPage": {
-                        "@id": `${imageUrl}#image`,
-                    },
-                },
-                {
-                    "@type": "ImageObject",
-                    "@id": `${imageUrl}#image`,
-                    "name": image.title,
-                    "description": `Download high-quality ${image.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects.`,
-                    "caption": image.caption || image.title,
-                    "contentUrl": image.cloudflare_url,
-                    "thumbnailUrl": image.thumbnail_url || image.cloudflare_url,
-                    "encodingFormat": "image/png",
-                    "width": image.width || 352,
-                    "height": image.height || 352,
-                    "contentSize": image.file_size ? `${image.file_size} KB` : undefined,
-                    "keywords": processedKeywords,
-                    "creator": {
-                        "@type": "Organization",
-                        "name": siteConfig.siteName,
-                        "url": siteConfig.url,
-                    },
-                    "license": siteConfig.licenseUrl,
-                    "acquireLicensePage": siteConfig.licenseUrl,
-                    "creditText": siteConfig.siteName,
-                    "copyrightNotice": siteConfig.copyright,
-                    "isAccessibleForFree": true,
-                    "datePublished": image.created_at || new Date().toISOString(),
-                    "dateModified": image.updated_at || new Date().toISOString(),
-                    "copyrightHolder": {
-                        "@type": "Organization",
-                        "name": siteConfig.siteName,
-                    },
-                },
-            ],
-        };
-    };
-
     if (loading) {
         return (
             <div className="flex items-center justify-center h-screen w-full bg-[#FBFAFF]">
@@ -164,14 +94,77 @@ export default function SingleSubCategories() {
                             {images?.length > 0 ? (
                                 <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-5 w-full mt-5">
                                     {images && images.map((image: any) => {
-                                        const enhancedSchema = createImageSchema(image);
+                                        const imageUrl = getImageUrl(image.slug);
+                                        
+                                        // Process keywords for schema
+                                        let processedKeywords: string[] | undefined = undefined;
+                                        if (image.keywords) {
+                                            if (Array.isArray(image.keywords)) {
+                                                processedKeywords = image.keywords
+                                                    .map((item: any) => item.name || item)
+                                                    .filter(Boolean);
+                                            } else if (typeof image.keywords === 'string') {
+                                                processedKeywords = image.keywords
+                                                    .split(",")
+                                                    .map((k: string) => k.trim())
+                                                    .filter(Boolean);
+                                            }
+                                        }
+                                        
+                                        // Create image schema
+                                        const imageSchema = {
+                                            "@context": "https://schema.org",
+                                            "@graph": [
+                                                {
+                                                    "@type": "WebPage",
+                                                    "@id": imageUrl,
+                                                    "url": imageUrl,
+                                                    "name": image.title,
+                                                    "description": `Download high-quality ${image.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.` || image.title,
+                                                    "inLanguage": "en",
+                                                    "primaryImageOfPage": {
+                                                        "@id": `${imageUrl}#image`,
+                                                    },
+                                                },
+                                                {
+                                                    "@type": "ImageObject",
+                                                    "@id": `${imageUrl}#image`,
+                                                    "name": image.title,
+                                                    "description": `Download high-quality ${image.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.` || image.title,
+                                                    "caption": image.caption || image.title,
+                                                    "contentUrl": image.cloudflare_url,
+                                                    "thumbnailUrl": image.thumbnail_url || image.cloudflare_url,
+                                                    "encodingFormat": "image/png",
+                                                    "width": image.width || 352,
+                                                    "height": image.height || 352,
+                                                    "contentSize": image.file_size ? `${image.file_size} KB` : undefined,
+                                                    "keywords": processedKeywords,
+                                                    "creator": {
+                                                        "@type": "Organization",
+                                                        "name": siteConfig.siteName,
+                                                        "url": siteConfig.url,
+                                                    },
+                                                    "license": siteConfig.licenseUrl,
+                                                    "acquireLicensePage": siteConfig.licenseUrl,
+                                                    "creditText": siteConfig.siteName,
+                                                    "copyrightNotice": siteConfig.copyright,
+                                                    "isAccessibleForFree": true,
+                                                    "datePublished": image.created_at || new Date().toISOString(),
+                                                    "dateModified": image.updated_at || new Date().toISOString(),
+                                                    "copyrightHolder": {
+                                                        "@type": "Organization",
+                                                        "name": siteConfig.siteName,
+                                                    },
+                                                },
+                                            ],
+                                        };
                                         
                                         return (
                                             <div className="block w-full h-full relative rounded-2xl border border-gray-300 shadow-sm group overflow-hidden" key={image.id}>
                                                 <script
                                                     type="application/ld+json"
                                                     dangerouslySetInnerHTML={{
-                                                        __html: JSON.stringify(enhancedSchema),
+                                                        __html: JSON.stringify(imageSchema),
                                                     }}
                                                 />
                                                 <Link
