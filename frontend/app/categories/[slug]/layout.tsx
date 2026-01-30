@@ -106,10 +106,11 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/animals#faq",
+                "@id": "https://pngpoint.com/categories/animals#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
+                        "@id": "https://pngpoint.com/categories/animals#faq-question-1",
                         "name": "What is an Animal PNG image, and why is it useful?",
                         "acceptedAnswer": {
                             "@type": "Answer",
@@ -118,6 +119,7 @@ const categorySchemas: Record<string, any> = {
                     },
                     {
                         "@type": "Question",
+                        "@id": "https://pngpoint.com/categories/animals#faq-question-2",
                         "name": "What does transparent background mean in Animal PNGs?",
                         "acceptedAnswer": {
                             "@type": "Answer",
@@ -126,6 +128,7 @@ const categorySchemas: Record<string, any> = {
                     },
                     {
                         "@type": "Question",
+                        "@id": "https://pngpoint.com/categories/animals#faq-question-3",
                         "name": "Are these Animal PNGs free to download and use?",
                         "acceptedAnswer": {
                             "@type": "Answer",
@@ -134,6 +137,7 @@ const categorySchemas: Record<string, any> = {
                     },
                     {
                         "@type": "Question",
+                        "@id": "https://pngpoint.com/categories/animals#faq-question-4",
                         "name": "Can I use Animal PNGs for commercial projects?",
                         "acceptedAnswer": {
                             "@type": "Answer",
@@ -241,10 +245,11 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/business#faq",
+                "@id": "https://pngpoint.com/categories/business#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
+                        "@id": "https://pngpoint.com/categories/business#faq-question-1",
                         "name": "What is a Business PNG image?",
                         "acceptedAnswer": {
                             "@type": "Answer",
@@ -253,6 +258,7 @@ const categorySchemas: Record<string, any> = {
                     },
                     {
                         "@type": "Question",
+                        "@id": "https://pngpoint.com/categories/business#faq-question-2",
                         "name": "Are Business PNGs free to use?",
                         "acceptedAnswer": {
                             "@type": "Answer",
@@ -261,6 +267,7 @@ const categorySchemas: Record<string, any> = {
                     },
                     {
                         "@type": "Question",
+                        "@id": "https://pngpoint.com/categories/business#faq-question-3",
                         "name": "Can I use Business PNGs commercially?",
                         "acceptedAnswer": {
                             "@type": "Answer",
