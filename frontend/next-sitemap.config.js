@@ -8,6 +8,7 @@ module.exports = {
   changefreq: 'daily',
   priority: 0.7,
   robotsTxtOptions: {
+    includeDefaultSitemap: false,
     policies: [
       // Block specific bots
       { userAgent: 'AhrefsBot', disallow: '/' },
