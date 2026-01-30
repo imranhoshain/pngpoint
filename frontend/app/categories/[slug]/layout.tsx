@@ -7,7 +7,8 @@ import React from "react";
 const getCategoryUrl = (slug: string) => `${siteConfig.url}/api/v1/images/categories/${slug}`;
 
 // Schema data mapping for different categories
-// Each category has a unique @graph structure with separate CollectionPage, ItemList, BreadcrumbList, ImageObject, and FAQPage
+// Each category has a unique @graph structure with CollectionPage, BreadcrumbList, ItemList, and ImageObject
+// FAQs are embedded in CollectionPage via mainEntity to avoid duplicate FAQPage errors
 const categorySchemas: Record<string, any> = {
     animals: {
         "@context": "https://schema.org",
@@ -24,7 +25,41 @@ const categorySchemas: Record<string, any> = {
                 },
                 "breadcrumb": {
                     "@id": "https://pngpoint.com/categories/animals#breadcrumb"
-                }
+                },
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is an Animal PNG image, and why is it useful?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "An Animal PNG is a raster image with transparent backgrounds. Its clean edges make it perfect for overlays, logos, web design, and educational materials, without the worry of a white box behind the image."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "What does transparent background mean in Animal PNGs?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "It means only the animal shape is visible. You can place it on any background without a white border, making your designs look professional and seamless."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Are these Animal PNGs free to download and use?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Some PNGs are free, while others are premium. Check the licensing note for each file. Free downloads may have limited usage; premium packs often include broader commercial rights."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I use Animal PNGs for commercial projects?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes, many Animal PNGs are available for commercial use on websites, in branding, or on products. Always verify the license terms for clarity. Look for Royalty-Free or Commercial Use Allowed labels."
+                        }
+                    }
+                ]
             },
             {
                 "@type": "BreadcrumbList",
@@ -103,48 +138,6 @@ const categorySchemas: Record<string, any> = {
                     "name": "PNGPoint",
                     "url": "https://pngpoint.com/"
                 }
-            },
-            {
-                "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/animals#faqpage",
-                "mainEntity": [
-                    {
-                        "@type": "Question",
-                        "@id": "https://pngpoint.com/categories/animals#faq-question-1",
-                        "name": "What is an Animal PNG image, and why is it useful?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "An Animal PNG is a raster image with transparent backgrounds. Its clean edges make it perfect for overlays, logos, web design, and educational materials, without the worry of a white box behind the image."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "@id": "https://pngpoint.com/categories/animals#faq-question-2",
-                        "name": "What does transparent background mean in Animal PNGs?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "It means only the animal shape is visible. You can place it on any background without a white border, making your designs look professional and seamless."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "@id": "https://pngpoint.com/categories/animals#faq-question-3",
-                        "name": "Are these Animal PNGs free to download and use?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Some PNGs are free, while others are premium. Check the licensing note for each file. Free downloads may have limited usage; premium packs often include broader commercial rights."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "@id": "https://pngpoint.com/categories/animals#faq-question-4",
-                        "name": "Can I use Animal PNGs for commercial projects?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes, many Animal PNGs are available for commercial use on websites, in branding, or on products. Always verify the license terms for clarity. Look for Royalty-Free or Commercial Use Allowed labels."
-                        }
-                    }
-                ]
             }
         ]
     },
@@ -163,7 +156,33 @@ const categorySchemas: Record<string, any> = {
                 },
                 "breadcrumb": {
                     "@id": "https://pngpoint.com/categories/business#breadcrumb"
-                }
+                },
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "What is a Business PNG image?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "A Business PNG is a transparent image used for presentations, websites, marketing, and branding without background issues."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Are Business PNGs free to use?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Some are free, others are premium. Always check license details before use."
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "Can I use Business PNGs commercially?",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "Yes, many allow commercial use. Look for 'Royalty-Free' or 'Commercial Use Allowed'."
+                        }
+                    }
+                ]
             },
             {
                 "@type": "BreadcrumbList",
@@ -242,39 +261,6 @@ const categorySchemas: Record<string, any> = {
                     "name": "PNGPoint",
                     "url": "https://pngpoint.com/"
                 }
-            },
-            {
-                "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/business#faqpage",
-                "mainEntity": [
-                    {
-                        "@type": "Question",
-                        "@id": "https://pngpoint.com/categories/business#faq-question-1",
-                        "name": "What is a Business PNG image?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "A Business PNG is a transparent image used for presentations, websites, marketing, and branding without background issues."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "@id": "https://pngpoint.com/categories/business#faq-question-2",
-                        "name": "Are Business PNGs free to use?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Some are free, others are premium. Always check license details before use."
-                        }
-                    },
-                    {
-                        "@type": "Question",
-                        "@id": "https://pngpoint.com/categories/business#faq-question-3",
-                        "name": "Can I use Business PNGs commercially?",
-                        "acceptedAnswer": {
-                            "@type": "Answer",
-                            "text": "Yes, many allow commercial use. Look for 'Royalty-Free' or 'Commercial Use Allowed'."
-                        }
-                    }
-                ]
             }
         ]
     }
