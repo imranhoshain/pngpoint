@@ -8,7 +8,6 @@ module.exports = {
   changefreq: 'daily',
   priority: 0.7,
   robotsTxtOptions: {
-    includeDefaultSitemap: false,
     policies: [
       // Block specific bots
       { userAgent: 'AhrefsBot', disallow: '/' },
@@ -39,5 +38,13 @@ module.exports = {
       { userAgent: '*', allow: '/' },
     ],
     additionalSitemaps: [],
+    transformRobotsTxt: async (_, robotsTxt) => {
+      // Remove any sitemap references
+      return robotsTxt
+        .split('\n')
+        .filter(line => !line.toLowerCase().includes('sitemap:'))
+        .filter(line => !line.toLowerCase().includes('host:'))
+        .join('\n');
+    },
   },
 };
