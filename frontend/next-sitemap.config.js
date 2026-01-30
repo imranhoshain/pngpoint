@@ -9,6 +9,7 @@ module.exports = {
   priority: 0.7,
   robotsTxtOptions: {
     policies: [
+      // Block specific bots
       { userAgent: 'AhrefsBot', disallow: '/' },
       { userAgent: 'Barkrowler', disallow: '/' },
       { userAgent: 'DotBot', disallow: '/' },
@@ -36,8 +37,6 @@ module.exports = {
       // Allow all other bots (including Google, Bing, etc.)
       { userAgent: '*', allow: '/' },
     ],
-    additionalSitemaps: [
-      `${siteUrl}/api/v1/sitemap.xml`
-    ],
+    additionalSitemaps: [],
   },
 };
