@@ -105,7 +105,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/animals#faq",
+                "@id": "https://pngpoint.com/categories/animals#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -228,19 +228,19 @@ const categorySchemas: Record<string, any> = {
         "@graph": [
             {
                 "@type": "CollectionPage",
-                "@id": "https://pngpoint.com/categories/business/#collectionpage",
+                "@id": "https://pngpoint.com/categories/business#collectionpage",
                 "name": "Professional business PNG images for corporate presentations, marketing, finance, startups, and office concepts. Includes transparent icons, illustrations, and visuals designed for branding, websites, reports, and commercial communication materials.",
-                "url": "https://pngpoint.com/categories/business/",
+                "url": "https://pngpoint.com/categories/business",
                 "isPartOf": {
                     "@type": "WebSite",
                     "@id": "https://pngpoint.com/#website"
                 },
                 "breadcrumb": {
-                    "@id": "https://pngpoint.com/categories/business/#breadcrumb"
+                    "@id": "https://pngpoint.com/categories/business#breadcrumb"
                 },
                 "mainEntity": {
                     "@type": "ItemList",
-                    "@id": "https://pngpoint.com/categories/business/#itemlist",
+                    "@id": "https://pngpoint.com/categories/business#itemlist",
                     "itemListOrder": "https://schema.org/ItemListOrderAscending",
                     "numberOfItems": 6,
                     "itemListElement": [
@@ -285,7 +285,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "BreadcrumbList",
-                "@id": "https://pngpoint.com/categories/business/#breadcrumb",
+                "@id": "https://pngpoint.com/categories/business#breadcrumb",
                 "itemListElement": [
                     {
                         "@type": "ListItem",
@@ -319,7 +319,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/business#faq",
+                "@id": "https://pngpoint.com/categories/business#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -536,7 +536,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "ImageObject",
-                "@id": "https://pngpoint.com/building-architecture/#imageobject",
+                "@id": "https://pngpoint.com/categories/buildings-and-architecture#imageobject",
                 "name": "Modern Building PNG",
                 "contentUrl": "https://pngpoint.com/images/modern-building.png",
                 "caption": "Modern building PNG with transparent background",
@@ -552,7 +552,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/building-architecture/#faq",
+                "@id": "https://pngpoint.com/categories/buildings-and-architecture#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -587,20 +587,20 @@ const categorySchemas: Record<string, any> = {
         "@graph": [
             {
                 "@type": "CollectionPage",
-                "@id": "https://pngpoint.com/categories/industry/#collectionpage",
+                "@id": "https://pngpoint.com/categories/industry#collectionpage",
                 "name": "Industry PNG Images with Transparent Background",
                 "description": "Industry PNG images showcasing manufacturing, construction, machinery, logistics, factories, and industrial processes. High-resolution transparent graphics designed for business presentations, technical documentation, education, and commercial communication.",
-                "url": "https://pngpoint.com/categories/industry/",
+                "url": "https://pngpoint.com/categories/industry",
                 "isPartOf": {
                     "@type": "WebSite",
                     "@id": "https://pngpoint.com/#website"
                 },
                 "breadcrumb": {
-                    "@id": "https://pngpoint.com/categories/industry/#breadcrumb"
+                    "@id": "https://pngpoint.com/categories/industry#breadcrumb"
                 },
                 "mainEntity": {
                     "@type": "ItemList",
-                    "@id": "https://pngpoint.com/categories/industry/#itemlist",
+                    "@id": "https://pngpoint.com/categories/industry#itemlist",
                     "itemListOrder": "https://schema.org/ItemListOrderAscending",
                     "numberOfItems": 14,
                     "itemListElement": [
@@ -645,7 +645,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "BreadcrumbList",
-                "@id": "https://pngpoint.com/categories/industry/#breadcrumb",
+                "@id": "https://pngpoint.com/categories/industry#breadcrumb",
                 "itemListElement": [
                     {
                         "@type": "ListItem",
@@ -657,13 +657,13 @@ const categorySchemas: Record<string, any> = {
                         "@type": "ListItem",
                         "position": 2,
                         "name": "Industry PNG Images with Transparent Background",
-                        "item": "https://pngpoint.com/categories/industry/"
+                        "item": "https://pngpoint.com/categories/industry"
                     }
                 ]
             },
             {
                 "@type": "ImageObject",
-                "@id": "https://pngpoint.com/categories/industry/#imageobject",
+                "@id": "https://pngpoint.com/categories/industry#imageobject",
                 "name": "Industry PNG Images with Transparent Background",
                 "contentUrl": "https://pngpoint.com/image/smiling-man-sits-with-yellow-suitcase-and-book-ready-for-vacation/",
                 "caption": "Smiling man sits with yellow suitcase and book, ready for vacation",
@@ -679,7 +679,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/industry/#faq",
+                "@id": "https://pngpoint.com/categories/industry#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -802,20 +802,20 @@ const categorySchemas: Record<string, any> = {
         "@graph": [
             {
                 "@type": "CollectionPage",
-                "@id": "https://pngpoint.com/categories/graphic-resources/#collectionpage",
+                "@id": "https://pngpoint.com/categories/graphic-resources#collectionpage",
                 "name": "Graphic Resources PNG Images with Transparent Background",
                 "description": "Graphic resource PNG images including icons, symbols, illustrations, UI elements, and design assets. Transparent and versatile files suitable for web design, presentations, apps, branding projects, and creative workflows across industries.",
-                "url": "https://pngpoint.com/categories/graphic-resources/",
+                "url": "https://pngpoint.com/categories/graphic-resources",
                 "isPartOf": {
                     "@type": "WebSite",
                     "@id": "https://pngpoint.com/#website"
                 },
                 "breadcrumb": {
-                    "@id": "https://pngpoint.com/categories/graphic-resources/#breadcrumb"
+                    "@id": "https://pngpoint.com/categories/graphic-resources#breadcrumb"
                 },
                 "mainEntity": {
                     "@type": "ItemList",
-                    "@id": "https://pngpoint.com/categories/graphic-resources/#itemlist",
+                    "@id": "https://pngpoint.com/categories/graphic-resources#itemlist",
                     "itemListOrder": "https://schema.org/ItemListOrderAscending",
                     "numberOfItems": 9,
                     "itemListElement": [
@@ -860,7 +860,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "BreadcrumbList",
-                "@id": "https://pngpoint.com/categories/graphic-resources/#breadcrumb",
+                "@id": "https://pngpoint.com/categories/graphic-resources#breadcrumb",
                 "itemListElement": [
                     {
                         "@type": "ListItem",
@@ -872,13 +872,13 @@ const categorySchemas: Record<string, any> = {
                         "@type": "ListItem",
                         "position": 2,
                         "name": "Graphic Resources PNG Images with Transparent Background",
-                        "item": "https://pngpoint.com/categories/graphic-resources/"
+                        "item": "https://pngpoint.com/categories/graphic-resources"
                     }
                 ]
             },
             {
                 "@type": "ImageObject",
-                "@id": "https://pngpoint.com/categories/graphic-resources/#imageobject",
+                "@id": "https://pngpoint.com/categories/graphic-resources#imageobject",
                 "name": "Graphic Resources PNG Images with Transparent Background",
                 "contentUrl": "https://pngpoint.com/image/free-tag-on-black/",
                 "caption": "Free tag on black",
@@ -894,7 +894,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/graphic-resources/#faq",
+                "@id": "https://pngpoint.com/categories/graphic-resources#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -1017,20 +1017,20 @@ const categorySchemas: Record<string, any> = {
         "@graph": [
             {
                 "@type": "CollectionPage",
-                "@id": "https://pngpoint.com/categories/food/#collectionpage",
+                "@id": "https://pngpoint.com/categories/food#collectionpage",
                 "name": "Food PNG Images with Transparent Background",
                 "description": "Food PNG images with transparent backgrounds, including meals, ingredients, fruits, desserts, and snacks. Designed for menus, websites, social media, education, and marketing, offering clean visuals ready for web and print use.",
-                "url": "https://pngpoint.com/categories/food/",
+                "url": "https://pngpoint.com/categories/food",
                 "isPartOf": {
                     "@type": "WebSite",
                     "@id": "https://pngpoint.com/#website"
                 },
                 "breadcrumb": {
-                    "@id": "https://pngpoint.com/categories/food/#breadcrumb"
+                    "@id": "https://pngpoint.com/categories/food#breadcrumb"
                 },
                 "mainEntity": {
                     "@type": "ItemList",
-                    "@id": "https://pngpoint.com/categories/food/#itemlist",
+                    "@id": "https://pngpoint.com/categories/food#itemlist",
                     "itemListOrder": "https://schema.org/ItemListOrderAscending",
                     "numberOfItems": 14,
                     "itemListElement": [
@@ -1075,7 +1075,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "BreadcrumbList",
-                "@id": "https://pngpoint.com/categories/food/#breadcrumb",
+                "@id": "https://pngpoint.com/categories/food#breadcrumb",
                 "itemListElement": [
                     {
                         "@type": "ListItem",
@@ -1087,13 +1087,13 @@ const categorySchemas: Record<string, any> = {
                         "@type": "ListItem",
                         "position": 2,
                         "name": "Food PNG Images with Transparent Background",
-                        "item": "https://pngpoint.com/categories/food/"
+                        "item": "https://pngpoint.com/categories/food"
                     }
                 ]
             },
             {
                 "@type": "ImageObject",
-                "@id": "https://pngpoint.com/categories/food/#imageobject",
+                "@id": "https://pngpoint.com/categories/food#imageobject",
                 "name": "Food PNG Images with Transparent Background",
                 "contentUrl": "https://pngpoint.com/image/delicious-peanut-butter-sandwich-with-peanuts",
                 "caption": "Delicious peanut butter sandwich with peanuts",
@@ -1109,7 +1109,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/food/#faq",
+                "@id": "https://pngpoint.com/categories/food#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -1232,20 +1232,20 @@ const categorySchemas: Record<string, any> = {
         "@graph": [
             {
                 "@type": "CollectionPage",
-                "@id": "https://pngpoint.com/categories/drinks/",
+                "@id": "https://pngpoint.com/categories/drinks#collectionpage",
                 "name": "Drinks PNG Images with Transparent Background",
                 "description": "Drinks PNG images featuring beverages such as coffee, tea, juice, soft drinks, and cocktails. Transparent, high-quality graphics ideal for menus, branding, food blogs, advertisements, packaging designs, and hospitality-related projects.",
-                "url": "https://pngpoint.com/categories/drinks/",
+                "url": "https://pngpoint.com/categories/drinks",
                 "isPartOf": {
                     "@type": "WebSite",
                     "@id": "https://pngpoint.com/#website"
                 },
                 "breadcrumb": {
-                    "@id": "https://pngpoint.com/categories/drinks/#breadcrumb"
+                    "@id": "https://pngpoint.com/categories/drinks#breadcrumb"
                 },
                 "mainEntity": {
                     "@type": "ItemList",
-                    "@id": "https://pngpoint.com/categories/drinks/#itemlist",
+                    "@id": "https://pngpoint.com/categories/drinks#itemlist",
                     "itemListOrder": "https://schema.org/ItemListOrderAscending",
                     "numberOfItems": 8,
                     "itemListElement": [
@@ -1290,7 +1290,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "BreadcrumbList",
-                "@id": "https://pngpoint.com/categories/drinks/#breadcrumb",
+                "@id": "https://pngpoint.com/categories/drinks#breadcrumb",
                 "itemListElement": [
                     {
                         "@type": "ListItem",
@@ -1302,13 +1302,13 @@ const categorySchemas: Record<string, any> = {
                         "@type": "ListItem",
                         "position": 2,
                         "name": "Drinks PNG Images with Transparent Background",
-                        "item": "https://pngpoint.com/categories/drinks/"
+                        "item": "https://pngpoint.com/categories/drinks"
                     }
                 ]
             },
             {
                 "@type": "ImageObject",
-                "@id": "https://pngpoint.com/categories/drinks/#imageobject",
+                "@id": "https://pngpoint.com/categories/drinks#imageobject",
                 "name": "Drinks PNG Images with Transparent Background",
                 "contentUrl": "https://pngpoint.com/image/close-up-of-a-gleaming-polished-teaspoon883/",
                 "caption": "Close up of a gleaming, polished teaspoon883",
@@ -1324,7 +1324,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/animals#faq",
+                "@id": "https://pngpoint.com/categories/drinks#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
@@ -1447,20 +1447,20 @@ const categorySchemas: Record<string, any> = {
         "@graph": [
             {
                 "@type": "CollectionPage",
-                "@id": "https://pngpoint.com/categories/culture-and-religion/#collectionpage",
+                "@id": "https://pngpoint.com/categories/culture-and-religion#collectionpage",
                 "name": "Culture and Religion PNG Images with Transparent Background",
                 "description": "Culture and religion PNG images representing traditions, rituals, symbols, festivals, and spiritual concepts. Transparent visuals suitable for education, cultural awareness, presentations, publishing, and respectful creative or informational projects.",
-                "url": "https://pngpoint.com/categories/culture-and-religion/",
+                "url": "https://pngpoint.com/categories/culture-and-religion",
                 "isPartOf": {
                     "@type": "WebSite",
                     "@id": "https://pngpoint.com/#website"
                 },
                 "breadcrumb": {
-                    "@id": "https://pngpoint.com/categories/culture-and-religion/#breadcrumb"
+                    "@id": "https://pngpoint.com/categories/culture-and-religion#breadcrumb"
                 },
                 "mainEntity": {
                     "@type": "ItemList",
-                    "@id": "https://pngpoint.com/categories/culture-and-religion/#itemlist",
+                    "@id": "https://pngpoint.com/categories/culture-and-religion#itemlist",
                     "itemListOrder": "https://schema.org/ItemListOrderAscending",
                     "numberOfItems": 9,
                     "itemListElement": [
@@ -1505,7 +1505,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "BreadcrumbList",
-                "@id": "https://pngpoint.com/categories/culture-and-religion/#breadcrumb",
+                "@id": "https://pngpoint.com/categories/culture-and-religion#breadcrumb",
                 "itemListElement": [
                     {
                         "@type": "ListItem",
@@ -1517,13 +1517,13 @@ const categorySchemas: Record<string, any> = {
                         "@type": "ListItem",
                         "position": 2,
                         "name": "Culture and Religion PNG Images with Transparent Background",
-                        "item": "https://pngpoint.com/categories/culture-and-religion/"
+                        "item": "https://pngpoint.com/categories/culture-and-religion"
                     }
                 ]
             },
             {
                 "@type": "ImageObject",
-                "@id": "https://pngpoint.com/categories/culture-and-religion/#imageobject",
+                "@id": "https://pngpoint.com/categories/culture-and-religion#imageobject",
                 "name": "Culture and Religion PNG Images with Transparent Background",
                 "contentUrl": "https://pngpoint.com/image/elegant-oval-vase-with-botanical-design-illustration/",
                 "caption": "Elegant oval vase with botanical design illustration",
@@ -1539,7 +1539,7 @@ const categorySchemas: Record<string, any> = {
             },
             {
                 "@type": "FAQPage",
-                "@id": "https://pngpoint.com/categories/culture-and-religion/#faq",
+                "@id": "https://pngpoint.com/categories/culture-and-religion#faqpage",
                 "mainEntity": [
                     {
                         "@type": "Question",
