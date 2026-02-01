@@ -9,7 +9,19 @@ module.exports = {
   priority: 0.7,
   robotsTxtOptions: {
     policies: [
-      // Block specific bots
+      // Block Google bots
+      { userAgent: 'Googlebot', disallow: '/' },
+      { userAgent: 'Googlebot-Image', disallow: '/' },
+      { userAgent: 'Googlebot-News', disallow: '/' },
+      { userAgent: 'Googlebot-Video', disallow: '/' },
+      
+      // Block other major search engines
+      { userAgent: 'Bingbot', disallow: '/' },
+      { userAgent: 'Slurp', disallow: '/' },        // Yahoo
+      { userAgent: 'DuckDuckBot', disallow: '/' },
+      { userAgent: 'YandexBot', disallow: '/' },
+      
+      // Block SEO/crawler bots
       { userAgent: 'AhrefsBot', disallow: '/' },
       { userAgent: 'Barkrowler', disallow: '/' },
       { userAgent: 'DotBot', disallow: '/' },
@@ -34,7 +46,8 @@ module.exports = {
       { userAgent: 'HubSpot Crawler', disallow: '/' },
       { userAgent: 'Sogou web spider', disallow: '/' },
       { userAgent: 'Sogou spider', disallow: '/' },
-      // Allow all other bots (including Google, Bing, etc.)
+      
+      // Allow all other bots (if any remain)
       { userAgent: '*', allow: '/' },
     ],
     additionalSitemaps: [],
