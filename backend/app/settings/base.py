@@ -73,7 +73,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
-    # "middleware.ddos_protection.DDoSProtectionMiddleware",
+    "middleware.ddos_protection.DDoSProtectionMiddleware",
     "middleware.ddos_protection.RequestSizeLimitMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "django.middleware.gzip.GZipMiddleware",
