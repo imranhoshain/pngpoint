@@ -263,7 +263,243 @@ const categorySchemas: Record<string, any> = {
                 }
             }
         ]
-    }
+    },
+    "buildings-and-architecture": {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+            "@type": "CollectionPage",
+            "@id": "https://pngpoint.com/categories/buildings-and-architecture#collectionpage",
+            "name": "Building and Architecture PNG Images",
+            "description": "Download high-quality, royalty-free building and architecture PNG images with transparent backgrounds for design, web, branding, and commercial projects.",
+            "url": "https://pngpoint.com/categories/buildings-and-architecture",
+            "isPartOf": {
+                "@type": "WebSite",
+                "@id": "https://pngpoint.com/#website"
+            },
+            "breadcrumb": {
+                "@id": "https://pngpoint.com/categories/buildings-and-architecture#breadcrumb"
+            },
+            "mainEntity": {
+                "@type": "ItemList",
+                "@id": "https://pngpoint.com/categories/buildings-and-architecture#itemlist",
+                "itemListOrder": "https://schema.org/ItemListOrderAscending",
+                "numberOfItems": 12,
+                "itemListElement": [
+                {
+                    "@type": "ListItem",
+                    "position": 1,
+                    "name": "Ancient Structures PNG",
+                    "url": "https://pngpoint.com/sub-categories/ancient-structures-png"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 2,
+                    "name": "Bridge PNG",
+                    "url": "https://pngpoint.com/sub-categories/bridges-png"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 3,
+                    "name": "City Skylines PNG",
+                    "url": "https://pngpoint.com/sub-categories/city-skylines-png"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 4,
+                    "name": "Commercial Buildings PNG",
+                    "url": "https://pngpoint.com/sub-categories/commercial-buildings-png"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 5,
+                    "name": "Houses & Homes PNG",
+                    "url": "https://pngpoint.com/sub-categories/houses-homes-png"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 6,
+                    "name": "Lighthouses PNG",
+                    "url": "https://pngpoint.com/sub-categories/lighthouses-png"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 7,
+                    "name": "Modern Architecture PNG",
+                    "url": "https://pngpoint.com/sub-categories/modern-architecture-png"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 8,
+                    "name": "Mosques & Temples PNG",
+                    "url": "https://pngpoint.com/sub-categories/mosques-temples-png"
+                },
+                {
+                    "@type": "ListItem",
+                    "position": 9,
+                    "name": "Stadiums & Arenas PNG",
+                    "url": "https://pngpoint.com/sub-categories/stadiums-arenas-png"
+                }
+                ]
+            }
+            },
+
+            {
+            "@type": "BreadcrumbList",
+            "@id": "https://pngpoint.com/categories/buildings-and-architecture#breadcrumb",
+            "itemListElement": [
+                {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://pngpoint.com/"
+                },
+                {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Buildings & Architecture PNG",
+                "item": "https://pngpoint.com/categories/buildings-and-architecture"
+                }
+            ]
+            },
+
+            {
+            "@type": "ImageObject",
+            "@id": "https://pngpoint.com/building-architecture/#imageobject",
+            "name": "Modern Building PNG",
+            "contentUrl": "https://pngpoint.com/images/modern-building.png",
+            "caption": "Modern building PNG with transparent background",
+            "license": "https://pngpoint.com/license",
+            "acquireLicensePage": "https://pngpoint.com/license",
+            "creditText": "PNGPoint",
+            "copyrightNotice": "© PNGPoint",
+            "creator": {
+                "@type": "Organization",
+                "name": "PNGPoint",
+                "url": "https://pngpoint.com/"
+            }
+            },
+
+            {
+            "@type": "FAQPage",
+            "@id": "https://pngpoint.com/building-architecture/#faq",
+            "mainEntity": [
+                {
+                "@type": "Question",
+                "name": "Can I use building PNG images for commercial projects?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, many building and architecture PNG images on PNGPoint are royalty-free and allowed for commercial and print use. Always check the license details on the image page."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Do architecture PNG images come with transparent backgrounds?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Most architecture PNG images include transparent backgrounds, making them easy to use in designs, presentations, and websites."
+                }
+                },
+                {
+                "@type": "Question",
+                "name": "Are high-resolution building PNG images available?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Yes, PNGPoint offers high-resolution and HD building PNG images suitable for both web and print projects."
+                }
+                }
+            ]
+            }
+        ]
+        }
 };
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
