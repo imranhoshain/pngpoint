@@ -91,12 +91,12 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
             {imagesData?.count > 50 && (
                 <TrendingImagesPagination count={imagesData?.count} />
             )}
-            <HomeCategories />
             {/* <Trendingtags /> */}
+            {/* <HomeCategories />
             <HowItWorks />
             <UseCases />
             <HomeReviews />
-            <HomeFAQ />
+            <HomeFAQ /> */}
             <Footer />
         </>
     );

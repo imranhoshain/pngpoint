@@ -69,7 +69,7 @@ export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
                 <div className="flex flex-row flex-wrap items-center justify-between py-1.5 px-1.5 gap-x-2.5 rounded w-full border border-gray-300 shadow-sm">
                     <div className="flex flex-row flex-wrap items-center gap-x-2.5">
                         <AiOutlineFileText className="text-2xl md:text-3xl" />
-                        <span className="text-sm font-normal">License</span>
+                        <span className="text-sm font-normal">Free for personal & commercial use. No attribution required</span>
                     </div>
                     <div>
                         <a 

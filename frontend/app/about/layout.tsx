@@ -4,11 +4,16 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-    title: "About Us - PNGPoint",
-    description: "Learn more about PNGPoint, our mission, vision, and the team dedicated to providing high-quality PNG assets for designers and creators.",
+    title: "About PNGBay – Free Transparent PNG Image Platform",
+    description: "Learn about PNGBay, a free platform offering high-quality transparent PNG images for personal and commercial use.",
     alternates: {
-        canonical: "https://pngpoint.com/about",
+        canonical: "https://pngbay.com/about",
     },
+    keywords: [
+        "about pngbay",
+        "free png website",
+        "transparent png platform"
+    ],
 };
 
 export default function AboutRootLayout({

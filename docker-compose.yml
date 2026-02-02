@@ -43,7 +43,7 @@ services:
     restart: always
     env_file:
       - ./backend/.env
-    command: daphne --http-timeout 300 -b 0.0.0.0 -p 8000 app.asgi:application
+    command: gunicorn app.wsgi:application --bind 0.0.0.0:8000 --workers 2 --timeout 300
     volumes:
       - ./backend/static:/app/static
       - ./backend/media:/app/media
@@ -71,7 +71,7 @@ services:
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.tls.certresolver=le"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.priority=100"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.service=${ENVIRONMENT}-backend-svc"
-      # Service definition for backend (Django / Daphne)
+      # Service definition for backend (Django / Gunicorn)
       - "traefik.http.services.${ENVIRONMENT}-backend-svc.loadbalancer.server.port=8000"
 
       - "traefik.docker.network=web"

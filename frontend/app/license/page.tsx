@@ -4,10 +4,10 @@ import { Metadata } from "next";
 import { siteConfig, getSiteHostname } from "@/config/site";
 
 export const metadata: Metadata = {
-  title: "License - PNGPoint",
-  description: "Read PNGPoint's licensing information to understand how you can use our PNG assets legally and responsibly.",
+  title: "PNGBay License Agreement",
+  description: "Read PNGBay's licensing information to understand how you can use our PNG assets legally and responsibly.",
   alternates: {
-    canonical: "https://pngpoint.com/license",
+    canonical: "https://pngbay.com/license",
   },
 };
 
@@ -21,106 +21,135 @@ export default function License() {
                 <div className="max-w-screen-lg container mx-auto px-4 lg:px-6 w-full">
                     <div className="bg-white shadow-sm rounded-2xl p-6 lg:p-10">
                         <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-4">
-                            License & Usage Policy - {siteConfig.siteName}
+                            PNGBay Content License Agreement
                         </h1>
                         <p className="text-gray-700 mb-6">
                             Welcome to <a 
-                                href="https://pngpoint.com" 
+                                href="https://pngbay.com" 
                                 className="font-semibold text-[#0077a2] hover:text-[#005a7d] hover:underline transition-colors"
                             >
-                                {siteConfig.siteName}
-                            </a>,
-                            your free source for high-quality PNG images with transparent
-                            backgrounds. To ensure clarity for our users and contributors,
-                            please read our license and usage policy carefully.
+                                PNGBay (pngbay.com)
+                            </a>. This License Agreement explains how you may use the PNG images and other resources available on our website. By downloading or using any content from PNGBay, you agree to the terms below.
                         </p>
 
                         <div className="mb-6">
-                            <h2 className="text-xl font-semibold text-green-600 mb-3">
-                                What You Can Do
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                1. Free License Overview
                             </h2>
-                            <ul className="list-disc list-inside text-gray-700 space-y-2">
-                                <li>
-                                    <span className="font-medium">Free Downloads</span> - All PNG
-                                    images on {hostname} are available for free download.
-                                </li>
-                                <li>
-                                    <span className="font-medium">Personal & Commercial Use</span>{" "}
-                                    - You may use our PNGs in personal projects, school work,
-                                    websites, social media, presentations, or even in commercial
-                                    designs, advertisements, and client projects.
-                                </li>
-                                <li>
-                                    <span className="font-medium">Editing & Modifications</span> -
-                                    You are allowed to edit, crop, recolor, or combine PNG files
-                                    with your own work.
-                                </li>
-                                <li>
-                                    <span className="font-medium">No Attribution Required</span> -
-                                    Giving credit is not mandatory, but a backlink to
-                                    {hostname} is always appreciated to support our community.
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div className="mb-6">
-                            <h2 className="text-xl font-semibold text-red-600 mb-3">
-                                What You Cannot Do
-                            </h2>
-                            <ul className="list-disc list-inside text-gray-700 space-y-2">
-                                <li>
-                                    <span className="font-medium">No Selling of Files</span> - You
-                                    cannot sell or redistribute PNG files as standalone downloads
-                                    (free or paid) on other websites, apps, or marketplaces.
-                                </li>
-                                <li>
-                                    <span className="font-medium">No Claim of Ownership</span> -
-                                    Do not claim images from {hostname} as your own original
-                                    work.
-                                </li>
-                                <li>
-                                    <span className="font-medium">No Automated Bulk Downloading</span>{" "}
-                                    - Using bots or automated tools to scrape or mass-download
-                                    PNGs is strictly prohibited.
-                                </li>
-                            </ul>
-                        </div>
-
-                        <div className="mb-6">
-                            <h2 className="text-xl font-semibold text-blue-600 mb-3">
-                                License Type
-                            </h2>
+                            <p className="text-gray-700 mb-2">
+                                All PNG images on PNGBay are provided free of charge and can be used for personal and commercial projects without payment or subscription, unless otherwise stated.
+                            </p>
                             <p className="text-gray-700">
-                                All PNGs on {hostname} are provided under a free-to-use
-                                license. This means they are royalty-free and safe to use for
-                                both personal and commercial projects, as long as you follow the
-                                restrictions listed above.
+                                ✔ Free for personal use ✔ Free for commercial use ✔ No attribution required (credit appreciated but optional)
                             </p>
                         </div>
 
                         <div className="mb-6">
-                            <h2 className="text-xl font-semibold text-yellow-600 mb-3">
-                                Important Note
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                2. Permitted Uses
+                            </h2>
+                            <p className="text-gray-700 mb-2">You are allowed to:</p>
+                            <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                                <li>Use PNG images in websites, blogs, apps, and software</li>
+                                <li>Use images in graphic design, presentations, posters, and videos</li>
+                                <li>Use images for commercial products, marketing, and advertising</li>
+                                <li>Edit, resize, recolor, or modify images to suit your project</li>
+                                <li>Use images in social media posts and online content</li>
+                            </ul>
+                        </div>
+
+                        <div className="mb-6">
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                3. Prohibited Uses
+                            </h2>
+                            <p className="text-gray-700 mb-2">You are NOT allowed to:</p>
+                            <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                                <li>Sell, sublicense, or redistribute PNGBay images as standalone files</li>
+                                <li>Upload PNGBay images to other stock websites or marketplaces</li>
+                                <li>Claim PNGBay images as your own original work</li>
+                                <li>Use images in illegal, harmful, or misleading content</li>
+                                <li>Use images in logos or trademarks without significant modification</li>
+                            </ul>
+                        </div>
+
+                        <div className="mb-6">
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                4. Attribution
+                            </h2>
+                            <p className="text-gray-700 mb-2">
+                                Attribution is not required, but we appreciate it.
+                            </p>
+                            <p className="text-gray-700 font-medium">
+                                Optional credit example: Image by PNGBay (pngbay.com)
+                            </p>
+                        </div>
+
+                        <div className="mb-6">
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                5. Copyright & Ownership
+                            </h2>
+                            <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4">
+                                <li>
+                                    All images are either:
+                                    <ul className="list-disc list-inside ml-6 mt-1">
+                                        <li>Created by PNGBay contributors, or</li>
+                                        <li>Submitted by users, or</li>
+                                        <li>Believed to be in the public domain</li>
+                                    </ul>
+                                </li>
+                                <li>PNGBay does not guarantee that all images are free from third-party rights.</li>
+                                <li>If you believe an image infringes your copyright, please contact us immediately.</li>
+                            </ul>
+                        </div>
+
+                        <div className="mb-6">
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                6. DMCA & Copyright Infringement
+                            </h2>
+                            <p className="text-gray-700 mb-2">
+                                PNGBay respects copyright laws. If you are a copyright owner and believe that content on PNGBay violates your rights, please submit a DMCA takedown request including:
+                            </p>
+                            <ul className="list-disc list-inside text-gray-700 space-y-2 ml-4 mb-2">
+                                <li>Your name and contact information</li>
+                                <li>The URL of the infringing content</li>
+                                <li>Proof of ownership</li>
+                                <li>A statement made under penalty of perjury</li>
+                            </ul>
+                            <p className="text-gray-700">
+                                Contact us at: <a href="mailto:copyright@pngbay.com" className="text-[#0077a2] hover:underline">copyright@pngbay.com</a>
+                            </p>
+                        </div>
+
+                        <div className="mb-6">
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                7. Disclaimer
                             </h2>
                             <p className="text-gray-700">
-                                Some PNG files may be user-submitted or derived from third-party
-                                sources. While we take care to provide only free-to-use images,
-                                {hostname} does not guarantee absolute exclusivity of rights.
-                                If you are working on highly sensitive or trademark-related
-                                projects, we recommend double-checking the image usage rights or
-                                contacting us for clarification.
+                                All images are provided "as is" without warranties of any kind. PNGBay is not responsible for any damages, losses, or legal issues arising from the use of images downloaded from this site.
+                            </p>
+                        </div>
+
+                        <div className="mb-6">
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                8. Changes to This License
+                            </h2>
+                            <p className="text-gray-700">
+                                PNGBay reserves the right to update or modify this License Agreement at any time without prior notice. Continued use of the website constitutes acceptance of the updated terms.
                             </p>
                         </div>
 
                         <div>
-                            <h2 className="text-xl font-semibold text-purple-600 mb-3">
-                                Contribute & Support
+                            <h2 className="text-xl font-semibold text-gray-900 mb-3">
+                                9. Contact Information
                             </h2>
+                            <p className="text-gray-700 mb-2">
+                                If you have any questions about this License Agreement, please contact us:
+                            </p>
                             <p className="text-gray-700">
-                                If you enjoy our free resources, please consider sharing
-                                {hostname} with your friends, linking to us from your blog, or
-                                following us on social media. Your support helps us keep
-                                providing free PNG images to everyone.
+                                📧 Email: <a href="mailto:support@pngbay.com" className="text-[#0077a2] hover:underline">support@pngbay.com</a>
+                            </p>
+                            <p className="text-gray-700">
+                                🌐 Website: <a href="https://pngbay.com" className="text-[#0077a2] hover:underline">https://pngbay.com</a>
                             </p>
                         </div>
                     </div>

@@ -26,8 +26,8 @@ export async function generateMetadata(
 
     if (!res.ok) {
       return {
-        title: "Image - PNGPoint",
-        description: "PNGPoint image details",
+        title: "Image - PNGBay",
+        description: "PNGBay image details",
         alternates: {
           canonical: getImageUrl(slug),
         },
@@ -40,8 +40,8 @@ export async function generateMetadata(
     // Validate required data exists
     if (!data || !data.cloudflare_url) {
       return {
-        title: "Image - PNGPoint",
-        description: "PNGPoint image details",
+        title: "Image - PNGBay",
+        description: "PNGBay image details",
         alternates: {
           canonical: getImageUrl(slug),
         },
@@ -56,15 +56,15 @@ export async function generateMetadata(
       : '';
 
     return {
-      title: `${data.title || 'Image'} - PNGPoint`,
-      description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
+      title: `${data.title || 'Image'} - PNGBay`,
+      description: `The ${data.title || 'image'} image is a high-quality, transparent background graphic designed for creative and professional use. This PNG file is available in HD resolution and can be downloaded for free from PNGBay. You can use this transparent PNG in website designs, presentations, social media graphics, posters, advertisements, and digital projects.This PNG is free for both personal and commercial use under the PNGBay license. No attribution is required, and you can resize or modify the image to suit your project needs.`,
       keywords: keywords || undefined,
       alternates: {
         canonical: getImageUrl(slug),
       },
       openGraph: {
-        title: `${data.title || 'Image'} - PNGPoint`,
-        description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
+        title: `${data.title || 'Image'} - PNGBay`,
+        description: `The ${data.title || 'image'} image is a high-quality, transparent background graphic designed for creative and professional use. This PNG file is available in HD resolution and can be downloaded for free from PNGBay. You can use this transparent PNG in website designs, presentations, social media graphics, posters, advertisements, and digital projects.This PNG is free for both personal and commercial use under the PNGBay license. No attribution is required, and you can resize or modify the image to suit your project needs.`,
         url: getImageUrl(slug),
         type: "website",
         images: [
@@ -79,15 +79,15 @@ export async function generateMetadata(
       twitter: {
         card: "summary_large_image",
         title: data.title || 'Image',
-        description: `Download high-quality ${data.description || 'image'} PNG with a transparent background, free to use for personal or commercial projects. Explore more related PNG images below—perfect for design, presentations, social media posts, and more.`,
+        description: `The ${data.title || 'image'} image is a high-quality, transparent background graphic designed for creative and professional use. This PNG file is available in HD resolution and can be downloaded for free from PNGBay. You can use this transparent PNG in website designs, presentations, social media graphics, posters, advertisements, and digital projects.This PNG is free for both personal and commercial use under the PNGBay license. No attribution is required, and you can resize or modify the image to suit your project needs.`,
         images: [imageUrl],
       },
     };
   } catch (error) {
     console.error('Error generating metadata:', error);
     return {
-      title: "Image - PNGPoint",
-      description: "PNGPoint image details",
+      title: "Image - PNGBay",
+      description: "PNGBay image details",
       alternates: {
         canonical: getImageUrl(slug),
       },
@@ -149,7 +149,7 @@ async function getImageData(slug: string) {
       keywords: processedKeywords,
       publishDate: data.created_at || new Date().toISOString(),
       modifiedDate: data.updated_at || new Date().toISOString(),
-      categoryPageUrl: data.category_url || "https://pngpoint.com/",
+      categoryPageUrl: data.category_url || "https://pngbay.com/",
       categoryName: data.category_name || "Images",
     };
   } catch (error) {

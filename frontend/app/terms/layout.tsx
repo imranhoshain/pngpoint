@@ -4,10 +4,10 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-    title: "Terms & Conditions - PNGPoint",
-    description: "Review the terms and conditions for using PNGPoint.",
+    title: "PNGBay License Agreement",
+    description: "Review the terms and conditions for using PNGBay.",
     alternates: {
-    canonical: "https://pngpoint.com/terms",
+    canonical: "https://pngbay.com/terms",
   },
 };
 

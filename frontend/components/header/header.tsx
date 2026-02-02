@@ -189,18 +189,18 @@ export const Header = () => {
     };
 
     return (
-        <header className="relative top-0 left-0 right-0 pt-2.5 md:pt-5 pb-1.5 w-full bg-[#0077a2] text-white">
+        <header className="relative top-0 left-0 right-0 pt-2.5 md:pt-5 pb-1.5 w-full bg-[#00bcd4] text-white">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap justify-center items-center w-full">
-                    <script 
+                    {/* <script 
                         type="application/ld+json"
                         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-                    />
+                    /> */}
                     <Link className="block w-fit" href={"/"}>
                         <img
                             className="w-40 md:w-56 h-auto"
-                            src="/PNGPOINT-White-logo.webp"
-                            alt="pngpoint"
+                            src="/pngbay_logo.png"
+                            alt="pngbay"
                             onClick={() => handleLogo()}
                         />
                     </Link>

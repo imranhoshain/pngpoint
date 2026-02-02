@@ -4,11 +4,16 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-    title: "Contact Us - PNGPoint",
-    description: "Get in touch with PNGPoint for any inquiries or support.",
+    title: "Contact PNGBay – Free PNG Image Support",
+    description: "Contact PNGBay for support, copyright, licensing, or business inquiries related to free PNG images.",
     alternates: {
-        canonical: "https://pngpoint.com/contact",
+        canonical: "https://pngbay.com/contact",
     },
+    keywords: [
+        "contact pngbay",
+        "png support",
+        "png image help"
+    ],
 };
 
 export default function ContactRootLayout({

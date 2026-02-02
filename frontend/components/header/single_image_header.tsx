@@ -4,7 +4,7 @@ import { ReactIcons } from "@/utils/reactIcons";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Logo from "../../public/PNGPOINT-White-logo.png";
+import Logo from "../../public/pngbay_logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setTitle } from "@/redux/features/getImages/getImageSlice";
@@ -76,13 +76,13 @@ export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData 
                         : undefined,
                     "creator": {
                         "@type": "Organization",
-                        "name": "PNGPoint",
-                        "url": "https://pngpoint.com/",
+                        "name": "PNGBay",
+                        "url": "https://pngbay.com/",
                     },
-                    "license": "https://pngpoint.com/license",
-                    "acquireLicensePage": "https://pngpoint.com/license",
-                    "creditText": "PNGPoint",
-                    "copyrightNotice": "© PNGPoint",
+                    "license": "https://pngbay.com/license",
+                    "acquireLicensePage": "https://pngbay.com/license",
+                    "creditText": "PNGBay",
+                    "copyrightNotice": "© PNGBay",
                     "isAccessibleForFree": true,
                     "datePublished": imageData.publishDate,
                     "dateModified": imageData.modifiedDate,
@@ -92,14 +92,14 @@ export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData 
         : null;
 
     return (
-        <header className="relative top-0 left-0 right-0 py-1.5 w-full bg-[#0077a2]">
+        <header className="relative top-0 left-0 right-0 py-1.5 w-full bg-[#00bcd4]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-row flex-wrap justify-between items-center w-full">
                     <Link className="block w-fit" href={"/"}>
                         <Image
                             className="w-32 sm:w-40 md:w-56 h-auto"
                             src={Logo}
-                            alt="pngpoint"
+                            alt="pngbay"
                             width={244}
                             height={244}
                             loading="eager"
