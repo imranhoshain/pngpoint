@@ -14,27 +14,34 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # HTTP router (redirects to HTTPS)
+      # ===== ACME CHALLENGE HANDLER (HIGHEST PRIORITY) =====
+      - "traefik.http.routers.acme-challenge.rule=PathPrefix(`/.well-known/acme-challenge/`)"
+      - "traefik.http.routers.acme-challenge.entrypoints=web"
+      - "traefik.http.routers.acme-challenge.priority=1000"
+      - "traefik.http.routers.acme-challenge.service=noop@internal"
+
+      # ===== HTTP ROUTER (redirects to HTTPS after certificate is obtained) =====
       - "traefik.http.routers.${ENVIRONMENT}-frontend-web.rule=Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-web.entrypoints=web"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.middlewares=https-redirect@docker"
+      # Temporarily commented out for certificate generation - uncomment after SSL works
+      # - "traefik.http.routers.${ENVIRONMENT}-frontend-web.middlewares=https-redirect@docker"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-web.priority=10"
 
-      # HTTPS router
+      # ===== HTTPS ROUTER =====
       - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.rule=Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.entrypoints=websecure"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.tls.certresolver=le"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.priority=10"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.service=${ENVIRONMENT}-frontend-svc"
       
-      # Service definition for frontend
+      # ===== SERVICE DEFINITION =====
       - "traefik.http.services.${ENVIRONMENT}-frontend-svc.loadbalancer.server.port=3000"
 
-      # Define the redirect middleware ONCE (only in frontend)
+      # ===== HTTPS REDIRECT MIDDLEWARE (defined once) =====
       - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
 
-      # Tell Traefik which docker network to use
+      # ===== NETWORK =====
       - "traefik.docker.network=web"
 
   backend:
@@ -56,23 +63,25 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # API over HTTP (redirects to HTTPS)
+      # ===== API OVER HTTP (redirects to HTTPS after certificate is obtained) =====
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.entrypoints=web"
-      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.middlewares=https-redirect@docker"
+      # Temporarily commented out for certificate generation - uncomment after SSL works
+      # - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.middlewares=https-redirect@docker"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.priority=100"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.service=${ENVIRONMENT}-backend-svc"
 
-      # API over HTTPS
+      # ===== API OVER HTTPS =====
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.entrypoints=websecure"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.tls.certresolver=le"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.priority=100"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.service=${ENVIRONMENT}-backend-svc"
       
-      # Service definition for backend (Django / Gunicorn)
+      # ===== SERVICE DEFINITION =====
       - "traefik.http.services.${ENVIRONMENT}-backend-svc.loadbalancer.server.port=8000"
 
+      # ===== NETWORK =====
       - "traefik.docker.network=web"
 
   celery:
@@ -107,23 +116,25 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # HTTP → assets (static + media), then redirect to HTTPS
+      # ===== HTTP ASSETS (redirects to HTTPS after certificate is obtained) =====
       - "traefik.http.routers.${ENVIRONMENT}-assets-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
       - "traefik.http.routers.${ENVIRONMENT}-assets-web.entrypoints=web"
-      - "traefik.http.routers.${ENVIRONMENT}-assets-web.middlewares=https-redirect@docker"
+      # Temporarily commented out for certificate generation - uncomment after SSL works
+      # - "traefik.http.routers.${ENVIRONMENT}-assets-web.middlewares=https-redirect@docker"
       - "traefik.http.routers.${ENVIRONMENT}-assets-web.priority=95"
       - "traefik.http.routers.${ENVIRONMENT}-assets-web.service=${ENVIRONMENT}-assets-svc"
 
-      # HTTPS → assets (static + media)
+      # ===== HTTPS ASSETS =====
       - "traefik.http.routers.${ENVIRONMENT}-assets-secure.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
       - "traefik.http.routers.${ENVIRONMENT}-assets-secure.entrypoints=websecure"
       - "traefik.http.routers.${ENVIRONMENT}-assets-secure.tls.certresolver=le"
       - "traefik.http.routers.${ENVIRONMENT}-assets-secure.priority=95"
       - "traefik.http.routers.${ENVIRONMENT}-assets-secure.service=${ENVIRONMENT}-assets-svc"
       
-      # Service definition for assets (nginx)
+      # ===== SERVICE DEFINITION =====
       - "traefik.http.services.${ENVIRONMENT}-assets-svc.loadbalancer.server.port=80"
 
+      # ===== NETWORK =====
       - "traefik.docker.network=web"
 
 networks:
