@@ -14,14 +14,10 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # redirect http → https
-      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.permanent=true"
-
       # HTTP router (redirects to HTTPS)
       - "traefik.http.routers.${ENVIRONMENT}-frontend-web.rule=Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-web.entrypoints=web"
-      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.middlewares=${ENVIRONMENT}-https"
+      - "traefik.http.routers.${ENVIRONMENT}-frontend-web.middlewares=https-redirect@docker"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-web.priority=10"
 
       # HTTPS router
@@ -30,8 +26,13 @@ services:
       - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.tls.certresolver=le"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.priority=10"
       - "traefik.http.routers.${ENVIRONMENT}-frontend-secure.service=${ENVIRONMENT}-frontend-svc"
+      
       # Service definition for frontend
       - "traefik.http.services.${ENVIRONMENT}-frontend-svc.loadbalancer.server.port=3000"
+
+      # Define the redirect middleware ONCE (only in frontend)
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
 
       # Tell Traefik which docker network to use
       - "traefik.docker.network=web"
@@ -55,13 +56,10 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # redirect http → https
-      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
-
       # API over HTTP (redirects to HTTPS)
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && PathPrefix(`/api/`)"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.entrypoints=web"
-      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.middlewares=${ENVIRONMENT}-https"
+      - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.middlewares=https-redirect@docker"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.priority=100"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-web.service=${ENVIRONMENT}-backend-svc"
 
@@ -71,6 +69,7 @@ services:
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.tls.certresolver=le"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.priority=100"
       - "traefik.http.routers.${ENVIRONMENT}-backend-api-secure.service=${ENVIRONMENT}-backend-svc"
+      
       # Service definition for backend (Django / Gunicorn)
       - "traefik.http.services.${ENVIRONMENT}-backend-svc.loadbalancer.server.port=8000"
 
@@ -108,13 +107,10 @@ services:
     labels:
       - "traefik.enable=true"
 
-      # redirect http → https
-      - "traefik.http.middlewares.${ENVIRONMENT}-https.redirectscheme.scheme=https"
-
       # HTTP → assets (static + media), then redirect to HTTPS
       - "traefik.http.routers.${ENVIRONMENT}-assets-web.rule=(Host(`${DOMAIN}`) || Host(`${WWW_DOMAIN}`)) && (PathPrefix(`/static/`) || PathPrefix(`/media/`))"
       - "traefik.http.routers.${ENVIRONMENT}-assets-web.entrypoints=web"
-      - "traefik.http.routers.${ENVIRONMENT}-assets-web.middlewares=${ENVIRONMENT}-https"
+      - "traefik.http.routers.${ENVIRONMENT}-assets-web.middlewares=https-redirect@docker"
       - "traefik.http.routers.${ENVIRONMENT}-assets-web.priority=95"
       - "traefik.http.routers.${ENVIRONMENT}-assets-web.service=${ENVIRONMENT}-assets-svc"
 
@@ -124,6 +120,7 @@ services:
       - "traefik.http.routers.${ENVIRONMENT}-assets-secure.tls.certresolver=le"
       - "traefik.http.routers.${ENVIRONMENT}-assets-secure.priority=95"
       - "traefik.http.routers.${ENVIRONMENT}-assets-secure.service=${ENVIRONMENT}-assets-svc"
+      
       # Service definition for assets (nginx)
       - "traefik.http.services.${ENVIRONMENT}-assets-svc.loadbalancer.server.port=80"
 
