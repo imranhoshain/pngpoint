@@ -189,7 +189,7 @@ export const Header = () => {
     };
 
     return (
-        <header className="relative top-0 left-0 right-0 pt-2.5 md:pt-5 pb-1.5 w-full bg-[#E8F7FA] text-[#0077a2]">
+        <header className="relative top-0 left-0 right-0 pt-2.5 md:pt-5 pb-1.5 w-full bg-[#0077a2] text-[#0077a2]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap justify-center items-center w-full">
                     {/* <script 

@@ -92,7 +92,7 @@ export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData 
         : null;
 
     return (
-        <header className="relative top-0 left-0 right-0 py-1.5 w-full bg-[#E8F7FA]">
+        <header className="relative top-0 left-0 right-0 py-1.5 w-full bg-[#0077a2]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-row flex-wrap justify-between items-center w-full">
                     <Link className="block w-fit" href={"/"}>
