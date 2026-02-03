@@ -60,14 +60,14 @@ export const SearchingImage: React.FC<SearchingImageProps> = ({
         if (categorySlug && categoryName) {
             return `${categoryName} PNG Images with Transparent Background`;
         }
-        return "Free PNG Images Download with Transparent Background";
+        return "PNGBay – Free HD Transparent PNG Images Download";
     };
 
     const getSubheading = () => {
         if (categorySlug && categoryName) {
             return `Free & Royalty-Free Downloads for Design, Education, and Commercial Use`;
         }
-        return "Download high-quality, royalty-free PNG images with transparent backgrounds for design, web, branding, and commercial use.";
+        return "Download free HD transparent PNG images for logos, icons, animals, and designs. No signup, no copyright, ready for personal and commercial use";
     };
 
     const getPlaceholder = () => {

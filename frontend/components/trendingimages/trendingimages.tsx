@@ -14,10 +14,10 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
     const images = imagesData;
     
     return (
-        <section className="relative top-0 left-0 right-0 py-5 w-full bg-[#FBFAFF]">
+        <section className="relative top-0 left-0 right-0 py-5 w-full bg-[#E8F7FA]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap justify-center items-center gap-y-4 text-center w-full">
-                    <h2 className="text-xl lg:text-3xl font-bold text-[#0077a2]">Popular PNG Images Downloaded by Users</h2>
+                    <h2 className="text-xl lg:text-3xl font-bold text-[#0077a2]">Free HD PNG Images Downloaded by Users</h2>
                 </div>
                 <div className="flex flex-col flex-wrap w-full">
                     <>
