@@ -19,7 +19,7 @@ const API_URL = resolveApiUrl();
 const MEDIA_URL = process.env.NEXT_PUBLIC_MEDIA_URL || SITE_URL;
 const INTERNAL_API_URL = process.env.INTERNAL_API_URL || "http://127.0.0.1:8000/api/v1";
 
-const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "PNGPoint";
+const SITE_NAME = process.env.NEXT_PUBLIC_SITE_NAME || "PNGBay";
 
 export const siteConfig = {
     url: SITE_URL,
