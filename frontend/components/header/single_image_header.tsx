@@ -4,7 +4,7 @@ import { ReactIcons } from "@/utils/reactIcons";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
-import Logo from "../../public/pngbay_logo.png";
+import Logo from "../../public/pngbay-logo-white.png";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setTitle } from "@/redux/features/getImages/getImageSlice";
@@ -92,7 +92,7 @@ export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData 
         : null;
 
     return (
-        <header className="relative top-0 left-0 right-0 py-1.5 w-full bg-[#0077a2]">
+        <header className="relative top-0 left-0 right-0 py-1.5 w-full bg-[#00bcd4]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-row flex-wrap justify-between items-center w-full">
                     <Link className="block w-fit" href={"/"}>

@@ -20,7 +20,7 @@ export const FooterLogo: React.FC = () => {
         <Link className="block w-fit" href={"/"}>
             <img
                 className="w-40 lg:w-44 xl:w-52 h-auto"
-                src="/pngbay_logo.png"
+                src="/pngbay-logo-white.png"
                 alt="pngbay"
                 loading="lazy"
                 decoding="async"

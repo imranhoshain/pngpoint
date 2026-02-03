@@ -78,7 +78,7 @@ export const SearchingImage: React.FC<SearchingImageProps> = ({
     };
 
     return (
-        <section className="relative top-0 left-0 right-0 pb-2.5 md:pb-5 w-full bg-[#0077a2]">
+        <section className="relative top-0 left-0 right-0 pb-2.5 md:pb-5 w-full bg-[#00bcd4]">
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap items-center justify-center gap-y-5 w-full">
                     <h1 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-center">

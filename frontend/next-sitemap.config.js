@@ -48,7 +48,7 @@ module.exports = {
       { userAgent: 'Sogou spider', disallow: '/' },
       
       // Allow all other bots (if any remain)
-      { userAgent: '*', allow: '/' },
+      { userAgent: '*', disallow: '/' },
     ],
     additionalSitemaps: [],
     transformRobotsTxt: async (_, robotsTxt) => {
