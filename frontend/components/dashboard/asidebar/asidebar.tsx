@@ -10,7 +10,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { Logout } from '@/components/logout/logout';
 import { AdminMenu, UserMenu } from '@/utils/menu';
-import PPLogo from "../../../public/PP-logo-white.png";
+import PPLogo from "../../../public/pngbay-logo-white.png";
 
 export const AsideBar = ({ sideBar, setSideBar }: any) => {
     const auth = useSelector((state: RootState) => state.auth);

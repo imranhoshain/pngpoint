@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import Logo from "../../../public/PP-logo.png";
+import Logo from "../../../public/pngbay_logo.png";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { RegisterForm } from "@/components/forms/registerForm";
 
