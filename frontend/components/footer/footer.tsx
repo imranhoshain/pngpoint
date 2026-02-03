@@ -9,8 +9,8 @@ export default function Footer() {
     const { FaXTwitter, FaFacebook, FaPinterest, FaInstagram } = ReactIcons;
     return (
         <footer className="relative top-0 left-0 right-0 py-10 lg:pt-16 pb-10 w-full text-white bg-[#00bcd4] flex flex-col items-center">
-            <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full flex justify-center">
-                <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-10 w-full">
+            <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10 w-full max-w-5xl mx-auto">
                     <div className="flex flex-col flex-wrap gap-y-4 md:gap-y-2 w-full items-center text-center">
                         <FooterLogo />
                         <p className="text-xs xl:text-sm font-medium uppercase">free download transparent<br />png files no copyright</p>
