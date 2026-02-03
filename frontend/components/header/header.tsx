@@ -52,7 +52,7 @@ export const Header = () => {
         "@type": "WebPage",
         "@id": "https://pngpoint.com/#webpage",
         "url": "https://pngpoint.com/",
-        "name": "Free PNG Images Download – Transparent Background | Pngpoint",
+        "name": "Free PNG Images Download – Transparent Background | Pngbay",
         "description": "Download high-quality, royalty-free PNG images with transparent backgrounds, perfect for web design, branding, digital content creation, and commercial projects.",
         "isPartOf": {
             "@id": "https://pngpoint.com/#website"

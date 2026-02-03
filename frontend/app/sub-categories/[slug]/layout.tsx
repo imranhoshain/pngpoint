@@ -23,7 +23,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
         const data = SingleSubCategoryResdata?.data;
 
         return {
-            title: `Browse All PNG Image ${data.name} | Free Transparent PNGs | PNGPoint`,
+            title: `Browse All PNG Image ${data.name} | Free Transparent PNGs | PNGBay`,
             description: "Discover our full collection of PNG images, neatly organized by category for quick and easy downloads.",
             alternates: {
                 canonical: getSubCategoryUrl(slug),
