@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-    title: "PNG Point Register Form",
-    description: "PNG Point Register Form",
+    title: "PNG Bay Register Form",
+    description: "PNG Bay Register Form",
 };
 
 export default function RegisterRootLayout({

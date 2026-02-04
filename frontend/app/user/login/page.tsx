@@ -15,7 +15,7 @@ export default function Login() {
                                 <Link className="block w-fit" href={'/'}>
                                 <Image
                                     src={Logo}
-                                    alt="png-point"
+                                    alt="png-bay"
                                     width={100}
                                     height={100}
                                     priority

@@ -2,8 +2,8 @@ import { Metadata } from "next";
 import React from "react";
 
 export const metadata: Metadata = {
-    title: "PNG Point Login Form",
-    description: "PNG Point Login Form",
+    title: "PNG Bay Login Form",
+    description: "PNG Bay Login Form",
 };
 
 export default function LoginRootLayout({
