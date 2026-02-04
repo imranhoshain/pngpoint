@@ -7,7 +7,7 @@ CACHE_PREFIX = "img_slug:"
 
 @receiver(post_save, sender=Images)
 def update_image_cache(sender, instance, created, **kwargs):
-    if instance.status == "approved":
+    if instance.status == "approved" and created:
         cache_key = f"{CACHE_PREFIX}{instance.slug}"
         data = {
             "slug": instance.slug,
