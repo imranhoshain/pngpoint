@@ -11,6 +11,7 @@ from api.images.views.categories import CategoriesViewSet
 from api.images.views.sub_categories import SubCategoriesViewSet
 from api.images.views.keywords import KeywordsView
 from api.images.views.upload import ImagesUploadAPIView
+from api.images.views.slugs import get_image_slugs
 
 urlpatterns = [
     # IMAGE UPLOAD ROUTE
@@ -173,6 +174,8 @@ urlpatterns = [
         KeywordsView.as_view(),
         name='keywords',
     ),
+
+    path('slugs',get_image_slugs,name="image-slug-list"),
 
     # IMAGES UPDATED
     path(
