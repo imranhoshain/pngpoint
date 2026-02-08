@@ -55,7 +55,7 @@ class UserTotalImagesViewSet(viewsets.ViewSet):
     def list(self, request, *args, **kwargs):
         
         user = request.user
-        queryset = Images.objects.filter(user=user).order_by('-created_at')
+        queryset = Images.objects.filter(user=user).order_by('created_at')
 
         for backend in list(self.filter_backends):
             queryset = backend().filter_queryset(request, queryset, self)

@@ -42,6 +42,9 @@ module.exports = {
       { userAgent: 'HubSpot Crawler', disallow: '/' },
       { userAgent: 'Sogou web spider', disallow: '/' },
       { userAgent: 'Sogou spider', disallow: '/' },
+      // Allow Google-Extended and GPTBot
+      { userAgent: 'Google-Extended', allow: '/' },
+      { userAgent: 'GPTBot', allow: '/' },
       // Allow all other bots (including Google, Bing, etc.)
       { userAgent: '*', allow: '/' },
     ],
