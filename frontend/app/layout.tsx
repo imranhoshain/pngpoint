@@ -79,7 +79,7 @@ export default function RootLayout({
                 
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
-                {/* <meta name="p:domain_verify" content="c4d1b017f0884994340d0fe3f090b469"/> */}
+                <meta name="p:domain_verify" content="79113438e5c3285bed9e9d60a4dafce4"/>
             </head>
             <body className={`${interFont.variable} antialiased`}>
                 {/* Google Tag Manager (noscript) */}

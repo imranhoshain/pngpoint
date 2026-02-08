@@ -17,6 +17,7 @@ module.exports = {
   ],
   robotsTxtOptions: {
     policies: [
+      // Block specific bots
       { userAgent: 'AhrefsBot', disallow: '/' },
       { userAgent: 'Barkrowler', disallow: '/' },
       { userAgent: 'DotBot', disallow: '/' },
@@ -43,7 +44,6 @@ module.exports = {
       { userAgent: 'Sogou spider', disallow: '/' },
       // Allow all other bots (including Google, Bing, etc.)
       { userAgent: '*', allow: '/' },
-      { userAgent: '*', disallow: '/' },
     ],
     additionalSitemaps: [],
     transformRobotsTxt: async (_, robotsTxt) => {
