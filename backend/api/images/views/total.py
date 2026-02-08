@@ -21,7 +21,7 @@ class TotalImagesViewSet(viewsets.ViewSet):
             Images.objects
             .select_related("user")
             .prefetch_related("keywords")
-            .order_by("-created_at")
+            .order_by("created_at")
         )
 
         for backend in list(self.filter_backends):
