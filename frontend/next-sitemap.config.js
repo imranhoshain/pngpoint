@@ -20,13 +20,6 @@ module.exports = {
       { userAgent: '*', allow: '/' },
     ],
     additionalSitemaps: [],
-    transformRobotsTxt: async (_, robotsTxt) => {
-      return robotsTxt
-        .split('\n')
-        .filter(line => !line.toLowerCase().includes('sitemap:'))
-        .filter(line => !line.toLowerCase().includes('host:'))
-        .join('\n');
-    },
   },
   additionalPaths: async (config) => {
     try {
