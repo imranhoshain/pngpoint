@@ -8,7 +8,7 @@ export default async function sitemap() {
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:5000';
 
   // Static routes
-  const staticRoutes = ['', '/about', '/contact'].map((route) => ({
+  const staticRoutes = ['', '/about', '/contact','/dmca','/license','/privacy','/terms'].map((route) => ({
     url: `${siteUrl}${route}`,
     lastModified: new Date(),
     changeFrequency: 'daily' as const,
