@@ -17,7 +17,7 @@ module.exports = {
   ],
   robotsTxtOptions: {
     policies: [
-      { userAgent: '*', disallow: '/' },
+      { userAgent: '*', allow: '/' },
     ],
     additionalSitemaps: [],
     transformRobotsTxt: async (_, robotsTxt) => {
