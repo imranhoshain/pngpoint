@@ -50,12 +50,12 @@ sitemaps = {
 }
 
 urlpatterns += [
-    path('sitemap.xml', index, {
+    path('api/v1/sitemap.xml', index, {
         'sitemaps': sitemaps,
         'sitemap_url_name': 'sitemap-section',
     }, name='sitemap-index'),
     
-    path('sitemap-<section>.xml', sitemap, {
+    path('api/v1/sitemap-<section>.xml', sitemap, {
         'sitemaps': sitemaps,
     }, name='sitemap-section'),
 ]
