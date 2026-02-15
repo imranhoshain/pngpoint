@@ -47,19 +47,15 @@ from images.sitemaps import (
 sitemaps = {
     'static': StaticViewSitemap,
     'images': OptimizedImageSitemap,
-    'recent': RecentImagesSitemap,
-    'popular': PopularImagesSitemap,
-    'categories': CategorySitemap,
-    'subcategories': SubCategorySitemap,
 }
 
 urlpatterns += [
-    path('api/v1/sitemap.xml', index, {
+    path('sitemap.xml', index, {
         'sitemaps': sitemaps,
         'sitemap_url_name': 'sitemap-section',
     }, name='sitemap-index'),
     
-    path('api/v1/sitemap-<section>.xml', sitemap, {
+    path('sitemap-<section>.xml', sitemap, {
         'sitemaps': sitemaps,
     }, name='sitemap-section'),
 ]

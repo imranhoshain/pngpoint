@@ -187,7 +187,7 @@ class StaticViewSitemap(Sitemap):
         return super().get_urls(page=page, site=site, protocol=protocol)
 
     def items(self):
-        return ['home','about', 'contact', 'privacy', 'terms','license']
+        return ['home','about', 'contact', 'privacy', 'terms','license','dmca']
 
     def location(self, item):
         if item == 'home':
