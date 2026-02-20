@@ -58,7 +58,7 @@ class DownloadImageViewSet(viewsets.ViewSet):
         }
         variant = size_variant_map.get(size, 'singleimage')
         
-        image_url = f"https://{config.images_domain}/{config.account_hash}/{image_id}/{variant}"
+        image_url = f"https://{config.images_domain}/{config.account_hash}/{image_id}/singleimage"
 
         try:
             response = requests.get(image_url, stream=True)
