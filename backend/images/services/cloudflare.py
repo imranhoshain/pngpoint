@@ -82,6 +82,7 @@ def delete_images_from_cloudflare(image_ids):
             cloudflare_id = image.cloudflare_id
 
             if not cloudflare_id:
+                image.delete()
                 failed.append({"id": image_id, "error": "No Cloudflare ID found"})
                 continue
 
