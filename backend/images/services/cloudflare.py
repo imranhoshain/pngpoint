@@ -83,6 +83,7 @@ def delete_images_from_cloudflare(image_ids):
 
             if not cloudflare_id:
                 failed.append({"id": image_id, "error": "No Cloudflare ID found"})
+                image.delete()
                 continue
 
             result = NUMBER_OF_IMAGE_DELETE_FROM_CLOUDFLARE(cloudflare_id)

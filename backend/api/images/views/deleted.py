@@ -22,6 +22,7 @@ class SingleImageDeleteView(viewsets.ViewSet):
             cloudflare_id = image.cloudflare_id
 
             if not cloudflare_id:
+                image.delete()
                 return Response(
                     {
                         "success": False,
