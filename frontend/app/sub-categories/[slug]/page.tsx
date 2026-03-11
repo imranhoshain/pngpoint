@@ -7,21 +7,31 @@ import { getFetchData } from "@/utils/getFetchData";
 import { siteConfig, getImageUrl } from "@/config/site";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation"
+import { useParams, useRouter, useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react";
 import bgShape from "../../../public/bg-shape.jpg";
 import Pagination from "@/components/pagination/pagination";
 
 export default function SingleSubCategories() {
     const { slug } = useParams();
-    const [currentPage, setCurrentPage] = useState<number>(1);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+
+    const pageFromUrl = parseInt(searchParams.get("page") || "1", 10);
+    const [currentPage, setCurrentPage] = useState<number>(pageFromUrl);
     const [subCategory, setSubCategory] = useState<any>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string>("");
 
+    // Sync state if URL param changes (e.g. browser back/forward)
+    useEffect(() => {
+        setCurrentPage(pageFromUrl);
+    }, [pageFromUrl]);
+
     useEffect(() => {
         let isMounted = true;
         const fetchingData = async () => {
+            setLoading(true);
             try {
                 const data = await getFetchData(`${SERVER_URL}/images/sub-categories/${slug}/?page=${currentPage}`, {
                     next: { revalidate: 180 },
@@ -72,14 +82,21 @@ export default function SingleSubCategories() {
             </div>
         );
     }
+
     const subCategoryData = subCategory?.results;
-
     const images = subCategoryData?.images;
-
     const totalPages = Math.ceil(subCategory?.count / 100);
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
+        // Update the URL with the new page number
+        const params = new URLSearchParams(searchParams.toString());
+        if (page === 1) {
+            params.delete("page"); // Keep URL clean for page 1
+        } else {
+            params.set("page", String(page));
+        }
+        router.push(`?${params.toString()}`, { scroll: true });
     };
 
     return (
@@ -95,7 +112,7 @@ export default function SingleSubCategories() {
                                 <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-5 w-full mt-5">
                                     {images && images.map((image: any) => {
                                         const imageUrl = getImageUrl(image.slug);
-                                        
+
                                         // Process keywords for schema
                                         let processedKeywords: string[] | undefined = undefined;
                                         if (image.keywords) {
@@ -110,7 +127,7 @@ export default function SingleSubCategories() {
                                                     .filter(Boolean);
                                             }
                                         }
-                                        
+
                                         // Create image schema
                                         const imageSchema = {
                                             "@context": "https://schema.org",
@@ -158,7 +175,7 @@ export default function SingleSubCategories() {
                                                 },
                                             ],
                                         };
-                                        
+
                                         return (
                                             <div className="block w-full h-full relative rounded-2xl border border-gray-300 shadow-sm group overflow-hidden" key={image.id}>
                                                 <script
