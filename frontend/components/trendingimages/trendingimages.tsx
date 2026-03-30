@@ -14,7 +14,7 @@ import { getCloudflareUrl, getCloudflareSrcSet } from "@/utils/cloudflare";
  *   - "thumb": Format=WebP, Width=400, Quality=80, Fit=scale-down
  * Flip to true after variants exist to get the 21,979 KiB image savings.
  */
-const USE_CLOUDFLARE_WEBP = false;
+const USE_CLOUDFLARE_WEBP = true;
 
 type TrendingimagesProps = {
     imagesData: any;
