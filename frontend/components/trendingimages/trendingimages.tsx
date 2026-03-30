@@ -6,6 +6,16 @@ import { Download } from "../download/download";
 import { getImageUrl } from "@/config/site";
 import { getCloudflareUrl, getCloudflareSrcSet } from "@/utils/cloudflare";
 
+/*
+ * Set this to true ONLY after you have created the "webp" and "thumb"
+ * variants in your Cloudflare Images dashboard.
+ * Instructions: Cloudflare Dashboard → Images → Variants → Add variant
+ *   - "webp":  Format=WebP, Width=700, Quality=85, Fit=scale-down
+ *   - "thumb": Format=WebP, Width=400, Quality=80, Fit=scale-down
+ * Flip to true after variants exist to get the 21,979 KiB image savings.
+ */
+const USE_CLOUDFLARE_WEBP = false;
+
 type TrendingimagesProps = {
     imagesData: any;
 };
@@ -126,9 +136,27 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                                  */}
                                                 <img
                                                     className="w-auto h-auto max-w-full max-h-full object-contain z-10 relative"
-                                                    src={getCloudflareUrl(image.cloudflare_url, "webp")}
-                                                    srcSet={isAboveFold ? getCloudflareSrcSet(image.cloudflare_url) : undefined}
-                                                    sizes={isAboveFold ? "(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw" : undefined}
+                                                    /*
+                                                     * USE_CLOUDFLARE_WEBP=false → uses original "public" URL
+                                                     * (your current working URLs, no breakage).
+                                                     * Flip to true after creating Cloudflare WebP variants
+                                                     * to unlock 21,979 KiB image savings.
+                                                     */
+                                                    src={
+                                                        USE_CLOUDFLARE_WEBP
+                                                            ? getCloudflareUrl(image.cloudflare_url, "webp")
+                                                            : image.cloudflare_url
+                                                    }
+                                                    srcSet={
+                                                        USE_CLOUDFLARE_WEBP && isAboveFold
+                                                            ? getCloudflareSrcSet(image.cloudflare_url)
+                                                            : undefined
+                                                    }
+                                                    sizes={
+                                                        USE_CLOUDFLARE_WEBP && isAboveFold
+                                                            ? "(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                                                            : undefined
+                                                    }
                                                     alt={image.title}
                                                     title={image.title}
                                                     width={image.width || 352}

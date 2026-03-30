@@ -22,17 +22,13 @@
  */
 export function getCloudflareUrl(
     url: string | undefined | null,
-    variant: "webp" | "thumb" | "public" = "webp"
+    variant: "webp" | "thumb" | "public" = "public"
 ): string {
     if (!url) return "";
 
     try {
-        // Cloudflare Images URL ends with /<variant>
-        // Replace the last path segment with the requested variant
         const parts = url.split("/");
         if (parts.length < 2) return url;
-
-        // Last segment is the variant name
         parts[parts.length - 1] = variant;
         return parts.join("/");
     } catch {
