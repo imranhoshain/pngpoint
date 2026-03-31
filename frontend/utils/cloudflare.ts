@@ -1,28 +1,24 @@
 /**
  * Cloudflare Images URL helper
  * ─────────────────────────────────────────────────────────────────────────────
- * Converts a Cloudflare Images URL from any variant to a target variant.
+ * FIX image delivery (2,877–3,189 KiB savings):
  *
- * Cloudflare Images URLs follow this pattern:
- *   https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/<VARIANT>
+ * The previous default variant was "public" (original full-size PNG).
+ * Any call to getCloudflareUrl(url) without a second argument was serving
+ * uncompressed originals, which is why PageSpeed flagged enormous payloads.
  *
- * By switching the variant name at the end of the URL you get different
- * formats/sizes without storing extra copies.
+ * Default is now "webp" (700px wide, WebP, quality 85) — the smallest
+ * variant suitable for display use.
  *
- * Setup steps (one-time, in Cloudflare dashboard):
- *   1. Go to Cloudflare Dashboard → Images → Variants
- *   2. Create variant "webp"  → WebP, width 700, quality 85, fit scale-down
- *   3. Create variant "thumb" → WebP, width 400, quality 80, fit scale-down
- *   4. Keep "public" as your original PNG fallback
- *
- * Usage:
- *   getCloudflareUrl(image.cloudflare_url)           // → .../webp  (default)
- *   getCloudflareUrl(image.cloudflare_url, 'thumb')  // → .../thumb
- *   getCloudflareUrl(image.cloudflare_url, 'public') // → original PNG
+ * Cloudflare Images variant setup (Cloudflare Dashboard → Images → Variants):
+ *   "webp"   → WebP, width 700, quality 85, fit scale-down  ← display default
+ *   "thumb"  → WebP, width 400, quality 80, fit scale-down  ← mobile / srcset
+ *   "small"  → WebP, width 200, quality 75, fit scale-down  ← category grids
+ *   "public" → original PNG (keep for download button only)
  */
 export function getCloudflareUrl(
     url: string | undefined | null,
-    variant: "webp" | "thumb" | "public" = "public"
+    variant: "webp" | "thumb" | "small" | "public" = "webp" // FIX: was "public"
 ): string {
     if (!url) return "";
 
@@ -38,16 +34,17 @@ export function getCloudflareUrl(
 
 /**
  * Returns a srcSet string for responsive Cloudflare images.
- * Use this for the first 4 (above-fold) images to maximise LCP.
+ *
+ * Use on above-fold images (index < 4) for LCP optimization.
+ * Below-fold images should use just src={getCloudflareUrl(url)} (webp default)
+ * with loading="lazy" — no srcSet needed since they won't affect LCP.
  *
  * Usage:
  *   <img
  *     src={getCloudflareUrl(image.cloudflare_url)}
- *     srcSet={getCloudflareeSrcSet(image.cloudflare_url)}
+ *     srcSet={getCloudflareSrcSet(image.cloudflare_url)}
  *     sizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
  *   />
- *
- * Requires Cloudflare variants: "thumb" (400px) and "webp" (700px)
  */
 export function getCloudflareSrcSet(url: string | undefined | null): string {
     if (!url) return "";
@@ -55,4 +52,15 @@ export function getCloudflareSrcSet(url: string | undefined | null): string {
         `${getCloudflareUrl(url, "thumb")} 400w`,
         `${getCloudflareUrl(url, "webp")} 700w`,
     ].join(", ");
+}
+
+/**
+ * Returns a small thumbnail URL for use in category grids, review avatars,
+ * and any other UI where images are displayed at less than ~250px wide.
+ *
+ * Creates a "small" variant (200px WebP) which is ~4x smaller than "webp".
+ * Make sure the "small" variant exists in your Cloudflare Images dashboard.
+ */
+export function getCloudflareThumbnailUrl(url: string | undefined | null): string {
+    return getCloudflareUrl(url, "small");
 }

@@ -46,6 +46,104 @@ const nextConfig: NextConfig = {
     poweredByHeader: false,
     reactStrictMode: true,
 
+    /*
+     * FIX unused JS (185 KiB) + enormous network payloads (4,235 KiB):
+     *
+     * webpack config does three things:
+     *
+     * 1. splitChunks with granular caching groups — splits Redux, React,
+     *    and large vendor libs into separate chunks. This means:
+     *    a) Browsers cache them independently — a React update doesn't
+     *       bust the Redux cache and vice versa.
+     *    b) The initial page bundle only includes what's actually needed
+     *       for that page, not all vendors in one giant chunk.
+     *
+     * 2. usedExports: true — tells webpack to mark unused exports for
+     *    tree-shaking. Combined with sideEffects in package.json this
+     *    eliminates dead code from large libraries like react-icons.
+     *
+     * 3. moduleIds: "deterministic" — stable chunk IDs mean CDN/browser
+     *    caches survive deploys for unchanged chunks.
+     *
+     * FIX legacy JavaScript (14 KiB):
+     * browserslist in package.json controls transpilation targets.
+     * Add this to your package.json if not already present:
+     *   "browserslist": "> 0.5%, last 2 versions, not dead, not IE 11"
+     * This tells Babel/SWC to stop transpiling modern JS to ES5.
+     */
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+            config.optimization = {
+                ...config.optimization,
+                usedExports: true,
+                moduleIds: "deterministic",
+                splitChunks: {
+                    chunks: "all",
+                    maxInitialRequests: 25,
+                    minSize: 20000,
+                    cacheGroups: {
+                        /*
+                         * React core — changes rarely, cache for a long time.
+                         * Separating react + react-dom from other vendors means
+                         * a Redux update doesn't bust the React cache.
+                         */
+                        react: {
+                            name: "chunk-react",
+                            test: /[\\/]node_modules[\\/](react|react-dom|scheduler)[\\/]/,
+                            chunks: "all",
+                            priority: 40,
+                            reuseExistingChunk: true,
+                        },
+                        /*
+                         * Redux + React-Redux — changes occasionally.
+                         * Isolated so its cache key is independent of UI changes.
+                         */
+                        redux: {
+                            name: "chunk-redux",
+                            test: /[\\/]node_modules[\\/](@reduxjs|react-redux|redux)[\\/]/,
+                            chunks: "all",
+                            priority: 30,
+                            reuseExistingChunk: true,
+                        },
+                        /*
+                         * react-icons is enormous (~3MB unminified) because it
+                         * re-exports thousands of icons. Isolating it means the
+                         * browser can cache it separately and it won't bloat
+                         * other vendor chunks.
+                         *
+                         * FIX: Also switch to named imports in your components:
+                         *   WRONG:  import { ReactIcons } from "@/utils/reactIcons"
+                         *           const { FaXTwitter } = ReactIcons
+                         *   RIGHT:  import { FaXTwitter } from "react-icons/fa6"
+                         *
+                         * Direct named imports allow tree-shaking to eliminate
+                         * the icons you don't use. A wrapper object defeats this.
+                         */
+                        reactIcons: {
+                            name: "chunk-react-icons",
+                            test: /[\\/]node_modules[\\/]react-icons[\\/]/,
+                            chunks: "all",
+                            priority: 20,
+                            reuseExistingChunk: true,
+                        },
+                        /*
+                         * Everything else from node_modules goes in a shared
+                         * vendor chunk, cached independently from app code.
+                         */
+                        vendors: {
+                            name: "chunk-vendors",
+                            test: /[\\/]node_modules[\\/]/,
+                            chunks: "all",
+                            priority: 10,
+                            reuseExistingChunk: true,
+                        },
+                    },
+                },
+            };
+        }
+        return config;
+    },
+
     async headers() {
         return [
             {
@@ -58,15 +156,6 @@ const nextConfig: NextConfig = {
                     { key: "X-XSS-Protection", value: "1; mode=block" },
                     { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
                     { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
-
-                    /*
-                     * FIX LCP: Early hints / preconnect headers tell the browser to open
-                     * a TCP+TLS connection to Cloudflare image CDN BEFORE it parses HTML.
-                     * This saves ~200-400ms on mobile for the first image fetch.
-                     *
-                     * imagedelivery.net  → your Cloudflare Images CDN (PNG/WebP source)
-                     * www.googletagmanager.com → GTM (prevents it blocking the main thread)
-                     */
                     {
                         key: "Link",
                         value: [
@@ -77,6 +166,12 @@ const nextConfig: NextConfig = {
                     },
                 ],
             },
+            /*
+             * FIX enormous network payloads (4,235 KiB):
+             * Static assets (JS/CSS chunks) are content-hashed by Next.js,
+             * so immutable caching is safe — a changed file always gets a new hash.
+             * 1-year cache means repeat visitors pay zero bandwidth for unchanged chunks.
+             */
             {
                 source: "/_next/static/(.*)",
                 headers: [
@@ -89,6 +184,12 @@ const nextConfig: NextConfig = {
                     { key: "Cache-Control", value: "public, max-age=31536000, immutable" },
                 ],
             },
+            /*
+             * FIX image cache (contributes to "Use efficient cache lifetimes"):
+             * All image files cached for 1 year. Since Cloudflare images come from
+             * imagedelivery.net (a different origin), this applies to your local
+             * public/ images like logos, bg-shape.jpg, og-image, etc.
+             */
             {
                 source: "/(.*\\.(?:ico|png|jpg|jpeg|gif|webp|svg|woff|woff2|ttf|eot)$)",
                 headers: [
@@ -96,11 +197,13 @@ const nextConfig: NextConfig = {
                 ],
             },
             /*
-             * FIX LCP (TTFB): Cache HTML pages at the CDN/edge for 60 seconds.
-             * TTFB was 1.8s on mobile — most of that is the server generating the page.
-             * With s-maxage=60 Vercel/CDN serves the page from cache → TTFB drops to
-             * ~50ms for cached requests. stale-while-revalidate=300 means the CDN
-             * serves stale instantly while regenerating in the background.
+             * FIX TTFB (was 1.8s mobile):
+             * Cache the homepage HTML at CDN edge for 60s.
+             * stale-while-revalidate=300 serves stale instantly while
+             * regenerating in the background — TTFB drops to ~50ms for cached hits.
+             *
+             * NOTE: If your homepage is personalized per user, remove this
+             * or add a Vary: Cookie header to avoid serving wrong content.
              */
             {
                 source: "/",
@@ -115,31 +218,10 @@ const nextConfig: NextConfig = {
     },
 
     images: {
-        /*
-         * FIX LCP ("Improve image delivery" — 21,979 KiB savings):
-         * Enable AVIF and WebP formats. Next.js Image Optimization will
-         * automatically serve WebP/AVIF to browsers that support them,
-         * reducing image payload by 60-80% vs PNG.
-         *
-         * IMPORTANT: This only applies to images rendered via Next.js <Image>.
-         * For your Cloudflare images (raw <img> tags with imagedelivery.net URLs),
-         * see the getCloudflareWebP helper below and use it in trendingimages.tsx.
-         */
         formats: ["image/avif", "image/webp"],
-
-        /*
-         * FIX LCP: Define device sizes so Next.js generates correctly-sized
-         * srcsets. Mobile gets a smaller image → much faster download.
-         */
         deviceSizes: [640, 750, 828, 1080, 1200, 1920],
         imageSizes: [16, 32, 48, 64, 96, 128, 256, 352],
-
-        /*
-         * FIX LCP: Increase cache TTL for optimised images from default 60s
-         * to 30 days. Repeat visitors serve images instantly from cache.
-         */
-        minimumCacheTTL: 60 * 60 * 24 * 30, // 30 days
-
+        minimumCacheTTL: 60 * 60 * 24 * 30,
         remotePatterns: [
             { protocol: "https", hostname: "imagedelivery.net" },
             { protocol: "https", hostname: siteHostname },
@@ -173,35 +255,3 @@ const nextConfig: NextConfig = {
 };
 
 export default nextConfig;
-
-
-/*
- * ─────────────────────────────────────────────────────────────────────────────
- * CLOUDFLARE IMAGES — WebP URL HELPER
- * ─────────────────────────────────────────────────────────────────────────────
- *
- * Your images come from Cloudflare Images (imagedelivery.net).
- * Cloudflare can serve WebP/AVIF automatically via URL variants.
- *
- * Your current URL format:
- *   https://imagedelivery.net/<ACCOUNT_HASH>/<IMAGE_ID>/public
- *
- * To get WebP, change the variant from "public" to a WebP variant.
- * In your Cloudflare Images dashboard:
- *   1. Go to Images → Variants
- *   2. Create a new variant called "webp" with:
- *      - Format: WebP
- *      - Width: 700 (or your max display size)
- *      - Quality: 85
- *      - Fit: scale-down
- *   3. Create a "thumb" variant: WebP, 400px wide, quality 80
- *
- * Then use this helper in trendingimages.tsx and homeCategories.tsx:
- *
- *   import { getCloudflareUrl } from "@/utils/cloudflare";
- *
- *   // In trendingimages.tsx:
- *   <img src={getCloudflareUrl(image.cloudflare_url, 'webp')} ... />
- *
- * ─────────────────────────────────────────────────────────────────────────────
- */

@@ -42,29 +42,90 @@
 }
 
 /*
- * FIX desktop CLS 0.46 — Scrollbar gutter reservation
+ * FIX CLS (desktop 0.46 → target <0.1):
  *
- * WHY THIS FIXES CLS:
- * Your <Scrollbar /> component replaces the native OS scrollbar after
- * hydration. On desktop, the native scrollbar occupies ~15-17px of page
- * width. When it's removed/replaced by the custom one, every block element
- * on the page reflows → large CLS spike (was 0.46, target <0.1).
- * Mobile CLS is 0 because mobile browsers use overlay scrollbars (0px wide).
+ * scrollbar-gutter: stable reserves the ~15px scrollbar width in the layout
+ * BEFORE JavaScript runs and the custom <Scrollbar /> component activates.
+ * Without this, removing the native scrollbar causes every block element to
+ * reflow → the large CLS spike on desktop. Mobile is unaffected because
+ * mobile browsers use overlay scrollbars (0px gutter width).
  *
- * scrollbar-gutter:stable reserves that ~15px in the layout BEFORE JavaScript
- * runs, so there is no width change when the custom scrollbar activates.
- * overflow-y:scroll ensures the gutter is always present (even on short pages).
+ * overflow-y: scroll ensures the gutter is always reserved even on short pages
+ * that don't need scrolling, preventing a gutter appear/disappear shift.
  */
 html {
   scrollbar-gutter: stable;
   overflow-y: scroll;
 }
 
+/*
+ * FIX render-blocking / CLS from font swap:
+ *
+ * When Next.js loads Inter with display:swap, the browser first renders
+ * text using a system font fallback, then swaps to Inter when it loads.
+ * The size difference between the fallback and Inter causes CLS.
+ *
+ * @font-face with size-adjust, ascent-override, descent-override, and
+ * line-gap-override calibrates the fallback font to match Inter's exact
+ * metrics. When Inter arrives, the swap causes zero layout shift because
+ * the fallback already occupies identical space.
+ *
+ * These values are from the Next.js font optimization output for Inter.
+ * If you inspect your _next/static/css/ files you'll see Next.js generates
+ * these automatically — this is a manual version as a safety net for cases
+ * where the auto-generated values don't apply quickly enough.
+ *
+ * How to verify: In Chrome DevTools → Rendering → check "Layout Shift Regions"
+ * then reload. Blue flashes = layout shifts. The header/hero text should not flash.
+ */
+@font-face {
+  font-family: "inter-fallback";
+  src: local("Arial");
+  ascent-override: 90.49%;
+  descent-override: 22.56%;
+  line-gap-override: 0%;
+  size-adjust: 107.06%;
+}
+
 body {
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-inter), "inter-fallback", sans-serif;
   font-weight: 400;
   line-height: normal;
   font-size: 1rem;
+}
+
+/*
+ * FIX LCP / render-blocking:
+ * The header background color is known at CSS parse time.
+ * Painting it immediately (before fonts/images load) prevents a flash
+ * of unstyled content (FOUC) and gives users visual feedback faster.
+ *
+ * This is "critical CSS" — styles for above-fold elements that should
+ * be inlined or appear very early in the CSS bundle.
+ */
+header {
+  background-color: #0077a2;
+  contain: layout style;
+}
+
+/*
+ * FIX LCP: contain:layout on the search section prevents it from
+ * triggering a full-page reflow when its content changes (e.g. when
+ * the placeholder text updates based on category). Layout containment
+ * scopes reflows to within this element.
+ */
+section[class*="bg-\\[\\#0077a2\\]"] {
+  contain: layout style;
+}
+
+/*
+ * FIX CLS: aspect-ratio hint for image grid cells.
+ * Even with width+height on <img> tags, if the parent container has no
+ * explicit size the browser may still shift. This ensures the grid cells
+ * maintain their aspect ratio during load.
+ */
+.aspect-square {
+  aspect-ratio: 1 / 1;
 }
 
 .auth-contributor::-webkit-scrollbar {
@@ -89,7 +150,6 @@ body {
 }
 
 @keyframes pulse-slow {
-
   0%,
   100% {
     opacity: 0.5;
@@ -108,137 +168,73 @@ body {
 
 @theme inline {
   --radius-sm: calc(var(--radius) - 4px);
-
   --radius-md: calc(var(--radius) - 2px);
-
   --radius-lg: var(--radius);
-
   --radius-xl: calc(var(--radius) + 4px);
-
   --color-background: var(--background);
-
   --color-foreground: var(--foreground);
-
   --color-card: var(--card);
-
   --color-card-foreground: var(--card-foreground);
-
   --color-popover: var(--popover);
-
   --color-popover-foreground: var(--popover-foreground);
-
   --color-primary: var(--primary);
-
   --color-primary-foreground: var(--primary-foreground);
-
   --color-secondary: var(--secondary);
-
   --color-secondary-foreground: var(--secondary-foreground);
-
   --color-muted: var(--muted);
-
   --color-muted-foreground: var(--muted-foreground);
-
   --color-accent: var(--accent);
-
   --color-accent-foreground: var(--accent-foreground);
-
   --color-destructive: var(--destructive);
-
   --color-border: var(--border);
-
   --color-input: var(--input);
-
   --color-ring: var(--ring);
-
   --color-chart-1: var(--chart-1);
-
   --color-chart-2: var(--chart-2);
-
   --color-chart-3: var(--chart-3);
-
   --color-chart-4: var(--chart-4);
-
   --color-chart-5: var(--chart-5);
-
   --color-sidebar: var(--sidebar);
-
   --color-sidebar-foreground: var(--sidebar-foreground);
-
   --color-sidebar-primary: var(--sidebar-primary);
-
   --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-
   --color-sidebar-accent: var(--sidebar-accent);
-
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-
   --color-sidebar-border: var(--sidebar-border);
-
   --color-sidebar-ring: var(--sidebar-ring);
 }
 
 .dark {
   --background: oklch(0.145 0 0);
-
   --foreground: oklch(0.985 0 0);
-
   --card: oklch(0.205 0 0);
-
   --card-foreground: oklch(0.985 0 0);
-
   --popover: oklch(0.205 0 0);
-
   --popover-foreground: oklch(0.985 0 0);
-
   --primary: oklch(0.922 0 0);
-
   --primary-foreground: oklch(0.205 0 0);
-
   --secondary: oklch(0.269 0 0);
-
   --secondary-foreground: oklch(0.985 0 0);
-
   --muted: oklch(0.269 0 0);
-
   --muted-foreground: oklch(0.708 0 0);
-
   --accent: oklch(0.269 0 0);
-
   --accent-foreground: oklch(0.985 0 0);
-
   --destructive: oklch(0.704 0.191 22.216);
-
   --border: oklch(1 0 0 / 10%);
-
   --input: oklch(1 0 0 / 15%);
-
   --ring: oklch(0.556 0 0);
-
   --chart-1: oklch(0.488 0.243 264.376);
-
   --chart-2: oklch(0.696 0.17 162.48);
-
   --chart-3: oklch(0.769 0.188 70.08);
-
   --chart-4: oklch(0.627 0.265 303.9);
-
   --chart-5: oklch(0.645 0.246 16.439);
-
   --sidebar: oklch(0.205 0 0);
-
   --sidebar-foreground: oklch(0.985 0 0);
-
   --sidebar-primary: oklch(0.488 0.243 264.376);
-
   --sidebar-primary-foreground: oklch(0.985 0 0);
-
   --sidebar-accent: oklch(0.269 0 0);
-
   --sidebar-accent-foreground: oklch(0.985 0 0);
-
   --sidebar-border: oklch(1 0 0 / 10%);
-
   --sidebar-ring: oklch(0.556 0 0);
 }
 
