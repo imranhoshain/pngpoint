@@ -2,6 +2,7 @@ import { Suspense } from "react";
 import { HomepageMainComponent } from "@/components/homepageMainComponent/homepageMainComponent";
 import { HomeLoading } from "@/components/loading/homeLoading";
 import { SERVER_URL } from "@/utils/api";
+import { getCloudflareUrl } from "@/utils/cloudflare";
 
 interface HomeProps {
     searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
@@ -9,7 +10,8 @@ interface HomeProps {
 
 interface ImagesData {
     count: number;
-    images: unknown[];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    images: any[];
 }
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -28,14 +30,6 @@ export default async function Home({ searchParams }: HomeProps) {
 
     let imagesData: ImagesData = { count: 0, images: [] };
     try {
-        /*
-         * FIX LCP: Increased revalidate from 120s → 300s (5 min).
-         * Longer cache means more requests are served from edge cache,
-         * drastically reducing TTFB and therefore LCP.
-         *
-         * Also added cache: "force-cache" as an explicit signal to Next.js
-         * and the CDN to aggressively cache this response.
-         */
         const res = await fetch(url, {
             next: { revalidate: 300 },
             cache: "force-cache",
@@ -50,46 +44,62 @@ export default async function Home({ searchParams }: HomeProps) {
     }
 
     /*
-     * FIX LCP: Extract the first image URL from the SSR data so we can
-     * inject a <link rel="preload"> in the <head> for it. The LCP element
-     * on most pages is the first image in the grid. Preloading it gives the
-     * browser a head-start before it parses the component tree.
+     * FIX LCP — preload URL must EXACTLY match the <img src> the browser fetches.
      *
-     * This is the single highest-impact LCP fix available at the page level.
+     * BEFORE (broken): preload href = raw cloudflare_url  (e.g. .../public/image.png)
+     *                  img src      = getCloudflareUrl(url, "webp")  (e.g. .../webp/image.png)
+     * → Browser preloads one URL, then fetches a DIFFERENT URL for the img.
+     *   The preload is completely wasted — the browser makes two requests.
+     *
+     * AFTER (fixed): both preload href AND img src use getCloudflareUrl(..., "webp")
+     * → Browser starts fetching the exact same resource from the preload tag,
+     *   so when the img element is parsed the resource is already in cache.
+     *
+     * imageSrcSet + imageSizes mirror the srcSet/sizes on the <img> so the
+     * browser picks the correct variant for the current viewport.
      */
-    const firstImageUrl =
-        Array.isArray((imagesData as any).images) && (imagesData as any).images.length > 0
-            ? (imagesData as any).images[0]?.cloudflare_url
+    const rawFirstImageUrl =
+        Array.isArray(imagesData.images) && imagesData.images.length > 0
+            ? imagesData.images[0]?.cloudflare_url
             : null;
+
+    // Transform to WebP variant — must match USE_CLOUDFLARE_WEBP=true in trendingimages.tsx
+    const preloadImageUrl = rawFirstImageUrl
+        ? getCloudflareUrl(rawFirstImageUrl, "webp")
+        : null;
+
+    // Build srcset for the preload — mirrors getCloudflareSrcSet() output
+    const preloadImageSrcSet = rawFirstImageUrl
+        ? `${getCloudflareUrl(rawFirstImageUrl, "thumb")} 400w, ${getCloudflareUrl(rawFirstImageUrl, "webp")} 700w`
+        : null;
 
     return (
         <>
             {/*
              * FIX LCP: Preload the first (LCP candidate) image.
-             * Place this as early as possible in the document head so the
-             * browser starts fetching it before it processes JS/CSS.
              *
-             * as="image" + fetchpriority="high" ensures highest fetch priority.
-             * imageSrcSet / imagesizes can be added if you serve responsive images.
+             * Placed as early as possible so the browser queues the fetch
+             * before it processes any JS or CSS.
+             *
+             * as="image" + fetchpriority="high" = highest browser fetch priority.
+             * imageSrcSet / imageSizes = hints the browser to the correct variant
+             * for each viewport, matching the <img srcSet sizes> in trendingimages.tsx.
              */}
-            {firstImageUrl && (
+            {preloadImageUrl && (
                 <link
                     rel="preload"
                     as="image"
-                    href={firstImageUrl}
+                    href={preloadImageUrl}
+                    // @ts-expect-error: imageSrcSet is valid HTML but not in React types yet
+                    imageSrcSet={preloadImageSrcSet ?? undefined}
+                    // @ts-expect-error: imageSizes is valid HTML but not in React types yet
+                    imageSizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     // @ts-expect-error: fetchpriority is a valid HTML attribute not yet in React types
                     fetchpriority="high"
                 />
             )}
 
             <section className="relative top-0 left-0 right-0 w-full">
-                {/*
-                 * FIX LCP: HomeLoading (the Suspense fallback) must reserve
-                 * the same vertical space as HomepageMainComponent.
-                 * If HomeLoading renders a tiny spinner, the page jumps when
-                 * the real content loads → CLS + delayed LCP measurement.
-                 * Ensure HomeLoading renders a full-height skeleton.
-                 */}
                 <Suspense fallback={<HomeLoading />}>
                     <HomepageMainComponent initialImagesData={imagesData} />
                 </Suspense>

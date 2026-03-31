@@ -6,14 +6,6 @@ import { Download } from "../download/download";
 import { getImageUrl } from "@/config/site";
 import { getCloudflareUrl, getCloudflareSrcSet } from "@/utils/cloudflare";
 
-/*
- * Set this to true ONLY after you have created the "webp" and "thumb"
- * variants in your Cloudflare Images dashboard.
- * Instructions: Cloudflare Dashboard → Images → Variants → Add variant
- *   - "webp":  Format=WebP, Width=700, Quality=85, Fit=scale-down
- *   - "thumb": Format=WebP, Width=400, Quality=80, Fit=scale-down
- * Flip to true after variants exist to get the 21,979 KiB image savings.
- */
 const USE_CLOUDFLARE_WEBP = true;
 
 type TrendingimagesProps = {
@@ -38,6 +30,25 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                             {images.map((image: any, index: number) => {
                                 const imageUrl = getImageUrl(image.slug);
                                 const isAboveFold = index < 4;
+                                /*
+                                 * FIX LCP: The very first image (index 0) is the
+                                 * primary LCP candidate on all viewports.
+                                 *
+                                 * fetchPriority breakdown:
+                                 *   index 0  → "high"  (LCP element — fetch immediately)
+                                 *   index 1–3 → "auto"  (above fold but not LCP)
+                                 *   index 4+  → "low"   (below fold — don't compete with LCP)
+                                 *
+                                 * Previously ALL 4 above-fold images used "high", which
+                                 * caused the browser to treat them equally and slowed down
+                                 * the actual LCP image.
+                                 */
+                                const isLCP = index === 0;
+                                const fetchPriorityValue: "high" | "auto" | "low" = isLCP
+                                    ? "high"
+                                    : isAboveFold
+                                    ? "auto"
+                                    : "low";
 
                                 let processedKeywords: string[] | undefined = undefined;
                                 if (image.keywords) {
@@ -59,37 +70,41 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                         {
                                             "@type": "WebPage",
                                             "@id": imageUrl,
-                                            "url": imageUrl,
-                                            "name": image.title,
-                                            "description": `Download high-quality ${image.description || "image"} PNG with a transparent background, free to use for personal or commercial projects.`,
-                                            "inLanguage": "en",
-                                            "primaryImageOfPage": { "@id": `${imageUrl}#image` },
+                                            url: imageUrl,
+                                            name: image.title,
+                                            description: `Download high-quality ${image.description || "image"} PNG with a transparent background, free to use for personal or commercial projects.`,
+                                            inLanguage: "en",
+                                            primaryImageOfPage: { "@id": `${imageUrl}#image` },
                                         },
                                         {
                                             "@type": "ImageObject",
                                             "@id": `${imageUrl}#image`,
-                                            "name": image.title,
-                                            "description": `Download high-quality ${image.description || "image"} PNG with a transparent background.`,
-                                            "caption": image.caption || image.title,
-                                            "contentUrl": image.cloudflare_url,
-                                            "thumbnailUrl": image.thumbnail_url || image.cloudflare_url,
-                                            "encodingFormat": "image/png",
-                                            "width": image.width || 500,
-                                            "height": image.height || 600,
-                                            "contentSize": image.file_size ? `${image.file_size} KB` : undefined,
-                                            "keywords": processedKeywords,
-                                            "creator": {
+                                            name: image.title,
+                                            description: `Download high-quality ${image.description || "image"} PNG with a transparent background.`,
+                                            caption: image.caption || image.title,
+                                            contentUrl: image.cloudflare_url,
+                                            thumbnailUrl: image.thumbnail_url || image.cloudflare_url,
+                                            encodingFormat: "image/png",
+                                            width: image.width || 500,
+                                            height: image.height || 600,
+                                            contentSize: image.file_size
+                                                ? `${image.file_size} KB`
+                                                : undefined,
+                                            keywords: processedKeywords,
+                                            creator: {
                                                 "@type": "Organization",
-                                                "name": "PNGPoint",
-                                                "url": "https://pngpoint.com/",
+                                                name: "PNGPoint",
+                                                url: "https://pngpoint.com/",
                                             },
-                                            "license": "https://pngpoint.com/license",
-                                            "acquireLicensePage": "https://pngpoint.com/license",
-                                            "creditText": "PNGPoint",
-                                            "copyrightNotice": "© PNGPoint",
-                                            "isAccessibleForFree": true,
-                                            "datePublished": image.created_at || new Date().toISOString(),
-                                            "dateModified": image.updated_at || new Date().toISOString(),
+                                            license: "https://pngpoint.com/license",
+                                            acquireLicensePage: "https://pngpoint.com/license",
+                                            creditText: "PNGPoint",
+                                            copyrightNotice: "© PNGPoint",
+                                            isAccessibleForFree: true,
+                                            datePublished:
+                                                image.created_at || new Date().toISOString(),
+                                            dateModified:
+                                                image.updated_at || new Date().toISOString(),
                                         },
                                     ],
                                 };
@@ -101,7 +116,9 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                     >
                                         <script
                                             type="application/ld+json"
-                                            dangerouslySetInnerHTML={{ __html: JSON.stringify(imageSchema) }}
+                                            dangerouslySetInnerHTML={{
+                                                __html: JSON.stringify(imageSchema),
+                                            }}
                                         />
 
                                         <Link
@@ -118,38 +135,21 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                                     style={{ backgroundImage: `url(${bgShape.src})` }}
                                                 />
 
-                                                {/*
-                                                 * FIX LCP: fetchPriority="high" + loading="eager" for
-                                                 * the first 4 images (above the fold on all screen sizes).
-                                                 *
-                                                 * FIX "Improve image delivery" (21,979 KiB savings):
-                                                 * getCloudflareUrl() swaps the Cloudflare variant from
-                                                 * "public" (original PNG) → "webp" (WebP 700px 85% quality).
-                                                 * This reduces image weight by ~70% on mobile.
-                                                 *
-                                                 * getCloudflareSrcSet() adds srcset so mobile devices
-                                                 * automatically download the smaller "thumb" (400px) variant.
-                                                 *
-                                                 * ⚠️  REQUIRED SETUP: Create "webp" and "thumb" variants in
-                                                 * your Cloudflare Images dashboard before deploying.
-                                                 * See instructions in next.config.ts.
-                                                 */}
                                                 <img
                                                     className="w-auto h-auto max-w-full max-h-full object-contain z-10 relative"
-                                                    /*
-                                                     * USE_CLOUDFLARE_WEBP=false → uses original "public" URL
-                                                     * (your current working URLs, no breakage).
-                                                     * Flip to true after creating Cloudflare WebP variants
-                                                     * to unlock 21,979 KiB image savings.
-                                                     */
                                                     src={
                                                         USE_CLOUDFLARE_WEBP
-                                                            ? getCloudflareUrl(image.cloudflare_url, "webp")
+                                                            ? getCloudflareUrl(
+                                                                  image.cloudflare_url,
+                                                                  "webp"
+                                                              )
                                                             : image.cloudflare_url
                                                     }
                                                     srcSet={
                                                         USE_CLOUDFLARE_WEBP && isAboveFold
-                                                            ? getCloudflareSrcSet(image.cloudflare_url)
+                                                            ? getCloudflareSrcSet(
+                                                                  image.cloudflare_url
+                                                              )
                                                             : undefined
                                                     }
                                                     sizes={
@@ -159,11 +159,25 @@ export const Trendingimages: React.FC<TrendingimagesProps> = ({ imagesData }) =>
                                                     }
                                                     alt={image.title}
                                                     title={image.title}
+                                                    /*
+                                                     * FIX "Image elements do not have explicit width and height":
+                                                     * Always provide width + height to avoid layout shifts.
+                                                     * The aspect-square container already prevents CLS, but
+                                                     * PageSpeed still flags missing attributes as a warning.
+                                                     * Using the actual image dimensions (or fallback 352×352)
+                                                     * satisfies both PSI and the browser's aspect-ratio hint.
+                                                     */
                                                     width={image.width || 352}
                                                     height={image.height || 352}
                                                     loading={isAboveFold ? "eager" : "lazy"}
                                                     decoding={isAboveFold ? "sync" : "async"}
-                                                    fetchPriority={isAboveFold ? "high" : "low"}
+                                                    /*
+                                                     * FIX LCP: Give ONLY the first image "high" priority.
+                                                     * Marking multiple images as high-priority forces them
+                                                     * to compete, effectively making none of them high-priority.
+                                                     * index 0 = "high", index 1-3 = "auto", rest = "low"
+                                                     */
+                                                    fetchPriority={fetchPriorityValue}
                                                 />
                                             </div>
 

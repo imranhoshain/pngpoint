@@ -10,12 +10,15 @@ import Script from "next/script";
 const interFont = Inter({
     variable: "--font-inter",
     subsets: ["latin"],
+    // FIX CLS + render-blocking: font-display:swap prevents the font from
+    // blocking rendering. Without this, the browser holds the LCP paint
+    // until the font is downloaded, inflating both FCP and LCP.
+    display: "swap",
 });
 
 export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
-    
     keywords: [
         "free png images",
         "png free",
@@ -58,7 +61,7 @@ export const metadata: Metadata = {
         "cartoon images png",
         "cartoon mouth png",
         "cartoon png background",
-        "certificate border png"
+        "certificate border png",
     ],
     authors: [{ name: siteConfig.name }],
     creator: siteConfig.name,
@@ -108,29 +111,41 @@ export default function RootLayout({
                     })(window,document,'script','dataLayer','GTM-55NWGSDH');`}
                 </Script>
                 {/* End Google Tag Manager */}
-                
+
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
-                <meta name="p:domain_verify" content="c4d1b017f0884994340d0fe3f090b469"/>
+                <meta name="p:domain_verify" content="c4d1b017f0884994340d0fe3f090b469" />
             </head>
             <body className={`${interFont.variable} antialiased`}>
                 {/* Google Tag Manager (noscript) */}
                 <noscript>
-                    <iframe 
+                    <iframe
                         src="https://www.googletagmanager.com/ns.html?id=GTM-55NWGSDH"
-                        height="0" 
-                        width="0" 
-                        style={{display: 'none', visibility: 'hidden'}}
+                        height="0"
+                        width="0"
+                        style={{ display: "none", visibility: "hidden" }}
                     />
                 </noscript>
                 {/* End Google Tag Manager (noscript) */}
 
-                {/* Google Analytics (gtag.js) */}
+                {/*
+                 * FIX render-blocking / LCP:
+                 * Changed GA script strategy from "afterInteractive" → "lazyOnload".
+                 *
+                 * "afterInteractive" fires immediately after hydration, competing with
+                 * LCP image fetches for main-thread time and network bandwidth.
+                 * "lazyOnload" defers until the page is fully idle — analytics data
+                 * is still captured (pageview fires on load), but LCP is no longer
+                 * blocked by GA parsing/execution.
+                 *
+                 * GTM already handles GA events via the GTM container above, so this
+                 * standalone gtag snippet is redundant during the critical path anyway.
+                 */}
                 <Script
                     src="https://www.googletagmanager.com/gtag/js?id=G-JF0VD5LP21"
-                    strategy="afterInteractive"
+                    strategy="lazyOnload"
                 />
-                <Script id="google-analytics" strategy="afterInteractive">
+                <Script id="google-analytics" strategy="lazyOnload">
                     {`
                         window.dataLayer = window.dataLayer || [];
                         function gtag(){dataLayer.push(arguments);}
@@ -139,7 +154,7 @@ export default function RootLayout({
                     `}
                 </Script>
                 {/* End Google Analytics */}
-                
+
                 <ReduxProvider>
                     <Scrollbar />
                     <Notification />

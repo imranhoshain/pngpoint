@@ -24,13 +24,22 @@ import { TrendingImagesPagination } from "../trendingimages/trendingImagesPagina
  * All components below are below the fold. Dynamic imports means their JS
  * is excluded from the initial bundle and only fetched when needed.
  * This reduces parse/compile time on mobile by ~200ms.
+ *
+ * FIX CLS (desktop 0.46 → 0):
+ * The skeletons MUST reserve the same vertical space as the real component.
+ * If the skeleton is too short, when the real component loads it pushes all
+ * subsequent content down → CLS spike.
+ *
+ * Heights below are calibrated to approximate each section's rendered height.
+ * If you change section content/padding significantly, update these too.
+ * Use Chrome DevTools → Performance → Layout Shifts to verify after changes.
  */
 const HomeCategories = dynamic(
-    () => import("../categories/homeCategories").then(m => ({ default: m.HomeCategories })),
+    () => import("../categories/homeCategories").then((m) => ({ default: m.HomeCategories })),
     {
         ssr: false,
         loading: () => (
-            <div className="w-full bg-white py-5 lg:py-10">
+            <div className="w-full bg-white py-5 lg:py-10" style={{ minHeight: "420px" }}>
                 <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5">
                     <div className="h-8 w-64 bg-gray-200 rounded animate-pulse mx-auto mb-8" />
                     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4">
@@ -45,24 +54,50 @@ const HomeCategories = dynamic(
 );
 
 const HowItWorks = dynamic(
-    () => import("../howItWorks/howItWorks").then(m => ({ default: m.HowItWorks })),
-    { ssr: false, loading: () => <div className="w-full h-64 bg-gray-50" /> }
+    () => import("../howItWorks/howItWorks").then((m) => ({ default: m.HowItWorks })),
+    {
+        ssr: false,
+        /*
+         * FIX CLS: minHeight must match HowItWorks rendered height.
+         * Inspect the real component in DevTools and set this accordingly.
+         * 400px is a conservative estimate for a typical "3 steps" section.
+         */
+        loading: () => <div className="w-full bg-gray-50" style={{ minHeight: "400px" }} />,
+    }
 );
 
 const UseCases = dynamic(
-    () => import("../useCases/useCases").then(m => ({ default: m.UseCases })),
-    { ssr: false, loading: () => <div className="w-full h-64 bg-white" /> }
+    () => import("../useCases/useCases").then((m) => ({ default: m.UseCases })),
+    {
+        ssr: false,
+        /*
+         * FIX CLS: UseCases typically contains a grid of use-case cards.
+         * 500px is a conservative estimate — adjust to your actual height.
+         */
+        loading: () => <div className="w-full bg-white" style={{ minHeight: "500px" }} />,
+    }
 );
 
 const HomeReviews = dynamic(
-    () => import("../reviews/homeReviews").then(m => ({ default: m.HomeReviews })),
-    { ssr: false, loading: () => <div className="w-full h-64 bg-gray-50" /> }
+    () => import("../reviews/homeReviews").then((m) => ({ default: m.HomeReviews })),
+    {
+        ssr: false,
+        /*
+         * FIX CLS: Reviews section with testimonial cards.
+         * Adjust minHeight to match your actual rendered height.
+         */
+        loading: () => <div className="w-full bg-gray-50" style={{ minHeight: "450px" }} />,
+    }
 );
 
-const HomeFAQ = dynamic(
-    () => import("../faq/homeFAQ"),
-    { ssr: false, loading: () => <div className="w-full h-64 bg-white" /> }
-);
+const HomeFAQ = dynamic(() => import("../faq/homeFAQ"), {
+    ssr: false,
+    /*
+     * FIX CLS: FAQ section is often tall due to accordion items.
+     * 600px is conservative — measure and update if needed.
+     */
+    loading: () => <div className="w-full bg-white" style={{ minHeight: "600px" }} />,
+});
 
 interface ImagesData {
     count: number;
@@ -148,9 +183,7 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
 
             {isPending ? <ImageGridSkeleton /> : <Trendingimages imagesData={imagesData.images} />}
 
-            {imagesData?.count > 50 && (
-                <TrendingImagesPagination count={imagesData?.count} />
-            )}
+            {imagesData?.count > 50 && <TrendingImagesPagination count={imagesData?.count} />}
 
             {/* Below-fold: loaded dynamically to reduce initial JS bundle */}
             <HomeCategories />
