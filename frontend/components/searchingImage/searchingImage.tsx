@@ -5,7 +5,7 @@ import { setKeyword } from "@/redux/features/getImages/getImageSlice";
 import { RootState } from "@/redux/store";
 import { ReactIcons } from "@/utils/reactIcons";
 import { getSearchSchema } from "@/utils/searchSchema";
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
 
@@ -25,40 +25,48 @@ export const SearchingImage: React.FC<SearchingImageProps> = ({
     const { IoSearchOutline } = ReactIcons;
 
     /*
-     * FIX LCP + CLS: REMOVED useGetCategoriesQuery from this component.
+     * FIX INP: Debounce the Redux dispatch so it only fires 300ms after the
+     * user stops typing. Previously every keystroke dispatched to Redux,
+     * which triggered a store update → re-render of all Redux subscribers.
+     * On mobile this was contributing to the 341ms INP.
      *
-     * The original code called useGetCategoriesQuery({ refetchOnMountOrArgChange: true })
-     * here, which fired an extra API request on every mount. This had two effects:
-     *
-     * 1. LCP: The network waterfall gained an extra request that competed with
-     *    the page images for bandwidth on mobile (already bandwidth-constrained).
-     *
-     * 2. CLS: The categories data was not used anywhere in this component's
-     *    rendered JSX — it was fetched but never rendered. The fetch still
-     *    triggered a Redux state update → React re-render → potential layout
-     *    recalculation during the LCP window.
-     *
-     * If you need the categories list in this component in the future, fetch it
-     * server-side in the parent page and pass it as a prop instead.
+     * setSearchValue still updates immediately (local state, fast) so the
+     * input feels responsive. Only the Redux side effect is delayed.
      */
+    const debounceTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const val = e.target.value;
-        setSearchValue(val);
-        dispatch(setKeyword(val));
-    };
+    const handleInputChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => {
+            const val = e.target.value;
+            // Update local state immediately so the input stays responsive
+            setSearchValue(val);
 
-    const handleSearch = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (searchValue.trim()) {
-            const searchSlug = searchValue.trim().replace(/\s+/g, "-").toLowerCase();
-            if (categorySlug) {
-                router.push(`/?keyword=${searchSlug}&category=${categorySlug}`);
-            } else {
-                router.push(`/?keyword=${searchSlug}`);
+            // Debounce the Redux dispatch to avoid per-keystroke re-renders
+            if (debounceTimer.current) clearTimeout(debounceTimer.current);
+            debounceTimer.current = setTimeout(() => {
+                dispatch(setKeyword(val));
+            }, 300);
+        },
+        [dispatch]
+    );
+
+    const handleSearch = useCallback(
+        (e: React.FormEvent) => {
+            e.preventDefault();
+            // On explicit submit, cancel the debounce and dispatch immediately
+            if (debounceTimer.current) clearTimeout(debounceTimer.current);
+            if (searchValue.trim()) {
+                dispatch(setKeyword(searchValue.trim()));
+                const searchSlug = searchValue.trim().replace(/\s+/g, "-").toLowerCase();
+                if (categorySlug) {
+                    router.push(`/?keyword=${searchSlug}&category=${categorySlug}`);
+                } else {
+                    router.push(`/?keyword=${searchSlug}`);
+                }
             }
-        }
-    };
+        },
+        [searchValue, categorySlug, dispatch, router]
+    );
 
     const schema = getSearchSchema(title);
 
@@ -94,10 +102,10 @@ export const SearchingImage: React.FC<SearchingImageProps> = ({
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap items-center justify-center gap-y-5 w-full">
                     {/*
-                     * FIX CLS: explicit min-h on both headings prevents font-swap
-                     * from shifting content. The heading is above the fold and is
-                     * often the LCP text element — reserving its height stops the
-                     * biggest source of CLS on this page.
+                     * FIX CLS: min-h on headings prevents font-swap reflow.
+                     * The font-display: swap in layout.tsx means Inter loads
+                     * after the fallback font paints. Without reserved height
+                     * the metric shift of the fallback → Inter causes CLS.
                      */}
                     <h1 className="text-white text-xl md:text-2xl lg:text-3xl xl:text-4xl font-semibold text-center min-h-[28px] md:min-h-[32px] lg:min-h-[36px] xl:min-h-[44px]">
                         {getHeading()}
@@ -106,12 +114,6 @@ export const SearchingImage: React.FC<SearchingImageProps> = ({
                         {getSubheading()}
                     </p>
 
-                    {/*
-                     * FIX CLS: The search form has a fixed height via py-3/py-4 + border.
-                     * No dynamic content inside it, so no CLS risk here.
-                     * Changed h2 → p for the subheading (h2 under h1 is fine semantically
-                     * but the original had TWO h-level elements for non-heading content).
-                     */}
                     <form
                         onSubmit={handleSearch}
                         className="flex flex-col flex-wrap w-full lg:w-[95%] xl:w-[60%] relative"
@@ -123,11 +125,6 @@ export const SearchingImage: React.FC<SearchingImageProps> = ({
                             placeholder={getPlaceholder()}
                             value={searchValue}
                             onChange={handleInputChange}
-                            /*
-                             * FIX LCP: autoComplete="off" prevents the browser from
-                             * rendering a dropdown autocomplete overlay during initial
-                             * paint, which can delay LCP measurement.
-                             */
                             autoComplete="off"
                         />
                         <button

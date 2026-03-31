@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { useEffect, useState, useRef, useTransition } from "react";
+import { useEffect, useState, useRef, useTransition, useCallback } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSelector, useDispatch } from "react-redux";
 import dynamic from "next/dynamic";
@@ -10,8 +10,7 @@ import { getFetchData } from "@/utils/getFetchData";
 import { SERVER_URL } from "@/utils/api";
 
 /*
- * FIX LCP: Import above-fold components synchronously.
- * These are visible on first paint — must be in the initial bundle.
+ * FIX LCP: Above-fold components remain synchronous imports.
  */
 import Footer from "../footer/footer";
 import { Header } from "../header/header";
@@ -20,24 +19,26 @@ import { Trendingimages } from "../trendingimages/trendingimages";
 import { TrendingImagesPagination } from "../trendingimages/trendingImagesPagination";
 
 /*
- * FIX unused JS (205 KiB savings):
- * All components below are below the fold. Dynamic imports means their JS
- * is excluded from the initial bundle and only fetched when needed.
- * This reduces parse/compile time on mobile by ~200ms.
+ * FIX CLS: Changed ssr: false → ssr: true on all below-fold sections.
  *
- * FIX CLS (desktop 0.46 → 0):
- * The skeletons MUST reserve the same vertical space as the real component.
- * If the skeleton is too short, when the real component loads it pushes all
- * subsequent content down → CLS spike.
+ * ssr: false was the primary cause of CLS on desktop (0.46) and mobile (0.31).
+ * With ssr: false, Next.js renders nothing on the server for these components.
+ * The browser receives HTML with empty slots, hydrates, then the components
+ * load and push all subsequent content down — a massive layout shift.
  *
- * Heights below are calibrated to approximate each section's rendered height.
- * If you change section content/padding significantly, update these too.
- * Use Chrome DevTools → Performance → Layout Shifts to verify after changes.
+ * With ssr: true the server renders the full HTML, so the browser never sees
+ * an empty slot. The loading skeleton is now only shown during client-side
+ * navigation (when the user changes pages/filters), not on initial load.
+ *
+ * IMPORTANT: If any of these components directly access `window`, `document`,
+ * or `localStorage` at module scope (outside useEffect), they will throw during
+ * SSR. Fix those by moving the access inside useEffect, or keep ssr: false
+ * only for those specific components and add accurate minHeight skeletons.
  */
 const HomeCategories = dynamic(
     () => import("../categories/homeCategories").then((m) => ({ default: m.HomeCategories })),
     {
-        ssr: false,
+        ssr: true,
         loading: () => (
             <div className="w-full bg-white py-5 lg:py-10" style={{ minHeight: "420px" }}>
                 <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5">
@@ -56,12 +57,7 @@ const HomeCategories = dynamic(
 const HowItWorks = dynamic(
     () => import("../howItWorks/howItWorks").then((m) => ({ default: m.HowItWorks })),
     {
-        ssr: false,
-        /*
-         * FIX CLS: minHeight must match HowItWorks rendered height.
-         * Inspect the real component in DevTools and set this accordingly.
-         * 400px is a conservative estimate for a typical "3 steps" section.
-         */
+        ssr: true,
         loading: () => <div className="w-full bg-gray-50" style={{ minHeight: "400px" }} />,
     }
 );
@@ -69,11 +65,7 @@ const HowItWorks = dynamic(
 const UseCases = dynamic(
     () => import("../useCases/useCases").then((m) => ({ default: m.UseCases })),
     {
-        ssr: false,
-        /*
-         * FIX CLS: UseCases typically contains a grid of use-case cards.
-         * 500px is a conservative estimate — adjust to your actual height.
-         */
+        ssr: true,
         loading: () => <div className="w-full bg-white" style={{ minHeight: "500px" }} />,
     }
 );
@@ -81,21 +73,13 @@ const UseCases = dynamic(
 const HomeReviews = dynamic(
     () => import("../reviews/homeReviews").then((m) => ({ default: m.HomeReviews })),
     {
-        ssr: false,
-        /*
-         * FIX CLS: Reviews section with testimonial cards.
-         * Adjust minHeight to match your actual rendered height.
-         */
+        ssr: true,
         loading: () => <div className="w-full bg-gray-50" style={{ minHeight: "450px" }} />,
     }
 );
 
 const HomeFAQ = dynamic(() => import("../faq/homeFAQ"), {
-    ssr: false,
-    /*
-     * FIX CLS: FAQ section is often tall due to accordion items.
-     * 600px is conservative — measure and update if needed.
-     */
+    ssr: true,
     loading: () => <div className="w-full bg-white" style={{ minHeight: "600px" }} />,
 });
 
@@ -117,6 +101,19 @@ const ImageGridSkeleton = () => (
     </section>
 );
 
+/*
+ * FIX INP: Simple debounce hook to delay Redux dispatches on search input.
+ * Prevents a Redux state update + full re-render on every single keystroke.
+ */
+function useDebounce<T>(value: T, delay: number): T {
+    const [debouncedValue, setDebouncedValue] = useState<T>(value);
+    useEffect(() => {
+        const timer = setTimeout(() => setDebouncedValue(value), delay);
+        return () => clearTimeout(timer);
+    }, [value, delay]);
+    return debouncedValue;
+}
+
 export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData: ImagesData }) => {
     const [imagesData, setImagesData] = useState<ImagesData>(initialImagesData);
     const [isPending, startTransition] = useTransition();
@@ -126,6 +123,14 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
     const router = useRouter();
     const searchParams = useSearchParams();
     const isFirstRender = useRef(true);
+
+    /*
+     * FIX INP: Debounce the search state that triggers the fetch effect.
+     * The search Redux state updates immediately (for URL sync), but the
+     * actual API fetch is delayed by 300ms so rapid typing doesn't fire
+     * multiple simultaneous requests or block the main thread.
+     */
+    const debouncedSearch = useDebounce(search, 300);
 
     useEffect(() => {
         const params = Object.fromEntries(searchParams.entries());
@@ -138,43 +143,46 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
         dispatch({ type: "search/setSearch", payload });
     }, [searchParams, dispatch]);
 
+    /*
+     * FIX INP: Use debouncedSearch instead of search so this effect (which
+     * calls router.push + fetch) only fires 300ms after the user stops typing.
+     */
+    const fetchImages = useCallback(async () => {
+        const { title, category, keyword, page } = debouncedSearch;
+
+        const queryParams = Object.entries({ title, category, keyword, page })
+            .filter(([, value]) => value !== undefined && value !== null && value !== "" && value !== 1)
+            .map(([key, value]) => {
+                if (key === "keyword" && typeof value === "string") {
+                    const slugValue = value.trim().replace(/\s+/g, "-").toLowerCase();
+                    return `${encodeURIComponent(key)}=${encodeURIComponent(slugValue)}`;
+                }
+                return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
+            })
+            .join("&");
+
+        const nextPath = queryParams ? `/?${queryParams}` : "/";
+        router.push(nextPath, { scroll: false });
+
+        const url = `${SERVER_URL}/images/approved/home${queryParams ? `?${queryParams}` : ""}`;
+
+        startTransition(async () => {
+            try {
+                const data = await getFetchData(url, { next: { revalidate: 300 } });
+                setImagesData(data);
+            } catch (error) {
+                console.error("Failed to fetch images", error);
+            }
+        });
+    }, [debouncedSearch, router]);
+
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false;
             return;
         }
-
-        const fetchImages = async () => {
-            const { title, category, keyword, page } = search;
-
-            const queryParams = Object.entries({ title, category, keyword, page })
-                .filter(([, value]) => value !== undefined && value !== null && value !== "" && value !== 1)
-                .map(([key, value]) => {
-                    if (key === "keyword" && typeof value === "string") {
-                        const slugValue = value.trim().replace(/\s+/g, "-").toLowerCase();
-                        return `${encodeURIComponent(key)}=${encodeURIComponent(slugValue)}`;
-                    }
-                    return `${encodeURIComponent(key)}=${encodeURIComponent(value)}`;
-                })
-                .join("&");
-
-            const nextPath = queryParams ? `/?${queryParams}` : "/";
-            router.push(nextPath, { scroll: false });
-
-            const url = `${SERVER_URL}/images/approved/home${queryParams ? `?${queryParams}` : ""}`;
-
-            startTransition(async () => {
-                try {
-                    const data = await getFetchData(url, { next: { revalidate: 300 } });
-                    setImagesData(data);
-                } catch (error) {
-                    console.error("Failed to fetch images", error);
-                }
-            });
-        };
-
         fetchImages();
-    }, [search, router]);
+    }, [fetchImages]);
 
     return (
         <>
@@ -183,9 +191,19 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
 
             {isPending ? <ImageGridSkeleton /> : <Trendingimages imagesData={imagesData.images} />}
 
-            {imagesData?.count > 50 && <TrendingImagesPagination count={imagesData?.count} />}
+            {/*
+             * FIX CLS: Always render a fixed-height wrapper for pagination,
+             * even when there are ≤50 images. Without this, when pagination
+             * appears (count > 50) it pushes content down causing a CLS spike.
+             * The min-h-[52px] reserves the space pagination occupies.
+             */}
+            <div className="min-h-[52px]">
+                {imagesData?.count > 50 && (
+                    <TrendingImagesPagination count={imagesData?.count} />
+                )}
+            </div>
 
-            {/* Below-fold: loaded dynamically to reduce initial JS bundle */}
+            {/* Below-fold sections — SSR enabled to eliminate CLS */}
             <HomeCategories />
             <HowItWorks />
             <UseCases />

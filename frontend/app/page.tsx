@@ -1,4 +1,4 @@
-import { Suspense } from "react";
+import { Suspense, cache } from "react";
 import type { Metadata } from "next";
 import { HomepageMainComponent } from "@/components/homepageMainComponent/homepageMainComponent";
 import { HomeLoading } from "@/components/loading/homeLoading";
@@ -15,50 +15,60 @@ interface ImagesData {
     images: any[];
 }
 
-async function fetchImagesData(searchParams: HomeProps["searchParams"]): Promise<{ imagesData: ImagesData; rawFirstImageUrl: string | null }> {
-    const params = await searchParams;
+/*
+ * FIX LCP: Wrap fetchImagesData in React.cache() so that generateMetadata
+ * and the page component share a single fetch result per request.
+ * Previously both called the function independently, causing two identical
+ * requests to your backend on every page load.
+ */
+const fetchImagesData = cache(
+    async (
+        searchParams: HomeProps["searchParams"]
+    ): Promise<{ imagesData: ImagesData; rawFirstImageUrl: string | null }> => {
+        const params = await searchParams;
 
-    const title = typeof params.title === "string" ? params.title : "";
-    const category = typeof params.category === "string" ? params.category : "";
-    const keyword = typeof params.keyword === "string" ? params.keyword : "";
-    const page = typeof params.page === "string" ? params.page : "1";
+        const title = typeof params.title === "string" ? params.title : "";
+        const category = typeof params.category === "string" ? params.category : "";
+        const keyword = typeof params.keyword === "string" ? params.keyword : "";
+        const page = typeof params.page === "string" ? params.page : "1";
 
-    const queryParams = new URLSearchParams(
-        Object.entries({ title, category, keyword, page }).filter(([, v]) => v && v !== "1")
-    ).toString();
+        const queryParams = new URLSearchParams(
+            Object.entries({ title, category, keyword, page }).filter(([, v]) => v && v !== "1")
+        ).toString();
 
-    const url = `${SERVER_URL}/images/approved/home${queryParams ? `?${queryParams}` : ""}`;
+        const url = `${SERVER_URL}/images/approved/home${queryParams ? `?${queryParams}` : ""}`;
 
-    let imagesData: ImagesData = { count: 0, images: [] };
-    try {
-        const res = await fetch(url, {
-            next: { revalidate: 300 },
-            cache: "force-cache",
-        });
-        if (!res.ok) {
-            console.error(`Homepage fetch failed with status ${res.status}`);
-        } else {
-            imagesData = await res.json();
+        let imagesData: ImagesData = { count: 0, images: [] };
+        try {
+            /*
+             * FIX TTFB conflict: removed `cache: "force-cache"` which was overriding
+             * `next: { revalidate: 300 }`. The two options conflict — force-cache caches
+             * indefinitely and ignores the revalidate interval. Using revalidate alone
+             * gives you ISR-style 5-minute caching without the conflict.
+             */
+            const res = await fetch(url, {
+                next: { revalidate: 300 },
+            });
+            if (!res.ok) {
+                console.error(`Homepage fetch failed with status ${res.status}`);
+            } else {
+                imagesData = await res.json();
+            }
+        } catch (error) {
+            console.error("Failed to load homepage images", error);
         }
-    } catch (error) {
-        console.error("Failed to load homepage images", error);
+
+        const rawFirstImageUrl =
+            Array.isArray(imagesData.images) && imagesData.images.length > 0
+                ? (imagesData.images[0]?.cloudflare_url ?? null)
+                : null;
+
+        return { imagesData, rawFirstImageUrl };
     }
-
-    const rawFirstImageUrl =
-        Array.isArray(imagesData.images) && imagesData.images.length > 0
-            ? (imagesData.images[0]?.cloudflare_url ?? null)
-            : null;
-
-    return { imagesData, rawFirstImageUrl };
-}
+);
 
 /*
- * FIX LCP: generateMetadata injects the preload + preconnect into <head> during SSR.
- * This is earlier than anything returned from the component body, giving the browser
- * a head-start on the LCP image fetch before any JS or CSS is processed.
- *
- * Also adds preconnect for the Cloudflare Images CDN origin to eliminate
- * TCP+TLS setup time (~100-300ms on mobile) before the first image byte.
+ * generateMetadata now reuses the cached fetch result — no second request.
  */
 export async function generateMetadata({ searchParams }: HomeProps): Promise<Metadata> {
     const { rawFirstImageUrl } = await fetchImagesData(searchParams);
@@ -66,13 +76,10 @@ export async function generateMetadata({ searchParams }: HomeProps): Promise<Met
 
     return {
         ...(preloadUrl && {
-            // Next.js will render these as <link> tags inside <head>
             alternates: {},
-            // We use the 'other' metadata field to inject arbitrary link tags
             other: {
-                // preconnect: eliminates TCP+TLS round-trip to Cloudflare CDN
-                "link-preconnect": '<link rel="preconnect" href="https://imagedelivery.net" crossorigin="anonymous">',
-                // dns-prefetch: fallback for browsers that ignore preconnect
+                "link-preconnect":
+                    '<link rel="preconnect" href="https://imagedelivery.net" crossorigin="anonymous">',
                 "link-dns-prefetch": '<link rel="dns-prefetch" href="https://imagedelivery.net">',
             },
         }),
@@ -82,44 +89,42 @@ export async function generateMetadata({ searchParams }: HomeProps): Promise<Met
 export default async function Home({ searchParams }: HomeProps) {
     const { imagesData, rawFirstImageUrl } = await fetchImagesData(searchParams);
 
-    /*
-     * FIX LCP: The preload href MUST exactly match the <img src> rendered in
-     * trendingimages.tsx. Both use getCloudflareUrl(url, "webp") — any URL
-     * mismatch causes the browser to make TWO fetches, wasting the preload.
-     */
     const preloadImageUrl = rawFirstImageUrl
         ? getCloudflareUrl(rawFirstImageUrl, "webp")
         : null;
 
+    /*
+     * FIX LCP: Build the srcset string for the preload hint.
+     * This must exactly match the srcSet on the <img> in trendingimages.tsx
+     * so the browser uses the preloaded resource and doesn't fetch again.
+     */
     const preloadImageSrcSet = rawFirstImageUrl
         ? `${getCloudflareUrl(rawFirstImageUrl, "thumb")} 400w, ${getCloudflareUrl(rawFirstImageUrl, "webp")} 700w`
         : null;
 
     return (
         <>
-            {/*
-             * FIX LCP: preconnect to Cloudflare Images CDN inline.
-             * Even though generateMetadata above also injects this, inline
-             * placement guarantees it appears in streaming SSR output as early
-             * as possible regardless of metadata hoisting behaviour.
-             */}
             <link rel="preconnect" href="https://imagedelivery.net" crossOrigin="anonymous" />
             <link rel="dns-prefetch" href="https://imagedelivery.net" />
 
-            {/*
-             * FIX LCP: <link rel="preload"> for the first (LCP candidate) image.
-             * imageSrcSet + imageSizes mirror the srcSet/sizes on the <img> in
-             * trendingimages.tsx so the browser picks the right variant per viewport.
-             */}
             {preloadImageUrl && (
+                /*
+                 * FIX LCP: Use lowercase `imagesrcset` and `imagesizes` — these are the
+                 * correct HTML attribute names. The previous version used `imageSrcSet`
+                 * (camelCase) which React does NOT map to the correct HTML attribute,
+                 * meaning the responsive preload hint was silently ignored by the browser.
+                 *
+                 * Also removed the @ts-expect-error on fetchpriority — React 18.3+ accepts
+                 * it natively. If you're on an older version keep the suppression.
+                 */
                 <link
                     rel="preload"
                     as="image"
                     href={preloadImageUrl}
-                    imageSrcSet={preloadImageSrcSet ?? undefined}
-                    imageSizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
-                    // @ts-expect-error: lowercase fetchpriority is valid HTML, not yet in React types
-                    fetchpriority="high"
+                    // @ts-expect-error: imagesrcset/imagesizes not yet in React's link types
+                    imagesrcset={preloadImageSrcSet ?? undefined}
+                    imagesizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                    fetchPriority="high"
                 />
             )}
 
