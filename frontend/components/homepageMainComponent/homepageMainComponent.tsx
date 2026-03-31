@@ -150,6 +150,21 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
     const fetchImages = useCallback(async () => {
         const { title, category, keyword, page } = debouncedSearch;
 
+        const currentTitle = searchParams.get("title") ?? "";
+        const currentCategory = searchParams.get("category") ?? "";
+        const currentKeyword = searchParams.get("keyword") ?? "";
+        const currentPage = searchParams.get("page") ? Number(searchParams.get("page")) : 1;
+
+        const isMatchingUrl = title === currentTitle && category === currentCategory && keyword === currentKeyword && page === currentPage;
+        
+        // Since page.tsx is statically rendered now, initialImagesData contains the default payload.
+        // We only skip client fetching if the URL represents the default payload too.
+        const isDefaultQuery = title === "" && category === "" && keyword === "" && page === 1;
+
+        if (isMatchingUrl && isDefaultQuery) {
+            return;
+        }
+
         const queryParams = Object.entries({ title, category, keyword, page })
             .filter(([, value]) => value !== undefined && value !== null && value !== "" && value !== 1)
             .map(([key, value]) => {
