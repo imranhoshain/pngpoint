@@ -7,11 +7,11 @@ import { RootState } from "@/redux/store";
 import Image from "next/image";
 import Link from "next/link";
 import { useGetUserQuery } from "@/redux/features/auth/authApi";
+import { FaRegCircleUser } from "react-icons/fa6";
+import { HiOutlineMenu } from "react-icons/hi";
 
 export const TopBar = ({ handleSideBarOpen }: any) => {
     const auth = useSelector((state: RootState) => state.auth);
-    import { FaRegCircleUser } from "react-icons/fa6";
-import { HiOutlineMenu } from "react-icons/hi";
 const [hydrated, setHydrated] = useState(false);
 
     // Hydration effect

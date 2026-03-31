@@ -6,6 +6,7 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { Field } from "../field/field";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 export const ChangePasswordForm:React.FC = () => {
     const {
@@ -21,7 +22,6 @@ export const ChangePasswordForm:React.FC = () => {
     const [showNew, setShowNew] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
-    import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 const onSubmit = async (data: any) => {
         if (data.new_password !== data.confirm_password) {
             toast.error("New password and confirm password do not match.");

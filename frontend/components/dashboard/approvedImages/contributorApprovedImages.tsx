@@ -13,6 +13,8 @@ import { RootState } from "@/redux/store";
 import { useNumberOfImagesDeleteMutation } from "@/redux/features/images/pendingApi";
 import { useAddCSVUploadMutation } from "@/redux/features/images/csvApi";
 import { SelectedImageSidebar } from "../seletedSideBarImage/seletedSideBarImage";
+import { FaTags } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
 
 export default function ContributorApprovedImages() {
     const [value, setValue] = useState<string>("");
@@ -37,8 +39,6 @@ export default function ContributorApprovedImages() {
 
     const [NumberOfImagesDelete] = useNumberOfImagesDeleteMutation();
     const [addCSVUpload] = useAddCSVUploadMutation();
-    import { FaTags } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
 const images: ImagesResponse[] = data?.images ?? [];
     const count: number = data?.count ?? 0;
     const totalPages: number = Math.ceil(count / 100);

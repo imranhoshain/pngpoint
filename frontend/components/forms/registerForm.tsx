@@ -9,13 +9,13 @@ import Link from "next/link";
 import { useAddRegisterMutation } from "@/redux/features/auth/authApi";
 import { RegisterPropsType } from "@/types/registerPropsType";
 import { useRouter } from "next/navigation";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 export const RegisterForm: React.FC = () => {
     const {register,handleSubmit,reset,formState: { errors }} = useForm<RegisterPropsType>();
     const [addRegister, { isLoading }] = useAddRegisterMutation();
     const [show, setShow] = useState({ password: false, confirm: false });
     const router = useRouter();
-    import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 const toggleVisibility = (field: "password" | "confirm") => {
         setShow((prev) => ({ ...prev, [field]: !prev[field] }));
     };

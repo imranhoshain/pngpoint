@@ -5,6 +5,9 @@ import { Dimensions } from "./dimensions";
 import { Download } from "./download";
 import { FileSize } from "./filesize";
 import { SocialMedia } from "./socialmedia";
+import { IoInformationCircleOutline } from "react-icons/io5";
+import { AiOutlineFileText } from "react-icons/ai";
+import { PiImageSquareLight } from "react-icons/pi";
 
 interface MainImageProps {
     image: any;
@@ -12,9 +15,6 @@ interface MainImageProps {
 }
 
 export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
-    import { IoInformationCircleOutline } from "react-icons/io5";
-import { AiOutlineFileText } from "react-icons/ai";
-import { PiImageSquareLight } from "react-icons/pi";
 return (
         <div className="flex flex-col flex-wrap gap-y-2.5 lg:gap-y-2.5 w-full">
             {/* IMAGE TITLE */}

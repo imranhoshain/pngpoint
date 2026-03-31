@@ -3,13 +3,13 @@
 
 import { SERVER_URL } from "@/utils/api";
 import React, { useEffect, useState } from "react";
+import { HiOutlineDownload } from "react-icons/hi";
 
 interface ImageProps {
     image: any;
 }
 
 export const Download: React.FC<ImageProps> = ({ image }) => {
-    import { HiOutlineDownload } from "react-icons/hi";
 const [fileSize, setFileSize] = useState<number | null>(null);
 
     useEffect(() => {

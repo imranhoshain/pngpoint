@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { setTitle } from "@/redux/features/getImages/getImageSlice";
 import { getSearchSchema } from "@/utils/searchSchema";
+import { IoSearchOutline } from "react-icons/io5";
 
 interface ImageData {
     pageUrl: string;
@@ -31,7 +32,6 @@ interface SingleImageHeaderProps {
 }
 
 export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData }) => {
-    import { IoSearchOutline } from "react-icons/io5";
 const dispatch = useDispatch();
     const title = useSelector((state: RootState) => state.search.title);
     

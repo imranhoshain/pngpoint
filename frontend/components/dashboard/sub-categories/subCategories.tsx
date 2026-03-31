@@ -3,13 +3,13 @@
 import Image from "next/image";
 import { MEDIA_URL } from "@/utils/api";
 import React, { useState } from "react";
-import { IoSearchOutline } from "react-icons/io5";
 import { AddSubCategoryForm } from "@/components/forms/addSubCategoryForm";
 import { useDeleteSubCategoryMutation, useGetSubCategoriesQuery, usePartialUpdateSubCategoryMutation } from "@/redux/features/sub-categories/subCategoriesApi";
 import { useGetSingleSubCategoriesQuery } from "@/redux/features/sub-categories/subCategoriesApi";
 import { Field } from "@/components/field/field";
 import { useForm, Controller } from "react-hook-form";
 import { toast } from "react-toastify";
+import { IoSearchOutline } from "react-icons/io5";
 
 interface SingleSubCategoryPopupProps {
     subCategorySlug: string;

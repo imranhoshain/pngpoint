@@ -10,6 +10,7 @@ import Image from 'next/image';
 import { Logout } from '@/components/logout/logout';
 import { AdminMenu, UserMenu } from '@/utils/menu';
 import PPLogo from "../../../public/PP-logo-white.png";
+import { IoMdClose } from "react-icons/io";
 
 export const AsideBar = ({ sideBar, setSideBar }: any) => {
     const auth = useSelector((state: RootState) => state.auth);
@@ -36,7 +37,6 @@ export const AsideBar = ({ sideBar, setSideBar }: any) => {
         setOpenMenuId(openMenuId === id ? null : id);
     };
 
-    import { IoMdClose } from "react-icons/io";
 const menuToRender = role === 'admin' ? AdminMenu : UserMenu;
     const basePath = role === 'admin' ? `/dashboard/admin/${username}` : `/dashboard/contributor/${username}`;
 

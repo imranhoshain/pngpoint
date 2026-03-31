@@ -6,8 +6,8 @@ import { AddCategoryForm } from "@/components/forms/addCategoryForm";
 import { useGetCategoriesQuery } from "@/redux/features/categories/categoriesApi";
 import Image from "next/image";
 import { MEDIA_URL } from "@/utils/api";
-import { IoSearchOutline } from "react-icons/io5";
 import SingleCategoryPopup from "@/components/popup/singleCategoryPopup";
+import { IoSearchOutline } from "react-icons/io5";
 
 export default function CategoriesComponent() {
     const [isOpen, setIsOpen] = useState(false);

@@ -7,6 +7,7 @@ import { getSearchSchema } from "@/utils/searchSchema";
 import { useState, useRef, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/navigation";
+import { IoSearchOutline } from "react-icons/io5";
 
 interface SearchingImageProps {
     categorySlug?: string;
@@ -21,7 +22,6 @@ export const SearchingImage: React.FC<SearchingImageProps> = ({
     const router = useRouter();
     const [searchValue, setSearchValue] = useState<string>("");
     const title = useSelector((state: RootState) => state.search.title);
-    import { IoSearchOutline } from "react-icons/io5";
 /*
      * FIX INP: Debounce the Redux dispatch so it only fires 300ms after the
      * user stops typing. Previously every keystroke dispatched to Redux,

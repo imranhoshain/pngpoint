@@ -11,12 +11,12 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
 import { SelectedImageSidebar } from "../seletedSideBarImage/seletedSideBarImage";
+import { FaTags } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
 
 export default function ContributorRejectedImages() {
     const [value, setValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
-    import { FaTags } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
 const { data, isLoading, isError, refetch } = useGetUserRejectedImagesQuery({
         searchTerm: value,
         pageNumber: currentPage,

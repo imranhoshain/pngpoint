@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { Field } from "../field/field";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 
 export const LoginForm: React.FC = () => {
     const [isShow, setIsShow] = useState<boolean>(false);
@@ -19,7 +20,6 @@ export const LoginForm: React.FC = () => {
         formState: { errors },
     } = useForm<LoginPropsType>();
     const [addLogin, { isLoading }] = useAddLoginMutation();
-    import { IoMdEye, IoMdEyeOff } from "react-icons/io";
 const router = useRouter();
 
     const onSubmitForm = async (formData: LoginPropsType) => {

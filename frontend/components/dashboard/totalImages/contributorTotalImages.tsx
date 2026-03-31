@@ -5,11 +5,11 @@ import Pagination from "../../pagination/pagination";
 import { useGetUserTotalImagesQuery } from "@/redux/features/images/totalApi";
 import Image from "next/image";
 import { ImagesResponse } from "@/types/imagesResponse";
+import { FaTags } from "react-icons/fa";
 
 export default function ContributorTotalImages() {
     const [value, setValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
-    import { FaTags } from "react-icons/fa";
 const { data, isLoading, isError } = useGetUserTotalImagesQuery({
         searchTerm: value,
         pageNumber: currentPage,

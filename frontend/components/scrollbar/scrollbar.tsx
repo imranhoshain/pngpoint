@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { GoArrowDown } from "react-icons/go";
 
 export default function Scrollbar() {
-    import { GoArrowDown } from "react-icons/go";
 const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
