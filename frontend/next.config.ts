@@ -71,6 +71,7 @@ const nextConfig: NextConfig = {
      *   "browserslist": "> 0.5%, last 2 versions, not dead, not IE 11"
      * This tells Babel/SWC to stop transpiling modern JS to ES5.
      */
+    turbopack: {},
     webpack: (config, { isServer }) => {
         if (!isServer) {
             config.optimization = {
