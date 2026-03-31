@@ -41,6 +41,25 @@
   --sidebar-ring: oklch(0.708 0 0);
 }
 
+/*
+ * FIX desktop CLS 0.46 — Scrollbar gutter reservation
+ *
+ * WHY THIS FIXES CLS:
+ * Your <Scrollbar /> component replaces the native OS scrollbar after
+ * hydration. On desktop, the native scrollbar occupies ~15-17px of page
+ * width. When it's removed/replaced by the custom one, every block element
+ * on the page reflows → large CLS spike (was 0.46, target <0.1).
+ * Mobile CLS is 0 because mobile browsers use overlay scrollbars (0px wide).
+ *
+ * scrollbar-gutter:stable reserves that ~15px in the layout BEFORE JavaScript
+ * runs, so there is no width change when the custom scrollbar activates.
+ * overflow-y:scroll ensures the gutter is always present (even on short pages).
+ */
+html {
+  scrollbar-gutter: stable;
+  overflow-y: scroll;
+}
+
 body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
@@ -225,10 +244,12 @@ body {
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: color-mix(in oklch, var(--ring) 50%, transparent);
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
   }
 }

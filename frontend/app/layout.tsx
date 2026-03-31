@@ -10,9 +10,12 @@ import Script from "next/script";
 const interFont = Inter({
     variable: "--font-inter",
     subsets: ["latin"],
-    // FIX CLS + render-blocking: font-display:swap prevents the font from
-    // blocking rendering. Without this, the browser holds the LCP paint
-    // until the font is downloaded, inflating both FCP and LCP.
+    /*
+     * FIX render-blocking + CLS:
+     * display:"swap" prevents the font from blocking the initial render.
+     * Without this, the browser waits for the Inter font file before
+     * painting any text, which inflates both FCP and LCP.
+     */
     display: "swap",
 });
 
@@ -102,6 +105,23 @@ export default function RootLayout({
     return (
         <html lang="en">
             <head>
+                {/*
+                 * FIX LCP — preconnect to Cloudflare Images CDN.
+                 *
+                 * This is the EARLIEST possible placement — inside <head> in the
+                 * root layout, before any scripts or stylesheets.
+                 *
+                 * Without preconnect, the browser must complete TCP handshake +
+                 * TLS negotiation (~100-300ms on mobile, ~50ms on desktop) before
+                 * the first byte of the LCP image can arrive. Preconnect eliminates
+                 * this by warming up the connection as soon as the HTML is parsed.
+                 *
+                 * Replace "https://imagedelivery.net" with your actual Cloudflare
+                 * Images delivery domain if it differs (check your cloudflare_url values).
+                 */}
+                <link rel="preconnect" href="https://imagedelivery.net" crossOrigin="anonymous" />
+                <link rel="dns-prefetch" href="https://imagedelivery.net" />
+
                 {/* Google Tag Manager */}
                 <Script id="google-tag-manager" strategy="afterInteractive">
                     {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -130,16 +150,16 @@ export default function RootLayout({
 
                 {/*
                  * FIX render-blocking / LCP:
-                 * Changed GA script strategy from "afterInteractive" → "lazyOnload".
+                 * GA script strategy changed: "afterInteractive" → "lazyOnload"
                  *
-                 * "afterInteractive" fires immediately after hydration, competing with
-                 * LCP image fetches for main-thread time and network bandwidth.
-                 * "lazyOnload" defers until the page is fully idle — analytics data
-                 * is still captured (pageview fires on load), but LCP is no longer
-                 * blocked by GA parsing/execution.
+                 * "afterInteractive" runs immediately after hydration, competing
+                 * with the LCP image fetch for main-thread time and bandwidth.
+                 * "lazyOnload" defers until the page is fully idle — analytics
+                 * data is still captured (pageview fires on window load), but
+                 * it no longer sits in the LCP critical path.
                  *
-                 * GTM already handles GA events via the GTM container above, so this
-                 * standalone gtag snippet is redundant during the critical path anyway.
+                 * Note: GTM (above) already forwards GA events, so this gtag
+                 * snippet is redundant during the critical paint window anyway.
                  */}
                 <Script
                     src="https://www.googletagmanager.com/gtag/js?id=G-JF0VD5LP21"
