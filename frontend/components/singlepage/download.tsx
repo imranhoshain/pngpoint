@@ -2,7 +2,6 @@
 "use client";
 
 import { SERVER_URL } from "@/utils/api";
-import { ReactIcons } from "@/utils/reactIcons";
 import React, { useEffect, useState } from "react";
 
 interface ImageProps {
@@ -10,8 +9,8 @@ interface ImageProps {
 }
 
 export const Download: React.FC<ImageProps> = ({ image }) => {
-    const { HiOutlineDownload } = ReactIcons;
-    const [fileSize, setFileSize] = useState<number | null>(null);
+    import { HiOutlineDownload } from "react-icons/hi";
+const [fileSize, setFileSize] = useState<number | null>(null);
 
     useEffect(() => {
         if (!image?.image?.cloudflare_url) return;

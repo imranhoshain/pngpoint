@@ -1,6 +1,5 @@
 "use client";
 
-import { ReactIcons } from "@/utils/reactIcons";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -32,8 +31,8 @@ interface SingleImageHeaderProps {
 }
 
 export const SingleImageHeader: React.FC<SingleImageHeaderProps> = ({ imageData }) => {
-    const { IoSearchOutline } = ReactIcons;
-    const dispatch = useDispatch();
+    import { IoSearchOutline } from "react-icons/io5";
+const dispatch = useDispatch();
     const title = useSelector((state: RootState) => state.search.title);
     
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {

@@ -2,7 +2,6 @@
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAddChangePasswordMutation } from "@/redux/features/auth/authApi";
-import { ReactIcons } from "@/utils/reactIcons";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -22,9 +21,8 @@ export const ChangePasswordForm:React.FC = () => {
     const [showNew, setShowNew] = useState(false);
     const [showConfirm, setShowConfirm] = useState(false);
 
-    const { IoMdEye, IoMdEyeOff } = ReactIcons;
-
-    const onSubmit = async (data: any) => {
+    import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+const onSubmit = async (data: any) => {
         if (data.new_password !== data.confirm_password) {
             toast.error("New password and confirm password do not match.");
             return;

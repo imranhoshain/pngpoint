@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { ReactIcons } from "@/utils/reactIcons";
 import Link from "next/link";
 import React from "react";
 
@@ -11,9 +10,9 @@ interface ImageProps {
 }
 
 export const SocialMedia: React.FC<ImageProps> = ({ image, pageUrl }) => {
-    const { FaFacebook, FaPinterest, FaXTwitter, FaInstagram } = ReactIcons;
-
-    const encodedUrl = encodeURIComponent(pageUrl);
+    import { FaFacebook, FaPinterest, FaInstagram } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
+const encodedUrl = encodeURIComponent(pageUrl);
     const encodedTitle = encodeURIComponent(image?.image?.title || "");
     const encodedMedia = encodeURIComponent(image?.image?.cloudflare_url || "");
 

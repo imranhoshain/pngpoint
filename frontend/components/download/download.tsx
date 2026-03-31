@@ -1,5 +1,4 @@
 import { SERVER_URL } from "@/utils/api";
-import { ReactIcons } from "@/utils/reactIcons";
 import React from "react";
 
 type DownloadProps = {
@@ -7,9 +6,8 @@ type DownloadProps = {
 }
 
 export const Download: React.FC<DownloadProps> = ({ imageId }) => {
-    const { HiOutlineDownload } = ReactIcons;
-
-    const handleDownloadImage = (imageId: string) => {
+    import { HiOutlineDownload } from "react-icons/hi";
+const handleDownloadImage = (imageId: string) => {
         const url = `${SERVER_URL}/images/download/${imageId}/`;
         const link = document.createElement('a');
         link.href = url;

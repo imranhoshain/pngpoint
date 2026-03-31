@@ -113,9 +113,8 @@ const nextConfig: NextConfig = {
                          * other vendor chunks.
                          *
                          * FIX: Also switch to named imports in your components:
-                         *   WRONG:  import { ReactIcons } from "@/utils/reactIcons"
-                         *           const { FaXTwitter } = ReactIcons
-                         *   RIGHT:  import { FaXTwitter } from "react-icons/fa6"
+                         *   WRONG:  *           import { FaXTwitter } from "react-icons/fa6";
+*   RIGHT:  import { FaXTwitter } from "react-icons/fa6"
                          *
                          * Direct named imports allow tree-shaking to eliminate
                          * the icons you don't use. A wrapper object defeats this.
@@ -157,14 +156,6 @@ const nextConfig: NextConfig = {
                     { key: "X-XSS-Protection", value: "1; mode=block" },
                     { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
                     { key: "Strict-Transport-Security", value: "max-age=31536000; includeSubDomains" },
-                    {
-                        key: "Link",
-                        value: [
-                            "<https://imagedelivery.net>; rel=preconnect",
-                            "<https://www.googletagmanager.com>; rel=preconnect",
-                            "<https://www.google-analytics.com>; rel=dns-prefetch",
-                        ].join(", "),
-                    },
                 ],
             },
             /*

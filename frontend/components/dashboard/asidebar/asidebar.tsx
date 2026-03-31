@@ -5,7 +5,6 @@ import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/redux/store';
 import { useParams } from 'next/navigation';
-import { ReactIcons } from '@/utils/reactIcons';
 import Link from 'next/link';
 import Image from 'next/image';
 import { Logout } from '@/components/logout/logout';
@@ -37,9 +36,8 @@ export const AsideBar = ({ sideBar, setSideBar }: any) => {
         setOpenMenuId(openMenuId === id ? null : id);
     };
 
-    const { IoMdClose } = ReactIcons;
-
-    const menuToRender = role === 'admin' ? AdminMenu : UserMenu;
+    import { IoMdClose } from "react-icons/io";
+const menuToRender = role === 'admin' ? AdminMenu : UserMenu;
     const basePath = role === 'admin' ? `/dashboard/admin/${username}` : `/dashboard/contributor/${username}`;
 
     return (

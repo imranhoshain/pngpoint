@@ -132,18 +132,8 @@ export default function RootLayout({
                 <link rel="preconnect" href="https://imagedelivery.net" crossOrigin="anonymous" />
                 <link rel="dns-prefetch" href="https://imagedelivery.net" />
 
-                {/*
-                 * FIX render-blocking: preconnect to Google Fonts CDN.
-                 * Next.js font optimization downloads Inter at build time and
-                 * self-hosts it, so this preconnect is actually for any remaining
-                 * third-party font references. If Next.js is fully self-hosting
-                 * Inter (which it does by default), these are optional but harmless.
-                 */}
-                <link rel="preconnect" href="https://fonts.googleapis.com" />
-                <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-
                 {/* Google Tag Manager */}
-                <Script id="google-tag-manager" strategy="afterInteractive">
+                <Script id="google-tag-manager" strategy="lazyOnload">
                     {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                     new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
                     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=

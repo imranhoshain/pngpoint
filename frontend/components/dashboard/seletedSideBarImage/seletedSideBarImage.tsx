@@ -6,7 +6,6 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import Link from "next/link";
 import { Field } from "@/components/field/field";
-import { ReactIcons } from "@/utils/reactIcons";
 import { RootState } from "@/redux/store";
 import {
     useBulkImageUpdateMutation,
@@ -32,9 +31,8 @@ export const SelectedImageSidebar: React.FC<SelectedImageSidebarProps> = ({
     refetch
 }) => {
     const dispatch = useDispatch();
-    const { RiDeleteBin6Line } = ReactIcons;
-
-    const selectedImageIds = useSelector((state: RootState) => state.imageSideBar.selectedImageIds);
+    import { RiDeleteBin6Line } from "react-icons/ri";
+const selectedImageIds = useSelector((state: RootState) => state.imageSideBar.selectedImageIds);
     const auth = useSelector((state: RootState) => state.auth);
     const role = auth?.user?.role;
 

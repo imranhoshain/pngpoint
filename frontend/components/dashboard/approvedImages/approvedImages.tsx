@@ -3,7 +3,6 @@
 
 import Pagination from "@/components/pagination/pagination";
 import { useGetApprovedImagesQuery } from "@/redux/features/images/approvedApi";
-import { ReactIcons } from "@/utils/reactIcons";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { ImagesResponse } from "@/types/imagesResponse";
@@ -38,9 +37,9 @@ export default function ApprovedImagesComponent() {
 
     const [NumberOfImagesDelete] = useNumberOfImagesDeleteMutation();
     const [addCSVUpload] = useAddCSVUploadMutation();
-    const { FaTags, IoMdClose } = ReactIcons;
-
-    const images: ImagesResponse[] = data?.images ?? [];
+    import { FaTags } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
+const images: ImagesResponse[] = data?.images ?? [];
     const count: number = data?.count ?? 0;
     const totalPages: number = Math.ceil(count / 100);
 

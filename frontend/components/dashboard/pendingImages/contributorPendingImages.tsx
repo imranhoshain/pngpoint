@@ -17,7 +17,6 @@ import {
 } from "@/redux/features/imageSidebar/imageSideBarSlice";
 import { RootState } from "@/redux/store";
 import { ImagesResponse } from "@/types/imagesResponse";
-import { ReactIcons } from "@/utils/reactIcons";
 import Image from "next/image";
 import { useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -44,9 +43,9 @@ export default function ContributorPendingImages() {
 
     const [NumberOfImagesDelete] = useNumberOfImagesDeleteMutation();
     const [addCSVUpload] = useAddCSVUploadMutation();
-    const { FaTags, IoMdClose } = ReactIcons;
-
-    const images: ImagesResponse[] = data?.images ?? [];
+    import { FaTags } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
+const images: ImagesResponse[] = data?.images ?? [];
     const count: number = data?.count ?? 0;
     const totalPages: number = Math.ceil(count / 100);
 

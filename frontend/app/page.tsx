@@ -74,16 +74,7 @@ export async function generateMetadata({ searchParams }: HomeProps): Promise<Met
     const { rawFirstImageUrl } = await fetchImagesData(searchParams);
     const preloadUrl = rawFirstImageUrl ? getCloudflareUrl(rawFirstImageUrl, "webp") : null;
 
-    return {
-        ...(preloadUrl && {
-            alternates: {},
-            other: {
-                "link-preconnect":
-                    '<link rel="preconnect" href="https://imagedelivery.net" crossorigin="anonymous">',
-                "link-dns-prefetch": '<link rel="dns-prefetch" href="https://imagedelivery.net">',
-            },
-        }),
-    };
+    return {};
 }
 
 export default async function Home({ searchParams }: HomeProps) {
@@ -104,26 +95,16 @@ export default async function Home({ searchParams }: HomeProps) {
 
     return (
         <>
-            <link rel="preconnect" href="https://imagedelivery.net" crossOrigin="anonymous" />
-            <link rel="dns-prefetch" href="https://imagedelivery.net" />
-
             {preloadImageUrl && (
                 /*
-                 * FIX LCP: Use lowercase `imagesrcset` and `imagesizes` — these are the
-                 * correct HTML attribute names. The previous version used `imageSrcSet`
-                 * (camelCase) which React does NOT map to the correct HTML attribute,
-                 * meaning the responsive preload hint was silently ignored by the browser.
-                 *
-                 * Also removed the @ts-expect-error on fetchpriority — React 18.3+ accepts
-                 * it natively. If you're on an older version keep the suppression.
+                 * FIX LCP: Valid React 19 camelCase attributes for preloads
                  */
                 <link
                     rel="preload"
                     as="image"
                     href={preloadImageUrl}
-                    // @ts-expect-error: imagesrcset/imagesizes not yet in React's link types
-                    imagesrcset={preloadImageSrcSet ?? undefined}
-                    imagesizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
+                    imageSrcSet={preloadImageSrcSet ?? undefined}
+                    imageSizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     fetchPriority="high"
                 />
             )}

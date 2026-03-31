@@ -6,7 +6,6 @@ import { useGetRejectedImagesQuery } from "@/redux/features/images/rejectedApi";
 import { clearSelectedMetadata, closeSidebar, openSidebar, setSelectedMetadata } from "@/redux/features/imageSidebar/imageSideBarSlice";
 import { RootState } from "@/redux/store";
 import { ImagesResponse } from "@/types/imagesResponse";
-import { ReactIcons } from "@/utils/reactIcons";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -16,9 +15,9 @@ import { SelectedImageSidebar } from "../seletedSideBarImage/seletedSideBarImage
 export default function RejectedImagesComponent() {
     const [value, setValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { FaTags, IoMdClose } = ReactIcons;
-
-    const { data, isLoading, isError, refetch } = useGetRejectedImagesQuery({
+    import { FaTags } from "react-icons/fa";
+import { IoMdClose } from "react-icons/io";
+const { data, isLoading, isError, refetch } = useGetRejectedImagesQuery({
         searchTerm: value,
         pageNumber: currentPage,
     }, {

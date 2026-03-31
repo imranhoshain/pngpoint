@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Pagination from "../../pagination/pagination";
-import { ReactIcons } from "@/utils/reactIcons";
 import { useGetUserTotalImagesQuery } from "@/redux/features/images/totalApi";
 import Image from "next/image";
 import { ImagesResponse } from "@/types/imagesResponse";
@@ -10,9 +9,8 @@ import { ImagesResponse } from "@/types/imagesResponse";
 export default function ContributorTotalImages() {
     const [value, setValue] = useState<string>("");
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { FaTags } = ReactIcons;
-
-    const { data, isLoading, isError } = useGetUserTotalImagesQuery({
+    import { FaTags } from "react-icons/fa";
+const { data, isLoading, isError } = useGetUserTotalImagesQuery({
         searchTerm: value,
         pageNumber: currentPage,
     }, {

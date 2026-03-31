@@ -3,7 +3,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useAddLoginMutation } from "@/redux/features/auth/authApi";
 import { LoginPropsType } from "@/types/loginPropsType";
-import { ReactIcons } from "@/utils/reactIcons";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -20,8 +19,8 @@ export const LoginForm: React.FC = () => {
         formState: { errors },
     } = useForm<LoginPropsType>();
     const [addLogin, { isLoading }] = useAddLoginMutation();
-    const { IoMdEye, IoMdEyeOff } = ReactIcons;
-    const router = useRouter();
+    import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+const router = useRouter();
 
     const onSubmitForm = async (formData: LoginPropsType) => {
         try {

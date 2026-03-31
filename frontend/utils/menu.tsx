@@ -1,8 +1,13 @@
 import { MenuType } from "@/types/menuType";
-import { ReactIcons } from "./reactIcons";
-
-const { IoIosSettings, IoMdCloudUpload, BiSolidDashboard, FiLoader, IoMdClose, AiOutlineCheck, FaImages, TbArrowsExchange, ImProfile, FaUsersCog, HiMiniDocumentDuplicate } = ReactIcons;
-
+import { IoIosSettings, IoMdCloudUpload, IoMdClose } from "react-icons/io";
+import { BiSolidDashboard } from "react-icons/bi";
+import { FiLoader } from "react-icons/fi";
+import { AiOutlineCheck } from "react-icons/ai";
+import { FaImages } from "react-icons/fa6";
+import { TbArrowsExchange } from "react-icons/tb";
+import { ImProfile } from "react-icons/im";
+import { FaUsersCog } from "react-icons/fa";
+import { HiMiniDocumentDuplicate } from "react-icons/hi2";
 export const AdminMenu: MenuType[] = [
     {
         id: 1,

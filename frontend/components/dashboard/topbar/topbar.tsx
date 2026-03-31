@@ -4,16 +4,15 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { ReactIcons } from "@/utils/reactIcons";
 import Image from "next/image";
 import Link from "next/link";
 import { useGetUserQuery } from "@/redux/features/auth/authApi";
 
 export const TopBar = ({ handleSideBarOpen }: any) => {
     const auth = useSelector((state: RootState) => state.auth);
-    const { FaRegCircleUser, HiOutlineMenu } = ReactIcons;
-
-    const [hydrated, setHydrated] = useState(false);
+    import { FaRegCircleUser } from "react-icons/fa6";
+import { HiOutlineMenu } from "react-icons/hi";
+const [hydrated, setHydrated] = useState(false);
 
     // Hydration effect
     useEffect(() => {

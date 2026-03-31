@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import { ReactIcons } from "@/utils/reactIcons";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
@@ -16,9 +15,8 @@ export const RegisterForm: React.FC = () => {
     const [addRegister, { isLoading }] = useAddRegisterMutation();
     const [show, setShow] = useState({ password: false, confirm: false });
     const router = useRouter();
-    const { IoMdEye, IoMdEyeOff } = ReactIcons;
-
-    const toggleVisibility = (field: "password" | "confirm") => {
+    import { IoMdEye, IoMdEyeOff } from "react-icons/io";
+const toggleVisibility = (field: "password" | "confirm") => {
         setShow((prev) => ({ ...prev, [field]: !prev[field] }));
     };
 
