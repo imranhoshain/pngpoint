@@ -221,8 +221,6 @@ export const Header = () => {
                             alt="pngpoint"
                             width={224}
                             height={60}
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            // @ts-expect-error fetchPriority not yet in React img types
                             fetchPriority="high"
                             onClick={() => handleLogo()}
                         />
