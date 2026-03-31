@@ -90,9 +90,7 @@ export default async function Home({ searchParams }: HomeProps) {
                     rel="preload"
                     as="image"
                     href={preloadImageUrl}
-                    // @ts-expect-error: imageSrcSet is valid HTML but not in React types yet
                     imageSrcSet={preloadImageSrcSet ?? undefined}
-                    // @ts-expect-error: imageSizes is valid HTML but not in React types yet
                     imageSizes="(max-width: 640px) 50vw, (max-width: 1280px) 33vw, 25vw"
                     // @ts-expect-error: fetchpriority is a valid HTML attribute not yet in React types
                     fetchpriority="high"
