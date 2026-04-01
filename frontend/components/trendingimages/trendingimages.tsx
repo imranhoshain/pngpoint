@@ -110,10 +110,10 @@ const ImageCard = memo(function ImageCard({
             className="block w-full relative rounded-2xl border border-gray-300 shadow-sm group overflow-hidden"
             key={image.id}
         >
-            {/* <script
+            <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: schemaJson }}
-            /> */}
+            />
 
             <Link
                 className="flex flex-col justify-center items-center w-full z-50 relative overflow-hidden"
