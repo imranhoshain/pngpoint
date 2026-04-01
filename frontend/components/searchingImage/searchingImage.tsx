@@ -91,12 +91,12 @@ export const SearchingImage: React.FC<SearchingImageProps> = ({
 
     return (
         <section className="relative top-0 left-0 right-0 pb-2.5 md:pb-5 w-full bg-[#0077a2]">
-            {schema && (
+            {/* {schema && (
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
                 />
-            )}
+            )} */}
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap items-center justify-center gap-y-5 w-full">
                     {/*
