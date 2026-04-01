@@ -204,7 +204,7 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
             </div>
 
             {/* Below-fold sections — SSR enabled to eliminate CLS */}
-            {/* <HomeCategories /> */}
+            <HomeCategories />
             <HowItWorks />
             <UseCases />
             <HomeReviews />
