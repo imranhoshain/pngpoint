@@ -198,7 +198,7 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
              * The min-h-[52px] reserves the space pagination occupies.
              */}
             <div className="min-h-[52px]">
-                {imagesData?.count > 20 && (
+                {imagesData?.count > 48 && (
                     <TrendingImagesPagination count={imagesData?.count} />
                 )}
             </div>
