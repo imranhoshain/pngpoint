@@ -203,6 +203,7 @@ urlpatterns = [
         SingleImageDeleteView.as_view({'delete': 'destroy'}),
         name='single_image_delete',
     ),
+    path("contacts", ContactListCreateAPIView.as_view(), name="contact-list-create"),
 
     # SINGLE IMAGE ALL ROUTES
     path(
@@ -217,7 +218,6 @@ urlpatterns = [
         DownloadImageViewSet.as_view({"get": "retrieve"}),
         name='download_image',
     ),
-    path("contacts", ContactListCreateAPIView.as_view(), name="contact-list-create"),
     
 ]
 
