@@ -1,5 +1,5 @@
 from django.contrib import admin
-from images.models import Categories, SubCategories, Keywords, Images
+from images.models import Categories, SubCategories, Keywords, Images,Contact
 
 
 @admin.register(Categories)
@@ -42,3 +42,5 @@ class ImagesAdmin(admin.ModelAdmin):
         ('Classification', {'fields': ('category', 'sub_category', 'keywords', 'status')}),
         ('Stats', {'fields': ('download_count', 'created_at', 'updated_at')}),
     )
+
+admin.site.register(Contact)
