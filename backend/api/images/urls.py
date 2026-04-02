@@ -11,6 +11,7 @@ from api.images.views.categories import CategoriesViewSet
 from api.images.views.sub_categories import SubCategoriesViewSet
 from api.images.views.keywords import KeywordsView
 from api.images.views.upload import ImagesUploadAPIView
+from api.images.views.contacts import ContactListCreateAPIView
 
 urlpatterns = [
     # IMAGE UPLOAD ROUTE
@@ -216,6 +217,7 @@ urlpatterns = [
         DownloadImageViewSet.as_view({"get": "retrieve"}),
         name='download_image',
     ),
+    path("contacts", ContactListCreateAPIView.as_view(), name="contact-list-create"),
     
 ]
 
