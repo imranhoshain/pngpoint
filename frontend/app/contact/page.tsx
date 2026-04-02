@@ -55,7 +55,7 @@ export default function Contact() {
         setState({ loading: true, success: false, error: null });
 
         try {
-            const res = await fetch(`${SERVER_URL}/contacts`, {
+            const res = await fetch(`${SERVER_URL}/images/contacts`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(formData),
