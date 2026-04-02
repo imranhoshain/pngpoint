@@ -25,7 +25,7 @@ class ContactListCreateAPIView(ListCreateAPIView):
                     f"Message:\n{contact.message}"
                 ),
                 from_email='robiulcc@gmail.com',
-                recipient_list=['robiulcc@gmail.com'],
+                recipient_list=['osmangoni255@gmail.com'],
                 fail_silently=False,
             )
         except Exception as e:
