@@ -4,10 +4,12 @@ from rest_framework import status
 from django.core.mail import send_mail
 from django.conf import settings
 from api.images.serializers.contacts import ContactSerializer
+from images.models import Contact
 
 
 class ContactListCreateAPIView(ListCreateAPIView):
     serializer_class = ContactSerializer
+    queryset = Contact.objects.all()
 
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
