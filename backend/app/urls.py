@@ -1,112 +1,85 @@
-from api.accounts.views.token import ThrottledTokenRefreshView, ThrottledTokenVerifyView
+from django.urls import path, include
 from django.conf import settings
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from django.http import JsonResponse
-from django.urls import include, path, re_path
+from django.conf.urls.static import static
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.contrib import admin
+from api.accounts.views.token import ThrottledTokenRefreshView, ThrottledTokenVerifyView
 
-BASE_API = "api/v1"
+BASE_API = 'api/v1'
 
 urlpatterns = [
-    path("", lambda request: JsonResponse({"message": "Welcome to the png point API"})),
-    re_path(
-        r"^api/v1/admin/723f8a95-ef33-4f96-987e-ea5b96ef22534d3d6d/", admin.site.urls
-    ),
-    path(f"{BASE_API}/images/", include("api.images.urls")),
-    path(f"{BASE_API}/accounts/", include("api.accounts.urls")),
-    path(f"{BASE_API}/configuration/", include("api.configuration.urls")),
-    path(
-        f"{BASE_API}/token/refresh",
-        ThrottledTokenRefreshView.as_view(),
-        name="token_refresh",
-    ),
-    path(
-        f"{BASE_API}/token/verify",
-        ThrottledTokenVerifyView.as_view(),
-        name="token_verify",
-    ),
+    path('', lambda request: JsonResponse({"message": "Welcome to the png point API"})),
+    path(f'{BASE_API}/admin', admin.site.urls),
+    path(f'{BASE_API}/images/', include('api.images.urls')),
+    path(f'{BASE_API}/accounts/', include('api.accounts.urls')),
+    path(f'{BASE_API}/configuration/', include('api.configuration.urls')),
+    path(f'{BASE_API}/token/refresh', ThrottledTokenRefreshView.as_view(), name='token_refresh'),
+    path(f'{BASE_API}/token/verify', ThrottledTokenVerifyView.as_view(), name='token_verify'),
 ]
 
-if "schema_viewer" in settings.INSTALLED_APPS and settings.DEBUG:
+if 'schema_viewer' in settings.INSTALLED_APPS and settings.DEBUG:
     urlpatterns += [
-        path(f"{BASE_API}/database-desing/", include("schema_viewer.urls")),
+        path(f'{BASE_API}/database-desing/', include('schema_viewer.urls')),
     ]
 
-if "drf_spectacular" in settings.INSTALLED_APPS and settings.DEBUG:
-    from drf_spectacular.views import (
-        SpectacularAPIView,
-        SpectacularRedocView,
-        SpectacularSwaggerView,
-    )
-
+if 'drf_spectacular' in settings.INSTALLED_APPS and settings.DEBUG:
+    from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView, SpectacularRedocView
     urlpatterns += [
-        path(f"{BASE_API}/schema/", SpectacularAPIView.as_view(), name="schema"),
-        path(
-            f"{BASE_API}/schema/swagger-ui/",
-            SpectacularSwaggerView.as_view(),
-            name="swagger_ui",
-        ),
-        path(f"{BASE_API}/schema/redoc/", SpectacularRedocView.as_view(), name="redoc"),
+        path(f'{BASE_API}/schema/', SpectacularAPIView.as_view(), name='schema'),
+        path(f'{BASE_API}/schema/swagger-ui/', SpectacularSwaggerView.as_view(), name='swagger_ui'),
+        path(f'{BASE_API}/schema/redoc/', SpectacularRedocView.as_view(), name='redoc'),
     ]
-
+    
 from django.contrib import admin
-from django.contrib.sitemaps.views import index, sitemap
-from django.urls import include, path
+from django.urls import path, include
+from django.contrib.sitemaps.views import sitemap, index
 from images.sitemaps import (
-    CategorySitemap,
     OptimizedImageSitemap,
-    PopularImagesSitemap,
     RecentImagesSitemap,
-    StaticViewSitemap,
+    PopularImagesSitemap,
+    CategorySitemap,
     SubCategorySitemap,
+    StaticViewSitemap
 )
 
 # Define all sitemaps
 sitemaps = {
-    "static": StaticViewSitemap,
-    "images": OptimizedImageSitemap,
-    "recent": RecentImagesSitemap,
-    "popular": PopularImagesSitemap,
-    "categories": CategorySitemap,
-    "subcategories": SubCategorySitemap,
+    'static': StaticViewSitemap,
+    'images': OptimizedImageSitemap,
+    'recent': RecentImagesSitemap,
+    'popular': PopularImagesSitemap,
+    'categories': CategorySitemap,
+    'subcategories': SubCategorySitemap,
 }
 
 urlpatterns += [
-    path(
-        "api/v1/sitemap.xml",
-        index,
-        {
-            "sitemaps": sitemaps,
-            "sitemap_url_name": "sitemap-section",
-        },
-        name="sitemap-index",
-    ),
-    path(
-        "api/v1/sitemap-<section>.xml",
-        sitemap,
-        {
-            "sitemaps": sitemaps,
-        },
-        name="sitemap-section",
-    ),
+    path('api/v1/sitemap.xml', index, {
+        'sitemaps': sitemaps,
+        'sitemap_url_name': 'sitemap-section',
+    }, name='sitemap-index'),
+    
+    path('api/v1/sitemap-<section>.xml', sitemap, {
+        'sitemaps': sitemaps,
+    }, name='sitemap-section'),
 ]
 
-
 def custom_404(request, exception):
-    return JsonResponse(
-        {"success": False, "message": "Page not found", "error": 404}, status=404
-    )
-
+    return JsonResponse({
+        'success': False,
+        'message': 'Page not found',
+        'error': 404
+    }, status=404)
 
 def custom_500(request):
-    return JsonResponse(
-        {"success": False, "message": "Internal server error", "error": 500}, status=500
-    )
+    return JsonResponse({
+        'success': False,
+        'message': 'Internal server error',
+        'error': 500
+    }, status=500)
 
-
-handler404 = "app.urls.custom_404"
-handler500 = "app.urls.custom_500"
+handler404 = 'app.urls.custom_404'
+handler500 = 'app.urls.custom_500'
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

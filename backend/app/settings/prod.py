@@ -73,7 +73,6 @@ def get_csrf_trusted_origins():
 def get_cors_allowed_origins():
     origins = []
     origins.append("https://www.pngpoint.com")
-    origins.append("'http://localhost:8000'")
     frontend_domain = os.getenv('FRONTEND_DOMAIN', '')
     if frontend_domain:
         origins.append(frontend_domain.rstrip('/'))
@@ -86,8 +85,7 @@ CORS_ALLOWED_ORIGINS = get_cors_allowed_origins()
 
 CSRF_TRUSTED_ORIGINS = get_csrf_trusted_origins()
 
-APPEND_SLASH = True
-SECURE_SSL_REDIRECT = False
+APPEND_SLASH = False
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://.*\.replit\.dev$",
