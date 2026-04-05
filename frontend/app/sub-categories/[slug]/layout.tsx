@@ -7,11 +7,16 @@ import React from "react";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     try {
-        const res = await fetch(`${SERVER_URL}/images/sub-categories/${slug}/`, {
-            next: { revalidate: 120 },
-        });
+        const [subCategoryRes, pageDataRes] = await Promise.all([
+            fetch(`${SERVER_URL}/images/sub-categories/${slug}/`, {
+                next: { revalidate: 120 },
+            }),
+            fetch(`${SERVER_URL}/images/sub-categories/${slug}/page_data`, {
+                next: { revalidate: 120 },
+            }),
+        ]);
 
-        if (!res.ok) {
+        if (!subCategoryRes.ok) {
             return {
                 title: "PNGPoint",
                 description: "PNGPoint image details",
@@ -19,12 +24,21 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
             };
         }
 
-        const SingleSubCategoryResdata = await res.json();
+        const SingleSubCategoryResdata = await subCategoryRes.json();
         const data = SingleSubCategoryResdata?.data;
 
+        let metaTitle = `Browse All PNG Image ${data.name} | Free Transparent PNGs | PNGPoint`;
+        let metaDescription = "Discover our full collection of PNG images, neatly organized by category for quick and easy downloads.";
+
+        if (pageDataRes.ok) {
+            const pageData = await pageDataRes.json();
+            if (pageData?.meta_title) metaTitle = pageData.meta_title;
+            if (pageData?.meta_description) metaDescription = pageData.meta_description;
+        }
+
         return {
-            title: `Browse All PNG Image ${data.name} | Free Transparent PNGs | PNGPoint`,
-            description: "Discover our full collection of PNG images, neatly organized by category for quick and easy downloads.",
+            title: metaTitle,
+            description: metaDescription,
             alternates: {
                 canonical: getSubCategoryUrl(slug),
             },
