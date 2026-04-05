@@ -10,7 +10,7 @@ BASE_API = 'api/v1'
 
 urlpatterns = [
     path('', lambda request: JsonResponse({"message": "Welcome to the png point API"})),
-    path(f'{BASE_API}/admin/', admin.site.urls),
+    path(f'{BASE_API}/admin/723f8a95-ef33-4f96-987e-ea5b96ef22534d3d6d', admin.site.urls),
     path(f'{BASE_API}/images/', include('api.images.urls')),
     path(f'{BASE_API}/accounts/', include('api.accounts.urls')),
     path(f'{BASE_API}/configuration/', include('api.configuration.urls')),
