@@ -9,7 +9,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useParams, useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState, useTransition, useRef } from "react";
-import bgShape from "../../../public/bg-shape.jpg";
+import bgShape from "@/public/bg-shape.jpg";
 import Pagination from "@/components/pagination/pagination";
 import { Header } from "@/components/header/header";
 import Footer from "@/components/footer/footer";
