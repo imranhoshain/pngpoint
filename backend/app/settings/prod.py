@@ -85,7 +85,7 @@ CORS_ALLOWED_ORIGINS = get_cors_allowed_origins()
 
 CSRF_TRUSTED_ORIGINS = get_csrf_trusted_origins()
 
-APPEND_SLASH = False
+APPEND_SLASH = True
 
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://.*\.replit\.dev$",
