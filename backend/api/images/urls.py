@@ -219,7 +219,7 @@ urlpatterns = [
     ),
     path("contacts", ContactListCreateAPIView.as_view(), name="contact-list-create"),
     path(
-        "images/sub-categories/<slug:slug>/page_data",
+        "sub-categories/<slug:slug>/page_data",
         SubCategoryPageDataView.as_view(),
         name="sub-category-page-data",
     ),
