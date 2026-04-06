@@ -177,7 +177,7 @@ export default function SingleSubCategories() {
 
     const paginationText = currentPage > 1
     ? `You're browsing page ${currentPage} of our ${subCategoryData?.name || ""} PNG collection. Explore more pages to discover additional high-quality transparent images.`
-    : null;
+    : `You're browsing page 1 of our ${subCategoryData?.name || ""} PNG collection. Explore more pages to discover additional high-quality transparent images.`;
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
