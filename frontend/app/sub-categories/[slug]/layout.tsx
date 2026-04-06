@@ -8,7 +8,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     const { slug } = await params;
     try {
         const [subCategoryRes, pageDataRes] = await Promise.all([
-            fetch(`${SERVER_URL}/images/sub-categories/${slug}/`, {
+            fetch(`${SERVER_URL}/images/sub-categories/${slug}`, {
                 next: { revalidate: 120 },
             }),
             fetch(`${SERVER_URL}/images/sub-categories/${slug}/page_data`, {
