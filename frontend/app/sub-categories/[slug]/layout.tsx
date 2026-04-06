@@ -7,35 +7,19 @@ import React from "react";
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const { slug } = await params;
     try {
-        const [subCategoryRes, pageDataRes] = await Promise.all([
-            fetch(`${SERVER_URL}/images/sub-categories/${slug}`, {
-                next: { revalidate: 120 },
-            }),
-            fetch(`${SERVER_URL}/images/sub-categories/${slug}/page_data`, {
-                next: { revalidate: 120 },
-            }),
-        ]);
-        console.log(subCategoryRes.ok)
-        console.log(pageDataRes.ok)
-        if (!subCategoryRes.ok) {
+        const res = await fetch(`${SERVER_URL}/images/sub-categories/${slug}/page_data`, {
+            next: { revalidate: 120 },
+        });
+        if (!res.ok) {
             return {
                 title: "PNGPoint",
                 description: "PNGPoint image details",
                 alternates: { canonical: getSubCategoryUrl(slug) },
             };
         }
-
-        const SingleSubCategoryResdata = await subCategoryRes.json();
-        const data = SingleSubCategoryResdata?.data;
-
-        let metaTitle = `Browse All PNG Image ${data.name} | Free Transparent PNGs | PNGPoint`;
-        let metaDescription = "Discover our full collection of PNG images, neatly organized by category for quick and easy downloads.";
-
-        if (pageDataRes.ok) {
-            const pageData = await pageDataRes.json();
-            if (pageData?.meta_title) metaTitle = pageData.meta_title;
-            if (pageData?.meta_description) metaDescription = pageData.meta_description;
-        }
+        const data = await res.json();
+        const metaTitle = data?.meta_title;
+        const metaDescription = data?.meta_description;
 
         return {
             title: metaTitle,
