@@ -15,7 +15,8 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
                 next: { revalidate: 120 },
             }),
         ]);
-
+        console.log(subCategoryRes.ok)
+        console.log(pageDataRes.ok)
         if (!subCategoryRes.ok) {
             return {
                 title: "PNGPoint",
