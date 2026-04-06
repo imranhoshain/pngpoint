@@ -175,13 +175,9 @@ export default function SingleSubCategories() {
     const images = subCategoryData?.images;
     const totalPages = Math.ceil(subCategory?.count / 100);
 
-    const paginationText = pageContent?.pagination_text_template
-        ? pageContent.pagination_text_template
-              .replace("{page}", String(currentPage))
-              .replace("{name}", subCategoryData?.name || "")
-        : currentPage > 1
-        ? `You're browsing page ${currentPage} of our ${subCategoryData?.name || ""} PNG collection. Explore more pages to discover additional high-quality transparent images.`
-        : null;
+    const paginationText = currentPage > 1
+    ? `You're browsing page ${currentPage} of our ${subCategoryData?.name || ""} PNG collection. Explore more pages to discover additional high-quality transparent images.`
+    : null;
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
