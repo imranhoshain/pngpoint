@@ -20,20 +20,6 @@ import { TrendingImagesPagination } from "../trendingimages/trendingImagesPagina
 
 /*
  * FIX CLS: Changed ssr: false → ssr: true on all below-fold sections.
- *
- * ssr: false was the primary cause of CLS on desktop (0.46) and mobile (0.31).
- * With ssr: false, Next.js renders nothing on the server for these components.
- * The browser receives HTML with empty slots, hydrates, then the components
- * load and push all subsequent content down — a massive layout shift.
- *
- * With ssr: true the server renders the full HTML, so the browser never sees
- * an empty slot. The loading skeleton is now only shown during client-side
- * navigation (when the user changes pages/filters), not on initial load.
- *
- * IMPORTANT: If any of these components directly access `window`, `document`,
- * or `localStorage` at module scope (outside useEffect), they will throw during
- * SSR. Fix those by moving the access inside useEffect, or keep ssr: false
- * only for those specific components and add accurate minHeight skeletons.
  */
 const HomeCategories = dynamic(
     () => import("../categories/homeCategories").then((m) => ({ default: m.HomeCategories })),
@@ -103,7 +89,6 @@ const ImageGridSkeleton = () => (
 
 /*
  * FIX INP: Simple debounce hook to delay Redux dispatches on search input.
- * Prevents a Redux state update + full re-render on every single keystroke.
  */
 function useDebounce<T>(value: T, delay: number): T {
     const [debouncedValue, setDebouncedValue] = useState<T>(value);
@@ -122,14 +107,22 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
     const dispatch = useDispatch();
     const router = useRouter();
     const searchParams = useSearchParams();
-    const isFirstRender = useRef(true);
 
     /*
-     * FIX INP: Debounce the search state that triggers the fetch effect.
-     * The search Redux state updates immediately (for URL sync), but the
-     * actual API fetch is delayed by 300ms so rapid typing doesn't fire
-     * multiple simultaneous requests or block the main thread.
+     * FIX DOUBLE LOAD: Track whether the initial URL → Redux sync has
+     * already been accounted for.
+     *
+     * The double-load chain was:
+     *   1. Mount → initialImagesData renders images correctly ✓
+     *   2. searchParams effect → dispatch → search state changes
+     *   3. debouncedSearch settles (300ms) → fetchImages fires again ✗
+     *
+     * The fix: the very first time debouncedSearch changes it is always
+     * because of the searchParams sync, not user interaction. We detect
+     * and skip that first change via hasFetchedOnce.
      */
+    const hasFetchedOnce = useRef(false);
+
     const debouncedSearch = useDebounce(search, 300);
 
     useEffect(() => {
@@ -140,13 +133,29 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
             keyword: params.keyword ?? "",
             page: params.page ? Number(params.page) : 1,
         };
-        dispatch({ type: "search/setSearch", payload });
-    }, [searchParams, dispatch]);
 
-    /*
-     * FIX INP: Use debouncedSearch instead of search so this effect (which
-     * calls router.push + fetch) only fires 300ms after the user stops typing.
-     */
+        /*
+         * Only dispatch when a param actually differs from the current Redux
+         * state. This avoids an unnecessary dispatch (and debouncedSearch
+         * change) when the URL is unchanged — e.g. on a plain page reload
+         * where Redux already holds the correct values.
+         */
+        const isDifferent =
+            payload.title !== search.title ||
+            payload.category !== search.category ||
+            payload.keyword !== search.keyword ||
+            payload.page !== search.page;
+
+        if (isDifferent) {
+            dispatch({ type: "search/setSearch", payload });
+        }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchParams]);
+    // Intentionally omit `search` and `dispatch` from deps:
+    // - `dispatch` is stable (Redux guarantee).
+    // - Including `search` would create a loop: dispatch → search changes →
+    //   effect re-runs → dispatch again.
+
     const fetchImages = useCallback(async () => {
         const { title, category, keyword, page } = debouncedSearch;
 
@@ -177,10 +186,19 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
     }, [debouncedSearch, router]);
 
     useEffect(() => {
-        if (isFirstRender.current) {
-            isFirstRender.current = false;
+        /*
+         * FIX DOUBLE LOAD (core guard):
+         *
+         * The first time this effect runs it is always the initial
+         * URL → Redux sync settling through the debounce, NOT a real user
+         * interaction. Skip the fetch for that first change, then allow
+         * every subsequent change (filter click, search, pagination) through.
+         */
+        if (!hasFetchedOnce.current) {
+            hasFetchedOnce.current = true;
             return;
         }
+
         fetchImages();
     }, [fetchImages]);
 
@@ -192,10 +210,7 @@ export const HomepageMainComponent = ({ initialImagesData }: { initialImagesData
             {isPending ? <ImageGridSkeleton /> : <Trendingimages imagesData={imagesData.images} />}
 
             {/*
-             * FIX CLS: Always render a fixed-height wrapper for pagination,
-             * even when there are ≤50 images. Without this, when pagination
-             * appears (count > 50) it pushes content down causing a CLS spike.
-             * The min-h-[52px] reserves the space pagination occupies.
+             * FIX CLS: Always render a fixed-height wrapper for pagination.
              */}
             <div className="min-h-[52px]">
                 {imagesData?.count > 48 && (
