@@ -40,6 +40,7 @@ interface SubCategory {
     name: string;
     slug: string;
     icon?: string;
+    category?: number | string; // parent category id or slug
 }
 
 // ─── Skeleton ─────────────────────────────────────────────────────────────────
@@ -133,14 +134,53 @@ const RelatedSubCategories = ({
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        fetch(`${SERVER_URL}/images/sub-categories/`)
-            .then((res) => res.json())
-            .then((data) => {
-                const all: SubCategory[] = data.data || [];
+        const fetchRelated = async () => {
+            try {
+                // Step 1: Fetch the current sub-category detail to get its parent category
+                const currentRes = await fetch(`${SERVER_URL}/images/sub-categories/${currentSlug}/`);
+                const currentData = await currentRes.json();
+
+                // Adjust this based on your API response shape.
+                // Common shapes:
+                //   currentData.data.category        → e.g. "animals" (slug) or 5 (id)
+                //   currentData.results.category      → same
+                //   currentData.category              → same
+                const categorySlug =
+                    currentData?.data?.category?.slug ||
+                    currentData?.results?.category?.slug ||
+                    currentData?.category?.slug ||
+                    currentData?.data?.category ||
+                    currentData?.results?.category ||
+                    currentData?.category;
+
+                if (!categorySlug) {
+                    setLoading(false);
+                    return;
+                }
+
+                // Step 2: Fetch all sub-categories belonging to the same parent category
+                const categoryRes = await fetch(`${SERVER_URL}/images/categories/${categorySlug}/`);
+                const categoryData = await categoryRes.json();
+
+                // Adjust this based on your API response shape.
+                // Common shapes:
+                //   categoryData.data.sub_categories  → array
+                //   categoryData.sub_categories       → array
+                const all: SubCategory[] =
+                    categoryData?.data?.sub_categories ||
+                    categoryData?.sub_categories ||
+                    [];
+
+                // Filter out the current sub-category
                 setSubCategories(all.filter((s) => s.slug !== currentSlug));
-            })
-            .catch((err) => console.error("Failed to fetch sub-categories:", err))
-            .finally(() => setLoading(false));
+            } catch (err) {
+                console.error("Failed to fetch related sub-categories:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchRelated();
     }, [currentSlug]);
 
     if (loading) {
