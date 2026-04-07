@@ -202,12 +202,12 @@ export default function SingleSubCategories() {
                                 `All PNG Image ${subCategoryData?.name}s — Free Transparent Downloads`}
                         </h1>
                         {pageContent?.intro_paragraph_1 && (
-                            <p className="text-gray-500 text-sm lg:text-base leading-relaxed max-w-4xl">
+                            <p className="text-gray-500 text-sm lg:text-base leading-relaxed max-w-5xl">
                                 {pageContent.intro_paragraph_1}
                             </p>
                         )}
                         {pageContent?.intro_paragraph_2 && (
-                            <p className="text-gray-500 text-sm lg:text-base leading-relaxed max-w-4xl">
+                            <p className="text-gray-500 text-sm lg:text-base leading-relaxed max-w-5xl">
                                 {pageContent.intro_paragraph_2}
                             </p>
                         )}
