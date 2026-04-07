@@ -145,13 +145,7 @@ const RelatedSubCategories = ({
                 //   currentData.data.category        → e.g. "animals" (slug) or 5 (id)
                 //   currentData.results.category      → same
                 //   currentData.category              → same
-                const categorySlug =
-                    currentData?.data?.category?.slug ||
-                    currentData?.results?.category?.slug ||
-                    currentData?.category?.slug ||
-                    currentData?.data?.category ||
-                    currentData?.results?.category ||
-                    currentData?.category;
+                const categorySlug = currentData?.categories?.slug 
 
                 if (!categorySlug) {
                     setLoading(false);
