@@ -207,7 +207,7 @@ export default function SingleSubCategories() {
                             </p>
                         )}
                         {pageContent?.intro_paragraph_2 && (
-                            <p className="text-gray-500 text-sm lg:text-base leading-relaxed max-w-4xl"">
+                            <p className="text-gray-500 text-sm lg:text-base leading-relaxed max-w-4xl">
                                 {pageContent.intro_paragraph_2}
                             </p>
                         )}
