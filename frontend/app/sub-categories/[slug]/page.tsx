@@ -2,7 +2,7 @@
 "use client";
 
 import { Download } from "@/components/download/download";
-import { SERVER_URL } from "@/utils/api";
+import { SERVER_URL, MEDIA_URL } from "@/utils/api";
 import { getFetchData } from "@/utils/getFetchData";
 import { siteConfig, getImageUrl } from "@/config/site";
 import Image from "next/image";
@@ -35,17 +35,22 @@ interface PageContent {
     faqs?: FAQ[];
 }
 
-// ─── Skeleton — mirrors homepage ImageGridSkeleton exactly ───────────────────
+interface SubCategory {
+    id: number;
+    name: string;
+    slug: string;
+    icon?: string;
+}
+
+// ─── Skeleton ─────────────────────────────────────────────────────────────────
 const PageSkeleton = () => (
     <section className="relative top-0 left-0 right-0 py-5 lg:py-10 w-full bg-[#FBFAFF]">
         <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
-            {/* Heading */}
             <div className="flex flex-col items-center gap-y-3 mb-8">
                 <div className="h-8 lg:h-10 w-[480px] max-w-full bg-gray-200 rounded animate-pulse" />
                 <div className="h-4 w-96 max-w-full bg-gray-200 rounded animate-pulse" />
                 <div className="h-4 w-72 max-w-full bg-gray-200 rounded animate-pulse" />
             </div>
-            {/* Grid */}
             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-5 w-full">
                 {Array.from({ length: 8 }).map((_, i) => (
                     <div
@@ -118,6 +123,77 @@ const FAQItem = ({ faq, index }: { faq: FAQ; index: number }) => {
     );
 };
 
+// ─── Related Sub-Categories ───────────────────────────────────────────────────
+const RelatedSubCategories = ({
+    currentSlug,
+}: {
+    currentSlug: string;
+}) => {
+    const [subCategories, setSubCategories] = useState<SubCategory[]>([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        fetch(`${SERVER_URL}/images/sub-categories/`)
+            .then((res) => res.json())
+            .then((data) => {
+                const all: SubCategory[] = data.data || [];
+                setSubCategories(all.filter((s) => s.slug !== currentSlug));
+            })
+            .catch((err) => console.error("Failed to fetch sub-categories:", err))
+            .finally(() => setLoading(false));
+    }, [currentSlug]);
+
+    if (loading) {
+        return (
+            <div className="flex flex-col gap-y-4 w-full">
+                <div className="h-7 w-64 bg-gray-200 rounded animate-pulse" />
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 w-full">
+                    {Array.from({ length: 8 }).map((_, i) => (
+                        <div
+                            key={i}
+                            className="w-full rounded-lg bg-gray-200 animate-pulse h-[280px]"
+                        />
+                    ))}
+                </div>
+            </div>
+        );
+    }
+
+    if (subCategories.length === 0) return null;
+
+    return (
+        <div className="flex flex-col gap-y-5 w-full">
+            <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
+                Explore More PNG Sub Categories
+            </h2>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-5 w-full">
+                {subCategories.map((sub) => (
+                    <Link
+                        key={sub.id}
+                        href={`/sub-categories/${sub.slug}/`}
+                        className="group relative block w-full overflow-hidden rounded-lg shadow-lg bg-white py-2.5 px-2.5"
+                    >
+                        <div className="relative w-full h-76 md:h-90 overflow-hidden rounded">
+                            <Image
+                                className="w-full h-full object-cover transition-transform duration-1000 ease-in-out group-hover:scale-110"
+                                src={sub.icon ? `${MEDIA_URL}${sub.icon}` : ""}
+                                alt={sub.name}
+                                width={352}
+                                height={352}
+                                title={sub.name}
+                            />
+                            <div className="absolute inset-0 bg-black bg-opacity-20 opacity-20 transition-opacity duration-700 ease-in-out group-hover:opacity-40" />
+                            <h4 className="absolute left-1/2 bottom-8 text-lg md:text-xl text-white font-semibold transform -translate-x-1/2 text-center whitespace-nowrap">
+                                {sub.name}
+                            </h4>
+                        </div>
+                    </Link>
+                ))}
+            </div>
+        </div>
+    );
+};
+
 // ─── Main component ───────────────────────────────────────────────────────────
 export default function SingleSubCategories() {
     const { slug } = useParams();
@@ -175,9 +251,10 @@ export default function SingleSubCategories() {
     const images = subCategoryData?.images;
     const totalPages = Math.ceil(subCategory?.count / 100);
 
-    const paginationText = currentPage > 1
-    ? `You're browsing page ${currentPage} of our ${subCategoryData?.name || ""} PNG collection. Explore more pages to discover additional high-quality transparent images.`
-    : `You're browsing page 1 of our ${subCategoryData?.name || ""} PNG collection. Explore more pages to discover additional high-quality transparent images.`;
+    const paginationText =
+        currentPage > 1
+            ? `You're browsing page ${currentPage} of our ${subCategoryData?.name || ""} PNG collection. Explore more pages to discover additional high-quality transparent images.`
+            : `You're browsing page 1 of our ${subCategoryData?.name || ""} PNG collection. Explore more pages to discover additional high-quality transparent images.`;
 
     const handlePageChange = (page: number) => {
         setCurrentPage(page);
@@ -195,7 +272,7 @@ export default function SingleSubCategories() {
             <div className="max-w-screen-2xl container mx-auto px-2.5 lg:px-5 w-full">
                 <div className="flex flex-col flex-wrap gap-y-8 lg:gap-y-12 w-full">
 
-                    {/* ── TOP INTRO — matches homepage heading style ── */}
+                    {/* ── TOP INTRO ── */}
                     <div className="flex flex-col items-center text-center gap-y-3 w-full">
                         <h1 className="text-2xl lg:text-4xl font-bold text-[#0077a2]">
                             {pageContent?.intro_heading ||
@@ -213,7 +290,7 @@ export default function SingleSubCategories() {
                         )}
                     </div>
 
-                    {/* ── IMAGE GRID — identical to homepage trending grid ── */}
+                    {/* ── IMAGE GRID ── */}
                     <div className="flex flex-col w-full">
                         {images?.length > 0 ? (
                             <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-4 gap-5 w-full">
@@ -303,7 +380,6 @@ export default function SingleSubCategories() {
                                                 className="flex flex-col justify-center items-center w-full min-h-[200px] sm:min-h-[220px] md:min-h-[250px] lg:min-h-[350px] h-full z-50 relative overflow-hidden"
                                                 href={`/image/${image.slug}/`}
                                             >
-                                                {/* bg-shape hover overlay */}
                                                 <div
                                                     className="rounded-2xl bg-center bg-no-repeat bg-cover opacity-0 absolute inset-0 w-full h-full group-hover:opacity-100 transition-opacity duration-300 ease-in-out"
                                                     style={{
@@ -348,7 +424,7 @@ export default function SingleSubCategories() {
                             </p>
                         )}
 
-                        {/* ── PAGINATION — fixed-height wrapper prevents CLS (matches homepage) ── */}
+                        {/* ── PAGINATION ── */}
                         <div className="min-h-[52px] flex justify-center items-center mt-2.5 lg:mt-5 w-full">
                             <Pagination
                                 totalPages={totalPages}
@@ -393,7 +469,6 @@ export default function SingleSubCategories() {
                                                     key={index}
                                                     className="flex items-start gap-x-2 text-gray-500 text-sm lg:text-base"
                                                 >
-                                                    {/* Brand-coloured bullet */}
                                                     <span className="mt-1.5 shrink-0 w-2 h-2 rounded-full bg-[#0077a2]" />
                                                     {use}
                                                 </li>
@@ -404,7 +479,10 @@ export default function SingleSubCategories() {
                         </div>
                     )}
 
-                    {/* ── FAQ SECTION — interactive accordion ── */}
+                    {/* ── RELATED SUB-CATEGORIES — shown after SEO content ── */}
+                    <RelatedSubCategories currentSlug={slug as string} />
+
+                    {/* ── FAQ SECTION ── */}
                     {pageContent?.faqs && pageContent.faqs.length > 0 && (
                         <div className="flex flex-col gap-y-4 w-full">
                             <h2 className="text-xl lg:text-2xl font-bold text-gray-800">
