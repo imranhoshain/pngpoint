@@ -168,13 +168,13 @@ REST_FRAMEWORK = {
     'DEFAULT_THROTTLE_RATES': {
         'anon': '100/minute',
         'user': '1000/minute',
-        'burst': '100/second',
+        'burst': '500/second',
         'login': '50/minute',
         'register': '100/hour',
         'sustained': '1000/hour',
         'public': '600/minute',
         'token_refresh': '200/minute',
-        'upload': '500/hour',
+        'upload': '1000/hour',
     },
 }
 
