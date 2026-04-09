@@ -70,11 +70,8 @@ function parseContentBlock(raw: string): ParsedContent {
         || raw.match(/content=["']([\s\S]*?)["'][^>]*name=["']description["']/i);
     if (descMatch) result.meta_description = strip(descMatch[1]);
 
-    // H1
-    const h1Match = raw.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
-    if (h1Match) {
-        result.intro_heading = strip(h1Match[1]);
-    }
+    // H1 — always use meta_title value (they must be the same)
+    result.intro_heading = result.meta_title;
 
     // All <p> tags in order
     const allParas: string[] = [];
