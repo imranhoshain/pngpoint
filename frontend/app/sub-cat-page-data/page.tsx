@@ -25,16 +25,24 @@ interface PageContentPayload {
     faqs: FAQ[];
 }
 
-export default function SubCategoryPageContentForm() {
-    const [slug, setSlug] = useState("");
-    const [method, setMethod] = useState<"POST" | "PUT">("POST");
-    const [popularUses, setPopularUses] = useState<string[]>([]);
-    const [usesInput, setUsesInput] = useState("");
-    const [faqs, setFaqs] = useState<FAQ[]>([]);
-    const [status, setStatus] = useState<{ message: string; type: "success" | "error" | "loading" | "" }>({ message: "", type: "" });
-    const [submitting, setSubmitting] = useState(false);
+interface ParsedContent {
+    meta_title: string;
+    meta_description: string;
+    intro_heading: string;
+    intro_paragraph_1: string;
+    intro_paragraph_2: string;
+    seo_heading: string;
+    seo_paragraph_1: string;
+    seo_paragraph_2: string;
+    seo_paragraph_3: string;
+    popular_uses_heading: string;
+    popular_uses: string[];
+    faq_heading: string;
+    faqs: FAQ[];
+}
 
-    const [form, setForm] = useState<Omit<PageContentPayload, "popular_uses" | "faqs">>({
+function parseContentBlock(raw: string): ParsedContent {
+    const result: ParsedContent = {
         meta_title: "",
         meta_description: "",
         intro_heading: "",
@@ -45,61 +53,132 @@ export default function SubCategoryPageContentForm() {
         seo_paragraph_2: "",
         seo_paragraph_3: "",
         popular_uses_heading: "",
-        pagination_text_template: "",
+        popular_uses: [],
         faq_heading: "",
-    });
-
-    const updateForm = (field: string, value: string) => {
-        setForm((prev) => ({ ...prev, [field]: value }));
+        faqs: [],
     };
 
-    const handleAddUse = (e: React.KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === "Enter") {
-            e.preventDefault();
-            const val = usesInput.trim();
-            if (!val) return;
-            setPopularUses((prev) => [...prev, val]);
-            setUsesInput("");
+    const strip = (html: string) =>
+        html.replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
+
+    // Meta title: <title>...</title>
+    const titleMatch = raw.match(/<title>([\s\S]*?)<\/title>/i);
+    if (titleMatch) result.meta_title = strip(titleMatch[1]);
+
+    // Meta description: content="..."
+    const descMatch = raw.match(/name=["']description["'][^>]*content=["']([\s\S]*?)["']/i)
+        || raw.match(/content=["']([\s\S]*?)["'][^>]*name=["']description["']/i);
+    if (descMatch) result.meta_description = strip(descMatch[1]);
+
+    // H1
+    const h1Match = raw.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i);
+    if (h1Match) {
+        result.intro_heading = strip(h1Match[1]);
+    }
+
+    // All <p> tags in order
+    const allParas: string[] = [];
+    const paraRegex = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+    let pm;
+    while ((pm = paraRegex.exec(raw)) !== null) {
+        const text = strip(pm[1]);
+        if (text) allParas.push(text);
+    }
+
+    // Determine split point: paragraphs before first <h2> are "intro", after are "seo"
+    const h2FirstIdx = raw.search(/<h2[^>]*>/i);
+    const introParas: string[] = [];
+    const seoParas: string[] = [];
+
+    const allParaMatches: { text: string; index: number }[] = [];
+    const paraRegex2 = /<p[^>]*>([\s\S]*?)<\/p>/gi;
+    let pm2;
+    while ((pm2 = paraRegex2.exec(raw)) !== null) {
+        const text = strip(pm2[1]);
+        if (text) allParaMatches.push({ text, index: pm2.index });
+    }
+
+    for (const p of allParaMatches) {
+        if (h2FirstIdx === -1 || p.index < h2FirstIdx) {
+            introParas.push(p.text);
+        } else {
+            seoParas.push(p.text);
         }
-    };
+    }
 
-    const removeUse = (idx: number) => {
-        setPopularUses((prev) => prev.filter((_, i) => i !== idx));
-    };
+    result.intro_paragraph_1 = introParas[0] || "";
+    result.intro_paragraph_2 = introParas[1] || "";
+    result.seo_paragraph_1 = seoParas[0] || "";
+    result.seo_paragraph_2 = seoParas[1] || "";
+    result.seo_paragraph_3 = seoParas[2] || "";
 
-    const addFaq = () => {
-        setFaqs((prev) => [...prev, { question: "", answer: "" }]);
-    };
+    // H2 tags — first h2 = seo_heading, second h2 = faq_heading
+    const h2Matches: string[] = [];
+    const h2Regex = /<h2[^>]*>([\s\S]*?)<\/h2>/gi;
+    let h2m;
+    while ((h2m = h2Regex.exec(raw)) !== null) {
+        h2Matches.push(strip(h2m[1]));
+    }
+    result.seo_heading = h2Matches[0] || "";
+    result.faq_heading = h2Matches[1] || "Frequently Asked Questions";
 
-    const updateFaq = (idx: number, field: keyof FAQ, value: string) => {
-        setFaqs((prev) => prev.map((f, i) => (i === idx ? { ...f, [field]: value } : f)));
-    };
+    // H3 = popular_uses_heading
+    const h3Match = raw.match(/<h3[^>]*>([\s\S]*?)<\/h3>/i);
+    if (h3Match) result.popular_uses_heading = strip(h3Match[1]);
 
-    const removeFaq = (idx: number) => {
-        setFaqs((prev) => prev.filter((_, i) => i !== idx));
+    // <ul><li> items = popular_uses
+    const liRegex = /<li[^>]*>([\s\S]*?)<\/li>/gi;
+    let lim;
+    while ((lim = liRegex.exec(raw)) !== null) {
+        const text = strip(lim[1]);
+        if (text) result.popular_uses.push(text);
+    }
+
+    // FAQs: <h4>question</h4><p>answer</p> pairs
+    const faqRegex = /<h4[^>]*>([\s\S]*?)<\/h4>\s*<p[^>]*>([\s\S]*?)<\/p>/gi;
+    let faqm;
+    while ((faqm = faqRegex.exec(raw)) !== null) {
+        result.faqs.push({
+            question: strip(faqm[1]),
+            answer: strip(faqm[2]),
+        });
+    }
+
+    return result;
+}
+
+export default function SubCategoryPageContentForm() {
+    const [slug, setSlug] = useState("");
+    const [rawContent, setRawContent] = useState("");
+    const [method, setMethod] = useState<"POST" | "PUT">("POST");
+    const [parsed, setParsed] = useState<ParsedContent | null>(null);
+    const [parseError, setParseError] = useState("");
+    const [paginationTemplate, setPaginationTemplate] = useState("");
+    const [status, setStatus] = useState<{ message: string; type: "success" | "error" | "loading" | "" }>({ message: "", type: "" });
+    const [submitting, setSubmitting] = useState(false);
+
+    const handleParse = () => {
+        if (!rawContent.trim()) {
+            setParseError("Please paste the content first.");
+            return;
+        }
+        try {
+            const result = parseContentBlock(rawContent);
+            setParsed(result);
+            setParseError("");
+        } catch {
+            setParseError("Failed to parse content. Please check the format.");
+        }
     };
 
     const resetForm = () => {
         setSlug("");
-        setMethod("POST");
-        setPopularUses([]);
-        setUsesInput("");
-        setFaqs([]);
+        setRawContent("");
+        setParsed(null);
+        setParseError("");
+        setPaginationTemplate("");
         setStatus({ message: "", type: "" });
-        setForm({
-            meta_title: "",
-            meta_description: "",
-            intro_heading: "",
-            intro_paragraph_1: "",
-            intro_paragraph_2: "",
-            seo_heading: "",
-            seo_paragraph_1: "",
-            seo_paragraph_2: "",
-            seo_paragraph_3: "",
-            popular_uses_heading: "",
-            pagination_text_template: "",
-            faq_heading: "",
-        });
+        setMethod("POST");
     };
 
     const submitForm = async () => {
@@ -107,11 +186,14 @@ export default function SubCategoryPageContentForm() {
             setStatus({ message: "Please enter a sub category slug.", type: "error" });
             return;
         }
+        if (!parsed) {
+            setStatus({ message: "Please parse the content first.", type: "error" });
+            return;
+        }
 
         const payload: PageContentPayload = {
-            ...form,
-            popular_uses: popularUses,
-            faqs: faqs.filter((f) => f.question || f.answer),
+            ...parsed,
+            pagination_text_template: paginationTemplate,
         };
 
         setSubmitting(true);
@@ -152,7 +234,7 @@ export default function SubCategoryPageContentForm() {
             {/* Header */}
             <div className="mb-8">
                 <h1 className="text-2xl font-semibold text-gray-900">Sub Category Page Content</h1>
-                <p className="text-sm text-gray-500 mt-1">Create or update SEO content, meta tags, and FAQ for a sub category page.</p>
+                <p className="text-sm text-gray-500 mt-1">Paste the raw content block — it will be parsed automatically into all required fields.</p>
             </div>
 
             {/* Slug + Method */}
@@ -163,7 +245,7 @@ export default function SubCategoryPageContentForm() {
                         type="text"
                         value={slug}
                         onChange={(e) => setSlug(e.target.value)}
-                        placeholder="e.g. aquatic-animals-png"
+                        placeholder="e.g. houses-homes-png"
                         className="flex-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm text-gray-900 bg-gray-50 focus:outline-none focus:border-gray-400"
                     />
                     <div className="flex border border-gray-200 rounded-lg overflow-hidden text-sm font-medium shrink-0">
@@ -183,204 +265,103 @@ export default function SubCategoryPageContentForm() {
                 </div>
             </div>
 
-            {/* Meta Tags */}
-            <SectionCard title="Meta Tags" dotColor="bg-violet-500">
-                <div className="flex flex-col gap-3">
-                    <Field label={`Meta title (${form.meta_title.length} / 255)`}>
-                        <input
-                            type="text"
-                            value={form.meta_title}
-                            onChange={(e) => updateForm("meta_title", e.target.value)}
-                            maxLength={255}
-                            placeholder="Aquatic Animals PNG Images – Free Transparent Download | PNGPoint"
-                            className="input"
-                        />
-                    </Field>
-                    <Field label={`Meta description (${form.meta_description.length} / 320)`}>
-                        <textarea
-                            value={form.meta_description}
-                            onChange={(e) => updateForm("meta_description", e.target.value)}
-                            maxLength={320}
-                            rows={3}
-                            placeholder="Download aquatic animals PNG images with transparent background..."
-                            className="input resize-none"
-                        />
-                    </Field>
+            {/* Raw Content Input */}
+            <div className="bg-white border border-gray-200 rounded-2xl p-5 mb-4">
+                <div className="flex items-center gap-2 mb-4">
+                    <span className="w-2 h-2 rounded-full bg-violet-500" />
+                    <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Raw Content</span>
                 </div>
-            </SectionCard>
-
-            {/* Top Intro */}
-            <SectionCard title="Top Intro" dotColor="bg-emerald-500">
                 <div className="flex flex-col gap-3">
-                    <Field label="H1 heading">
-                        <input
-                            type="text"
-                            value={form.intro_heading}
-                            onChange={(e) => updateForm("intro_heading", e.target.value)}
-                            placeholder="Aquatic Animals PNG Images (Transparent Background)"
-                            className="input"
-                        />
-                    </Field>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <Field label="Intro paragraph 1">
-                            <textarea
-                                value={form.intro_paragraph_1}
-                                onChange={(e) => updateForm("intro_paragraph_1", e.target.value)}
-                                rows={4}
-                                placeholder="Explore a wide collection of high-quality aquatic animals PNG images..."
-                                className="input resize-none"
-                            />
-                        </Field>
-                        <Field label="Intro paragraph 2">
-                            <textarea
-                                value={form.intro_paragraph_2}
-                                onChange={(e) => updateForm("intro_paragraph_2", e.target.value)}
-                                rows={4}
-                                placeholder="Our aquatic animals PNG images are carefully selected..."
-                                className="input resize-none"
-                            />
-                        </Field>
-                    </div>
-                </div>
-            </SectionCard>
-
-            {/* Bottom SEO Content */}
-            <SectionCard title="Bottom SEO Content" dotColor="bg-blue-500">
-                <div className="flex flex-col gap-3">
-                    <Field label="H2 heading">
-                        <input
-                            type="text"
-                            value={form.seo_heading}
-                            onChange={(e) => updateForm("seo_heading", e.target.value)}
-                            placeholder="About Aquatic Animals PNG Collection"
-                            className="input"
-                        />
-                    </Field>
-                    <Field label="SEO paragraph 1">
-                        <textarea
-                            value={form.seo_paragraph_1}
-                            onChange={(e) => updateForm("seo_paragraph_1", e.target.value)}
-                            rows={3}
-                            placeholder="Aquatic animals are creatures that live in water environments..."
-                            className="input resize-none"
-                        />
-                    </Field>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        <Field label="SEO paragraph 2">
-                            <textarea
-                                value={form.seo_paragraph_2}
-                                onChange={(e) => updateForm("seo_paragraph_2", e.target.value)}
-                                rows={4}
-                                placeholder="All images on this page come with transparent backgrounds..."
-                                className="input resize-none"
-                            />
-                        </Field>
-                        <Field label="SEO paragraph 3">
-                            <textarea
-                                value={form.seo_paragraph_3}
-                                onChange={(e) => updateForm("seo_paragraph_3", e.target.value)}
-                                rows={4}
-                                placeholder="Our library is regularly updated with new images..."
-                                className="input resize-none"
-                            />
-                        </Field>
-                    </div>
-                    <Field label="H3 heading (popular uses)">
-                        <input
-                            type="text"
-                            value={form.popular_uses_heading}
-                            onChange={(e) => updateForm("popular_uses_heading", e.target.value)}
-                            placeholder="Popular Uses of Aquatic Animals PNG Images"
-                            className="input"
-                        />
-                    </Field>
-                    <Field label="Popular uses (press Enter to add)">
-                        <div
-                            className="flex flex-wrap gap-2 border border-gray-200 rounded-lg px-3 py-2 min-h-[44px] bg-gray-50 cursor-text focus-within:border-gray-400"
-                            onClick={() => document.getElementById("uses-input")?.focus()}
-                        >
-                            {popularUses.map((use, i) => (
-                                <span key={i} className="flex items-center gap-1 bg-white border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-700">
-                                    {use}
-                                    <button onClick={() => removeUse(i)} className="text-gray-400 hover:text-red-500 text-sm leading-none ml-1">×</button>
-                                </span>
-                            ))}
-                            <input
-                                id="uses-input"
-                                value={usesInput}
-                                onChange={(e) => setUsesInput(e.target.value)}
-                                onKeyDown={handleAddUse}
-                                placeholder={popularUses.length === 0 ? "Type a use case and press Enter..." : ""}
-                                className="bg-transparent outline-none text-sm text-gray-700 min-w-[180px] flex-1"
-                            />
-                        </div>
-                    </Field>
-                </div>
-            </SectionCard>
-
-            {/* Pagination Text */}
-            <SectionCard title="Pagination Text" dotColor="bg-gray-400">
-                <Field label="Pagination template — use {page} and {name} as placeholders">
+                    <label className="text-xs font-medium text-gray-500">
+                        Paste the full content block (meta title, meta description, H1, paragraphs, H2, H3, FAQs, etc.)
+                    </label>
                     <textarea
-                        value={form.pagination_text_template}
-                        onChange={(e) => updateForm("pagination_text_template", e.target.value)}
-                        rows={2}
-                        placeholder="You're browsing page {page} of our {name} PNG collection. Explore more pages to discover additional high-quality transparent images."
-                        className="input resize-none"
+                        value={rawContent}
+                        onChange={(e) => { setRawContent(e.target.value); setParsed(null); setParseError(""); }}
+                        rows={14}
+                        placeholder={`🔹 Meta Title\n<title>Houses & Homes PNG – Free Transparent House, Home, Cottage PNG Images</title>\n🔹 Meta Description\n<meta name="description" content="...">\n<!-- 🔼 TOP INTRO -->\n<h1>Houses & Homes PNG Images (Transparent Background)</h1>\n<p>Intro paragraph 1...</p>\n...`}
+                        className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-800 bg-gray-50 font-mono focus:outline-none focus:border-gray-400 resize-y"
                     />
-                </Field>
-            </SectionCard>
-
-            {/* FAQ Section */}
-            <SectionCard title="FAQ Section" dotColor="bg-orange-500">
-                <div className="flex flex-col gap-3">
-                    <Field label="FAQ section heading">
-                        <input
-                            type="text"
-                            value={form.faq_heading}
-                            onChange={(e) => updateForm("faq_heading", e.target.value)}
-                            placeholder="Frequently Asked Questions (FAQ)"
-                            className="input"
-                        />
-                    </Field>
-                    <div className="flex flex-col gap-3">
-                        {faqs.map((faq, idx) => (
-                            <div key={idx} className="relative border border-gray-200 rounded-xl p-4 bg-gray-50">
-                                <button
-                                    onClick={() => removeFaq(idx)}
-                                    className="absolute top-3 right-3 text-gray-300 hover:text-red-500 text-lg leading-none"
-                                >×</button>
-                                <div className="flex flex-col gap-2 pr-6">
-                                    <Field label={`Question ${idx + 1}`}>
-                                        <input
-                                            type="text"
-                                            value={faq.question}
-                                            onChange={(e) => updateFaq(idx, "question", e.target.value)}
-                                            placeholder="Are these images free to download?"
-                                            className="input"
-                                        />
-                                    </Field>
-                                    <Field label="Answer">
-                                        <textarea
-                                            value={faq.answer}
-                                            onChange={(e) => updateFaq(idx, "answer", e.target.value)}
-                                            rows={2}
-                                            placeholder="Yes, all images are available for free download..."
-                                            className="input resize-none"
-                                        />
-                                    </Field>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
+                    {parseError && (
+                        <p className="text-xs text-red-500">{parseError}</p>
+                    )}
                     <button
-                        onClick={addFaq}
-                        className="w-full py-2.5 text-sm text-gray-500 border border-dashed border-gray-300 rounded-xl hover:bg-gray-50 hover:text-gray-700 transition-colors"
+                        onClick={handleParse}
+                        className="self-start px-5 py-2 text-sm font-medium bg-violet-600 text-white rounded-xl hover:bg-violet-700 transition-colors"
                     >
-                        + Add FAQ item
+                        Parse Content
                     </button>
                 </div>
-            </SectionCard>
+            </div>
+
+            {/* Parsed Preview */}
+            {parsed && (
+                <>
+                    <div className="bg-emerald-50 border border-emerald-200 rounded-2xl px-5 py-3 mb-4 flex items-center gap-2">
+                        <svg className="w-4 h-4 text-emerald-500 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span className="text-sm text-emerald-700 font-medium">Content parsed successfully — review below before submitting.</span>
+                    </div>
+
+                    {/* Meta Tags Preview */}
+                    <SectionCard title="Meta Tags" dotColor="bg-violet-500">
+                        <PreviewField label="Meta title" value={parsed.meta_title} />
+                        <PreviewField label="Meta description" value={parsed.meta_description} />
+                    </SectionCard>
+
+                    {/* Top Intro Preview */}
+                    <SectionCard title="Top Intro" dotColor="bg-emerald-500">
+                        <PreviewField label="H1 heading" value={parsed.intro_heading} />
+                        <PreviewField label="Intro paragraph 1" value={parsed.intro_paragraph_1} />
+                        <PreviewField label="Intro paragraph 2" value={parsed.intro_paragraph_2} />
+                    </SectionCard>
+
+                    {/* Bottom SEO Preview */}
+                    <SectionCard title="Bottom SEO Content" dotColor="bg-blue-500">
+                        <PreviewField label="H2 heading" value={parsed.seo_heading} />
+                        <PreviewField label="SEO paragraph 1" value={parsed.seo_paragraph_1} />
+                        <PreviewField label="SEO paragraph 2" value={parsed.seo_paragraph_2} />
+                        <PreviewField label="SEO paragraph 3" value={parsed.seo_paragraph_3} />
+                        <PreviewField label="Popular uses heading (H3)" value={parsed.popular_uses_heading} />
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-medium text-gray-500">Popular uses ({parsed.popular_uses.length} items)</label>
+                            <div className="flex flex-wrap gap-2">
+                                {parsed.popular_uses.length > 0 ? parsed.popular_uses.map((u, i) => (
+                                    <span key={i} className="bg-white border border-gray-200 rounded-full px-3 py-1 text-xs text-gray-700">{u}</span>
+                                )) : <span className="text-xs text-gray-400 italic">None found</span>}
+                            </div>
+                        </div>
+                    </SectionCard>
+
+                    {/* Pagination Text */}
+                    <SectionCard title="Pagination Text" dotColor="bg-gray-400">
+                        <div className="flex flex-col gap-1.5">
+                            <label className="text-xs font-medium text-gray-500">Pagination template — use {"{page}"} and {"{name}"} as placeholders</label>
+                            <textarea
+                                value={paginationTemplate}
+                                onChange={(e) => setPaginationTemplate(e.target.value)}
+                                rows={2}
+                                placeholder="You're browsing page {page} of our {name} PNG collection. Explore more pages to discover additional high-quality transparent images."
+                                className="w-full border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-800 bg-gray-50 focus:outline-none focus:border-gray-400 resize-none"
+                            />
+                        </div>
+                    </SectionCard>
+
+                    {/* FAQ Preview */}
+                    <SectionCard title="FAQ Section" dotColor="bg-orange-500">
+                        <PreviewField label="FAQ heading" value={parsed.faq_heading} />
+                        <div className="flex flex-col gap-2 mt-1">
+                            {parsed.faqs.length > 0 ? parsed.faqs.map((faq, i) => (
+                                <div key={i} className="border border-gray-200 rounded-xl p-3 bg-gray-50">
+                                    <p className="text-xs font-semibold text-gray-600 mb-1">Q{i + 1}: {faq.question}</p>
+                                    <p className="text-xs text-gray-500">{faq.answer}</p>
+                                </div>
+                            )) : <span className="text-xs text-gray-400 italic">No FAQs found</span>}
+                        </div>
+                    </SectionCard>
+                </>
+            )}
 
             {/* Status */}
             {status.message && (
@@ -403,8 +384,8 @@ export default function SubCategoryPageContentForm() {
                 </button>
                 <button
                     onClick={submitForm}
-                    disabled={submitting}
-                    className="flex-1 py-2.5 text-sm font-medium bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                    disabled={submitting || !parsed}
+                    className="flex-1 py-2.5 text-sm font-medium bg-gray-900 text-white rounded-xl hover:bg-gray-800 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                 >
                     {submitting ? "Submitting..." : method === "POST" ? "Create page content" : "Update page content"}
                 </button>
@@ -420,16 +401,18 @@ function SectionCard({ title, dotColor, children }: { title: string; dotColor: s
                 <span className={`w-2 h-2 rounded-full ${dotColor}`} />
                 <span className="text-xs font-semibold text-gray-400 uppercase tracking-widest">{title}</span>
             </div>
-            {children}
+            <div className="flex flex-col gap-3">{children}</div>
         </div>
     );
 }
 
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
+function PreviewField({ label, value }: { label: string; value: string }) {
     return (
         <div className="flex flex-col gap-1.5">
             <label className="text-xs font-medium text-gray-500">{label}</label>
-            {children}
+            <div className="border border-gray-200 rounded-lg px-3 py-2.5 text-sm text-gray-800 bg-gray-50 min-h-[38px] whitespace-pre-wrap">
+                {value || <span className="text-gray-300 italic">Not found</span>}
+            </div>
         </div>
     );
 }
