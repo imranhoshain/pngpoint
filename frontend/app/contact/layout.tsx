@@ -23,9 +23,9 @@ export default function ContactRootLayout({
 }>) {
     return (
         <section className="relative top-0 left-0 right-0 w-full h-screen">
-            <Header />
+            {/* <Header /> */}
             {children}
-            <Footer />
+            {/* <Footer /> */}
         </section>
     );
 }
