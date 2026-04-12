@@ -82,7 +82,7 @@ export default function Contact() {
             <Header />
 
             {/* ── Hero Banner ── */}
-            <section className="relative w-full bg-[#0077a2] overflow-hidden">
+            <section className="relative w-full bg-[#00bcd4] overflow-hidden">
                 <span className="pointer-events-none absolute -top-16 -left-16 w-64 h-64 rounded-full bg-white/5" />
                 <span className="pointer-events-none absolute -bottom-20 -right-10 w-80 h-80 rounded-full bg-white/5" />
                 <span className="pointer-events-none absolute top-10 right-1/4 w-32 h-32 rounded-full bg-white/5" />
