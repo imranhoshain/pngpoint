@@ -149,10 +149,10 @@ export default function Contact() {
                                 <p className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">Follow Us</p>
                                 <div className="flex flex-row flex-wrap items-center gap-3">
                                     {[
-                                        { href: "https://x.com/pngpoint", label: "X" },
-                                        { href: "https://www.facebook.com/people/Pngpoint/61578723218217/", label: "Facebook" },
-                                        { href: "https://www.pinterest.com/Pngpoints/", label: "Pinterest" },
-                                        { href: "https://www.instagram.com/pngpoint/", label: "Instagram" },
+                                        { href: "https://x.com/pngbay", label: "X" },
+                                        { href: "https://www.facebook.com/pngbay", label: "Facebook" },
+                                        { href: "https://www.pinterest.com/pngbay", label: "Pinterest" },
+                                        { href: "https://www.instagram.com/pngba_y", label: "Instagram" },
                                     ].map((s) => (
                                         <Link
                                             key={s.label}
