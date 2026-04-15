@@ -15,7 +15,6 @@ const interFont = Inter({
 export const metadata: Metadata = {
     title: siteConfig.title,
     description: siteConfig.description,
-    
     keywords: [
         "free png images",
         "transparent png",
@@ -67,34 +66,54 @@ export default function RootLayout({
     return (
         <html lang="en">
             <head>
-                <!-- Google Tag Manager -->
-                <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-                })(window,document,'script','dataLayer','GTM-WWZ2JPDW');</script>
-                <!-- End Google Tag Manager -->
-                
+                {/* Google Tag Manager */}
+                <Script
+                    id="gtm-script"
+                    strategy="beforeInteractive"
+                    dangerouslySetInnerHTML={{
+                        __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','GTM-WWZ2JPDW');`,
+                    }}
+                />
+                {/* End Google Tag Manager */}
+
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
-                <meta name="p:domain_verify" content="79113438e5c3285bed9e9d60a4dafce4"/>
+                <meta name="p:domain_verify" content="79113438e5c3285bed9e9d60a4dafce4" />
+
+                {/* Google tag (gtag.js) */}
+                <Script
+                    src="https://www.googletagmanager.com/gtag/js?id=G-0D66LNPY7G"
+                    strategy="afterInteractive"
+                />
+                <Script
+                    id="gtag-init"
+                    strategy="afterInteractive"
+                    dangerouslySetInnerHTML={{
+                        __html: `
+                            window.dataLayer = window.dataLayer || [];
+                            function gtag(){dataLayer.push(arguments);}
+                            gtag('js', new Date());
+                            gtag('config', 'G-0D66LNPY7G');
+                        `,
+                    }}
+                />
             </head>
             <body className={`${interFont.variable} antialiased`}>
-                <!-- Google Tag Manager (noscript) -->
-                <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-WWZ2JPDW"
-                height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-                <!-- End Google Tag Manager (noscript) -->
+                {/* Google Tag Manager (noscript) */}
+                <noscript>
+                    <iframe
+                        src="https://www.googletagmanager.com/ns.html?id=GTM-WWZ2JPDW"
+                        height="0"
+                        width="0"
+                        style={{ display: "none", visibility: "hidden" }}
+                    />
+                </noscript>
+                {/* End Google Tag Manager (noscript) */}
 
-                <!-- Google tag (gtag.js) -->
-                <script async src="https://www.googletagmanager.com/gtag/js?id=G-0D66LNPY7G"></script>
-                <script>
-                    window.dataLayer = window.dataLayer || [];
-                    function gtag(){dataLayer.push(arguments);}
-                    gtag('js', new Date());
-
-                    gtag('config', 'G-0D66LNPY7G');
-                </script>
-                
                 <ReduxProvider>
                     <Scrollbar />
                     <Notification />
