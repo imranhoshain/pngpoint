@@ -83,6 +83,18 @@ export default function RootLayout({
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
                 <meta name="p:domain_verify" content="79113438e5c3285bed9e9d60a4dafce4" />
+            </head>
+            <body className={`${interFont.variable} antialiased`}>
+                {/* Google Tag Manager (noscript) */}
+                <noscript>
+                    <iframe
+                        src="https://www.googletagmanager.com/ns.html?id=GTM-WWZ2JPDW"
+                        height="0"
+                        width="0"
+                        style={{ display: "none", visibility: "hidden" }}
+                    />
+                </noscript>
+                {/* End Google Tag Manager (noscript) */}
 
                 {/* Google tag (gtag.js) */}
                 <Script
@@ -101,18 +113,6 @@ export default function RootLayout({
                         `,
                     }}
                 />
-            </head>
-            <body className={`${interFont.variable} antialiased`}>
-                {/* Google Tag Manager (noscript) */}
-                <noscript>
-                    <iframe
-                        src="https://www.googletagmanager.com/ns.html?id=GTM-WWZ2JPDW"
-                        height="0"
-                        width="0"
-                        style={{ display: "none", visibility: "hidden" }}
-                    />
-                </noscript>
-                {/* End Google Tag Manager (noscript) */}
 
                 <ReduxProvider>
                     <Scrollbar />
