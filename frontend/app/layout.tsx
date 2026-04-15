@@ -66,7 +66,6 @@ export default function RootLayout({
     return (
         <html lang="en">
             <head>
-                {/* Google Tag Manager */}
                 <Script
                     id="gtm-script"
                     strategy="beforeInteractive"
@@ -78,14 +77,12 @@ export default function RootLayout({
                         })(window,document,'script','dataLayer','GTM-WWZ2JPDW');`,
                     }}
                 />
-                {/* End Google Tag Manager */}
 
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
                 <meta name="p:domain_verify" content="79113438e5c3285bed9e9d60a4dafce4" />
             </head>
             <body className={`${interFont.variable} antialiased`}>
-                {/* Google Tag Manager (noscript) */}
                 <noscript>
                     <iframe
                         src="https://www.googletagmanager.com/ns.html?id=GTM-WWZ2JPDW"
@@ -94,25 +91,6 @@ export default function RootLayout({
                         style={{ display: "none", visibility: "hidden" }}
                     />
                 </noscript>
-                {/* End Google Tag Manager (noscript) */}
-
-                {/* Google tag (gtag.js) */}
-                <Script
-                    src="https://www.googletagmanager.com/gtag/js?id=G-0D66LNPY7G"
-                    strategy="afterInteractive"
-                />
-                <Script
-                    id="gtag-init"
-                    strategy="afterInteractive"
-                    dangerouslySetInnerHTML={{
-                        __html: `
-                            window.dataLayer = window.dataLayer || [];
-                            function gtag(){dataLayer.push(arguments);}
-                            gtag('js', new Date());
-                            gtag('config', 'G-0D66LNPY7G');
-                        `,
-                    }}
-                />
 
                 <ReduxProvider>
                     <Scrollbar />
