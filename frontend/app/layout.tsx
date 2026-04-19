@@ -141,7 +141,7 @@ export default function RootLayout({
                     })(window,document,'script','dataLayer','GTM-55NWGSDH');`}
                 </Script>
                 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6545209183027710"
-                crossorigin="anonymous"></script>
+                crossOrigin="anonymous"></script>
 
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
