@@ -140,11 +140,8 @@ export default function RootLayout({
                     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                     })(window,document,'script','dataLayer','GTM-55NWGSDH');`}
                 </Script>
-                <Script
-                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6545209183027710"
-                    strategy="lazyOnload"
-                    crossOrigin="anonymous"
-                />
+                <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6545209183027710"
+                crossorigin="anonymous"></script>
 
                 <meta name="robots" content="index, follow" />
                 <meta name="theme-color" content="#ffffff" />
