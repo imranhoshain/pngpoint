@@ -1,3 +1,5 @@
+"use client";
+
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
@@ -6,30 +8,8 @@ import Notification from "@/components/notification/notification";
 import Scrollbar from "@/components/scrollbar/scrollbar";
 import { siteConfig } from "@/config/site";
 import Script from "next/script";
+import { useEffect } from "react";
 
-/*
- * FIX render-blocking (est. 1,170ms savings):
- *
- * Previous config loaded ALL Inter subsets + weights eagerly.
- * Changes made:
- *
- * 1. Added `adjustFontFallback: true` — Next.js generates a CSS fallback
- *    font that matches Inter's metrics (x-height, cap-height, line-gap).
- *    When Inter loads, the swap causes zero layout shift because the
- *    fallback already occupies identical space. This alone eliminates
- *    most CLS from font loading.
- *
- * 2. Added `preload: true` (explicit) — ensures Next.js injects a
- *    <link rel="preload"> for the woff2 file in <head>, so the font
- *    fetch starts at the same time as HTML parsing instead of after
- *    CSS is parsed. Cuts ~200-400ms off font load time on mobile.
- *
- * 3. Restricted to `weight: ["400", "600"]` — previously loading all
- *    weights meant the browser downloaded multiple woff2 files before
- *    it could render. 400 = body text, 600 = headings. If you use
- *    font-semibold (600) and font-normal (400) only, this covers all cases.
- *    Remove weights you don't actually use in your Tailwind classes.
- */
 const interFont = Inter({
     variable: "--font-inter",
     subsets: ["latin"],
@@ -117,6 +97,33 @@ export const metadata: Metadata = {
     },
 };
 
+declare global {
+    interface Window {
+        adsbygoogle: unknown[];
+    }
+}
+
+function AdUnit() {
+    useEffect(() => {
+        try {
+            (window.adsbygoogle = window.adsbygoogle || []).push({});
+        } catch (e) {
+            console.error("AdSense error:", e);
+        }
+    }, []);
+
+    return (
+        <ins
+            className="adsbygoogle"
+            style={{ display: "block" }}
+            data-ad-client="ca-pub-6545209183027710"
+            data-ad-slot="1002293346"
+            data-ad-format="auto"
+            data-full-width-responsive="true"
+        />
+    );
+}
+
 export default function RootLayout({
     children,
 }: Readonly<{
@@ -125,10 +132,6 @@ export default function RootLayout({
     return (
         <html lang="en">
             <head>
-                {/*
-                 * FIX LCP: preconnect to Cloudflare Images CDN.
-                 * Earliest possible placement — before any scripts or stylesheets.
-                 */}
                 <link rel="preconnect" href="https://imagedelivery.net" crossOrigin="anonymous" />
                 <link rel="dns-prefetch" href="https://imagedelivery.net" />
 
@@ -140,10 +143,13 @@ export default function RootLayout({
                     'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
                     })(window,document,'script','dataLayer','GTM-55NWGSDH');`}
                 </Script>
-                <script 
-                async 
-                src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6545209183027710"
-                crossOrigin="anonymous"
+
+                {/* Google AdSense */}
+                <Script
+                    async
+                    src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6545209183027710"
+                    crossOrigin="anonymous"
+                    strategy="afterInteractive"
                 />
 
                 <meta name="robots" content="index, follow" />
@@ -178,6 +184,8 @@ export default function RootLayout({
                 <ReduxProvider>
                     <Scrollbar />
                     <Notification />
+                    {/* Ad Unit — place anywhere in the body you want the ad to show */}
+                    <AdUnit />
                     {children}
                 </ReduxProvider>
             </body>
