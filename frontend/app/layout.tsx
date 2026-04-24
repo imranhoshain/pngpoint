@@ -6,7 +6,9 @@ import Notification from "@/components/notification/notification";
 import Scrollbar from "@/components/scrollbar/scrollbar";
 import { siteConfig } from "@/config/site";
 import Script from "next/script";
-import AdUnit from "@/components/ads/AdUnit";
+import AdUnitHorizontal from "@/components/ads/AdUnitHorizontal";
+import AdUnitSquare from "@/components/ads/AdUnitSquare";
+import AdUnitVertical from "@/components/ads/AdUnitVertical";
 
 /*
  * FIX render-blocking (est. 1,170ms savings):
@@ -183,7 +185,9 @@ export default function RootLayout({
                     <Scrollbar />
                     <Notification />
                     {/* Ad Unit — move this to any page component where you want ads */}
-                    <AdUnit />
+                    <AdUnitHorizontal />
+                    <AdUnitSquare />
+                    <AdUnitVertical />
                     {children}
                 </ReduxProvider>
             </body>

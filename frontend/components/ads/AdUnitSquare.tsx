@@ -8,7 +8,7 @@ declare global {
     }
 }
 
-export default function AdUnit() {
+export default function AdUnitSquare() {
     useEffect(() => {
         try {
             (window.adsbygoogle = window.adsbygoogle || []).push({});
@@ -22,7 +22,7 @@ export default function AdUnit() {
             className="adsbygoogle"
             style={{ display: "block" }}
             data-ad-client="ca-pub-6545209183027710"
-            data-ad-slot="1002293346"
+            data-ad-slot="1943271705"
             data-ad-format="auto"
             data-full-width-responsive="true"
         />
