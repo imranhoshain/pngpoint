@@ -6,6 +6,7 @@ import { Dimensions } from "./dimensions";
 import { Download } from "./download";
 import { FileSize } from "./filesize";
 import { SocialMedia } from "./socialmedia";
+import { AdBanner } from "../ads/AdBanner";
 
 interface MainImageProps {
     image: any;
@@ -75,19 +76,7 @@ export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
 
             {/* ADVERTISEMENT */}
             <div className="w-full order-last">
-                <ins
-                    className="adsbygoogle"
-                    style={{ display: "block" }}
-                    data-ad-client="ca-pub-6545209183027710"
-                    data-ad-slot="8484109801"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"
-                />
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html: `(adsbygoogle = window.adsbygoogle || []).push({});`,
-                    }}
-                />
+                <AdBanner />
             </div>
         </div>
     );
