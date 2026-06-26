@@ -18,9 +18,11 @@ export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
     return (
         <div className="flex flex-col flex-wrap gap-y-2.5 lg:gap-y-2.5 w-full">
             {/* IMAGE TITLE */}
-            {image?.image?.title && <div className="flex flex-col flex-wrap border border-gray-300 rounded px-2.5 py-2.5 w-full order-2 md:order-1">
-                <h1 className="text-black/80 text-lg font-medium">{image?.image?.title}</h1>
-            </div>}
+            {image?.image?.title && (
+                <div className="flex flex-col flex-wrap border border-gray-300 rounded px-2.5 py-2.5 w-full order-2 md:order-1">
+                    <h1 className="text-black/80 text-lg font-medium">{image?.image?.title}</h1>
+                </div>
+            )}
 
             {/* IMAGE DESCRIPTION & KEYWORDS */}
             <div className="flex flex-col flex-wrap gap-y-2.5 order-3 md:order-2">
@@ -53,7 +55,7 @@ export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
                     <FileSize image={image} />
                 </div>
 
-                {/* MIME Type (hardcoded PNG for now) */}
+                {/* MIME Type */}
                 <div className="flex flex-row flex-wrap items-center justify-between py-1.5 px-1.5 gap-x-2.5 rounded w-full border border-gray-300 shadow-sm">
                     <div className="flex flex-row flex-wrap items-center gap-x-2.5">
                         <PiImageSquareLight className="text-2xl md:text-3xl" />
@@ -71,6 +73,22 @@ export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
             {/* SOCIAL MEDIA IMAGE SHARING */}
             <SocialMedia image={image} pageUrl={pageUrl} />
 
+            {/* ADVERTISEMENT */}
+            <div className="w-full order-last">
+                <ins
+                    className="adsbygoogle"
+                    style={{ display: "block" }}
+                    data-ad-client="ca-pub-6545209183027710"
+                    data-ad-slot="8484109801"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(adsbygoogle = window.adsbygoogle || []).push({});`,
+                    }}
+                />
+            </div>
         </div>
     );
-}
+};
