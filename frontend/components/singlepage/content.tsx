@@ -1,13 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ReactIcons } from "@/utils/reactIcons";
 import React from "react";
 import { KeywordList } from "./keywordlist";
 import { Dimensions } from "./dimensions";
 import { Download } from "./download";
 import { FileSize } from "./filesize";
 import { SocialMedia } from "./socialmedia";
-import { IoInformationCircleOutline } from "react-icons/io5";
-import { AiOutlineFileText } from "react-icons/ai";
-import { PiImageSquareLight } from "react-icons/pi";
 
 interface MainImageProps {
     image: any;
@@ -15,7 +13,9 @@ interface MainImageProps {
 }
 
 export const Content: React.FC<MainImageProps> = ({ image, pageUrl }) => {
-return (
+    const { IoInformationCircleOutline, AiOutlineFileText, PiImageSquareLight } = ReactIcons;
+
+    return (
         <div className="flex flex-col flex-wrap gap-y-2.5 lg:gap-y-2.5 w-full">
             {/* IMAGE TITLE */}
             {image?.image?.title && (
@@ -24,8 +24,9 @@ return (
                 </div>
             )}
 
-            {/* KEYWORDS ONLY - Description moved to below main image */}
+            {/* IMAGE DESCRIPTION & KEYWORDS */}
             <div className="flex flex-col flex-wrap gap-y-2.5 order-3 md:order-2">
+                <p className="text-sm">{image?.image?.description}</p>
                 <KeywordList image={image} />
             </div>
 
@@ -64,24 +65,6 @@ return (
                         <span className="text-sm font-normal">image/png</span>
                     </div>
                 </div>
-
-                {/* License */}
-                <div className="flex flex-row flex-wrap items-center justify-between py-1.5 px-1.5 gap-x-2.5 rounded w-full border border-gray-300 shadow-sm">
-                    <div className="flex flex-row flex-wrap items-center gap-x-2.5">
-                        <AiOutlineFileText className="text-2xl md:text-3xl" />
-                        <span className="text-sm font-normal">License</span>
-                    </div>
-                    <div>
-                        <a 
-                            href="https://pngpoint.com/license" 
-                            target="_blank" 
-                            rel="noopener noreferrer"
-                            className="text-sm font-normal text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                            View License
-                        </a>
-                    </div>
-                </div>
             </div>
 
             {/* IMAGE DOWNLOADING */}
@@ -89,6 +72,23 @@ return (
 
             {/* SOCIAL MEDIA IMAGE SHARING */}
             <SocialMedia image={image} pageUrl={pageUrl} />
+
+            {/* ADVERTISEMENT */}
+            <div className="w-full order-last">
+                <ins
+                    className="adsbygoogle"
+                    style={{ display: "block" }}
+                    data-ad-client="ca-pub-6545209183027710"
+                    data-ad-slot="8484109801"
+                    data-ad-format="auto"
+                    data-full-width-responsive="true"
+                />
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: `(adsbygoogle = window.adsbygoogle || []).push({});`,
+                    }}
+                />
+            </div>
         </div>
     );
-}
+};
